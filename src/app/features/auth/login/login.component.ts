@@ -49,15 +49,13 @@ export class LoginComponent implements OnInit {
   formLogin = new FormGroup({
     email: new FormControl(
       this.dataLoginBurned ? environment.auth.user : '',
-      this.dataLoginBurned
-        ? []
-        : [Validators.required, Validators.minLength(3), Validators.email]
+      this.dataLoginBurned ? [] : [Validators.required, Validators.minLength(3), Validators.email],
     ),
     password: new FormControl(
       this.dataLoginBurned ? environment.auth.password : '',
       this.dataLoginBurned
         ? []
-        : [Validators.required, Validators.minLength(this.minLengthPassword())]
+        : [Validators.required, Validators.minLength(this.minLengthPassword())],
     ),
     rememberMe: new FormControl(false),
   });
@@ -70,7 +68,7 @@ export class LoginComponent implements OnInit {
     if (!data) {
       console.error(
         '❌ error, NO se puede setear Session Storage porque la api ha respondido con un valor falsy\n',
-        data
+        data,
       );
       return;
     }
@@ -78,7 +76,7 @@ export class LoginComponent implements OnInit {
     if (!this.dataTypeClass.isLiteralObject(data)) {
       console.error(
         '❌ error, NO se puede setear Session Storage porque la api NO ha respondido con un objeto literal\n',
-        data
+        data,
       );
       return;
     }
@@ -86,7 +84,7 @@ export class LoginComponent implements OnInit {
     if (this.dataTypeClass.literalObjectLength(data) <= 0) {
       console.error(
         '❌ error, NO se puede setear Session Storage porque la api ha respondido con un objeto literal vacio\n',
-        data
+        data,
       );
       return;
     }
@@ -100,7 +98,7 @@ export class LoginComponent implements OnInit {
           'key ',
           key,
           'value ',
-          value
+          value,
         );
         return;
       }
@@ -111,7 +109,7 @@ export class LoginComponent implements OnInit {
 
   async encryptCredentials(
     decryptedEmail: string,
-    decryptedPassword: string
+    decryptedPassword: string,
   ): Promise<{ encryptedEmail: string; encryptedPassword: string }> {
     const [encryptedEmail, encryptedPassword] = await Promise.all([
       this.cryptoServiceClass.encrypt(decryptedEmail) as Promise<string>,
@@ -128,7 +126,7 @@ export class LoginComponent implements OnInit {
 
     const { encryptedEmail, encryptedPassword } = await this.encryptCredentials(
       email!.trim(),
-      password!.trim()
+      password!.trim(),
     );
 
     const body: IBodyLogin = {
@@ -137,7 +135,7 @@ export class LoginComponent implements OnInit {
     };
 
     const { success, data, message } = await firstValueFrom(
-      this.http.post<ApiResponse<Record<string, string>>>(`${environment.api}`, body)
+      this.http.post<ApiResponse<Record<string, string>>>(`${environment.api}`, body),
     );
 
     /* EL SIGUIENTE CODIGO DEBERIA ESTAR DESCOMENTADO CUANDO FUNCIONE LA CONEXION A LA API  */

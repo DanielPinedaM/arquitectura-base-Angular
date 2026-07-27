@@ -60,11 +60,7 @@ export class RegisterComponent implements OnInit {
       Validators.pattern(CONST_REGEX.text.any),
     ]),
 
-    email: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.email,
-    ]),
+    email: new FormControl('', [Validators.required, Validators.minLength(3), Validators.email]),
 
     password: new FormControl('', [
       Validators.required,
@@ -78,14 +74,11 @@ export class RegisterComponent implements OnInit {
     ]),
   });
 
-  onChangeValidatePassword(
-    value = '',
-    formControlName: 'password' | 'confirmPassword'
-  ): void {
+  onChangeValidatePassword(value = '', formControlName: 'password' | 'confirmPassword'): void {
     if (!formControlName) {
       console.error(
         '❌ error: no existe el formControlName en onChangeValidatePassword \n',
-        formControlName
+        formControlName,
       );
       return;
     }
@@ -101,26 +94,23 @@ export class RegisterComponent implements OnInit {
     2) la contraseña sea segura */
     const { password, confirmPassword } = this.inputValuePassword();
 
-    this.objValidatePassword.set(
-      this.generalClass.validatePasswords(password, confirmPassword)
-    );
+    this.objValidatePassword.set(this.generalClass.validatePasswords(password, confirmPassword));
   }
 
   async encryptRegister(
     decryptedNameUser: string,
     decryptedEmail: string,
-    decryptedPassword: string
+    decryptedPassword: string,
   ): Promise<{
     encryptedNameUser: string;
     encryptedEmail: string;
     encryptedPassword: string;
   }> {
-    const [encryptedNameUser, encryptedEmail, encryptedPassword] =
-      await Promise.all([
-        this.cryptoServiceClass.encrypt(decryptedNameUser) as Promise<string>,
-        this.cryptoServiceClass.encrypt(decryptedEmail) as Promise<string>,
-        this.cryptoServiceClass.encrypt(decryptedPassword) as Promise<string>,
-      ]);
+    const [encryptedNameUser, encryptedEmail, encryptedPassword] = await Promise.all([
+      this.cryptoServiceClass.encrypt(decryptedNameUser) as Promise<string>,
+      this.cryptoServiceClass.encrypt(decryptedEmail) as Promise<string>,
+      this.cryptoServiceClass.encrypt(decryptedPassword) as Promise<string>,
+    ]);
 
     return { encryptedNameUser, encryptedEmail, encryptedPassword };
   }
@@ -132,12 +122,11 @@ export class RegisterComponent implements OnInit {
 
     const { nameUser, email, password } = this.formRegister.value;
 
-    const { encryptedNameUser, encryptedEmail, encryptedPassword } =
-      await this.encryptRegister(
-        nameUser!.trim(),
-        email!.trim(),
-        password!.trim()
-      );
+    const { encryptedNameUser, encryptedEmail, encryptedPassword } = await this.encryptRegister(
+      nameUser!.trim(),
+      email!.trim(),
+      password!.trim(),
+    );
 
     const body: IBodyRegister = {
       nameUser: encryptedNameUser as string,
@@ -146,13 +135,11 @@ export class RegisterComponent implements OnInit {
     };
 
     const { success, data, message } = await firstValueFrom(
-      this.http.post<ApiResponse<unknown>>(`${environment.api}`, body)
+      this.http.post<ApiResponse<unknown>>(`${environment.api}`, body),
     );
 
     if (success) {
-      this.toast.success(
-        `Usuario ${nameUser} registrado, inicie sesión para continuar `
-      );
+      this.toast.success(`Usuario ${nameUser} registrado, inicie sesión para continuar `);
       this.formRegister.reset();
       this.router.navigate(['/iniciar-sesion']);
     } else {
