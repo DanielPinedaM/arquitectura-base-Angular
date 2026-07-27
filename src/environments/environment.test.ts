@@ -1,16 +1,12 @@
-﻿// variables de PRUEBAS
+﻿import { IEnvironment } from '@/environments/data-types/interfaces/environment.interface';
 
-import { IEnvironment } from '@/environments/data-types/interfaces/environment.interface';
-
-const API: string = 'https://aqui escribir dominio de PRUEBAS';
-
+/** variables de PRUEBAS */
 export const environment: IEnvironment = {
   NODE_ENV: 'test',
-  production: false,
-  api: API,
+  api: 'https://aqui escribir dominio de PRUEBAS/api/v1/',
 
   auth: {
-    user: 'AQUI FALTA ESCRIBIR USUARIO PARA INICIAR SESION',
-    password: 'AQUI FALTA ESCRIBIR CONTRASEÑA PARA INICIAR SESION',
+    user: 'aqui escribir usuario quemado en login en PRUEBAS',
+    password: 'aqui escribir contraseña quemada en login en PRUEBAS',
   },
 };

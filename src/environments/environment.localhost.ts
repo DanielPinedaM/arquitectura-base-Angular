@@ -1,16 +1,12 @@
-﻿// variables de DESARROLLO (LOCAL HOST)
+﻿import { IEnvironment } from '@/environments/data-types/interfaces/environment.interface';
 
-import { IEnvironment } from '@/environments/data-types/interfaces/environment.interface';
-
-const API: string = 'http://localhost:3000/api/v1/';
-
+/** variables de DESARROLLO (LOCAL HOST) */
 export const environment: IEnvironment = {
   NODE_ENV: 'localhost',
-  production: false,
-  api: API,
+  api: 'http://localhost:3000/api/v1/',
 
   auth: {
-    user: 'AQUI FALTA ESCRIBIR USUARIO PARA INICIAR SESION',
-    password: 'AQUI FALTA ESCRIBIR CONTRASEÑA PARA INICIAR SESION',
+    user: 'aqui escribir usuario quemado en login en LOCAL HOST',
+    password: 'aqui escribir contraseña quemada en login en LOCAL HOST',
   },
 };

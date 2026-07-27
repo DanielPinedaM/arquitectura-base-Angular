@@ -8,7 +8,7 @@ import { HttpClientHelpersService } from './http-client-helpers.service';
  * token para desactivar los logs en una peticion concreta.
  * Por defecto se imprimen logs en todos los ambientes EXCEPTO produccion */
 export const HTTP_LOG_ENABLED: HttpContextToken<boolean> = new HttpContextToken<boolean>(
-  () => !environment.production,
+  () => environment.NODE_ENV !== 'production',
 );
 
 /**
@@ -97,7 +97,7 @@ export class HttpLogService {
    * ¿se debe imprimir el log?
    * NO en produccion, NI cuando la peticion desactivo el token */
   private canLog(req: HttpRequest<unknown>): boolean {
-    if (environment.production) return false;
+    if (environment.NODE_ENV === 'production') return false;
     return req.context.get(HTTP_LOG_ENABLED);
   }
 
