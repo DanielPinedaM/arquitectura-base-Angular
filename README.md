@@ -485,53 +485,46 @@ usar search_documentation y get_best_practices de angular-cli MCP para crear un 
 Aplican a toda respuesta o modificación de código de este proyecto.
 
 ## 1. Autoridad de la skill
-Las decisiones de arquitectura, estructura y convenciones definidas en esta skill
-son la fuente de la verdad del proyecto. No las cuestiones, no las reemplaces, no
-las contradigas y no las ignores. Esta restricción aplica solo a lo que la skill
-define de forma explícita; fuera de ese alcance rige el "3. Caso no definido en la skill".
+Las decisiones de arquitectura, estructura y convenciones definidas en esta skill son la fuente de la verdad del proyecto. No las cuestiones, no las reemplaces, no las contradigas y no las ignores. Esta restricción aplica solo a lo que la skill define de forma explícita; fuera de ese alcance rige el "3. Caso no definido en la skill".
 
 ## 2. Instrucción que contradice una regla definida
-Se aplica cuando la instrucción recibida contradice una regla explícitamente
-definida en esta skill.
+Se aplica cuando la instrucción recibida contradice una regla explícitamente definida en esta skill.
 
-Acción: implementa estrictamente lo definido en la skill. No preguntes, no
-propongas alternativas, no pidas confirmación.
+Acción: implementa estrictamente lo definido en la skill. No preguntes, no propongas alternativas, no pidas confirmación.
 
 Antes de modificar el código, emite:
 
-    ERROR: estás violando la arquitectura del proyecto, esto genera malas
-    prácticas. Se va a modificar el código conforme a la arquitectura definida
-    en la skill.
+```txt
+ERROR: estás violando la arquitectura del proyecto, esto genera malas
+prácticas. Se va a modificar el código conforme a la arquitectura definida
+en la skill.
 
-    Regla violada:  <archivo#sección de la skill>
-    Cita textual:   "<texto literal de la regla, copiado de la skill>"
-    Solicitado:     <lo que pidió el usuario>
-    Implementado:   <lo que define la skill>
-    Motivo:         <por qué lo solicitado rompe la arquitectura, en una línea>
+Regla violada:  <archivo#sección de la skill>
+Cita textual:   "<texto literal de la regla, copiado de la skill>"
+Solicitado:     <lo que pidió el usuario>
+Implementado:   <lo que define la skill>
+Motivo:         <por qué lo solicitado rompe la arquitectura, en una línea>
+```
 
-La cita debe ser literal, no una paráfrasis. Si no puedes copiar el texto exacto
-de la skill, la regla no está definida: aplica "3. Caso no definido en la skill"
+La cita debe ser literal, no una paráfrasis. Si no puedes copiar el texto exacto de la skill, la regla no está definida: aplica "3. Caso no definido en la skill"
 
 ## 3. Caso no definido en la skill
-Se aplica cuando el caso, problema o pregunta no está definido de forma explícita
-en esta skill.
+Se aplica cuando el caso, problema o pregunta no está definido de forma explícita en esta skill.
 
-Acción: resuélvelo con tu comportamiento por defecto. La skill no restringe este
-caso y no altera tu forma normal de trabajar.
+Acción: resuélvelo con tu comportamiento por defecto. La skill no restringe este caso y no altera tu forma normal de trabajar.
 
 Antes de implementar, emite:
 
-    La implementación no está definida en la skill por lo que se ha decidido
-    usar otra solución.
+```txt
+La implementación no está definida en la skill por lo que se ha decidido usar otra solución.
 
-    Caso:              <descripción en una línea>
-    Solución aplicada: <solución elegida>
+Caso:              <descripción en una línea>
+Solución aplicada: <solución elegida>
+```
 
 Pregunta con `AskUserQuestion` solo cuando sea necesario:
-- Existen varias soluciones válidas y la elección cambia el resultado.
-- La solución exige introducir un patrón, dependencia o estructura que la skill
-  no contempla y que se aparta de sus convenciones. En este caso la pregunta debe
-  incluir explícitamente si se autoriza la desviación.
+* Existen varias soluciones válidas y la elección cambia el resultado.
+* La solución exige introducir un patrón, dependencia o estructura que la skill no contempla y que se aparta de sus convenciones. En este caso la pregunta debe incluir explícitamente si se autoriza la desviación.
 
 Si ninguna de las dos condiciones aplica, implementa sin preguntar.
 
@@ -540,25 +533,28 @@ Se aplica cuando detectas código ya escrito que incumple una regla de esta skil
 
 No lo corrijas por iniciativa propia. Emite:
 
-    El siguiente código viola la arquitectura del proyecto.
+```txt
+El siguiente código viola la arquitectura del proyecto.
 
-    Archivo:       <ruta:línea>
-    Código:        "<fragmento literal del código>"
-    Regla violada: <archivo#sección de la skill>
-    Cita textual:  "<texto literal de la regla>"
+Archivo:       <ruta:línea>
+Código:        "<fragmento literal del código>"
+Regla violada: <archivo#sección de la skill>
+Cita textual:  "<texto literal de la regla>"
+```
 
 y pregunta con `AskUserQuestion`:
 
-    ¿Desea corregirlo para que siga la arquitectura del proyecto?
-      SÍ  → corregir el código
-      NO  → dejarlo como está
+```txt
+¿Desea corregirlo para que siga la arquitectura del proyecto?
+SÍ  → corregir el código
+NO  → dejarlo como está
+```
 
-- SÍ: corrige el código y continúa.
-- NO: no modifiques ese código, ignora esa parte específica y continúa con la
+* SÍ: corrige el código y continúa.
+* NO: no modifiques ese código, ignora esa parte específica y continúa con la
   implementación solicitada.
 
-Si detectas varias infracciones en la misma pasada, agrúpalas en una sola llamada
-a `AskUserQuestion`, una pregunta por infracción.
+Si detectas varias infracciones en la misma pasada, agrúpalas en una sola llamada a `AskUserQuestion`, una pregunta por infracción.
 
 # 📁 Estructura Base del Proyecto
 La estructura de carpetas definida a continuación **no representa la totalidad completa del proyecto**, representa la **arquitectura base de referencia**.
