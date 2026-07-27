@@ -10,14 +10,15 @@
     }
   },
   "scripts": {
-    "ng": "ng",
-    "watch": "ng build --watch --configuration development ",
-    "test": "ng test",
     "start:local": "ng serve --configuration=localhost --port=4200",
     "start:prod": "ng serve --configuration=production --port=4200",
     "start:test": "ng serve --configuration=test --port=4200",
+
     "build:test": "node --max_old_space_size=100000 node_modules/@angular/cli/bin/ng build --aot --configuration=test",
     "build:prod": "node --max_old_space_size=100000 node_modules/@angular/cli/bin/ng build --aot --configuration=production",
+
+    "watch": "ng build --watch --configuration development ",
+    "test": "ng test",
     "lint": "ng lint"
   },
   "private": true,
