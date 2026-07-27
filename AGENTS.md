@@ -13,12 +13,36 @@
 | `pnpm start:prod`  | Producción   | `src/environments/environment.prod.ts`      |
 | `pnpm start:test`  | Pruebas      | `src/environments/environment.test.ts`      |
 
-# Builds para despliegue
+#  Generar Carpeta `dist` (build) para Desplegar
 
-| Comando           | Ambiente     | Variable de Entorno                         |
+| Comando           | Ambiente     | Variable de Entorno                    |
 | ----------------- | ------------ | -------------------------------------- |
 | `pnpm build:test` | Pruebas      | `src/environments/environment.test.ts` |
 | `pnpm build:prod` | Producción   | `src/environments/environment.prod.ts` |
+
+# Ejecutar Carpeta `dist` con Archivos de Compilación
+`pnpm serve:dist` ejecuta en `http://localhost:2000` los archivos ya compilados dentro de la carpeta `dist`. NO recibe ni lee variables de entorno.
+
+## Regla
+El ambiente queda **hardcodeado dentro de la carpeta `dist`** durante el build. NO se define al ejecutar `pnpm serve:dist`.
+
+***Motivo:*** Los comandos `build:*` usan `fileReplacements` de `angular.json`, que reemplaza `src/environments/environment.ts` por el archivo del ambiente **antes** de compilar. Es decir, **las variables de entorno quedan hardcodeadas dentro de los archivos `.js` generados**, no se leen en tiempo de ejecución.
+
+## Pasos
+1. Generar la carpeta `dist` con el ambiente deseado, usando uno de los comandos de la sección "Generar Carpeta `dist` (build) para Desplegar"
+
+2. Ejecutar la carpeta `dist`
+
+```bash
+pnpm serve:dist
+```
+
+3. En el navegador abrir `http://localhost:2000`
+
+## Cambiar de Ambiente
+Volver a ejecutar `pnpm serve:dist` NO cambia el ambiente. Para cambiarlo, generar de nuevo la carpeta `dist` con `pnpm build:test` o `pnpm build:prod` según el ambiente requerido, y después ejecutar `pnpm serve:dist`.
+
+Angular CLI no tiene un comando para servir la carpeta `dist`; `ng serve` compila en memoria y no usa los archivos compilados. Por eso este script usa el paquete `serve`, y la bandera `-s` (`--single`) hace el fallback a `index.html` que necesita el Angular Router para que funcionen los deep links (por ejemplo, recargar el navegador en `http://localhost:2000/iniciar-sesion`).
 
 # Reglas Obligatorias para la IA
 * No generes análisis, recomendaciones ni comentarios adicionales hasta que empiece a realizar preguntas.
