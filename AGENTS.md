@@ -44,21 +44,6 @@ Volver a ejecutar `pnpm serve:dist` NO cambia el ambiente. Para cambiarlo, gener
 
 Angular CLI no tiene un comando para servir la carpeta `dist`; `ng serve` compila en memoria y no usa los archivos compilados. Por eso este script usa el paquete `serve`, y la bandera `-s` (`--single`) hace el fallback a `index.html` que necesita el Angular Router para que funcionen los deep links (por ejemplo, recargar el navegador en `http://localhost:2000/iniciar-sesion`).
 
-# Reglas Obligatorias para la IA
-* No generes análisis, recomendaciones ni comentarios adicionales hasta que empiece a realizar preguntas.
-
-* Todas las respuestas, recomendaciones y fragmentos de código deben respetar obligatoriamente la arquitectura, reglas, patrones y convenciones definidas en este documento.
-
-* No cuestiones, reemplaces, contradigas ni ignores las decisiones de arquitectura definidas en este proyecto.
-
-* Siempre que respondas con código, debes indicar explícitamente la ubicación exacta de cada archivo basándote en la estructura base del proyecto definida en este documento.
-
-* Si existe alguna ambigüedad, falta de contexto o algún aspecto importante de arquitectura, estructura o convenciones que no esté definido, primero debes preguntar antes de asumir una implementación.
-
-* Si durante la conversación recibes instrucciones contradictorias, debes priorizar siempre las reglas y decisiones definidas inicialmente en este documento.
-
-* La arquitectura, reglas y convenciones definidas en este documento tienen prioridad absoluta. Sin embargo, como no todos los casos posibles están documentados, si un problema no puede resolverse respetando la arquitectura actual o requiere una solución no contemplada en el README, primero debes advertir explícitamente que dicha solución se sale de la arquitectura o convenciones establecidas antes de generar una implementación.
-
 # Reglas de Idioma
 
 ## Responder en Español
