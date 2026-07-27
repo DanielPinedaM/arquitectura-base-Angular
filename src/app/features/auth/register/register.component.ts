@@ -78,13 +78,6 @@ export class RegisterComponent implements OnInit {
     ]),
   });
 
-  doNotAllowCopyPasteCut(event: ClipboardEvent): void {
-    event.preventDefault();
-    this.toast.info(
-      'No puedes copiar y pegar la contraseña, escribela manualmente'
-    );
-  }
-
   onChangeValidatePassword(
     value = '',
     formControlName: 'password' | 'confirmPassword'

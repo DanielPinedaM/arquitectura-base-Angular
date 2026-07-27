@@ -109,15 +109,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  doNotAllowCopyPasteCut(event: ClipboardEvent): void {
-    if (environment.production) {
-      event.preventDefault();
-      this.toast.info(
-        'No puedes copiar y pegar la contraseña, escribela manualmente'
-      );
-    }
-  }
-
   async encryptCredentials(
     decryptedEmail: string,
     decryptedPassword: string
