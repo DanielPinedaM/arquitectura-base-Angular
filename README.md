@@ -185,12 +185,36 @@ pn i
 | `pn start:test`  | Pruebas      | `src/environments/environment.test.ts`      |
 | `pn start:prod`  | Producción   | `src/environments/environment.prod.ts`      |
 
-# 🚀 Generar build (dist) para Desplegar
+# 🚀 Generar Carpeta `dist` (build) para Desplegar
 
 | Comando         | Ambiente     | Variable de Entorno                   |
 | --------------- | ------------ | -------------------------------------- |
 | `pn build:test` | Pruebas      | `src/environments/environment.test.ts` |
 | `pn build:prod` | Producción   | `src/environments/environment.prod.ts` |
+
+# Ejecutar Carpeta `dist` con Archivos de Compilación
+`pn serve:dist` ejecuta en `http://localhost:2000` los archivos ya compilados dentro de la carpeta `dist`. NO recibe ni lee variables de entorno.
+
+## Regla
+El ambiente queda **hardcodeado dentro de la carpeta `dist`** durante el build. NO se define al ejecutar `pn serve:dist`.
+
+***Motivo:*** Los comandos `build:*` usan `fileReplacements` de `angular.json`, que reemplaza `src/environments/environment.ts` por el archivo del ambiente **antes** de compilar. Es decir, **las variables de entorno quedan hardcodeadas dentro de los archivos `.js` generados**, no se leen en tiempo de ejecución.
+
+## Pasos
+1. Generar la carpeta `dist` con el ambiente deseado, usando uno de los comandos de la sección "Generar Carpeta `dist` (build) para Desplegar"
+
+2. Ejecutar la carpeta `dist`
+
+```bash
+pn serve:dist
+```
+
+3. En el navegador abrir `http://localhost:2000`
+
+## Cambiar de Ambiente
+Volver a ejecutar `pn serve:dist` NO cambia el ambiente. Para cambiarlo, generar de nuevo la carpeta `dist` con `pn build:test` o `pn build:prod` según el ambiente requerido, y después ejecutar `pn serve:dist`.
+
+Angular CLI no tiene un comando para servir la carpeta `dist`; `ng serve` compila en memoria y no usa los archivos compilados. Por eso este script usa el paquete `serve`, y la bandera `-s` (`--single`) hace el fallback a `index.html` que necesita el Angular Router para que funcionen los deep links (por ejemplo, recargar el navegador en `http://localhost:2000/iniciar-sesion`).
 
 # 🐞 Scripts para Hacer Debugging
 
