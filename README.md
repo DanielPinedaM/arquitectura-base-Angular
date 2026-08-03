@@ -1019,7 +1019,7 @@ Para construir cualquier elemento de UI, evaluar en este orden y detenerse en el
    Ejemplo: existe la etiqueta nativa `<dialog>` de HTML, pero como `Dialog` está en la lista, se debe usar el `Dialog` de Spartan (`<hlm-dialog>` y sus directivas).
 
 2. **¿El componente es un botón?**
-   Usar **SIEMPRE** el componente de `src\shared\design\ui\buttons`. Está prohibido usar el botón de Spartan (directiva `hlmBtn` de `@spartan-ng/button`) y está prohibido usar la etiqueta `<button>` nativa de HTML. Esta regla aplica en todos los casos, incluidos los botones internos de componentes compuestos (ver "Botones dentro de componentes compuestos").
+   Ir a **"Orden de Decisión para Botones"** y aplicar sus 3 pasos. Esa sección resuelve el caso completo: **no** continuar con los pasos 3 ni 4 de esta lista.
 
 3. **¿El componente NO está en la lista y NO es un botón?**
    Maquetar con Tailwind. En este caso sí se usan elementos HTML nativos (`<div>`, `<span>`, etc.) como base del maquetado. Ejemplo: `Card` no está en la lista, se maqueta con Tailwind sobre `<div>`.
@@ -1028,30 +1028,110 @@ Para construir cualquier elemento de UI, evaluar en este orden y detenerse en el
    El HTML nativo solo está prohibido en dos situaciones:
    * (a) Cuando existe un equivalente en "Componentes permitidos": usar Spartan ng, no el nativo.
 
-   * (b) La etiqueta `<button>` nativa: usar siempre `src\shared\design\ui\buttons`. En cualquier otro caso (componentes que no están en la lista), el HTML nativo es la base esperada para maquetar con Tailwind.
+   * (b) La etiqueta `<button>` nativa: ver **"Orden de Decisión para Botones"**.
+
+   En cualquier otro caso (componentes que no están en la lista), el HTML nativo es la base esperada para maquetar con Tailwind.
 
 ### Refuerzo para formularios
 Además de lo anterior, en formularios es obligatorio usar los componentes de Spartan de "Componentes permitidos" para todos los controles disponibles (checkbox, input, label, Radio Group, Select, Switch, textarea, etc.). No se permite ningún control de formulario en HTML nativo cuando existe su equivalente en la lista.
 
 Para el formulario en sí, sí se permite usar la etiqueta nativa `<form>` de HTML junto con Angular Forms with signals para el manejo de estado y validación.
 
-### Botones dentro de componentes compuestos
-Varios componentes de la lista (Alert Dialog, Dialog, Drawer, Sheet, dropdown-menu, Date Picker) usan botones internos: triggers que abren el overlay, acciones y botones de cierre. En Spartan NG esto se aplica con una **directiva de Spartan directamente sobre un elemento `<button>`** (por ejemplo `hlmDialogTrigger`, `hlmDialogClose`).
+### Orden de Decisión para Botones
 
-Esto encaja de forma natural con el sistema de botones definido en `src\shared\design\ui\buttons`: la directiva de Spartan (comportamiento/accesibilidad) y el botón (`src\shared\design\ui\buttons`, estilos y variantes) conviven en el **mismo** `<button>`. En **todos** los escenarios se usa `src\shared\design\ui\buttons`, nunca la directiva `hlmBtn`:
+> [!CAUTION]
+> Evaluar los 3 pasos **en orden** y **detenerse en el primer caso que aplique**. No saltar pasos ni combinarlos.
 
-* Trigger que abre el modal / drawer / menú → `<button [tuBoton] hlmDialogTrigger>` (o la directiva de trigger que corresponda: `hlmSheetTrigger`, `brnDialogTriggerFor`, etc.).
+Todo se decide con una sola pregunta: **¿el archivo que estás editando _implementa_ la librería de UI, o la _consume_?**
 
-* Botones de acción internos (footer del Dialog, cerrar, confirmar/cancelar del Alert Dialog, etc.) → `src\shared\design\ui\buttons` sobre el mismo `<button>` que lleva la directiva de acción/cierre (`hlmDialogClose`, etc.).
+| El archivo que estás editando…                    | Rol        | Botón que se usa            |
+| ------------------------------------------------- | ---------- | --------------------------- |
+| Está dentro de `src/shared/design/ui/spartan-ng`  | Implementa | `hlmBtn` → **paso 1**       |
+| Está en cualquier otra ruta de `src`              | Consume    | `appBtn` → **paso 2**       |
 
-* Botones sueltos que no llevan directiva de Spartan → `src\shared\design\ui\buttons`.
+> [!IMPORTANT]
+> En Angular los dos botones son **directivas de atributo**, no componentes. Se aplican **sobre** una etiqueta `<button>` o `<a>`, y por eso conviven en el mismo elemento con las directivas de comportamiento de Spartan (`hlmDialogTrigger`, `hlmDialogClose`, etc.).
+>
+> | Directiva | Selector real                  |
+> | --------- | ------------------------------ |
+> | `hlmBtn`  | `button[hlmBtn], a[hlmBtn]`    |
+> | `appBtn`  | `button[appBtn], a[appBtn]`    |
 
-Ejemplo (Dialog):
+#### Paso 1 - Botón interno de la librería de UI → `hlmBtn` de Spartan NG
+**Condición:** el botón se escribe **dentro** de `src/shared/design/ui/spartan-ng`, en el archivo que implementa o define un componente de Spartan NG.
+
+**Usar:** la directiva `hlmBtn` de `src/shared/design/ui/spartan-ng/form/action/button/src` — alias `@spartan-ng/button`.
+
+Así lo hace la propia librería:
+
+```html
+<!-- src/shared/design/ui/spartan-ng/overlay/dialog/src/lib/hlm-dialog-content.ts -->
+<button hlmBtn variant="ghost" size="icon-sm" class="absolute end-2 top-2" hlmDialogClose>
+  <span class="sr-only">close</span>
+  <span class="material-symbols-outlined">close</span>
+</button>
+```
+
+**Alcance:** esta regla aplica **únicamente** al código que implementa o define los componentes de la librería de UI. **NO** aplica al código de la aplicación donde esos componentes son consumidos — ese caso lo resuelve el paso 2.
+
+#### Paso 2 - Botón fuera de la librería de UI → Directiva `appBtn`
+**Condición:** el botón **NO** se escribe dentro de `src/shared/design/ui/spartan-ng`. Ocurre en cualquiera de estos dos casos:
+
+**2.1. El botón se usa al consumir un componente de la librería de UI.**
+Ejemplo: al usar `hlm-dialog`, `hlm-drawer`, `hlm-sheet`, `hlm-alert-dialog` o `hlmDropdownMenu` — tanto el trigger que abre el overlay como los botones de acción de su contenido (Guardar, Cancelar).
+
+**2.2. El botón pertenece a la interfaz de usuario de la aplicación.**
+Ejemplo: Iniciar sesión, Guardar, Cancelar, Crear, Editar, Eliminar, Buscar, Aceptar, Continuar.
+
+**Usar:**  Directiva `appBtn`
+
+**PROHIBIDO** usar `hlmBtn` (`@spartan-ng/button`) fuera de `src/shared/design/ui/spartan-ng`.
+
+> [!WARNING]
+> INCOMPLETO
+> la directiva `appBtn` **todavía no existe** y es el selector previsto para su directiva y sus inputs (`theme`, `variant`, `size`, `modifiers`, `effects`) reflejan los del botón composable equivalente de Next.js, que consume el mismo sistema Sass de `src/styles/global/scss/buttons`.
+>
+> Al crear la directiva, alinear selector e inputs con lo documentado aquí, o actualizar esta sección para que coincida con la implementación real.
+
+#### PROHIBIDA la etiqueta `<button>` nativa de HTML sin directiva de botón
+Aplica a los pasos 1 y 2. En Angular la etiqueta `<button>` es el **elemento anfitrión obligatorio**: tanto `hlmBtn` como `appBtn` son directivas de atributo y no existen sin ella.
+
+Lo que está prohibido es escribir un `<button>` **desnudo**, es decir, sin ninguna de las dos directivas de botón:
+
+**Ejemplo Incorrecto:**
+```html
+<button class="btn btn-primary btn-background" (click)="save()">Guardar</button>
+<button hlmDialogTrigger>Abrir</button>
+```
+
+**Ejemplo Correcto:**
+```html
+<button appBtn theme="primary" variant="background" (click)="save()">Guardar</button>
+<button appBtn hlmDialogTrigger theme="primary" variant="background">Abrir</button>
+```
+
+La misma regla aplica a `<a>`: prohibido un `<a>` con apariencia de botón sin `appBtn`.
+
+#### Cómo combinar el botón composable con las directivas de Spartan
+Los triggers y los cierres de Spartan son **directivas de comportamiento**: aportan accesibilidad y estado, pero **ningún estilo**. Por eso conviven en el mismo `<button>` que `appBtn`, que aporta los estilos.
+
+Sus selectores exigen la etiqueta `<button>`, así que esta convivencia es la única forma válida de consumirlos:
+
+| Directiva de comportamiento               | Selector real                                                     |
+| ----------------------------------------- | ----------------------------------------------------------------- |
+| `hlmDialogTrigger`                        | `button[hlmDialogTrigger], button[hlmDialogTriggerFor]`           |
+| `hlmDialogClose`                          | `button[hlmDialogClose]`                                          |
+| `hlmSheetTrigger` / `hlmSheetClose`       | `button[hlmSheetTrigger]` / `button[hlmSheetClose]`               |
+| `hlmDrawerTrigger` / `hlmDrawerClose`     | `button[hlmDrawerTrigger]` / `button[hlmDrawerClose]`             |
+| `hlmAlertDialogTrigger`                   | `button[hlmAlertDialogTrigger], button[hlmAlertDialogTriggerFor]` |
+| `hlmDropdownMenuTrigger`                  | `[hlmDropdownMenuTrigger]` (acepta cualquier elemento)            |
+
+**Ejemplo completo — `hlm-dialog` consumido desde la aplicación:**
 
 ```html
 <hlm-dialog>
-  <!-- Trigger: comportamiento de Spartan + estilos de tu botón en el mismo <button> -->
-  <button hlmDialogTrigger tuBoton variant="primary">Abrir</button>
+  <!-- 2.1 — trigger: comportamiento de Spartan + estilos de appBtn en el mismo <button> -->
+  <button appBtn hlmDialogTrigger theme="primary" variant="background">Abrir</button>
 
   <hlm-dialog-content *hlmDialogPortal="let ctx">
     <hlm-dialog-header>
@@ -1059,15 +1139,71 @@ Ejemplo (Dialog):
     </hlm-dialog-header>
 
     <hlm-dialog-footer>
-      <!-- Cerrar/cancelar: directiva de cierre de Spartan + tu botón -->
-      <button hlmDialogClose tuBoton variant="secondary">Cancelar</button>
-      <button tuBoton variant="primary" type="submit">Guardar</button>
+      <!-- 2.1 — cerrar: directiva de cierre de Spartan + appBtn -->
+      <button appBtn hlmDialogClose theme="secondary" variant="outline">Cancelar</button>
+
+      <!-- 2.2 — acción de la aplicación: appBtn solo -->
+      <button appBtn theme="primary" variant="background" type="submit">Guardar</button>
     </hlm-dialog-footer>
   </hlm-dialog-content>
 </hlm-dialog>
 ```
 
-Nota: `tuBoton` representa el selector real de tu componente/directiva en `src\shared\design\ui\buttons`. Ese componente ya reenvía correctamente los atributos y el foco (equivalente a `forwardRef`/spread de props), por lo que es compatible con las directivas de comportamiento de Spartan.
+#### Piezas que traen `hlmBtn` incrustado
+Algunas piezas de Spartan traen los estilos de botón incrustados y **no se pueden desactivar**. Lo hacen por dos mecanismos:
+
+* **`hostDirectives`** que aplican `HlmButton` al elemento anfitrión (`hlmAlertDialogAction`, `hlmAlertDialogCancel`, `hlmInputGroupButton`, `hlmCarouselNext`, `hlmCarouselPrevious`).
+
+* **`buttonVariants()` o `hlmBtn` dentro de su propio template** (`hlmPaginationLink`, `hlm-date-picker-trigger`, celdas de día del `Calendar`).
+
+En ambos casos el elemento recibe las clases Tailwind de Spartan. Se resuelven caso por caso:
+
+| Pieza                                       | ¿`hlmBtn` incrustado? | Qué hacer                                                 |
+| ------------------------------------------- | --------------------- | --------------------------------------------------------- |
+| `hlmDialogTrigger` / `hlmDialogClose`       | No                    | `appBtn` en el mismo `<button>`                           |
+| `hlmSheetTrigger` / `hlmSheetClose`         | No                    | `appBtn` en el mismo `<button>`                           |
+| `hlmDrawerTrigger` / `hlmDrawerClose`       | No                    | `appBtn` en el mismo `<button>`                           |
+| `hlmAlertDialogTrigger`                     | No                    | `appBtn` en el mismo `<button>`                           |
+| `hlmAlertDialogCancel`                      | **Sí**                | **PROHIBIDO.** Usar `<button appBtn brnDialogClose>`      |
+| `hlmAlertDialogAction`                      | **Sí**                | **PROHIBIDO.** Usar `<button appBtn>` suelto en el footer |
+| `hlmInputGroupButton`                       | **Sí**                | **Permitido**: es cromo interno del `Input Group`         |
+| `hlmCarouselNext` / `hlmCarouselPrevious`   | **Sí**                | **Permitido**: es cromo interno del `Carousel`            |
+
+**Criterio que resuelve cualquier pieza que no esté en la tabla:**
+* El botón representa una **acción de la aplicación** (Guardar, Cancelar, Eliminar) → `appBtn`. Su apariencia pertenece a la aplicación.
+
+* El botón es **cromo interno del componente** (flechas del `Carousel`, addon del `Input Group`) → la pieza de Spartan con `hlmBtn` incrustado. Su apariencia pertenece al componente, no a la aplicación.
+
+`hlmAlertDialogAction` y `hlmAlertDialogCancel` están prohibidos porque aplican `HlmButton` de forma incondicional y sus estilos Tailwind chocarían con las clases `.btn-*` de `appBtn` en el mismo elemento. Se reemplazan así, sin perder comportamiento:
+
+* `hlmAlertDialogAction` solo aporta estilos, **no cierra el diálogo** → se sustituye por un `<button appBtn>` suelto.
+
+* `hlmAlertDialogCancel` es `BrnDialogClose` + `HlmButton` → se sustituye por `brnDialogClose` (importado de `@spartan-ng/brain/dialog`), que aporta el cierre **sin ningún estilo**.
+
+```html
+<hlm-alert-dialog-footer>
+  <!-- cierre neutro de la capa brain + estilos de appBtn -->
+  <button appBtn brnDialogClose theme="secondary" variant="outline">Cancelar</button>
+
+  <!-- en vez de hlmAlertDialogAction, appBtn suelto -->
+  <button appBtn theme="danger" variant="background" (click)="delete()">Eliminar</button>
+</hlm-alert-dialog-footer>
+```
+
+### Dependencias internas de los componentes permitidos
+Si un componente de "Componentes permitidos" depende de otros componentes helm de Spartan NG para funcionar, esas dependencias sí se pueden usar aunque no estén listadas explícitamente. Dependencias reales de este proyecto:
+
+| Componente    | Depende de                                        |
+| ------------- | ------------------------------------------------- |
+| `Combobox`    | `Input Group` + `Button`                          |
+| `Date Picker` | `Calendar` + `Popover` + `Input Group` + `Button` |
+| `Calendar`    | `Select` + `Button`                               |
+| `Input Group` | `Input` + `Textarea` + `Button`                   |
+| `Carousel`    | `Button`                                          |
+
+`Button` (`@spartan-ng/button`) es el único de esos requisitos que **no** aparece en la tabla "Componentes permitidos", y es justamente el caso que cubre esta regla: la librería lo usa internamente para construir los demás componentes.
+
+Los botones se resuelven aparte, con **"Orden de Decisión para Botones"**: dentro de `src/shared/design/ui/spartan-ng` se usa la directiva `hlmBtn`, y al consumir esos componentes desde la aplicación se usa la directiva `appBtn` de `src/shared/design/ui/buttons`.
 
 ### Data Table
 Solo se permite el patrón "Data Table" de Spartan, construido sobre las directivas `Table` (`hlmTable`, `hlmTr`, `hlmTh`, `hlmTd`, etc.) + **`@tanstack/angular-table`**, incluyendo paginación y sorting. Es decir, se usa el conjunto completo Data Table (Table + TanStack + paginación + sorting), no una tabla estática suelta. No esta permitiro usar la etiqueta `<table>` nativa de HTML
