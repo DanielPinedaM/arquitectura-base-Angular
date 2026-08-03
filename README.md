@@ -1002,12 +1002,12 @@ export const routes: Routes = [
 # 💅 Maquetación
 
 ## Componentes de interfaz (UI): uso y maquetación
-Los componentes de Spartan NG están instalados en `src\shared\design\ui\spartan-ng`.
+Este proyecto usa los componentes de Spartan NG que están instalados en `src\shared\design\ui\spartan-ng`.
 
 Spartan NG tiene dos capas:
-* **`@spartan-ng/brain/*` (brain):** primitivas accesibles y sin estilo, instaladas vía npm. Aportan atributos ARIA, navegación por teclado y gestión del foco. Es el equivalente en Angular a Radix UI de React.
+* **`@spartan-ng/brain/*` (brain):** Primitivas accesibles y sin estilo, instaladas vía npm. Aportan navegación por teclado, gestión de foco, configuración ARIA y estado. Es el equivalente en Angular a Base UI de React.
 
-* **`@spartan-ng/*` (helm):** las versiones con estilo (Tailwind) construidas sobre brain. Son los componentes que se usan directamente en las plantillas (`hlm-...`, `hlmBtn`, `hlmInput`, etc.).
+* **`@spartan-ng/*` (helm):** Las versiones con estilo (Tailwind) construidas sobre brain. Son los componentes que se usan directamente en las plantillas (`hlm-...`, `hlmBtn`, `hlmInput`, etc.).
 
 Esta regla aplica a **cualquier componente visual del proyecto** (formularios, cards, badges, tooltips, layouts, etc.), no solo a formularios.
 
@@ -1016,29 +1016,27 @@ Para construir cualquier elemento de UI, evaluar en este orden y detenerse en el
 
 1. **¿El componente está en "Componentes permitidos"?**
    Usar el componente helm de Spartan de la lista. Está prohibido usar su equivalente nativo de HTML.
-   Ejemplo: existe la etiqueta nativa `<dialog>` de HTML, pero como `Dialog` está en la lista, se debe usar el `Dialog` de Spartan (`<hlm-dialog>` + sus directivas).
+   Ejemplo: existe la etiqueta nativa `<dialog>` de HTML, pero como `Dialog` está en la lista, se debe usar el `Dialog` de Spartan (`<hlm-dialog>` y sus directivas).
 
 2. **¿El componente es un botón?**
    Usar **SIEMPRE** el componente de `src\shared\design\ui\buttons`. Está prohibido usar el botón de Spartan (directiva `hlmBtn` de `@spartan-ng/button`) y está prohibido usar la etiqueta `<button>` nativa de HTML. Esta regla aplica en todos los casos, incluidos los botones internos de componentes compuestos (ver "Botones dentro de componentes compuestos").
 
 3. **¿El componente NO está en la lista y NO es un botón?**
-   Maquetar con Tailwind. En este caso sí se usan elementos HTML nativos (`<div>`, `<span>`, etc.) como base del maquetado.
-   Ejemplo: `Card` no está en la lista, se maqueta con Tailwind sobre `<div>`.
+   Maquetar con Tailwind. En este caso sí se usan elementos HTML nativos (`<div>`, `<span>`, etc.) como base del maquetado. Ejemplo: `Card` no está en la lista, se maqueta con Tailwind sobre `<div>`.
 
 4. **Alcance de la prohibición de HTML nativo (aplica a los casos 1, 2 y 3):**
    El HTML nativo solo está prohibido en dos situaciones:
-   * (a) Cuando existe un equivalente en "Componentes permitidos": usar Spartan, no el nativo.
+   * (a) Cuando existe un equivalente en "Componentes permitidos": usar Spartan ng, no el nativo.
 
-   * (b) La etiqueta `<button>` nativa: usar siempre `src\shared\design\ui\buttons`.
-   En cualquier otro caso (componentes que no están en la lista), el HTML nativo es la base esperada para maquetar con Tailwind.
+   * (b) La etiqueta `<button>` nativa: usar siempre `src\shared\design\ui\buttons`. En cualquier otro caso (componentes que no están en la lista), el HTML nativo es la base esperada para maquetar con Tailwind.
 
 ### Refuerzo para formularios
-Además de lo anterior, en formularios es **obligatorio** usar los componentes de Spartan de "Componentes permitidos" para todos los controles disponibles (checkbox, input, label, Radio Group, Select, Switch, textarea, etc.). No se permite ningún control de formulario en HTML nativo cuando existe su equivalente en la lista.
+Además de lo anterior, en formularios es obligatorio usar los componentes de Spartan de "Componentes permitidos" para todos los controles disponibles (checkbox, input, label, Radio Group, Select, Switch, textarea, etc.). No se permite ningún control de formulario en HTML nativo cuando existe su equivalente en la lista.
 
-Para el formulario en sí, sí se permite usar la etiqueta nativa `<form>` de HTML junto con los formularios de Angular (forms with signals) para el manejo de estado y validación. No es obligatorio envolver el formulario en un componente específico de Spartan.
+Para el formulario en sí, sí se permite usar la etiqueta nativa `<form>` de HTML junto con Angular Forms with signals para el manejo de estado y validación.
 
 ### Botones dentro de componentes compuestos
-Varios componentes de la lista (Alert Dialog, Dialog, Drawer, Sheet, dropdown-menu, Date Picker) usan botones internos: triggers que abren el overlay, acciones y botones de cierre. En Spartan NG esto **no** se hace con un patrón `asChild`: se aplica una **directiva de Spartan directamente sobre un elemento `<button>`** (por ejemplo `hlmDialogTrigger`, `hlmDialogClose`).
+Varios componentes de la lista (Alert Dialog, Dialog, Drawer, Sheet, dropdown-menu, Date Picker) usan botones internos: triggers que abren el overlay, acciones y botones de cierre. En Spartan NG esto se aplica con una **directiva de Spartan directamente sobre un elemento `<button>`** (por ejemplo `hlmDialogTrigger`, `hlmDialogClose`).
 
 Esto encaja de forma natural con el sistema de botones definido en `src\shared\design\ui\buttons`: la directiva de Spartan (comportamiento/accesibilidad) y el botón (`src\shared\design\ui\buttons`, estilos y variantes) conviven en el **mismo** `<button>`. En **todos** los escenarios se usa `src\shared\design\ui\buttons`, nunca la directiva `hlmBtn`:
 
