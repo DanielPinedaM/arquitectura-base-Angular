@@ -2,21 +2,12 @@
  * metodos relacionadas con los tipos de datos *
  * ********************************************* */
 
-import GeneralService from '@/shared/services/General.service';
 import { TitleCasePipe } from '@angular/common';
-import { inject, Injector, Service } from '@angular/core';
+import { inject, Service } from '@angular/core';
 
 @Service()
 export default class DataTypeService {
-  private injector = inject(Injector);
   private titleCasePipe = inject(TitleCasePipe);
-  private _generalClass: GeneralService | null = null;
-  get generalClass(): GeneralService {
-    if (!this._generalClass) {
-      this._generalClass = this.injector.get(GeneralService);
-    }
-    return this._generalClass;
-  }
 
   /**
    admite cualquier string */
@@ -29,19 +20,13 @@ export default class DataTypeService {
   admite numero decimal, comas, numero entero, positivo y negativo.
   Ejemplo: "-1,2.1", "-2", "3" */
   isStringNumber = (variable: string | any): boolean => {
-    return (
-      typeof variable === 'string' &&
-      /^(-?\d{0,}(\,|\.)?){0,}$/.test(variable.trim())
-    );
+    return typeof variable === 'string' && /^(-?\d{0,}(\,|\.)?){0,}$/.test(variable.trim());
   };
 
   /**
    true cuando el texto contiene cualquier tipo de letra */
   isLetter = (variable: string | any): boolean => {
-    return (
-      typeof variable === 'string' &&
-      /^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ\s]+$/.test(variable.trim())
-    );
+    return typeof variable === 'string' && /^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ\s]+$/.test(variable.trim());
   };
 
   /**
@@ -128,11 +113,7 @@ export default class DataTypeService {
   convertToBoolean = (variable: boolean | string | any): boolean | null => {
     const normalized: string = String(variable)?.trim()?.toLowerCase();
 
-    if (
-      normalized === 'true' ||
-      normalized === '1' ||
-      this.normalizeStr(variable) === 'si'
-    ) {
+    if (normalized === 'true' || normalized === '1' || this.normalizeStr(variable) === 'si') {
       return true;
     } else if (
       normalized === 'false' ||
@@ -174,8 +155,7 @@ export default class DataTypeService {
   literalObjectLength = (literalObject: any): number => {
     if (this.isLiteralObject(literalObject)) {
       const length: number =
-        Object.keys(literalObject).length +
-        Object.getOwnPropertySymbols(literalObject).length;
+        Object.keys(literalObject).length + Object.getOwnPropertySymbols(literalObject).length;
       return length;
     }
 
@@ -234,7 +214,7 @@ export default class DataTypeService {
       trimType?: 'trim' | 'trimStart' | 'trimEnd' | null;
       clearBlankSpaces?: boolean;
       typeOfDash?: '-' | '_' | null;
-    }
+    },
   ): string | any => {
     if (!this.isString(string)) return string;
     if (String(string).trim() === '') return '';

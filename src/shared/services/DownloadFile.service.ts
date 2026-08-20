@@ -2,9 +2,9 @@
  * metodos para descargar archivo *
  * ******************************** */
 
-import GeneralService from '@/shared/services/General.service';
 import LuxonService from '@/shared/services/Luxon.service';
-import { inject, Injector, Service } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
+import { inject, Service } from '@angular/core';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import ToastService from './Toast.service';
@@ -13,14 +13,7 @@ import ToastService from './Toast.service';
 export default class DownloadFileService {
   luxonClass = inject(LuxonService);
   toast = inject(ToastService);
-  private injector = inject(Injector);
-  private _generalClass: GeneralService | null = null;
-  get generalClass(): GeneralService {
-    if (!this._generalClass) {
-      this._generalClass = this.injector.get(GeneralService);
-    }
-    return this._generalClass;
-  }
+  private readonly titleCasePipe = inject(TitleCasePipe);
 
   /**
   Funcion para descargar archivo */
@@ -133,7 +126,7 @@ export default class DownloadFileService {
     const keys: string[] = Object.keys(nonNestedArrayOfObjects[0]);
 
     // Mayusculas iniciales a los nombres de las columnas del Excel
-    const header: string[] = keys.map((key: string) => this.generalClass.titleCase(key ?? ''));
+    const header: string[] = keys.map((key: string) => this.titleCasePipe.transform(key ?? ''));
 
     // Agregar encabezados con estilos
     worksheet.addRow(header);
