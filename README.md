@@ -624,16 +624,46 @@ src/
 │   │   │
 │   │   └── ui/ → componentes visuales reutilizables que representan partes aisladas de la interfaz, no páginas ni estructuras de navegación completas
 │   │       ├── menu/ → Componente de menú
-│   │       └── spartan-ng/ → componentes helm de Spartan NG (`@spartan-ng/*`), la capa con estilos Tailwind construida sobre `@spartan-ng/brain/*`
-│   │           ├── overlay/ → componentes que se superponen al contenido (alert-dialog, dialog, drawer, dropdown-menu, popover, sheet, toast/sonner, tooltip)
-│   │           ├── form/ → controles de formulario y sus dependencias, agrupados por el tipo de interacción
-│   │           │   ├── action/ → dispara una acción, no captura un valor del formulario (button)
-│   │           │   ├── date/ → selección de fechas (calendar, date-picker)
-│   │           │   ├── selection/ → elegir entre opciones predefinidas (checkbox, combobox, radio-group, select, switch)
-│   │           │   └── text/ → entrada de texto libre y su etiqueta (input, input-group, label, textarea)
-│   │           ├── navigation/ → componentes de navegación (accordion, pagination, tabs)
-│   │           ├── data-display/ → componentes de presentación de datos (carousel, data-table)
-│   │           └── utils/ → NO es un componente: expone la función `hlm()` para combinar clases de Tailwind, usada por todas las categorías
+│   │       └── spartan-ng/ → componentes helm de Spartan NG (`@spartan-ng/*`)
+│   │           │
+│   │           ├── data-display/ → componentes que presentan datos al usuario
+│   │           │   ├── carousel/ → carrusel de slides
+│   │           │   └── data-table/ → tabla de datos con @tanstack/angular-table, paginación y sorting
+│   │           │
+│   │           ├── form/ → controles de formulario y sus dependencias, subagrupados por el tipo de interacción
+│   │           │   ├── action/ → dispara una acción, no captura un valor del formulario
+│   │           │   │   └── button/ → botón
+│   │           │   ├── date/ → selección de fechas
+│   │           │   │   ├── calendar/ → calendario
+│   │           │   │   └── date-picker/ → selector de fecha sobre popover
+│   │           │   ├── selection/ → elegir entre opciones predefinidas
+│   │           │   │   ├── checkbox/ → casilla de verificación
+│   │           │   │   ├── combobox/ → input con autocompletado
+│   │           │   │   ├── radio-group/ → grupo de opciones excluyentes
+│   │           │   │   ├── select/ → desplegable de selección
+│   │           │   │   └── switch/ → interruptor on/off
+│   │           │   └── text/ → entrada de texto libre y su etiqueta
+│   │           │       ├── input/ → campo de texto de una línea
+│   │           │       ├── input-group/ → campo de texto con addons
+│   │           │       ├── label/ → etiqueta de un control
+│   │           │       └── textarea/ → campo de texto multilínea
+│   │           │
+│   │           ├── navigation/ → componentes de navegación
+│   │           │   ├── accordion/ → secciones plegables
+│   │           │   ├── pagination/ → paginación
+│   │           │   └── tabs/ → pestañas
+│   │           │
+│   │           ├── overlay/ → componentes que se superponen al contenido
+│   │           │   ├── alert-dialog/ → diálogo de confirmación
+│   │           │   ├── dialog/ → diálogo modal
+│   │           │   ├── drawer/ → panel deslizante
+│   │           │   ├── dropdown-menu/ → menú desplegable
+│   │           │   ├── popover/ → contenido flotante anclado
+│   │           │   ├── sheet/ → panel lateral
+│   │           │   ├── toast/ → notificación temporal (Sonner)
+│   │           │   └── tooltip/ → descripción emergente
+│   │           │
+│   │           └── helpers/ → expone `hlm()` y `classes()` para combinar clases de Tailwind, y `provideSpartanHlm()`, usados por todas las categorías
 │   │
 │   ├── services/ → servicios reutilizables de alcance global que pueden ser utilizados por múltiples features de la aplicación. Encapsulan lógica transversal, infraestructura, acceso a APIs, utilidades técnicas y gestión de estado compartido. No deben depender de reglas de negocio específicas de una feature.
 │   │   ├── Crypto.service.ts → Encriptar y desencriptar texto y objeto literal usando crypto-js
@@ -1216,34 +1246,36 @@ Solo se permite el patrón "Data Table" de Spartan, construido sobre las directi
 ### Componentes permitidos
 Los componentes están agrupados en cuatro categorías dentro de `src\shared\design\ui\spartan-ng`: `overlay`, `form`, `navigation` y `data-display`.
 
-Cada fila indica el alias de import. El alias es independiente de la carpeta: aunque los componentes estén anidados por categoría, el import siempre es plano (`@spartan-ng/<componente>`).
+Siempre para importar los componentes usar los import alias de shad cn que estan en `tsconfig.json`
 
-| Nombre                                                           | import alias                                         |
-| ---------------------------------------------------------------- | ---------------------------------------------------- |
-| Accordion                                                        | `@spartan-ng/accordion`                              |
-| Alert Dialog                                                     | `@spartan-ng/alert-dialog`                           |
-| Calendar                                                         | `@spartan-ng/calendar`                               |
-| Carousel                                                         | `@spartan-ng/carousel`                               |
-| Checkbox                                                         | `@spartan-ng/checkbox`                               |
-| Combobox                                                         | `@spartan-ng/combobox`                               |
-| Data Table (con `@tanstack/angular-table`, paginación y sorting) | `@spartan-ng/data-table` + `@tanstack/angular-table` |
-| Date Picker                                                      | `@spartan-ng/date-picker`                            |
-| Dialog                                                           | `@spartan-ng/dialog`                                 |
-| Drawer                                                           | `@spartan-ng/drawer`                                 |
-| Dropdown Menu                                                    | `@spartan-ng/dropdown-menu`                          |
-| Input                                                            | `@spartan-ng/input`                                  |
-| Input Group                                                      | `@spartan-ng/input-group`                            |
-| Label                                                            | `@spartan-ng/label`                                  |
-| Pagination                                                       | `@spartan-ng/pagination`                             |
-| Popover                                                          | `@spartan-ng/popover`                                |
-| Radio Group                                                      | `@spartan-ng/radio-group`                            |
-| Select                                                           | `@spartan-ng/select`                                 |
-| Sheet                                                            | `@spartan-ng/sheet`                                  |
-| Toast (Sonner)                                                   | `@spartan-ng/toast`                                  |
-| Switch                                                           | `@spartan-ng/switch`                                 |
-| Tabs                                                             | `@spartan-ng/tabs`                                   |
-| Textarea                                                         | `@spartan-ng/textarea`                               |
-| Tooltip                                                          | `@spartan-ng/tooltip`                                |
+Cada carpeta de componente tiene su barrel export en `index.ts`, que reexporta todos sus archivos y define la constante `Hlm*Imports`.
+
+| Nombre Componente                                                | Ruta                                                         |
+| ---------------------------------------------------------------- | ------------------------------------------------------------ |
+| Accordion                                                        | `src\shared\design\ui\spartan-ng\navigation\accordion`       |
+| Alert Dialog                                                     | `src\shared\design\ui\spartan-ng\overlay\alert-dialog`       |
+| Calendar                                                         | `src\shared\design\ui\spartan-ng\form\date\calendar`         |
+| Carousel                                                         | `src\shared\design\ui\spartan-ng\data-display\carousel`      |
+| Checkbox                                                         | `src\shared\design\ui\spartan-ng\form\selection\checkbox`    |
+| Combobox                                                         | `src\shared\design\ui\spartan-ng\form\selection\combobox`    |
+| Data Table (con `@tanstack/angular-table`, paginación y sorting) | `src\shared\design\ui\spartan-ng\data-display\data-table`    |
+| Date Picker                                                      | `src\shared\design\ui\spartan-ng\form\date\date-picker`      |
+| Dialog                                                           | `src\shared\design\ui\spartan-ng\overlay\dialog`             |
+| Drawer                                                           | `src\shared\design\ui\spartan-ng\overlay\drawer`             |
+| Dropdown Menu                                                    | `src\shared\design\ui\spartan-ng\overlay\dropdown-menu`      |
+| Input                                                            | `src\shared\design\ui\spartan-ng\form\text\input`            |
+| Input Group                                                      | `src\shared\design\ui\spartan-ng\form\text\input-group`      |
+| Label                                                            | `src\shared\design\ui\spartan-ng\form\text\label`            |
+| Pagination                                                       | `src\shared\design\ui\spartan-ng\navigation\pagination`      |
+| Popover                                                          | `src\shared\design\ui\spartan-ng\overlay\popover`            |
+| Radio Group                                                      | `src\shared\design\ui\spartan-ng\form\selection\radio-group` |
+| Select                                                           | `src\shared\design\ui\spartan-ng\form\selection\select`      |
+| Sheet                                                            | `src\shared\design\ui\spartan-ng\overlay\sheet`              |
+| Toast (Sonner)                                                   | `src\shared\design\ui\spartan-ng\overlay\toast`              |
+| Switch                                                           | `src\shared\design\ui\spartan-ng\form\selection\switch`      |
+| Tabs                                                             | `src\shared\design\ui\spartan-ng\navigation\tabs`            |
+| Textarea                                                         | `src\shared\design\ui\spartan-ng\form\text\textarea`         |
+| Tooltip                                                          | `src\shared\design\ui\spartan-ng\overlay\tooltip`            |
 
 ## 🧱 Configuración de Tailwind 4
 

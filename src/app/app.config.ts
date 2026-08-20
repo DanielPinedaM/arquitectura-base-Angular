@@ -1,5 +1,5 @@
 import { routes } from '@/app/app.routes';
-import { BrnLuxonDateAdapterNormalized } from '@/shared/design/ui/spartan-ng/form/date/brn-luxon-date-adapter-normalized';
+import { BrnLuxonDateAdapterNormalized } from '@spartan-ng/brn-luxon-date-adapter-normalized';
 import { acceptInterceptor } from '@/shared/http-client/interceptors/headers/accept.interceptor';
 import { contentTypeInterceptor } from '@/shared/http-client/interceptors/headers/content-type.interceptor';
 import { timeoutInterceptor } from '@/shared/http-client/interceptors/timeout.interceptor';
@@ -19,7 +19,7 @@ import {
   provideHlmDatePickerMultiConfig,
   provideHlmDateRangePickerConfig,
 } from '@spartan-ng/date-picker';
-import { provideSpartanHlm } from '@spartan-ng/utils';
+import { provideSpartanHlm } from '@spartan-ng/provide-spartan-hlm-helper';
 import { DateTime } from 'luxon';
 
 /**

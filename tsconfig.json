@@ -29,47 +29,154 @@
 
       /* ------------- spartan-ng  ------------- */
 
-      /* data-display */
-      "@spartan-ng/carousel": ["./src/shared/design/ui/spartan-ng/data-display/carousel/src/index.ts"],
-      "@spartan-ng/data-table": ["./src/shared/design/ui/spartan-ng/data-display/data-table/src/index.ts"],
+      /* helpers globales de spartan ng */
+      "@spartan-ng/hlm-helper": ["./src/shared/design/ui/spartan-ng/helpers/hlm.helper.ts"],
+      "@spartan-ng/provide-spartan-hlm-helper": [
+        "./src/shared/design/ui/spartan-ng/helpers/provide-spartan-hlm.helper.ts"
+      ],
 
-      /* form/action */
-      "@spartan-ng/button": ["./src/shared/design/ui/spartan-ng/form/action/button/src/index.ts"],
+      /* data-display/carousel */
+      "@spartan-ng/carousel": ["./src/shared/design/ui/spartan-ng/data-display/carousel/index.ts"],
+
+      /* data-display/data-table */
+      "@spartan-ng/data-table": [
+        "./src/shared/design/ui/spartan-ng/data-display/data-table/index.ts"
+      ],
 
       /* form/date */
-      "@spartan-ng/calendar": ["./src/shared/design/ui/spartan-ng/form/date/calendar/src/index.ts"],
-      "@spartan-ng/date-picker": ["./src/shared/design/ui/spartan-ng/form/date/date-picker/src/index.ts"],
+      "@spartan-ng/brn-luxon-date-adapter-normalized": [
+        "./src/shared/design/ui/spartan-ng/form/date/brn-luxon-date-adapter-normalized.ts"
+      ],
 
-      /* form/selection */
-      "@spartan-ng/checkbox": ["./src/shared/design/ui/spartan-ng/form/selection/checkbox/src/index.ts"],
-      "@spartan-ng/combobox": ["./src/shared/design/ui/spartan-ng/form/selection/combobox/src/index.ts"],
-      "@spartan-ng/radio-group": ["./src/shared/design/ui/spartan-ng/form/selection/radio-group/src/index.ts"],
-      "@spartan-ng/select": ["./src/shared/design/ui/spartan-ng/form/selection/select/src/index.ts"],
-      "@spartan-ng/switch": ["./src/shared/design/ui/spartan-ng/form/selection/switch/src/index.ts"],
+      /* form/action/button */
+      "@spartan-ng/button": ["./src/shared/design/ui/spartan-ng/form/action/button/index.ts"],
+      "@spartan-ng/hlm-button-const": [
+        "./src/shared/design/ui/spartan-ng/form/action/button/data-types/constants/hlm-button.const.ts"
+      ],
+      "@spartan-ng/hlm-button-interface": [
+        "./src/shared/design/ui/spartan-ng/form/action/button/data-types/interfaces/hlm-button.interface.ts"
+      ],
+      "@spartan-ng/hlm-button-type": [
+        "./src/shared/design/ui/spartan-ng/form/action/button/data-types/types/hlm-button.type.ts"
+      ],
+      "@spartan-ng/hlm-button-helper": [
+        "./src/shared/design/ui/spartan-ng/form/action/button/helpers/hlm-button.helper.ts"
+      ],
 
-      /* form/text */
-      "@spartan-ng/input": ["./src/shared/design/ui/spartan-ng/form/text/input/src/index.ts"],
-      "@spartan-ng/input-group": ["./src/shared/design/ui/spartan-ng/form/text/input-group/src/index.ts"],
-      "@spartan-ng/label": ["./src/shared/design/ui/spartan-ng/form/text/label/src/index.ts"],
-      "@spartan-ng/textarea": ["./src/shared/design/ui/spartan-ng/form/text/textarea/src/index.ts"],
+      /* form/date/calendar */
+      "@spartan-ng/calendar": ["./src/shared/design/ui/spartan-ng/form/date/calendar/index.ts"],
 
-      /* navigation */
-      "@spartan-ng/accordion": ["./src/shared/design/ui/spartan-ng/navigation/accordion/src/index.ts"],
-      "@spartan-ng/pagination": ["./src/shared/design/ui/spartan-ng/navigation/pagination/src/index.ts"],
-      "@spartan-ng/tabs": ["./src/shared/design/ui/spartan-ng/navigation/tabs/src/index.ts"],
+      /* form/date/date-picker */
+      "@spartan-ng/date-picker": [
+        "./src/shared/design/ui/spartan-ng/form/date/date-picker/index.ts"
+      ],
+      "@spartan-ng/hlm-date-picker-const": [
+        "./src/shared/design/ui/spartan-ng/form/date/date-picker/data-types/constants/hlm-date-picker.const.ts"
+      ],
+      "@spartan-ng/hlm-date-picker-interface": [
+        "./src/shared/design/ui/spartan-ng/form/date/date-picker/data-types/interfaces/hlm-date-picker.interface.ts"
+      ],
+      "@spartan-ng/hlm-date-picker-helper": [
+        "./src/shared/design/ui/spartan-ng/form/date/date-picker/helpers/hlm-date-picker.helper.ts"
+      ],
 
-      /* overlay */
-      "@spartan-ng/alert-dialog": ["./src/shared/design/ui/spartan-ng/overlay/alert-dialog/src/index.ts"],
-      "@spartan-ng/dialog": ["./src/shared/design/ui/spartan-ng/overlay/dialog/src/index.ts"],
-      "@spartan-ng/drawer": ["./src/shared/design/ui/spartan-ng/overlay/drawer/src/index.ts"],
-      "@spartan-ng/dropdown-menu": ["./src/shared/design/ui/spartan-ng/overlay/dropdown-menu/src/index.ts"],
-      "@spartan-ng/popover": ["./src/shared/design/ui/spartan-ng/overlay/popover/src/index.ts"],
-      "@spartan-ng/sheet": ["./src/shared/design/ui/spartan-ng/overlay/sheet/src/index.ts"],
-      "@spartan-ng/toast": ["./src/shared/design/ui/spartan-ng/overlay/toast/src/index.ts"],
-      "@spartan-ng/tooltip": ["./src/shared/design/ui/spartan-ng/overlay/tooltip/src/index.ts"],
+      /* form/selection/checkbox */
+      "@spartan-ng/checkbox": [
+        "./src/shared/design/ui/spartan-ng/form/selection/checkbox/index.ts"
+      ],
 
-      /* utils */
-      "@spartan-ng/utils": ["./src/shared/design/ui/spartan-ng/utils/src/index.ts"]
+      /* form/selection/combobox */
+      "@spartan-ng/combobox": [
+        "./src/shared/design/ui/spartan-ng/form/selection/combobox/index.ts"
+      ],
+
+      /* form/selection/radio-group */
+      "@spartan-ng/radio-group": [
+        "./src/shared/design/ui/spartan-ng/form/selection/radio-group/index.ts"
+      ],
+
+      /* form/selection/select */
+      "@spartan-ng/select": ["./src/shared/design/ui/spartan-ng/form/selection/select/index.ts"],
+
+      /* form/selection/switch */
+      "@spartan-ng/switch": ["./src/shared/design/ui/spartan-ng/form/selection/switch/index.ts"],
+
+      /* form/text/input */
+      "@spartan-ng/input": ["./src/shared/design/ui/spartan-ng/form/text/input/index.ts"],
+
+      /* form/text/input-group */
+      "@spartan-ng/input-group": [
+        "./src/shared/design/ui/spartan-ng/form/text/input-group/index.ts"
+      ],
+
+      /* form/text/label */
+      "@spartan-ng/label": ["./src/shared/design/ui/spartan-ng/form/text/label/index.ts"],
+
+      /* form/text/textarea */
+      "@spartan-ng/textarea": ["./src/shared/design/ui/spartan-ng/form/text/textarea/index.ts"],
+
+      /* navigation/accordion */
+      "@spartan-ng/accordion": ["./src/shared/design/ui/spartan-ng/navigation/accordion/index.ts"],
+
+      /* navigation/pagination */
+      "@spartan-ng/pagination": [
+        "./src/shared/design/ui/spartan-ng/navigation/pagination/index.ts"
+      ],
+      "@spartan-ng/hlm-pagination-helper": [
+        "./src/shared/design/ui/spartan-ng/navigation/pagination/helpers/hlm-pagination.helper.ts"
+      ],
+
+      /* navigation/tabs */
+      "@spartan-ng/tabs": ["./src/shared/design/ui/spartan-ng/navigation/tabs/index.ts"],
+      "@spartan-ng/hlm-tabs-const": [
+        "./src/shared/design/ui/spartan-ng/navigation/tabs/data-types/constants/hlm-tabs.const.ts"
+      ],
+
+      /* overlay/alert-dialog */
+      "@spartan-ng/alert-dialog": [
+        "./src/shared/design/ui/spartan-ng/overlay/alert-dialog/index.ts"
+      ],
+
+      /* overlay/dialog */
+      "@spartan-ng/dialog": ["./src/shared/design/ui/spartan-ng/overlay/dialog/index.ts"],
+      "@spartan-ng/hlm-dialog-const": [
+        "./src/shared/design/ui/spartan-ng/overlay/dialog/data-types/constants/hlm-dialog.const.ts"
+      ],
+      "@spartan-ng/hlm-dialog-type": [
+        "./src/shared/design/ui/spartan-ng/overlay/dialog/data-types/types/hlm-dialog.type.ts"
+      ],
+      "@spartan-ng/hlm-dialog-service": [
+        "./src/shared/design/ui/spartan-ng/overlay/dialog/services/hlm-dialog.service.ts"
+      ],
+
+      /* overlay/drawer */
+      "@spartan-ng/drawer": ["./src/shared/design/ui/spartan-ng/overlay/drawer/index.ts"],
+
+      /* overlay/dropdown-menu */
+      "@spartan-ng/dropdown-menu": [
+        "./src/shared/design/ui/spartan-ng/overlay/dropdown-menu/index.ts"
+      ],
+      "@spartan-ng/hlm-dropdown-menu-interface": [
+        "./src/shared/design/ui/spartan-ng/overlay/dropdown-menu/data-types/interfaces/hlm-dropdown-menu.interface.ts"
+      ],
+      "@spartan-ng/hlm-dropdown-menu-helper": [
+        "./src/shared/design/ui/spartan-ng/overlay/dropdown-menu/helpers/hlm-dropdown-menu.helper.ts"
+      ],
+
+      /* overlay/popover */
+      "@spartan-ng/popover": ["./src/shared/design/ui/spartan-ng/overlay/popover/index.ts"],
+
+      /* overlay/sheet */
+      "@spartan-ng/sheet": ["./src/shared/design/ui/spartan-ng/overlay/sheet/index.ts"],
+
+      /* overlay/toast */
+      "@spartan-ng/toast": ["./src/shared/design/ui/spartan-ng/overlay/toast/index.ts"],
+
+      /* overlay/tooltip */
+      "@spartan-ng/tooltip": ["./src/shared/design/ui/spartan-ng/overlay/tooltip/index.ts"],
+      "@spartan-ng/hlm-tooltip-const": [
+        "./src/shared/design/ui/spartan-ng/overlay/tooltip/data-types/constants/hlm-tooltip.const.ts"
+      ]
     }
   },
   "angularCompilerOptions": {
