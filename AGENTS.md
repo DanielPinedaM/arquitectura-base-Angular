@@ -113,12 +113,12 @@ Esta PROHIBIDO:
 
 * **Signals API**:
   * `signal()`
+  * `linkedSignal`
   * `.set()`
   * `.update()`
   * `computed()`
   * `effect()`
   * `afterRenderEffect()`
-  * `linkedSignal`
   * `resource()`
 
 * **Estado global con signals:** Todo estado global o compartido entre componentes debe manejarse con la API de signals de Angular, expuesto desde un servicio singleton `@Service()`. PROHIBIDO usar BehaviorSubject, ReplaySubject, Subject u otros stores basados en RxJS para mantener estado. RxJS queda reservado únicamente para flujos asíncronos de eventos (HTTP, websockets, streams), nunca como contenedor de estado.
