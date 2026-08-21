@@ -93,8 +93,8 @@ Los `value` de `path` son rutas de navegación (URLs). Es decir:
 
 Por ejemplo, si existe la carpeta `src/app/features/auth/recuperar-clave/` asociada a `path: 'recuperar-clave'`, tanto el nombre de la carpeta como el `value` del `path` van en español. El resto del código fuente dentro de esa carpeta (nombres de archivos `.ts`, clases, componentes, métodos, variables, etc.) sigue las reglas generales de la sección "Excepciones, Responder en Ingles" y se mantiene en inglés.
 
-# Reglas para Angular
-Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento. El MCP server `angular-cli` es la **fuente de verdad**: antes de escribir código o responder, es **OBLIGATORIO** consultar las tools `search_documentation` y `get_best_practices`.
+# Reglas **OBLIGATORIAS** para Angular
+Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento. El MCP server `angular-cli` es la **fuente de verdad**: antes de escribir código o responder, consultar las tools `search_documentation` y `get_best_practices`.
 
 ## Compatibilidad con zone.js
 Esta PROHIBIDO:
