@@ -395,6 +395,41 @@ El skill `.claude\skills\git-commit\SKILL.md` te permite realizar commits.
 hacer commit y push
 ```
 
+## prop-drilling
+Prohíbe el prop drilling y obliga el patrón **data down, events up**.
+
+***¿Qué problema soluciona?*** El prop drilling es un `input()` o un `output()` que atraviesa componentes intermedios que no lo consumen y que solo lo reenvían. Eso acopla componentes que no tienen ninguna relación con el dato, obliga a tocar toda la cadena cada vez que cambia una firma e impide reutilizar o mover el componente intermedio.
+
+***❌ Ejemplo Incorrecto - anti patrón prop drilling:***
+
+```txt
+<app-root />                     # aquí vive user
+  ↓
+<app-layout [user]="user" />     # ❌ no lo consume, solo lo reenvía
+  ↓
+<app-sidebar [user]="user" />    # ❌ no lo consume, solo lo reenvía
+  ↓
+<app-profile [user]="user" />    # ✅ el único que consume user
+```
+
+`app-layout` y `app-sidebar` declaran el `input()` `user` únicamente para pasarlo al siguiente componente. Esos dos componentes de paso son el prop drilling.
+
+La regla correcta es que el padre pase el dato al hijo directo con `input()` y que el hijo le notifique con `output()`. El padre es el único dueño del estado.
+
+El skill `.claude\skills\prop-drilling\SKILL.md` define las alternativas permitidas, en este orden: reestructurar el árbol de componentes, content projection con `ng-content` y `@Service()` singleton con signals.
+
+Se invoca al crear, dividir, extraer o refactorizar componentes.
+
+***Ejemplos de prompt:***
+
+```console
+/prop-drilling crea un componente de tabla que reciba el listado de usuarios
+```
+
+```console
+/prop-drilling refactorizar el componente que esta en la ruta X
+```
+
 # MCP
 
 # [🔗 Enlace - Repositorios de MCP](https://mcpservers.org/es/)
