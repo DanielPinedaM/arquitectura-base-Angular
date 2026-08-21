@@ -395,7 +395,7 @@ El skill `.claude\skills\git-commit\SKILL.md` te permite realizar commits.
 hacer commit y push
 ```
 
-## prop-drilling
+## `prop-drilling`
 Prohíbe el prop drilling y obliga el patrón **data down, events up**.
 
 ***¿Qué problema soluciona?*** El prop drilling es un `input()` o un `output()` que atraviesa componentes intermedios que no lo consumen y que solo lo reenvían. Eso acopla componentes que no tienen ninguna relación con el dato, obliga a tocar toda la cadena cada vez que cambia una firma e impide reutilizar o mover el componente intermedio.
