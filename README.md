@@ -216,16 +216,16 @@ Volver a ejecutar `pn serve:dist` NO cambia el ambiente. Para cambiarlo, generar
 
 Angular CLI no tiene un comando para servir la carpeta `dist`; `ng serve` compila en memoria y no usa los archivos compilados. Por eso este script usa el paquete `serve`, y la bandera `-s` (`--single`) hace el fallback a `index.html` que necesita el Angular Router para que funcionen los deep links (por ejemplo, recargar el navegador en `http://localhost:2000/iniciar-sesion`).
 
-# 🐞 Scripts para Hacer Debugging
+# 🪲 Scripts para Hacer Debugging
 
 > [!TIP]
 > # Deja de escribir `console.log()` para ver valores de variables y estados, mejor usa el debugging
 
 | Comando          | Ambiente      | Variable de Entorno                         | Configuración de `.vscode/launch.json` |
 | ---------------- | ------------- | ------------------------------------------- | -------------------------------------- |
-| `pn start:local` | Local host    | `src/environments/environment.localhost.ts` | `🐞 debugging en Chrome local host`    |
-| `pn start:test`  | Pruebas       | `src/environments/environment.test.ts`      | `🐞 debugging en Chrome pruebas`       |
-| `pn start:prod`  | Producción    | `src/environments/environment.prod.ts`      | `🐞 debugging en Chrome produccion`    |
+| `pn start:local` | Local host    | `src/environments/environment.localhost.ts` | `🪲 debugging en Chrome local host`    |
+| `pn start:test`  | Pruebas       | `src/environments/environment.test.ts`      | `🪲 debugging en Chrome pruebas`       |
+| `pn start:prod`  | Producción    | `src/environments/environment.prod.ts`      | `🪲 debugging en Chrome produccion`    |
 
 Para que los scripts `start:*` sirvan para depurar se tiene que escribir `debugger;` en el código.
 
@@ -276,11 +276,11 @@ debugger;
 4. Seleccionar el entorno que quiere depurar en la lista, según la tabla de scripts:
 
 ```txt
-🐞 debugging en Chrome local host
+🪲 debugging en Chrome local host
 
-🐞 debugging en Chrome pruebas
+🪲 debugging en Chrome pruebas
 
-🐞 debugging en Chrome produccion
+🪲 debugging en Chrome produccion
 ```
 
 5. Para que el editor de codigo ejecute el frontend, presionar:

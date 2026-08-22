@@ -5,7 +5,7 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "🐞 debugging en Chrome local host",
+      "name": "🪲 debugging en Chrome local host",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true,
@@ -15,7 +15,7 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "🐞 debugging en Chrome pruebas",
+      "name": "🪲 debugging en Chrome pruebas",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true,
@@ -25,7 +25,7 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "🐞 debugging en Chrome produccion",
+      "name": "🪲 debugging en Chrome produccion",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}",
       "sourceMaps": true,
