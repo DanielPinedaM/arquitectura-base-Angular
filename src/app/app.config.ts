@@ -1,5 +1,4 @@
 import { routes } from '@/app/app.routes';
-import { BrnLuxonDateAdapterNormalized } from '@spartan-ng/brn-luxon-date-adapter-normalized';
 import { acceptInterceptor } from '@/shared/http-client/interceptors/headers/accept.interceptor';
 import { contentTypeInterceptor } from '@/shared/http-client/interceptors/headers/content-type.interceptor';
 import { timeoutInterceptor } from '@/shared/http-client/interceptors/timeout.interceptor';
@@ -14,6 +13,7 @@ import { provideRouter } from '@angular/router';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { provideBrnCalendarI18n } from '@spartan-ng/brain/calendar';
 import { provideDateAdapter } from '@spartan-ng/brain/date-time';
+import { BrnLuxonDateAdapterNormalized } from '@spartan-ng/brn-luxon-date-adapter-normalized';
 import {
   provideHlmDatePickerConfig,
   provideHlmDatePickerMultiConfig,
@@ -74,7 +74,7 @@ const SPARTAN_NG = [
   provideBrnCalendarI18n({
     formatWeekdayName: (index) => {
       const weekdays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
-      return weekdays[index];
+      return weekdays[index] ?? '';
     },
     months: () => [
       'Ene',
@@ -98,7 +98,7 @@ const SPARTAN_NG = [
     labelNext: () => 'Ir al mes siguiente',
     labelWeekday: (index) => {
       const weekdays = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
-      return weekdays[index];
+      return weekdays[index] ?? '';
     },
   }),
 ];
