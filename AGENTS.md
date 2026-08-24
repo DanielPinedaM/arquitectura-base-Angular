@@ -111,9 +111,13 @@ Esta PROHIBIDO:
 * Prohibido el tipo `any`; usa `unknown` cuando el tipo sea incierto
 
 # Reglas **OBLIGATORIAS** de Angular
-Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento. El MCP server `angular-cli` es la **fuente de la verdad**: antes de escribir código o responder, consultar las tools `search_documentation` y `get_best_practices`.
+Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento:
 
-##  Buenas Practicas de Angular
+1. Antes de escribir código o responder, consultar las tools `search_documentation` y `get_best_practices` del MCP server `angular-cli`
+
+2. La información de `angular-cli` MCP es la **única fuente de verdad** por lo que se tiene que **acatar**
+
+## Buenas Practicas de Angular
 * Usar lazy loading para las feature routes
 
 * NO uses los decoradores `@HostBinding` ni `@HostListener`. Coloca los host bindings dentro del objeto host del decorador `@Component` o `@Directive`.
