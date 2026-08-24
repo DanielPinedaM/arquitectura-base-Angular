@@ -2,20 +2,12 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
-    "alwaysStrict": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "useUnknownInCatchVariables": true,
-    "noUncheckedSideEffectImports": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
+
+    /* ------------- strict type checking ------------- */
+    "strict": true,
+
+    /* ------------- modulos y compilacion ------------- */
+
     "isolatedModules": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -23,6 +15,7 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
+
     "paths": {
       /* -------------  carpeta contenedora de codigo fuente ------------- */
       "@/*": ["./src/*"],
@@ -181,8 +174,14 @@
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+
+    /* ------------- strict type checking de Angular ------------- */
+
+    "strictTemplates": true,
+    "strictStandalone": true,
+
+    "extendedDiagnostics": {
+      "defaultCategory": "error"
+    }
   }
 }
