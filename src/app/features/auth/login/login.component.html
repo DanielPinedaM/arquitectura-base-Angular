@@ -6,17 +6,9 @@
       <img src="https://robohash.org/2" alt="iniciar sesion" />
     </div>
 
-    <h1
-      class="text-center text-blue-lightning font-medium text-2 sm:text-xl mb-6 md:mb-4 leading-6"
-    >
-      Hola Mundo
-    </h1>
+    <h1 class="text-center font-medium mb-6 md:mb-4 leading-6">Hola Mundo</h1>
 
-    <form
-      [formGroup]="formLogin"
-      (ngSubmit)="onSubmitLogin()"
-      autocomplete="off"
-    >
+    <form [formGroup]="formLogin" (ngSubmit)="onSubmitLogin()" autocomplete="off">
       <div class="mb-3">
         <label for="email">Correo</label>
         <input
@@ -27,18 +19,12 @@
           class="block w-full"
           placeholder="nombre@correo.gov.co"
         />
-        @if (formLogin.get("email")?.touched && !dataLoginBurned) {
-          @if (formLogin.get("email")?.hasError("required")) {
-            <p-message
-              severity="error"
-              text="Correo es obligatorio"
-            ></p-message>
-          } @else if (formLogin.get("email")?.hasError("minlength")) {
-            <p-message
-              severity="error"
-              text="Correo es de mínimo 3 caracteres"
-            ></p-message>
-          } @else if (formLogin.get("email")?.hasError("email")) {
+        @if (formLogin.get('email')?.touched && !dataLoginBurned) {
+          @if (formLogin.get('email')?.hasError('required')) {
+            <p-message severity="error" text="Correo es obligatorio"></p-message>
+          } @else if (formLogin.get('email')?.hasError('minlength')) {
+            <p-message severity="error" text="Correo es de mínimo 3 caracteres"></p-message>
+          } @else if (formLogin.get('email')?.hasError('email')) {
             <p-message severity="error" text="Correo invalido"></p-message>
           }
         }
@@ -54,12 +40,9 @@
           toggleMask
           placeholder="********"
         />
-        @if (formLogin.get("password")?.touched && !dataLoginBurned) {
-          @if (formLogin.get("password")?.hasError("required")) {
-            <p-message
-              severity="error"
-              text="Contraseña es obligatoria"
-            ></p-message>
+        @if (formLogin.get('password')?.touched && !dataLoginBurned) {
+          @if (formLogin.get('password')?.hasError('required')) {
+            <p-message severity="error" text="Contraseña es obligatoria"></p-message>
           }
         }
       </div>
@@ -70,12 +53,7 @@
           <label for="rememberMe">Recordarme</label>
         </div>
 
-        <a
-          routerLink="/recuperar-clave"
-          class="btn btn-link"
-        >
-          ¿Olvidaste tu contraseña?
-        </a>
+        <a routerLink="/recuperar-clave" class="btn btn-link"> ¿Olvidaste tu contraseña? </a>
       </div>
 
       <div class="flex justify-center mb-5">
@@ -84,12 +62,7 @@
 
       <div class="flex gap-x-2">
         <p class="text-[12px] xsm:text-sm">¿No tienes una cuenta?</p>
-        <a
-          routerLink="/registrarme"
-          rel="noopener noreferrer"
-          class="btn btn-link"
-          >Registrate!</a
-        >
+        <a routerLink="/registrarme" rel="noopener noreferrer" class="btn btn-link">Registrate!</a>
       </div>
     </form>
   </div>
