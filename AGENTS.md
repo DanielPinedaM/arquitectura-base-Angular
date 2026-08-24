@@ -93,10 +93,7 @@ Los `value` de `path` son rutas de navegación (URLs). Es decir:
 
 Por ejemplo, si existe la carpeta `src/app/features/auth/recuperar-clave/` asociada a `path: 'recuperar-clave'`, tanto el nombre de la carpeta como el `value` del `path` van en español. El resto del código fuente dentro de esa carpeta (nombres de archivos `.ts`, clases, componentes, métodos, variables, etc.) sigue las reglas generales de la sección "Excepciones, Responder en Ingles" y se mantiene en inglés.
 
-# Reglas **OBLIGATORIAS** para Angular
-Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento. El MCP server `angular-cli` es la **fuente de la verdad**: antes de escribir código o responder, consultar las tools `search_documentation` y `get_best_practices`.
-
-## Compatibilidad con zone.js
+# Compatibilidad con zone.js
 Esta PROHIBIDO:
 * Eliminar zone.js del build en `angular.json`
 
@@ -106,26 +103,36 @@ Esta PROHIBIDO:
 
 **Razon**: Existen librerías de terceros que dependen de Zone.js. Sin Zone.js, cualquier callback asíncrono de estas librerías no refrescará la vista automáticamente.
 
-## Usar Angular 22 Moderno, NUNCA Legacy
-* Signal-based reactivity
+# Buenas Practicas de TypeScript
+* Usar strict type checking
 
-* OBLIGATORIO Utilizar Signal Forms junto con los componentes UI de formularios de Spartan NG. PROHIBIDO utilizar `ngModel` (Template-driven Forms) o `FormGroup` (Reactive Forms), incluyendo Typed Reactive Forms.
+* Prefiere la inferencia de tipos cuando el tipo sea obvio
 
-* **Signals API**:
-  * `signal()`
-  * `linkedSignal`
-  * `.set()`
-  * `.update()`
-  * `computed()`
-  * `effect()`
-  * `afterRenderEffect()`
-  * `resource()`
+* Prohibido el tipo `any`; usa `unknown` cuando el tipo sea incierto
 
-* **Estado global con signals:** Todo estado global o compartido entre componentes debe manejarse con la API de signals de Angular, expuesto desde un servicio singleton `@Service()`. PROHIBIDO usar BehaviorSubject, ReplaySubject, Subject u otros stores basados en RxJS para mantener estado. RxJS queda reservado únicamente para flujos asíncronos de eventos (HTTP, websockets, streams), nunca como contenedor de estado.
+# Reglas **OBLIGATORIAS** de Angular
+Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento. El MCP server `angular-cli` es la **fuente de la verdad**: antes de escribir código o responder, consultar las tools `search_documentation` y `get_best_practices`.
 
-* `input()` y `output()` con signals importados desde `import { input, output } from '@angular/core'`
+##  Buenas Practicas de Angular
+* Usar lazy loading para las feature routes
 
-* Standalone Components (no `NgModules`). No es necesario escribir `@Component({standalone: true })` porque ese es el valor por defecto
+* NO uses los decoradores `@HostBinding` ni `@HostListener`. Coloca los host bindings dentro del objeto host del decorador `@Component` o `@Directive`.
+
+* Usa `NgOptimizedImage` para todas las imágenes estáticas.
+  * `NgOptimizedImage` no funciona con imágenes inline en base64.
+
+* NO establezcas explícitamente `changeDetection: ChangeDetectionStrategy.OnPush`. `OnPush` es el valor por defecto.
+
+## Usar Angular 22 Moderno, **NUNCA** Legacy
+* OBLIGATORIO usar signal forms (`@angular/forms/signals`) junto con los componentes UI de formularios de Spartan NG (`src\shared\design\ui\spartan-ng`). PROHIBIDO usar `ngModel` (Template-driven Forms), `FormGroup` (Reactive Forms) y Typed Reactive Forms.
+
+* Usar `input()` y `output()` con signals importados desde `import { input, output } from '@angular/core'`. NO los decoradores `@Input()` ni `@Output()`
+
+* Usar `model()` para propiedades con two-way binding con la sintaxis `[(prop)]`, en lugar de combinar `input()` con `output()`
+
+* Usar standalone components, no `NgModules`
+
+* No es necesario escribir `@Component({standalone: true })` porque ese es el valor por defecto.
 
 * Function Interceptors (no class-based interceptors)
 
@@ -133,4 +140,22 @@ Esta PROHIBIDO:
 
 * Inyección de dependencias con `inject()` (no constructor injection)
 
-- **Servicios singleton:** usar `@Service()` en vez de `@Injectable({providedIn: 'root'})`. `@Service()` es el equivalente moderno y conciso, ya provee la instancia como singleton en root por defecto, sin configuración extra. Reservar `@Injectable` solo para casos avanzados (constructor injection, useClass/useValue/useFactory, scopes distintos a root).
+* **Servicios singleton:** usar `@Service()` en vez de `@Injectable({providedIn: 'root'})`. `@Service()` es el equivalente moderno y conciso, ya provee la instancia como singleton en root por defecto, sin configuración extra. Reservar `@Injectable` solo para casos avanzados (constructor injection, useClass/useValue/useFactory, scopes distintos a root).
+
+### Gestión de Estado
+* Signal-based reactivity
+
+* **Signals API**:
+  * `signal()`
+  * `computed()` para el estado derivado
+  * `linkedSignal` para el estado derivado de múltiples fuentes reactivas que deben mantenerse sincronizadas
+  * **NO** uses `mutate` en signals (fue removido de la API), usa `.update()` o `.set()` en su lugar:
+    * `.update((prev) => next)` cuando el nuevo estado se calcula **a partir del anterior**
+    * `.set(value)` cuando se **sobrescribe por completo** y no depende del estado anterior
+  * `effect()`
+  * `afterRenderEffect()`
+  * `resource()`
+
+* **Estado global con signals:** Todo estado global o compartido entre componentes debe manejarse con la API de signals de Angular, expuesto desde un servicio singleton `@Service()`. PROHIBIDO usar BehaviorSubject, ReplaySubject, Subject u otros stores basados en RxJS para mantener estado. RxJS queda reservado únicamente para flujos asíncronos de eventos (HTTP, websockets, streams), nunca como contenedor de estado.
+
+* Mantén las transformaciones de estado puras y predecibles
