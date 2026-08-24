@@ -46,3 +46,6 @@ Thumbs.db
 # Manejadores de paquetes diferente a pnpm
 package-lock.json
 yarn.lock
+
+# IA
+.playwright-cli
