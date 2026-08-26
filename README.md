@@ -2717,8 +2717,6 @@ Además, `GatewayApiService` maneja:
 Usar Angular 22 moderno. **NUNCA** usar Angular legacy:
 * Signal-based reactivity
 
-* Signal Forms
-
 * **Signals API**:
   * `signal()`
   * `.set()`
@@ -2746,15 +2744,12 @@ Usar Angular 22 moderno. **NUNCA** usar Angular legacy:
 ## Formularios
 
 ### Gestión del estado del formulario
+* **OBLIGATORIO** usar Signal Forms (`@angular/forms/signals`) en TODOS los formularios.
 
-* OBLIGATORIO usar **Signal Forms** en TODOS los formularios.
-
-* PROHIBIDO usar cualquier alternativa a **Signal Forms**. Esto incluye, entre otros:
+* **PROHIBIDO** usar cualquier alternativa a **Signal Forms**. Esto incluye, entre otros:
   * `ngModel` (Template-driven Forms).
   * Reactive Forms (`FormControl`, `FormGroup`, `FormArray`).
   * Cualquier otra librería, patrón o implementación personalizada para gestionar el estado de formularios.
-
-* NO se permiten excepciones a esta regla.
 
 ### Componentes de interfaz
 * OBLIGATORIO usar los componentes de formularios de **Spartan ng** ubicados en:
