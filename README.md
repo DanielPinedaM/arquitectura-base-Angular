@@ -2719,7 +2719,7 @@ Además, `GatewayApiService` maneja:
 ```
 
 # Sufijos en nombres de archivos
-[Angular moderno eliminó la necesidad de usar sufijos](https://angular.dev/cli/new#options) como `.component`, `.service`, `.directive`, `.pipe`, etc, porque el decorador de Angular (`@Component`, `@Injectable`, etc.) ya indica qué hace el archivo.
+[Angular moderno eliminó la necesidad de usar sufijos](https://angular.dev/cli/new#options) como `.component`, `.service`, `.directive`, `.pipe`, etc. porque el decorador de Angular (`@Component`, `@Injectable`, etc.) ya indica qué hace el archivo.
 
 ## Convención usada en este proyecto
 Aunque Angular moderno ya no obliga a usar sufijos, en este proyecto **sí** se usan, porque hacen explícito el tipo de cada archivo en su nombre, lo que evita ambigüedades y mantiene la consistencia al recorrer carpetas y leer imports en un proyecto grande.
