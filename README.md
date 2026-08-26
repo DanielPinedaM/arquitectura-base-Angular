@@ -3,7 +3,7 @@
 ---
 
 > [!TIP]
-> # 🧠 Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
+> # 🧠 Todo este proyecto usa Signals. Mira los siguientes videos 🔗 para aprender:
 >
 > ## 1. [signals](https://youtu.be/jqGjE6iqkvg)
 > ## 2. [Forms with signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
