@@ -2642,11 +2642,16 @@ Toda respuesta que pasa por `HttpClient` termina envuelta en el contrato `ApiRes
 ## Casos Donde Usar Observable
 * Debounce para retrasar peticiones HTTP al buscar en OnChange de input
 
+## Casos Donde Usar `httpResource()`
+* Usar `httpResource` para peticiones HTTP GET que requieran reactividad. No utilizarlo para mutaciones (POST, PUT, PATCH o DELETE); en esos casos, utilizar directamente `HttpClient`.
+
+## Casos Donde Usar `HttpClient`
+
+## Casos donde Usar `resource()`
+Para peticiones HTTP usa `httpResource()` o `HttpClient`, no `resource()` + `fetch`: pasa por el stack de `HttpClient` (interceptors, auth, manejo de errores) y te ahorra escribir params/loader a mano.
+
 ## Casos Donde Usar `toSignal`
 Re-fetch reactivo
-
-## Casos Donde Usar `httpResource`
-* Usar httpResource para peticiones HTTP GET que requieran reactividad. No utilizarlo para mutaciones (POST, PUT, PATCH o DELETE); en esos casos, utilizar directamente HttpClient.
 
 # INCOMPLETO - VERIFICAR Q EN "CONSUMO DE API" HAYA ESCRITO LO Q ESTA EN SIGUIENTE TEXTO
 
