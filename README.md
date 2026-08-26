@@ -369,7 +369,7 @@ Las IAs de pago y desde la terminal tienen mejoras respecto a otras plataformas:
 # 🅰️ Configurar Angular para que Funcione con IA
 Estas configuraciones ya estan listas para funcionar. Solo debes seguir los pasos a continuación para verificar que funcionen correctamente.
 
-# `AGENTS.md`
+# 📜 `AGENTS.md`
 Prompt que se envía siempre a Claude para que respete la arquitectura del proyecto y use Angular moderno (no legacy). `AGENTS.md` esta basado en [este link de la documentacion oficial de Angular](https://angular.dev/ai/develop-with-ai)
 
 Para probar que funcione envia este prompt a Claude:
