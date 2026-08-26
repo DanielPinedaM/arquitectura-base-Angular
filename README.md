@@ -2720,43 +2720,31 @@ Además, `GatewayApiService` maneja:
 
 # Sufijos en nombres de archivos
 
-[Angular moderno eliminó la necesidad de usar sufijos como:](https://www.reddit.com/r/angular/comments/1lk8r9k/bring_back_suffixes_in_angular_20_cli_need_20/?tl=es-419)
+[Angular moderno eliminó la necesidad de usar sufijos como:](http://angular.dev/cli/new#options)
 
-- `.component`
-- `.service`
-- `.directive`
-- `.pipe`
+* `.component`
+* `.service`
+* `.directive`
+* `.pipe`
 
 porque el decorador de Angular (`@Component`, `@Injectable`, etc.) ya indica qué hace el archivo.
 
 ## Convención usada en este proyecto
+Aunque Angular moderno ya no obliga a usar sufijos, en este proyecto **sí** se usan, porque hacen explícito el tipo de cada archivo en su nombre, lo que evita ambigüedades y mantiene la consistencia al recorrer carpetas y leer imports en un proyecto grande.
 
-Aunque Angular moderno ya no obliga a usar sufijos, en este proyecto **sí** se usan, porque:
+## ¿Dónde están definidos los sufijos?
+En `angular.json`, en la key `schematics` del proyecto `front`, que está dentro de la key `projects`:
 
-- Identifican de inmediato el tipo de archivo.
-
-- Facilitan la lectura de los imports.
-
-- Evitan confusión en proyectos grandes.
-
-- Mantienen la consistencia entre carpetas y archivos.
-
-## Dónde están definidos los sufijos
-
-Los sufijos NO se escriben a mano: están definidos en `angular.json`, dentro de la key `schematics` del proyecto `front`, es decir, en la ruta:
-
-```text
-projects → front → schematics
+```jsonc
+{
+  "projects": {
+    "front": {
+      "schematics": {
+        // aquí dentro está definido el sufijo de cada tipo de archivo
+      }
+    }
+  }
+}
 ```
 
-Cada schematic de `@schematics/angular` declarado ahí fija el sufijo con el que el Angular CLI genera ese tipo de archivo. Por eso este README no los enumera: `angular.json` es la única fuente de verdad.
-
-### Respuesta textual del MCP server `angular-cli` sobre esta key
-
-> The following top-level configuration properties are available for each project, under `projects['project-name']`.
->
-> | Property | Details | Value type | Default value |
-> | ---------- | --------- | ------------ | --------------- |
-> | `schematics` | A set of schematics that customize the `ng generate` sub-command option defaults for this project. See the Generation schematics section. | See schematics | `{}` |
-
-> Angular schematics are instructions for modifying a project by adding new files or modifying existing files. These can be configured by mapping the schematic name to a set of default options. The "name" of a schematic is in the format: `<schematic-package>:<schematic-name>`. Schematics for the default Angular CLI `ng generate` sub-commands are collected in the package `@schematics/angular`.
+Cada entrada de `@schematics/angular` dentro de esa key define el sufijo con el que el Angular CLI genera ese tipo de archivo.
