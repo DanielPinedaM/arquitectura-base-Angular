@@ -128,7 +128,9 @@ Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos d
 * NO establezcas explícitamente `changeDetection: ChangeDetectionStrategy.OnPush`. `OnPush` es el valor por defecto.
 
 ## Usar Angular 22 Moderno, **NUNCA** Legacy
-* OBLIGATORIO usar signal forms (`@angular/forms/signals`) junto con los componentes UI de formularios de Spartan NG (`src\shared\design\ui\spartan-ng`). PROHIBIDO usar `ngModel` (Template-driven Forms), `FormGroup` (Reactive Forms) y Typed Reactive Forms.
+* **OBLIGATORIO** usar signal forms (`@angular/forms/signals`) junto con los componentes UI de formularios de Spartan NG (`src\shared\design\ui\spartan-ng`).
+
+* **PROHIBIDO** usar alternativas a signal forms: `ngModel` (Template-driven Forms), `FormGroup` (Reactive Forms), Typed Reactive Forms, callback tipo `onChange`
 
 * Usar `input()` y `output()` con signals importados desde `import { input, output } from '@angular/core'`. NO los decoradores `@Input()` ni `@Output()`
 
