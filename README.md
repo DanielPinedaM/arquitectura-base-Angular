@@ -370,7 +370,19 @@ Las IAs de pago y desde la terminal tienen mejoras respecto a otras plataformas:
 Estas configuraciones ya estan listas para funcionar. Solo debes seguir los pasos a continuación para verificar que funcionen correctamente.
 
 # `AGENTS.md`
-Contiene instrucciones que se inyectan SIEMPRE en cada prompt, para que la IA respete arquitectura del proyecto.
+Prompt que se envía siempre a Claude para que respete la arquitectura del proyecto y use Angular moderno (no legacy). `AGENTS.md` esta basado en [este link de la documentacion oficial de Angular](https://angular.dev/ai/develop-with-ai)
+
+Para probar que funcione envia este prompt a Claude:
+
+```txt
+citarme textualmente de `angular-cli` MCP ¿que es Signal? y ejemplo
+```
+
+La salida debe contener algo similar a esto:
+
+```txt
+Angular Signals is a system that granularly tracks how and where your state is used throughout an application, allowing the framework to optimize rendering updates.
+```
 
 # Skills
 
