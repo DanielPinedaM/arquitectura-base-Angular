@@ -2,6 +2,17 @@
 
 ---
 
+> [!TIP]
+> # 🧠 Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
+>
+> ## 1. [signals](https://youtu.be/jqGjE6iqkvg)
+> ## 2. [Forms with signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
+
+> [!TIP]
+> # 🎥 **Aprende**
+>
+> Puedes hacer clic en el nombre de cada tecnología para ver cursos y aprenderlas
+
 # 🅰️ Stack Frontend del Proyecto
 A continuación se resumen las principales tecnologías del proyecto y el motivo por el que se utilizan. No se incluyen todas las dependencias.
 
@@ -22,11 +33,6 @@ A continuación se resumen las principales tecnologías del proyecto y el motivo
 * [**Zod 4:**](https://youtu.be/bUzGfrjg66M?si=PqQtfsXKDVA0HnuP) Permite utilizar la misma _sintaxis de código_ y reutilizar los mismos _esquemas de validación_ en frontend y backend. Además, se integra con _TypeScript_, ofrece validación de tipos en _tiempo de compilación_ y validación de datos en _tiempo de ejecución (runtime)_. En _frontend_ valida _formularios_ y _datos de entrada_, con excelente integración con _React Hook Form_ (_React_) y _Forms with Signals_ (_Angular_). En _backend_ valida _`body`_, _`query`_ y _`params`_ de las _solicitudes http_, garantizando la integridad de los datos antes de procesarlos.
 
 * [**Material Symbols Icons:**](https://fonts.google.com/icons) Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
-
-> [!TIP]
-> # 🎥 **Aprende**
->
-> Puedes hacer clic en el nombre de cada tecnología para ver cursos y aprenderlas
 
 # ⚙️ Configurar lo Siguiente **UNA SOLA VEZ**
 
