@@ -2720,7 +2720,7 @@ Además, `GatewayApiService` maneja:
 
 # Sufijos en nombres de archivos
 
-[Angular moderno eliminó la necesidad de usar sufijos como:](http://angular.dev/cli/new#options)
+[Angular moderno eliminó la necesidad de usar sufijos como:](https://angular.dev/cli/new#options)
 
 * `.component`
 * `.service`
