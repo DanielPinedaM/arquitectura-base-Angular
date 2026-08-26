@@ -2727,38 +2727,36 @@ Además, `GatewayApiService` maneja:
 - `.directive`
 - `.pipe`
 
-porque con el tipo del archivo ya se entiende que hace el archivo por el decorador de Angular (`@Component`, `@Injectable`, etc).
+porque el decorador de Angular (`@Component`, `@Injectable`, etc.) ya indica qué hace el archivo.
 
-**❌ Angular moderno sin sufijos**
+## Convención usada en este proyecto
 
-| Nombre Archivo   | Tipo de Archivo | decorador / tipo Angular |
-| ---------------- | --------------- | ------------------------ |
-| `login.ts`       | componente      | `@Component`             |
-| `auth.ts`        | servicio        | `@Injectable`            |
-| `auth-guard.ts`  | guard           | `CanActivateFn`          |
-| `list-table.ts`  | componente      | `@Component`             |
-| `format-date.ts` | pipe            | `@Pipe`                  |
-| `highlight.ts`   | directiva       | `@Directive`             |
+Aunque Angular moderno ya no obliga a usar sufijos, en este proyecto **sí** se usan, porque:
 
-**✅ Convención usada en este proyecto**
+- Identifican de inmediato el tipo de archivo.
 
-Aunque Angular moderno ya no obliga a usar sufijos, en este proyecto sí se siguen utilizando para mantener mayor claridad y organización.
+- Facilitan la lectura de los imports.
 
-Esto facilita:
+- Evitan confusión en proyectos grandes.
 
-- Identificar rápidamente el tipo de archivo.
+- Mantienen la consistencia entre carpetas y archivos.
 
-- Mejorar la lectura de imports.
+## Dónde están definidos los sufijos
 
-- Evitar confusión en proyectos grandes.
+Los sufijos NO se escriben a mano: están definidos en `angular.json`, dentro de la key `schematics` del proyecto `front`, es decir, en la ruta:
 
-- Mantener consistencia entre carpetas y archivos.
+```text
+projects → front → schematics
+```
 
-| Nombre Archivo            | Tipo de Archivo | decorador / tipo Angular |
-| ------------------------- | --------------- | ------------------------ |
-| `login.component.ts`      | componente      | `@Component`             |
-| `auth.service.ts`         | servicio        | `@Injectable`            |
-| `auth.guard.ts`           | guard           | `CanActivateFn`          |
-| `list-table.component.ts` | componente      | `@Component`             |
-| `format-date.pipe.ts`     | pipe            | `@Pipe`                  |
-| `highlight.directive.ts`  | directiva       | `@Directive`             |
+Cada schematic de `@schematics/angular` declarado ahí fija el sufijo con el que el Angular CLI genera ese tipo de archivo. Por eso este README no los enumera: `angular.json` es la única fuente de verdad.
+
+### Respuesta textual del MCP server `angular-cli` sobre esta key
+
+> The following top-level configuration properties are available for each project, under `projects['project-name']`.
+>
+> | Property | Details | Value type | Default value |
+> | ---------- | --------- | ------------ | --------------- |
+> | `schematics` | A set of schematics that customize the `ng generate` sub-command option defaults for this project. See the Generation schematics section. | See schematics | `{}` |
+
+> Angular schematics are instructions for modifying a project by adding new files or modifying existing files. These can be configured by mapping the schematic name to a set of default options. The "name" of a schematic is in the format: `<schematic-package>:<schematic-name>`. Schematics for the default Angular CLI `ng generate` sub-commands are collected in the package `@schematics/angular`.
