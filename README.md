@@ -2736,7 +2736,7 @@ Un `input()` que el hijo directo sí consume NO es prop drilling. Lo prohibido e
 3. **`@Service()` singleton con signals:** solo si lo anterior no aplica. El estado vive en el service, y cada componente lo inyecta con `inject()` donde lo necesita. PROHIBIDO usar RxJS como contenedor de estado
 
 ## Checklist Antes de Escribir el Componente
-```
+```txt
 - [ ] 1. Por cada input()/output() nuevo: verificar que el componente que lo declara consume el valor.
 - [ ] 2. Si solo lo reenvía o lo re-emite, es prop drilling: no escribirlo.
 - [ ] 3. Resolverlo reestructurando el árbol; si el intermedio debe existir, usar ng-content; si nada de eso aplica, mover el estado a un @Service() singleton con signals.
