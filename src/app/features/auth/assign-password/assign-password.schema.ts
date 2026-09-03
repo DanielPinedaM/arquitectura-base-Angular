@@ -1,0 +1,82 @@
+import {
+  MIN_LENGTH_PASSWORD,
+  SECURE_PASSWORD_ERROR_MESSAGE,
+} from '@/app/features/auth/data-types/constants/auth.const';
+import CONST_REGEX from '@/shared/data-types/constants/regex.const';
+import * as z from 'zod';
+
+const CONTAIN_MINIMUM = `debe contener mínimo ${MIN_LENGTH_PASSWORD} caracteres`;
+
+const isStrongPassword = (password: string): boolean =>
+  CONST_REGEX.text.strongPassword.test(password);
+
+export const assignPasswordSchema = z
+  .object({
+    password: z.string('Contraseña es obligatoria'),
+
+    confirmPassword: z.string('Confirmar contraseña es obligatoria'),
+  })
+  .superRefine(({ password, confirmPassword }, ctx) => {
+    const trimmedPassword = password.trim();
+    const trimmedConfirmPassword = confirmPassword.trim();
+
+    if (trimmedPassword === '') {
+      ctx.addIssue({ code: 'custom', message: 'Digite contraseña', path: ['password'] });
+      return;
+    }
+
+    if (trimmedPassword.length < MIN_LENGTH_PASSWORD) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `Contraseña ${CONTAIN_MINIMUM}`,
+        path: ['password'],
+      });
+      return;
+    }
+
+    if (!isStrongPassword(trimmedPassword)) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `Contraseña no es segura, ${SECURE_PASSWORD_ERROR_MESSAGE}`,
+        path: ['password'],
+      });
+      return;
+    }
+
+    if (trimmedConfirmPassword === '') {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Digite confirmar contraseña',
+        path: ['confirmPassword'],
+      });
+      return;
+    }
+
+    if (trimmedConfirmPassword.length < MIN_LENGTH_PASSWORD) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `Confirmar contraseña ${CONTAIN_MINIMUM}`,
+        path: ['confirmPassword'],
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Las contraseñas no coinciden',
+        path: ['confirmPassword'],
+      });
+      return;
+    }
+
+    if (!isStrongPassword(trimmedConfirmPassword)) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `Confirmar contraseña no es segura, ${SECURE_PASSWORD_ERROR_MESSAGE}`,
+        path: ['confirmPassword'],
+      });
+    }
+  });
+
+export type IAssignPasswordForm = z.input<typeof assignPasswordSchema>;

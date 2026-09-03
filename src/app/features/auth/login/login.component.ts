@@ -1,5 +1,5 @@
-﻿import { MIN_LENGTH_PASSWORD } from '@/app/features/auth/data-types/constants/auth.const';
 import { IBodyLogin } from '@/app/features/auth/data-types/interfaces/auth.interfaces';
+import { ILoginForm, loginSchema } from '@/app/features/auth/login/login.schema';
 import { environment } from '@/environments/environment';
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
 import CryptoService from '@/shared/services/Crypto.service';
@@ -7,31 +7,26 @@ import DataTypeService from '@/shared/services/DataType.service';
 import SessionStorageService from '@/shared/services/SessionStorage.service';
 import ToastService from '@/shared/services/Toast.service';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, signal } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, DOCUMENT, inject, OnInit, signal } from '@angular/core';
+import { form, FormField, FormRoot, validateStandardSchema } from '@angular/forms/signals';
 import { Router, RouterModule } from '@angular/router';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
-import { PasswordModule } from 'primeng/password';
+import { HlmCheckboxImports } from '@spartan-ng/checkbox';
+import { HlmInputEmailImports } from '@spartan-ng/input-email';
+import { HlmInputPasswordImports } from '@spartan-ng/input-password';
+import { HlmLabelImports } from '@spartan-ng/label';
 import { firstValueFrom } from 'rxjs';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   imports: [
     RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MessageModule,
-    PasswordModule,
-    CheckboxModule,
-    InputTextModule,
+    FormField,
+    FormRoot,
+    HlmCheckboxImports,
+    HlmInputEmailImports,
+    HlmInputPasswordImports,
+    HlmLabelImports,
   ],
 })
 export class LoginComponent implements OnInit {
@@ -42,26 +37,33 @@ export class LoginComponent implements OnInit {
   toast = inject(ToastService);
   router = inject(Router);
 
-  dataLoginBurned: boolean = ['localhost'].includes(environment.NODE_ENV);
+  private readonly document = inject(DOCUMENT);
 
-  minLengthPassword = signal<number>(MIN_LENGTH_PASSWORD);
+  private readonly dataLoginBurned = signal(this.document.location.hostname === 'localhost');
 
-  formLogin = new FormGroup({
-    email: new FormControl(
-      this.dataLoginBurned ? environment.auth.user : '',
-      this.dataLoginBurned ? [] : [Validators.required, Validators.minLength(3), Validators.email],
-    ),
-    password: new FormControl(
-      this.dataLoginBurned ? environment.auth.password : '',
-      this.dataLoginBurned
-        ? []
-        : [Validators.required, Validators.minLength(this.minLengthPassword())],
-    ),
-    rememberMe: new FormControl(false),
+  private readonly formModel = signal<ILoginForm>({
+    email: this.dataLoginBurned() ? environment.auth.user : '',
+    password: this.dataLoginBurned() ? environment.auth.password : '',
   });
+
+  protected readonly formLogin = form(
+    this.formModel,
+    (path) => validateStandardSchema(path, loginSchema(this.dataLoginBurned())),
+    {
+      submission: {
+        action: async () => {
+          await this.onSubmitLogin();
+          return undefined;
+        },
+      },
+    },
+  );
 
   ngOnInit() {
     this.storage.deleteAll();
+
+    // cuando el dominio es local host, quemar las credenciales e iniciar sesion automaticamente
+    if (this.dataLoginBurned()) this.onSubmitLogin();
   }
 
   setSessionStorage(data: Record<string, any>): void {
@@ -119,14 +121,12 @@ export class LoginComponent implements OnInit {
     return { encryptedEmail, encryptedPassword };
   }
 
-  async onSubmitLogin(): Promise<void> {
-    if (this.formLogin.invalid && !this.dataLoginBurned) return;
-
-    const { email, password } = this.formLogin.value;
+  private async onSubmitLogin(): Promise<void> {
+    const { email, password } = this.formModel();
 
     const { encryptedEmail, encryptedPassword } = await this.encryptCredentials(
-      email!.trim(),
-      password!.trim(),
+      email.trim(),
+      password.trim(),
     );
 
     const body: IBodyLogin = {
@@ -139,11 +139,12 @@ export class LoginComponent implements OnInit {
     );
 
     /* EL SIGUIENTE CODIGO DEBERIA ESTAR DESCOMENTADO CUANDO FUNCIONE LA CONEXION A LA API  */
-    //if (success) {
+    /* if (!success) {
+      this.hotToast.errorNotification(message);
+      return;
+    } */
+
     this.setSessionStorage(data);
     this.router.navigate(['/bots']);
-    //} else {
-    //  this.hotToast.errorNotification(message);
-    //}
   }
 }
