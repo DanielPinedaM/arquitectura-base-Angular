@@ -99,9 +99,9 @@ Antes de escribir código o responder, consultar las tools `search_documentation
 
 * Usar standalone components, no `NgModules`
 
-* No es necesario escribir `@Component({standalone: true })` porque ese es el valor por defecto.
+* No escribir `@Component({standalone: true })` porque ese es el valor por defecto.
 
-* Function Interceptors (no class-based interceptors)
+* Usar function interceptors (no class-based interceptors)
 
 * **Control Flow Directives:** `@for`, `@if`, `@switch`, `@case`, `@default` (no `*ngFor`, `*ngIf`, `ngSwitch`)
 
@@ -114,16 +114,16 @@ Antes de escribir código o responder, consultar las tools `search_documentation
 
 * **PROHIBIDO** usar alternativas a signal forms: `ngModel` (Template-driven Forms), `FormGroup` (Reactive Forms), Typed Reactive Forms, callback tipo `onChange`, etc.
 
-* Conectar el schema de Zod con signal forms usando `validateStandardSchema`, llamándolo dentro de la schema function que recibe `form()`.
+* Conectar el schema de Zod con signal forms usando `import { validateStandardSchema } from '@angular/forms/signals'`, llamándolo dentro de la schema function que recibe `form()`.
 
-* **PROHIBIDO** usar cualquier alternativa a Zod para validar formularios: los validators nativos de signal forms (`required()`, `minLength()`, `pattern()`, `min()`, `validate()`, etc.) importados desde `@angular/forms/signals`, los `Validators` nativos de Angular (`import { Validators } from '@angular/forms'`), o validator functions custom sin Zod. La única función de validación permitida con esquemas de zod es `import { validateStandardSchema } from '@angular/forms/signals';`
+* **PROHIBIDO** usar cualquier alternativa a Zod para validar formularios: los validators nativos de signal forms (`required()`, `minLength()`, `pattern()`, `min()`, `validate()`, etc.) importados desde `@angular/forms/signals`, los `Validators` nativos de Angular (`import { Validators } from '@angular/forms'`), o validator functions custom sin Zod. La única función de validación permitida con esquemas de zod es `validateStandardSchema`
 
 * Las validaciones tienen que estar dentro de archivo `.schema.ts` dentro de la carpeta padre del componente al que pertenece cada validación de formulario
 
 ## Gestión de Estado
 * Mantén las transformaciones de estado puras y predecibles
 
-* Signal-based reactivity
+* Usar signal-based reactivity
 
 * **Signals API**:
   * `signal()`
