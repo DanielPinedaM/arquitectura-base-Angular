@@ -1,4 +1,4 @@
-import { HlmCarouselComponent } from '@/shar3ed/design/ui/spartan-ng/data-display/carousel/hlm-carousel.component';
+import { HlmCarouselComponent } from '@/shared/design/ui/spartan-ng/data-display/carousel/hlm-carousel.component';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, untracked } from '@angular/core';
 import { HlmButtonDirective, provideBrnButtonConfig } from '@spartan-ng/button';
 import { hlm } from '@spartan-ng/hlm-helper';
