@@ -80,7 +80,7 @@ Esta PROHIBIDO:
 # Reglas **OBLIGATORIAS** de Angular
 Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento:
 
-1. Antes de escribir código o responder, consultar las tools `search_documentation` y `get_best_practices` del MCP server `angular-cli`. Estas fuentes son la **única fuente de verdad** y su cumplimiento es **obligatorio**.
+Antes de escribir código o responder, consultar las tools `search_documentation` y `get_best_practices` del MCP server `angular-cli`. Estas fuentes son la **única fuente de verdad** y su cumplimiento es **obligatorio**.
 
 ## Buenas Practicas de Angular
 * Usar lazy loading para las feature routes
