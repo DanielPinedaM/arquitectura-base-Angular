@@ -1374,35 +1374,35 @@ Siempre para importar los componentes usar los import alias de Spartan ng que es
 
 Cada carpeta de componente tiene su barrel export en `index.ts`, que reexporta todos sus archivos y define la constante `Hlm*Imports`.
 
-| Nombre Componente                                                | Ruta                                                         |
-| ---------------------------------------------------------------- | ------------------------------------------------------------ |
-| Accordion                                                        | `src\shared\design\ui\spartan-ng\navigation\accordion`       |
-| Alert Dialog                                                     | `src\shared\design\ui\spartan-ng\overlay\alert-dialog`       |
-| Calendar                                                         | `src\shared\design\ui\spartan-ng\form\date\calendar`         |
-| Carousel                                                         | `src\shared\design\ui\spartan-ng\data-display\carousel`      |
-| Checkbox                                                         | `src\shared\design\ui\spartan-ng\form\selection\checkbox`    |
-| Combobox                                                         | `src\shared\design\ui\spartan-ng\form\selection\combobox`    |
-| Data Table (con `@tanstack/angular-table`, paginación y sorting) | `src\shared\design\ui\spartan-ng\data-display\data-table`    |
-| Date Picker                                                      | `src\shared\design\ui\spartan-ng\form\date\date-picker`      |
-| Dialog                                                           | `src\shared\design\ui\spartan-ng\overlay\dialog`             |
-| Drawer                                                           | `src\shared\design\ui\spartan-ng\overlay\drawer`             |
-| Dropdown Menu                                                    | `src\shared\design\ui\spartan-ng\overlay\dropdown-menu`      |
+| Nombre Componente                                                | Ruta                                                             |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Accordion                                                        | `src\shared\design\ui\spartan-ng\navigation\accordion`           |
+| Alert Dialog                                                     | `src\shared\design\ui\spartan-ng\overlay\alert-dialog`           |
+| Calendar                                                         | `src\shared\design\ui\spartan-ng\form\date\calendar`             |
+| Carousel                                                         | `src\shared\design\ui\spartan-ng\data-display\carousel`          |
+| Checkbox                                                         | `src\shared\design\ui\spartan-ng\form\selection\checkbox`        |
+| Combobox                                                         | `src\shared\design\ui\spartan-ng\form\selection\combobox`        |
+| Data Table (con `@tanstack/angular-table`, paginación y sorting) | `src\shared\design\ui\spartan-ng\data-display\data-table`        |
+| Date Picker                                                      | `src\shared\design\ui\spartan-ng\form\date\date-picker`          |
+| Dialog                                                           | `src\shared\design\ui\spartan-ng\overlay\dialog`                 |
+| Drawer                                                           | `src\shared\design\ui\spartan-ng\overlay\drawer`                 |
+| Dropdown Menu                                                    | `src\shared\design\ui\spartan-ng\overlay\dropdown-menu`          |
 | Input Email                                                      | `src\shared\design\ui\spartan-ng\form\text\input\input-email`    |
 | Input Group                                                      | `src\shared\design\ui\spartan-ng\form\text\input\input-group`    |
 | Input Number                                                     | `src\shared\design\ui\spartan-ng\form\text\input\input-number`   |
 | Input Password                                                   | `src\shared\design\ui\spartan-ng\form\text\input\input-password` |
 | Input Text                                                       | `src\shared\design\ui\spartan-ng\form\text\input\input-text`     |
-| Label                                                            | `src\shared\design\ui\spartan-ng\form\text\label`            |
-| Pagination                                                       | `src\shared\design\ui\spartan-ng\navigation\pagination`      |
-| Popover                                                          | `src\shared\design\ui\spartan-ng\overlay\popover`            |
-| Radio Group                                                      | `src\shared\design\ui\spartan-ng\form\selection\radio-group` |
-| Select                                                           | `src\shared\design\ui\spartan-ng\form\selection\select`      |
-| Sheet                                                            | `src\shared\design\ui\spartan-ng\overlay\sheet`              |
-| Toast (Sonner)                                                   | `src\shared\design\ui\spartan-ng\overlay\toast`              |
-| Switch                                                           | `src\shared\design\ui\spartan-ng\form\selection\switch`      |
-| Tabs                                                             | `src\shared\design\ui\spartan-ng\navigation\tabs`            |
-| Textarea                                                         | `src\shared\design\ui\spartan-ng\form\text\textarea`         |
-| Tooltip                                                          | `src\shared\design\ui\spartan-ng\overlay\tooltip`            |
+| Label                                                            | `src\shared\design\ui\spartan-ng\form\text\label`                |
+| Pagination                                                       | `src\shared\design\ui\spartan-ng\navigation\pagination`          |
+| Popover                                                          | `src\shared\design\ui\spartan-ng\overlay\popover`                |
+| Radio Group                                                      | `src\shared\design\ui\spartan-ng\form\selection\radio-group`     |
+| Select                                                           | `src\shared\design\ui\spartan-ng\form\selection\select`          |
+| Sheet                                                            | `src\shared\design\ui\spartan-ng\overlay\sheet`                  |
+| Toast (Sonner)                                                   | `src\shared\design\ui\spartan-ng\overlay\toast`                  |
+| Switch                                                           | `src\shared\design\ui\spartan-ng\form\selection\switch`          |
+| Tabs                                                             | `src\shared\design\ui\spartan-ng\navigation\tabs`                |
+| Textarea                                                         | `src\shared\design\ui\spartan-ng\form\text\textarea`             |
+| Tooltip                                                          | `src\shared\design\ui\spartan-ng\overlay\tooltip`                |
 
 ## 🧱 Configuración de Tailwind 4
 
