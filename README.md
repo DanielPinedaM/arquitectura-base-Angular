@@ -5,9 +5,11 @@
 > [!TIP]
 > # 🧠 Todo este proyecto usa Signals. Mira los siguientes videos 🔗 para aprender:
 >
-> ## 1. [signals](https://youtu.be/jqGjE6iqkvg)
-> ## 2. [Forms with signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
-> ## 3. [`import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
+> ## 1. [Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
+> ## 2. [Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
+> ## 3. [Rxjs VS Signals](https://youtu.be/lSzO2D3OCjY?si=Yr4nlZ2AanGWW0WN)
+> ## 4. [Forms with Signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
+> ## 5. [input y output con Signals `import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
 
 > [!TIP]
 > # 🎥 **Aprende**
@@ -25,13 +27,77 @@ A continuación se resumen las principales tecnologías del proyecto y el motivo
 
 * [**Luxon 3:**](https://moment.github.io/luxon/) Corrige los errores de _`new Date()`_ de JavaScript y y tiene una API muy completa para manejo de fechas.
 
-* [**CSS:**](https://youtu.be/K3xmRF8ab1o?si=w1Ox_P5e2R934Xby) _`@layer`_ resuelve problemas de _especificidad_ y _cascada_ al controlar el orden de prioridad entre las _capas_, reduciendo la necesidad de usar _`!important`_. Además, CSS ha alcanzado un alto nivel de madurez e incorpora _CSS Nesting_, equivalente al _anidamiento de Sass_, y _Custom Properties_, equivalentes a las _variables de Sass_. En este proyecto se usa en _estilso globales_.
+* [**CSS:**](https://youtu.be/K3xmRF8ab1o?si=w1Ox_P5e2R934Xby)
 
-* [**Tailwind CSS 4:** ](https://youtu.be/R5EXap3vNDA?si=9TV4hucexfUBXgGk) Usa _clases utilitarias_ para aplicar estilos, evitando la mayoría de los problemas de _especificidad_, _herencia_ y _cascada_ de CSS. En este proyecto se usa en _estilos de los componentes_.
+1. No es necesario usar Sass, porque CSS ya tiene de forma nativa:
+  * [CSS anidado (CSS nesting)](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Nesting). Ejemplo:
 
-* [**Spartan ng:**](https://spartan.ng/components) Tiene una lista de _componentes UI_ muy completa, con integración nativa para estilos de _Tailwind_, _Signal Forms_ de Angular moderno, y _Luxon_ para fechas. Además, al no ser totalmente _headless_, tiene estilos por defecto que son fáciles de personalizar sin recurrir a _hacks de CSS_ como _`::ng-deep`_ o _`!important`_.
+```CSS
+.parent {
+  color: blue;
 
-* [**Zod 4:**](https://youtu.be/bUzGfrjg66M?si=PqQtfsXKDVA0HnuP) Permite utilizar la misma _sintaxis de código_ y reutilizar los mismos _esquemas de validación_ en frontend y backend. Además, se integra con _TypeScript_, ofrece validación de tipos en _tiempo de compilación_ y validación de datos en _tiempo de ejecución (runtime)_. En _frontend_ valida _formularios_ y _datos de entrada_, con excelente integración con _React Hook Form_ (_React_) y _Forms with Signals_ (_Angular_). En _backend_ valida _`body`_, _`query`_ y _`params`_ de las _solicitudes http_, garantizando la integridad de los datos antes de procesarlos.
+  .child {
+    color: red;
+  }
+}
+```
+
+  * [Variables de CSS (CSS custom properties)](https://css-tricks.com/a-complete-guide-to-custom-properties/). Ejemplo:
+
+```CSS
+:root {
+  --spacing: 16px;
+}
+
+.button {
+  padding: var(--spacing);
+}
+```
+
+Estas son 2 de las principales razones por las que se decide usar Sass y no CSS, pero en versiones mas nuevas de CSS, se empezo a implementar funciones que antes solamente estaban en Sass
+
+2. [`@layer`](https://css-tricks.com/css-cascade-layers/) resuelve problemas de [_especificidad_](https://css-tricks.com/specifics-on-css-specificity/) y [_cascada_](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Handling_conflicts) al controlar el orden de prioridad entre las _capas_, reduciendo la necesidad de usar [`!important`](https://css-tricks.com/when-using-important-is-the-right-choice/)
+
+3. [Tailwind 4 no se puede configurar con Sass](https://tailwindcss.com/docs/compatibility)
+
+* [**Tailwind CSS 4:** ](https://youtu.be/R5EXap3vNDA?si=9TV4hucexfUBXgGk) Usa _clases utilitarias (utility classes)_, esto significa que si tienes conocimiento en CSS, cada clase de CSS tiene su equivalente en Tailwind. Ejemplo: En CSS se escribe
+
+```CSS
+div {
+  display: flex;
+}
+```
+
+y en Tailwind se escribe
+
+```TSX
+<div className="flex">
+  {/* ... */}
+</div>
+```
+
+En este proyecto se usa CSS para estilos globales y Tailwind para los estilos de cada componente
+
+* [**Spartan ng:**](https://spartan.ng/components)
+1. Tiene una lista de _componentes UI_ muy completa, con integración nativa con Tailwind
+
+2. Usar una librería de UI permite abstraer lógica; la librería ya se encarga de crear los componentes y de manejar los estados. Solo tiene que usar los componentes de UI.
+
+3. Para componentes de UI como formularios y ventanas modales no se usa etiquetas nativas de HTML porque implica tener que "programar a mano" una librería de UI y seria reinventar la rueda
+
+4. Spartan ng es lo mas balanceado que hay entre una libreria que es totalmente Headless y una libreria de UI muy opinionada, es decir, por ejemplo modificar los estilos de [Angular Material](https://material.angular.dev/) se puede, pero es complejo y si usas una libreria totalmente Headless como [Headless UI](https://headlessui.com/) vas a enfrentarte con el problema de tener que escribir muchos estilos manualmente. Spartan ng es un punto medio: Tiene estilos por defecto pero permite editarlos facilmente usando CSS y Tailwind
+
+5. Para modificar los estilos de Spartan ng no se requiere usar hacks de CSS como `::ng-deep` o `!important`
+
+* [**Zod 4:**](https://youtu.be/bUzGfrjg66M?si=PqQtfsXKDVA0HnuP)
+
+1. Permite utilizar la _misma sintaxis de código_ y reutilizar los mismos _esquemas de validación_ en frontend y backend de Node.js.
+
+En frontend valida _formularios_ y _datos de entrada_, con integración con _React Hook Form_ (React) y [_Forms with Signals_ (Angular)](https://angular.dev/guide/forms/signals/validation). En backend valida _`body`_, _`query`_ y _`params`_ de las _solicitudes http_, garantizando la integridad de los datos antes de procesarlos.
+
+2. El mismo esquema de Zod se reutiliza para crear tipos de datos de TypeScript
+
+3. Se integra con TypeScript, ofrece validación de tipos en _tiempo de compilación_ y validación de datos en _tiempo de ejecución (runtime)_
 
 * [**Material Symbols Icons:**](https://fonts.google.com/icons) Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
 
@@ -54,7 +120,7 @@ Para que la configuración funcione, debes tener instalado:
 > [!TIP]
 > # ⚡ **Empieza de inmediato**
 >
-> 👍 Si quieres empezar a programar con IA sin perder tiempo configurando herramientas, utiliza **Claude Code**. Este proyecto ya incluye las configuraciones de **MCP**, **Skills**, **Rules** y `AGENTS.md` listas para usar.
+> 👍 Si quieres empezar a programar con IA sin perder tiempo configurando herramientas, utiliza **Claude Code**. Este proyecto ya incluye las configuraciones de **MCP**, **Skills**, **Rules** y [`AGENTS.md`](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks) listas para usar.
 >
 > 👎 Si prefieres otra IA, deberás configurar manualmente sus funcionalidades equivalentes según la forma en que esa herramienta las implemente.
 
@@ -323,10 +389,9 @@ debugger;
 >
 > Hazle preguntas a la IA sobre:
 >
-> 1. `AGENTS.md`
+> 1. [`AGENTS.md`](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks)
 > 2. `.claude/skills/***`
-> 3. `.claude/rules/***`
-> 4. Los **"🔗 Enlaces"**
+> 3. Los **"🔗 Enlaces"**
 >
 > Hasta comprender cómo funciona el proyecto.
 >
@@ -354,11 +419,12 @@ debugger;
 > # 🧠 Mira estos enlaces 🔗 para que aprendas de IA enfocada en desarrollo de Software:
 >
 > ## 1. [Benchmark de IA](https://artificialanalysis.ai/)
-> ## 2. [Categorización de los tipos de IA: Modelos, Harnesses y Orquestadores](https://youtu.be/_HxDbdItVcs?si=VB6SHcZB1enB2Qvl)
-> ## 3. [Mejores Modelos de IA](https://youtu.be/EPz00z1ACPc?si=Dkw3zECIk1d84YxX)
-> ## 4. [Mejores Harnesses de IA](https://youtu.be/Fzn9uWRRDXM?si=NJJmsOYuzTXl_aad)
-> ## 5. [Mejores Orquestadores de IA](https://youtu.be/rANNn5fIVmg?si=RxFAUjPUEYzXJpbq)
-> ## 6. [Prompts para desarrollo full stack con IA](https://github.com/DanielPinedaM/prompt-engineering/tree/main)
+> ## 2. [Prompts para desarrollo full stack con IA](https://github.com/DanielPinedaM/prompt-engineering/tree/main)
+> ## 3. [Categorización de los tipos de IA: Modelos, Harnesses y Orquestadores](https://youtu.be/_HxDbdItVcs?si=VB6SHcZB1enB2Qvl)
+> ## 4. [Mejores Modelos de IA](https://youtu.be/EPz00z1ACPc?si=Dkw3zECIk1d84YxX)
+> ## 5. [Mejores Harnesses de IA](https://youtu.be/Fzn9uWRRDXM?si=NJJmsOYuzTXl_aad)
+> ## 6. [Mejores Orquestadores de IA](https://youtu.be/rANNn5fIVmg?si=RxFAUjPUEYzXJpbq)
+> ## 7. [Desarrollo de software con IA: MCP, CLI, RAG](https://youtu.be/sn1o1Hr1pJs)
 
 ## ✏️ Edición de Código
 Este proyecto esta configurado para usar _IAs de pago y desde la terminal_. **NO** sirve si usas IAs gratis o desde una pagina web, porque estan limitadas.
@@ -379,7 +445,7 @@ Las IAs de pago y desde la terminal tienen mejoras respecto a otras plataformas:
 # 🅰️ Configurar Angular para que Funcione con IA
 Estas configuraciones ya estan listas para funcionar. Solo debes seguir los pasos a continuación para verificar que funcionen correctamente.
 
-# 📜 `AGENTS.md`
+# [📜 `AGENTS.md`](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks)
 Prompt que se envía siempre a Claude para que respete la arquitectura del proyecto y use Angular moderno (no legacy). `AGENTS.md` esta basado en [este link de la documentacion oficial de Angular](https://angular.dev/ai/develop-with-ai)
 
 Para probar que funcione envia este prompt a Claude:
@@ -410,7 +476,38 @@ El skill `.claude\skills\git-commit\SKILL.md` te permite realizar commits.
 ***Ejemplos de prompt:***
 
 ```console
-hacer commit y push
+git commit y git push
+```
+
+## 🌐 `playwright-cli`
+Mira [este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿como usar y que es `playwright-cli`?
+
+Sirve para que la IA (Claude Code) desde la terminal pueda controlar el navegador, llenar formularios y navegar entre paginas (rutas). En vez de hacer clicks y escribir manualmente en la pagina web, puedes pedirle a Claude que lo haga automaticamente
+
+Casos de uso:
+1. Pedir a Claude que haga testing de una funcionalidad en el navegador y que si encuentra errores entonces los corrija
+
+2. Automatizar procesos repetitivos dentro de la pagina web. Ejemplo: Llenar un formulario muchas veces
+
+***Ejemplos de prompt:***
+Es recomendable de que **SIEMPRE** que uses `playwright-cli` lo hagas con este prompt para que puedas ver en el navegador que esta haciendo Claude:
+
+```txt
+# <<< Aqui escribes un TITULO CORTO del nombre de la funcionalidad a testear o proceso a ejecutar en el navegador >>>
+<<<
+Aqui describes de forma mas DETALLADA la funcionalidad a testear o el proceso a automatizar, para mejorar el resultado es bueno decirle a Claude rutas especificas de donde estan los archivos, componentes, funciones, etc. que necesita para ejecutar el proceso
+>>>
+
+# Uso **OBLIGATORIO** de `playwright-cli`
+* **OBLIGATORIO** usar la skill `.claude\skills\playwright-cli\SKILL.md` para entender el funcionamiento de `playwright-cli`
+
+* **SIEMPRE**, después de realizar cualquier modificación/funcionalidad solicitada, usar `playwright-cli` para probar y verificar el resultado, especialmente cualquier cambio de maquetación o funcionalidad.
+
+* Usar `playwright-cli screenshot` para obtener capturas de pantalla y probar cambios de maquetación o funcionalidad.
+
+* **SIEMPRE** usar playwright-cli en modo `--headed` con `pnpm exec playwright-cli open --headed http://localhost:4200`
+
+* Si al probar encuentras bugs, corrígelos y vuelve a probar con `playwright-cli` hasta verificar que la modificación/funcionalidad funciona correctamente.
 ```
 
 # MCP
@@ -661,8 +758,13 @@ src/
 │   │           │   │   ├── select/ → desplegable de selección
 │   │           │   │   └── switch/ → interruptor on/off
 │   │           │   └── text/ → entrada de texto libre y su etiqueta
-│   │           │       ├── input/ → campo de texto de una línea
-│   │           │       ├── input-group/ → campo de texto con addons
+│   │           │       ├── input/ → campos de texto de una línea
+│   │           │       │   ├── input-base/ → renderiza el `<input>` nativo y recibe `type` como input; PROHIBIDO usarlo fuera de `src/shared`
+│   │           │       │   ├── input-text/ → input de texto libre
+│   │           │       │   ├── input-number/ → input numérico
+│   │           │       │   ├── input-password/ → input de contraseña con botón toggle mostrar/ocultar valor
+│   │           │       │   ├── input-email/ → input de correo
+│   │           │       │   └── input-group/ → agrupa un input con prefijos/sufijos (íconos, texto, botones)
 │   │           │       ├── label/ → etiqueta de un control
 │   │           │       └── textarea/ → campo de texto multilínea
 │   │           │
@@ -834,8 +936,6 @@ Contiene únicamente código reutilizable y completamente agnóstico al dominio.
 * `src/shared/guards`: guards reutilizables para control de navegación y acceso, sin lógica de negocio específica de las features
 
 * `src/shared/services`: servicios con lógica reutilizable y utilidades compartidas entre múltiples features.
-
-* `src/shared/services/api`: capa de acceso a APIs externas. Su única responsabilidad es realizar llamadas HTTP y centralizar la comunicación con servicios externos.
 
 * `src/shared/services/stores`: estado global de toda la aplicación.
 
@@ -1108,12 +1208,12 @@ Todo se decide con una sola pregunta: **¿el archivo que estás editando _implem
 #### Paso 1 - Botón interno de la librería de UI → `hlmBtn` de Spartan NG
 **Condición:** el botón se escribe **dentro** de `src/shared/design/ui/spartan-ng`, en el archivo que implementa o define un componente de Spartan NG.
 
-**Usar:** la directiva `hlmBtn` de `src/shared/design/ui/spartan-ng/form/action/button/src` — alias `@spartan-ng/button`.
+**Usar:** la directiva `hlmBtn` de `src/shared/design/ui/spartan-ng/form/action/button` — alias `@spartan-ng/button`.
 
 Así lo hace la propia librería:
 
 ```html
-<!-- src/shared/design/ui/spartan-ng/overlay/dialog/src/lib/hlm-dialog-content.ts -->
+<!-- src/shared/design/ui/spartan-ng/overlay/dialog/hlm-dialog-content.component.ts -->
 <button hlmBtn variant="ghost" size="icon-sm" class="absolute end-2 top-2" hlmDialogClose>
   <span class="sr-only">close</span>
   <span class="material-symbols-outlined">close</span>
@@ -1241,15 +1341,19 @@ En ambos casos el elemento recibe las clases Tailwind de Spartan. Se resuelven c
 ### Dependencias internas de los componentes permitidos
 Si un componente de "Componentes permitidos" depende de otros componentes helm de Spartan NG para funcionar, esas dependencias sí se pueden usar aunque no estén listadas explícitamente. Dependencias reales de este proyecto:
 
-| Componente    | Depende de                                        |
-| ------------- | ------------------------------------------------- |
-| `Combobox`    | `Input Group` + `Button`                          |
-| `Date Picker` | `Calendar` + `Popover` + `Input Group` + `Button` |
-| `Calendar`    | `Select` + `Button`                               |
-| `Input Group` | `Input` + `Textarea` + `Button`                   |
-| `Carousel`    | `Button`                                          |
+| Componente       | Depende de                                        |
+| ---------------- | ------------------------------------------------- |
+| `Combobox`       | `Input Group` + `Button`                          |
+| `Date Picker`    | `Calendar` + `Popover` + `Input Group` + `Button` |
+| `Calendar`       | `Select` + `Button`                               |
+| `Input Group`    | `Input Base` + `Textarea` + `Button`              |
+| `Input Text`     | `Input Base`                                      |
+| `Input Number`   | `Input Base`                                      |
+| `Input Email`    | `Input Base`                                      |
+| `Input Password` | `Input Base` + `Input Group` + `Button`           |
+| `Carousel`       | `Button`                                          |
 
-`Button` (`@spartan-ng/button`) es el único de esos requisitos que **no** aparece en la tabla "Componentes permitidos", y es justamente el caso que cubre esta regla: la librería lo usa internamente para construir los demás componentes.
+`Button` (`@spartan-ng/button`) e `Input Base` (`@spartan-ng/input-base`) son los dos requisitos que **no** aparecen en la tabla "Componentes permitidos", y son justamente el caso que cubre esta regla: solo se usan internamente para construir los demás componentes.
 
 Los botones se resuelven aparte, con **"Orden de Decisión para Botones"**: dentro de `src/shared/design/ui/spartan-ng` se usa la directiva `hlmBtn`, y al consumir esos componentes desde la aplicación se usa la directiva `appBtn` de `src/shared/design/ui/buttons`.
 
@@ -1261,10 +1365,12 @@ Solo se permite el patrón "Data Table" de Spartan, construido sobre las directi
 
 * Prohibido usar cualquier librería de UI externa (Angular Material, PrimeNG, NG-ZORRO, etc.).
 
+* Prohibido usar `input-base` (`src\shared\design\ui\spartan-ng\form\text\input\input-base`) fuera de `src/shared`. Es una pieza interna que solo existe para construir `input-text`, `input-number`, `input-password` e `input-email`. Fuera de `src/shared` se usa uno de esos cuatro, nunca el base.
+
 ### Componentes permitidos
 Los componentes están agrupados en cuatro categorías dentro de `src\shared\design\ui\spartan-ng`: `overlay`, `form`, `navigation` y `data-display`.
 
-Siempre para importar los componentes usar los import alias de shad cn que estan en `tsconfig.json`
+Siempre para importar los componentes usar los import alias de Spartan ng que estan en `tsconfig.json`
 
 Cada carpeta de componente tiene su barrel export en `index.ts`, que reexporta todos sus archivos y define la constante `Hlm*Imports`.
 
@@ -1281,8 +1387,11 @@ Cada carpeta de componente tiene su barrel export en `index.ts`, que reexporta t
 | Dialog                                                           | `src\shared\design\ui\spartan-ng\overlay\dialog`             |
 | Drawer                                                           | `src\shared\design\ui\spartan-ng\overlay\drawer`             |
 | Dropdown Menu                                                    | `src\shared\design\ui\spartan-ng\overlay\dropdown-menu`      |
-| Input                                                            | `src\shared\design\ui\spartan-ng\form\text\input`            |
-| Input Group                                                      | `src\shared\design\ui\spartan-ng\form\text\input-group`      |
+| Input Email                                                      | `src\shared\design\ui\spartan-ng\form\text\input\input-email`    |
+| Input Group                                                      | `src\shared\design\ui\spartan-ng\form\text\input\input-group`    |
+| Input Number                                                     | `src\shared\design\ui\spartan-ng\form\text\input\input-number`   |
+| Input Password                                                   | `src\shared\design\ui\spartan-ng\form\text\input\input-password` |
+| Input Text                                                       | `src\shared\design\ui\spartan-ng\form\text\input\input-text`     |
 | Label                                                            | `src\shared\design\ui\spartan-ng\form\text\label`            |
 | Pagination                                                       | `src\shared\design\ui\spartan-ng\navigation\pagination`      |
 | Popover                                                          | `src\shared\design\ui\spartan-ng\overlay\popover`            |
@@ -1301,7 +1410,7 @@ Cada carpeta de componente tiene su barrel export en `index.ts`, que reexporta t
 
 En este proyecto se está utilizando **Tailwind CSS V4**, por lo tanto el archivo `tailwind.config.js` ya no se utiliza y se considera **obsoleto** en esta arquitectura.
 
-La configuración de Tailwind ahora se realiza en el archivo `src/styles/global/tailwind`
+La configuración de Tailwind ahora se realiza en el archivo `src/styles/global/css/theme/tailwind`
 
 Esto permite centralizar la definición de tokens de diseño (colores, media queries, etc.) sin necesidad de configuración en archivo JavaScript.
 
@@ -1324,7 +1433,7 @@ module.exports = {
 **✅ Correcto - Configurar Tailwind 4 con `.css`**
 
 ```CSS
-/* src/styles/global/tailwind/theme.css */
+/* src/styles/global/css/theme/tailwind/theme.css */
 
 @theme {
   --color-primary-color: oklch(62.8% 0.258 29.23); // #FF0000
@@ -1335,7 +1444,7 @@ module.exports = {
 
 [Documentación de variables de Tailwind 4](https://tailwindcss.com/blog/tailwindcss-v4#css-theme-variables)
 
-Las variables con nombres de los colores de **Sass** en `src/styles/global/variable.scss` y **Tailwind** en `src/styles/global/tailwind/theme.css` deben mantener exactamente el mismo nombre y el mismo valor.
+Las variables con nombres de los colores de **Sass** en `src/styles/global/variable.scss` y **Tailwind** en `src/styles/global/css/theme/tailwind/theme.css` deben mantener exactamente el mismo nombre y el mismo valor.
 
 Esto garantiza que los colores sean los mismos entre los estilos globales definidos en Sass y los estilos de cada componente definidos con Tailwind.
 
@@ -1353,7 +1462,7 @@ $primary-color: oklch(62.8% 0.258 29.23) ;
 
 ```CSS
 /*
-src/styles/global/tailwind/theme.css
+src/styles/global/css/theme/tailwind/theme.css
 
 colores de Tailwind */
 @theme {
@@ -1376,7 +1485,7 @@ $primary-color: oklch(62.8% 0.258 29.23); // color rojo
 
 ```css
 /*
-src/styles/global/tailwind/theme.css
+src/styles/global/css/theme/tailwind/theme.css
 
 colores de Tailwind */
 @theme {
@@ -1626,7 +1735,7 @@ Esto incluye cualquier uso dentro de archivos:
 ***❌ EJEMPLO INCORRECTO USANDO  `@apply`***
 
 ```scss
-/* src/styles/global/global.scss 
+/* src/styles/global/scss/main.scss 
 
 ❌ MAL: usando Tailwind dentro de Sass/CSS con @apply */
 
@@ -1917,7 +2026,7 @@ Cada clase modifica únicamente una característica específica del botón. Esto
 | `_states.scss`       | Define los estados interactivos y de accesibilidad del botón. Centraliza comportamientos relacionados con `focus-visible`, `hover`, `active` y `disabled`.                   |                                                                  |
 | `_effects.scss`      | Contiene utilidades visuales reutilizables independientes de la lógica del botón. Permite agregar efectos opcionales como sombras, blur o elevación.                         | `.btn-shadow {} `                                                |
 | `_modifiers.scss`    | Clases composables que alteran o extienden características específicas del botón sin modificar su variante principal.                                                        | `.btn-full-width {} .btn-rounded-full {} .btn-icon-only {}`      |
-| `_mixins.scss`       | Codigo de Sass reutilizable que se repite en diferentes archivos de src\styles\global\buttons                                                                                | `@mixin btn-base-size {}`                                        |
+| `_mixins.scss`       | Codigo de Sass reutilizable que se repite en diferentes archivos de src\styles\global\scss\buttons                                                                                | `@mixin btn-base-size {}`                                        |
 | `_tokens.scss`       | Variables globales de Sass utilizadas por todo el sistema de botones. Centraliza colores, tamaños tipográficos y escalas de espaciado para mantener consistencia visual.     | `$primary: oklch(...);`                                          |
 
 ### 📖 Manual de Uso para Dar Estilos a Botones
@@ -1925,7 +2034,7 @@ Cada clase modifica únicamente una característica específica del botón. Esto
 Esta guía explica cómo utilizar correctamente los estilos globales de botones definidos en:
 
 ```txt
-src/styles/global/buttons
+src/styles/global/scss/buttons
 ```
 
 ### ✨ UI/UX
@@ -2517,7 +2626,7 @@ Cambiar la ubicación del icono y texto en el HTML, sin usar Sass ni Tailwind.
 `ApiResponse<T>` es la interface que define la estructura unica con la que el frontend recibe **TODAS** las respuestas de las APIs (internas y externas). Sin importar que responda el backend, `src\shared\http-client` envuelve toda respuesta HTTP en este contrato; el generico `<T>` tipa el contenido de `data`:
 
 ```ts
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   status: number;
   message: string;
