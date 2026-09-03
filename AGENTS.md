@@ -114,7 +114,7 @@ Antes de escribir código o responder, consultar las tools `search_documentation
 
 * **PROHIBIDO** usar alternativas a signal forms: `ngModel` (Template-driven Forms), `FormGroup` (Reactive Forms), Typed Reactive Forms, callback tipo `onChange`, etc.
 
-* Conectar el schema de Zod con signal forms usando `import { validateStandardSchema } from '@angular/forms/signals'`, llamándolo dentro de la schema function que recibe `form()`.
+* Conectar el Zod schema con signal forms usando `import { validateStandardSchema } from '@angular/forms/signals'`, invocándolo dentro de la schema function que es un callback con el segundo argumento de `form()`
 
 * **PROHIBIDO** usar cualquier alternativa a Zod para validar formularios: los validators nativos de signal forms (`required()`, `minLength()`, `pattern()`, `min()`, `validate()`, etc.) importados desde `@angular/forms/signals`, los `Validators` nativos de Angular (`import { Validators } from '@angular/forms'`), o validator functions custom sin Zod. La única función de validación permitida con esquemas de zod es `validateStandardSchema`
 
