@@ -9,7 +9,6 @@
 # Node
 /node_modules
 npm-debug.log
-yarn-error.log
 
 # IDEs and editors
 .idea/
@@ -51,6 +50,7 @@ yarn.lock
 .yarn/*
 yarn-debug.log*
 yarn-error.log*
+yarn-error.log
 
 # IA
 .playwright-cli
