@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { HlmInputDirective } from '@spartan-ng/input';
+import { HlmInputDirective } from '@spartan-ng/input-base';
 import { classes } from '@spartan-ng/hlm-helper';
 
 @Directive({

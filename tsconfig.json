@@ -94,12 +94,34 @@
       /* form/selection/switch */
       "@spartan-ng/switch": ["./src/shared/design/ui/spartan-ng/form/selection/switch/index.ts"],
 
-      /* form/text/input */
-      "@spartan-ng/input": ["./src/shared/design/ui/spartan-ng/form/text/input/index.ts"],
+      /* form/text/input/input-base */
+      "@spartan-ng/input-base": [
+        "./src/shared/design/ui/spartan-ng/form/text/input/input-base/index.ts"
+      ],
 
-      /* form/text/input-group */
+      /* form/text/input/input-text */
+      "@spartan-ng/input-text": [
+        "./src/shared/design/ui/spartan-ng/form/text/input/input-text/index.ts"
+      ],
+
+      /* form/text/input/input-number */
+      "@spartan-ng/input-number": [
+        "./src/shared/design/ui/spartan-ng/form/text/input/input-number/index.ts"
+      ],
+
+      /* form/text/input/input-password */
+      "@spartan-ng/input-password": [
+        "./src/shared/design/ui/spartan-ng/form/text/input/input-password/index.ts"
+      ],
+
+      /* form/text/input/input-email */
+      "@spartan-ng/input-email": [
+        "./src/shared/design/ui/spartan-ng/form/text/input/input-email/index.ts"
+      ],
+
+      /* form/text/input/input-group */
       "@spartan-ng/input-group": [
-        "./src/shared/design/ui/spartan-ng/form/text/input-group/index.ts"
+        "./src/shared/design/ui/spartan-ng/form/text/input/input-group/index.ts"
       ],
 
       /* form/text/label */
