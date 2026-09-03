@@ -118,7 +118,7 @@ Antes de escribir código o responder, consultar las tools `search_documentation
 
 * **PROHIBIDO** usar cualquier alternativa a Zod para validar formularios: los validators nativos de signal forms (`required()`, `minLength()`, `pattern()`, `min()`, `validate()`, etc.) importados desde `@angular/forms/signals`, los `Validators` nativos de Angular (`import { Validators } from '@angular/forms'`), o validator functions custom sin Zod. La única función de validación permitida con esquemas de zod es `validateStandardSchema`
 
-* Las validaciones tienen que estar dentro de archivo `.schema.ts` dentro de la carpeta padre del componente al que pertenece cada validación de formulario
+* Los Zod schema tienen que estar dentro de un archivo `.schema.ts` dentro de la carpeta padre del componente al que pertenece cada validación de formulario
 
 ## Gestión de Estado
 * Mantén las transformaciones de estado puras y predecibles
