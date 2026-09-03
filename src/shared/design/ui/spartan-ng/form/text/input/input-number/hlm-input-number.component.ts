@@ -73,7 +73,7 @@ export class HlmInputNumberComponent implements FormValueControl<number | null> 
 	/** El `<input>` nativo trabaja con string, el modelo del formulario con number */
 	protected readonly _rawValue = transformedValue(this.value, {
 		parse: (rawValue: string) => {
-			if (rawValue === '') return { value: null };
+			if (String(rawValue) === '') return { value: null };
 
 			const parsedValue = Number(rawValue);
 
