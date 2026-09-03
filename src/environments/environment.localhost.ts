@@ -1,6 +1,6 @@
 ﻿import { IEnvironment } from '@/environments/data-types/interfaces/environment.interface';
 
-/** variables de DESARROLLO (LOCAL HOST) */
+/** variables de entorno de DESARROLLO (LOCAL HOST) */
 export const environment: IEnvironment = {
   NODE_ENV: 'localhost',
   api: 'http://localhost:3000/api/v1/',
