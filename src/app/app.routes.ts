@@ -1,5 +1,5 @@
-﻿import { Routes } from '@angular/router';
-import { AuthGuard } from '@/shared/guards/auth.guard';
+﻿import { AuthGuard } from '@/shared/guards/auth.guard';
+import { Routes } from '@angular/router';
 
 // #region - error 404 ruta inexistente
 import { NotFound404Component } from '@/shared/design/ui/not-found-404/not-found-404.component';
@@ -10,11 +10,11 @@ import { MainWrapperComponent } from '@/shared/design/layouts/main-wrapper/main-
 // #endregion
 
 // #region autenticacion
+import { AssignPasswordComponent } from '@/app/features/auth/assign-password/assign-password.component';
 import { MainAuthComponent } from '@/app/features/auth/design/layouts/main-auth/main-auth.component';
 import { LoginComponent } from '@/app/features/auth/login/login.component';
 import { RecoverPasswordComponent } from '@/app/features/auth/recover-password/recover-password.component';
 import { RegisterComponent } from '@/app/features/auth/register/register.component';
-import { AssignPasswordComponent } from '@/app/features/auth/assign-password/assign-password.component';
 // #endregion
 
 import { BotsComponent } from '@/app/features/bots/bots.component';
