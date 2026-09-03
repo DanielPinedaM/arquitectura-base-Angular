@@ -41,11 +41,12 @@ export class MainMenuComponent implements OnInit {
       this.http.post<ApiResponse<IMenuOptions[]>>(`${environment.api}`, {}),
     );
 
-    if (success) {
-      this.menuOptions.set(data);
-    } else {
+    if (!success) {
       this.menuOptions.set([]);
       this.toast.error('Al mostrar menu');
+      return;
     }
+
+    this.menuOptions.set(data);
   }
 }
