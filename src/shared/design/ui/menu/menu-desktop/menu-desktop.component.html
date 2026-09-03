@@ -13,8 +13,8 @@
     <button
       (click)="onClickMinimizeOrMaximizeMenu()"
       class="flex items-center gap-x-2 cursor-pointer"
-      [pTooltip]="!showText ? 'Maximizar Menú' : ''"
-      matTooltipPosition="right"
+      [hlmTooltip]="!showText ? 'Maximizar Menú' : ''"
+      position="right"
     >
       @if (showText()) {
       <img
@@ -38,11 +38,11 @@
       >
         <a
           [routerLink]="item.path"
-          [pTooltip]="!showText ? item.tooltip : ''"
-          tooltipPosition="right"
+          [hlmTooltip]="!showText ? item.tooltip : ''"
+          position="right"
           class="hover:bg-orange-800 p-1 rounded cursor-pointer flex items-center gap-x-2"
         >
-          <i class="pi pi-users"></i>
+          <span class="material-symbols-outlined">group</span>
           @if (showText()) {
           <span>{{ item.text }}</span>
           }
@@ -54,11 +54,11 @@
     <li>
       <button
         (click)="onClickLogOut()"
-        [pTooltip]="!showText ? 'Cerrar sesión' : ''"
-        tooltipPosition="right"
+        [hlmTooltip]="!showText ? 'Cerrar sesión' : ''"
+        position="right"
         class="w-full hover:bg-orange-800 p-1 rounded cursor-pointer flex items-center gap-x-2"
       >
-        <i class="pi pi-sign-out"></i>
+        <span class="material-symbols-outlined">logout</span>
         @if (showText()) {
         <span>Cerrar sesión</span>
         }

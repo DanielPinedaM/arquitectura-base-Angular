@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, map, startWith } from 'rxjs';
 
-import { TooltipModule } from 'primeng/tooltip';
+import { HlmTooltipImports } from '@spartan-ng/tooltip';
 
 import ToastService from '@/shared/services/Toast.service';
 
@@ -18,7 +18,7 @@ interface IMenuOptions {
 @Component({
   selector: 'app-menu-desktop',
   templateUrl: './menu-desktop.component.html',
-  imports: [CommonModule, RouterModule, TooltipModule],
+  imports: [CommonModule, RouterModule, HlmTooltipImports],
 })
 export class MenuDesktopComponent {
   readonly router = inject(Router);
