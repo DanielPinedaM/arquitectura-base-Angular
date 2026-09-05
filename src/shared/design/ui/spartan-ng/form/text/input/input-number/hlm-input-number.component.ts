@@ -72,14 +72,20 @@ export class HlmInputNumberComponent implements FormValueControl<number | null> 
 
 	/** El `<input>` nativo trabaja con string, el modelo del formulario con number */
 	protected readonly _rawValue = transformedValue(this.value, {
-		parse: (rawValue: string) => {
-			if (String(rawValue) === '') return { value: null };
+		parse: (rawValue: string | number) => {
+			const stringValue = String(rawValue).trim();
+
+			if (stringValue === '') return { value: null };
+
+			if (stringValue === '0') return { value: 0 };
+
+			if (rawValue === 0) return { value: 0 };
+
+			if (!rawValue) return { value: null };
 
 			const parsedValue = Number(rawValue);
 
-			if (Number.isNaN(parsedValue)) {
-				return { error: { kind: 'parse', message: `${rawValue} no es un numero` } };
-			}
+			if (Number.isNaN(parsedValue)) return { value: null };
 
 			return { value: parsedValue };
 		},
