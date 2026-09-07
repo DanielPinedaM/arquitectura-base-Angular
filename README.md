@@ -489,6 +489,7 @@ pn dlx skills add https://github.com/angular/angular --skill angular-developer
 ```
 
 3. La terminal hace las siguientes preguntas:
+
 * ¿Para que IA instalar la skill?
 Seleccionar Claude Code
 
