@@ -1,6 +1,8 @@
 import ToastService from '@/shared/services/Toast.service';
 import { inject, Service } from '@angular/core';
 
+const TOAST_MESSAGE = 'Ha ocurrido un error, por favor comuniquese con el administrador del sistema';
+
 /**
  * maneja el status 404 (not found): el endpoint solicitado no existe en el servidor.
  * Loguea en consola y notifica un error genérico. */
@@ -14,12 +16,10 @@ export class NotFoundErrorHandlerService {
     console.error('❌ [not-found-error.handler.service.ts] error: ', {
       status: 'Error 404: Not Found',
       detail: `endpoint no encontrado, la URL solicitada "${url}" NO existe en el servidor`,
-      action: "Mostrar toast 'Ha ocurrido un error...'",
-      url: url,
+      action: `Mostrar toast '${TOAST_MESSAGE}'`,
+      url,
     });
 
-    this.toast.error(
-      'Ha ocurrido un error, por favor comuniquese con el administrador del sistema',
-    );
+    this.toast.error(TOAST_MESSAGE);
   }
 }

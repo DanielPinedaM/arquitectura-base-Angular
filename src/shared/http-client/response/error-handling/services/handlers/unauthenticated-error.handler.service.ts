@@ -3,6 +3,8 @@ import ToastService from '@/shared/services/Toast.service';
 import { inject, Service } from '@angular/core';
 import { Router } from '@angular/router';
 
+const TOAST_MESSAGE = 'Inicie sesión para continuar';
+
 /**
  * maneja el status 401 (unauthenticated): el usuario no está autenticado o la sesión expiró.
  * Redirige a /iniciar-sesion y notifica con Toast si no se está ya en el login */
@@ -18,14 +20,14 @@ export class UnauthenticatedErrorHandlerService {
     console.error('❌ [unauthenticated-error.handler.service.ts] error: ', {
       status: 'Error 401: unauthenticated',
       detail: 'El usuario no está autenticado o la sesión ha expirado',
-      action: "Mostrar toast 'inicie sesión para continuar' y re-dirigir al usuario a la página de inicio de sesión ",
-      url: url,
+      action: `Mostrar toast '${TOAST_MESSAGE}' y re-dirigir al usuario a la página de inicio de sesión`,
+      url,
     });
 
     this.router.navigate(['/iniciar-sesion']);
 
     if (!this.helper.pathnameIsLogin()) {
-      this.toast.info('Inicie sesión para continuar');
+      this.toast.info(TOAST_MESSAGE);
     }
   }
 }
