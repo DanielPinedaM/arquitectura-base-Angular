@@ -122,7 +122,7 @@ Antes de escribir código o responder, es **obligatorio** consultar estas fuente
 ## Formularios
 * Usar signal forms importado desde `@angular/forms/signals` junto con los componentes UI de formularios de Spartan NG ubicados en `src\shared\design\ui\spartan-ng\form`
 
-* **PROHIBIDO** usar alternativas a signal forms: `ngModel` (Template-driven Forms), `FormGroup` (Reactive Forms), Typed Reactive Forms, callback tipo `onChange`, etc.
+* **PROHIBIDO** usar alternativas a signal forms: `ngModel` (Template-driven Forms), `FormGroup` (Reactive Forms), callback tipo `onChange`, etc.
 
 * Conectar el Zod schema con signal forms usando `import { validateStandardSchema } from '@angular/forms/signals'`, invocándolo dentro de la schema function, que es el callback que recibe `form()` como segundo argumento
 
