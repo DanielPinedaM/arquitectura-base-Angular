@@ -39,7 +39,7 @@ export class GlobalErrorHandlerService {
       403: (url: string) => this.forbidden.handle(url),
       404: (url: string) => this.notFound.handle(url),
       429: (url: string) => this.tooManyRequests.handle(url),
-      500: (url: string) => this.serverError.handle(url),
+      500: (url: string) => this.serverError.handle(status, url),
     };
 
     /** normaliza cualquier status >= 500 al bucket 500 (errores de servidor) */

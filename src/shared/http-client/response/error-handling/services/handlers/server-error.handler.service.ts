@@ -13,11 +13,13 @@ export class ServerErrorHandlerService {
   private readonly log = inject(HttpLogService);
 
   /**
-   * ejecuta las acciones globales para los status >= 500 */
-  handle(url: string): void {
+   * ejecuta las acciones globales para los status >= 500.
+   * A diferencia de los demas handlers, recibe el status porque cubre un RANGO de status
+   * (500, 502, 503, etc.) y NO uno solo, por lo que necesita el status real para loguearlo */
+  handle(status: number, url: string): void {
     this.log.errorHandlerLogs({
       fileName: 'server-error.handler.service.ts',
-      status: 500,
+      status,
       detail: `error en el servidor en la URL ${url}`,
       action: `Mostrar toast '${TOAST_MESSAGE}'`,
       url,

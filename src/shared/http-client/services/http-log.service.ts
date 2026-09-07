@@ -118,9 +118,10 @@ export class HttpLogService {
     if (environment.NODE_ENV === 'production') return;
 
     console.error(`❌ [${fileName}] error: `, {
-      status,
-      /** nombre del status HTTP, por ejemplo "Forbidden" para el status 403 */
-      statusMessage: FALLBACK_MESSAGE(status),
+      status: {
+        number: status,
+        messsage: FALLBACK_MESSAGE(status),
+      },
       detail,
       action,
       url,
