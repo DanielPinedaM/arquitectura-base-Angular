@@ -446,7 +446,14 @@ Las IAs de pago y desde la terminal tienen mejoras respecto a otras plataformas:
 Estas configuraciones ya estan listas para funcionar. Solo debes seguir los pasos a continuación para verificar que funcionen correctamente.
 
 # [📜 `AGENTS.md`](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks)
-Prompt que se envía siempre a Claude para que respete la arquitectura del proyecto y use Angular moderno (no legacy). `AGENTS.md` esta basado en [este link de la documentacion oficial de Angular](https://angular.dev/ai/develop-with-ai)
+Este prompt siempre se envia a Claude. Sirve para que Claude:
+* Respete la arquitectura de software del proyecto.
+
+* Consulte la [documentacion oficial de Angular](https://angular.dev/llms.txt).
+
+* Use Angular moderno y no legacy.
+
+`AGENTS.md` esta basado en [este link de la documentacion oficial de Angular](https://angular.dev/ai/develop-with-ai)
 
 Para probar que funcione envia este prompt a Claude:
 
