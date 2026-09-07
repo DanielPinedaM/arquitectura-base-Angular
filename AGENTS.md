@@ -90,7 +90,7 @@ Antes de escribir código o responder, es **obligatorio** consultar estas fuente
 
 4. Skill `angular-developer` (`.claude/skills/angular-developer/SKILL.md` y `.claude/skills/angular-developer/references/`): El cómo, con ejemplos de código.
 
-5. Tus datos de entrenamiento: Último recurso, solo cuando ninguna fuente anterior cubra el caso.
+5. Tus datos de entrenamiento: Permitidos, no están prohibidos, pero ceden ante cualquier fuente anterior.
 
 ## Buenas Practicas de Angular
 * Usar lazy loading para las feature routes
