@@ -1,4 +1,5 @@
 import { ForbiddenErrorHandlerService } from '@/shared/http-client/response/error-handling/services/handlers/forbidden-error.handler.service';
+import { NetworkErrorHandlerService } from '@/shared/http-client/response/error-handling/services/handlers/network-error.handler.service';
 import { NotFoundErrorHandlerService } from '@/shared/http-client/response/error-handling/services/handlers/not-found-error.handler.service';
 import { ServerErrorHandlerService } from '@/shared/http-client/response/error-handling/services/handlers/server-error.handler.service';
 import { TooManyRequestsErrorHandlerService } from '@/shared/http-client/response/error-handling/services/handlers/too-many-requests-error.handler.service';
@@ -6,11 +7,12 @@ import { UnauthenticatedErrorHandlerService } from '@/shared/http-client/respons
 import { inject, Service } from '@angular/core';
 
 /**
- * orquestador de errores HTTP globales (401/403/404/429/5xx),
+ * orquestador de errores HTTP globales (0/401/403/404/429/5xx),
  * NO contiene lógica de negocio de features.
  * Según el status recibido, delega en el handler correspondiente. */
 @Service()
 export class GlobalErrorHandlerService {
+  private readonly network = inject(NetworkErrorHandlerService);
   private readonly unauthenticated = inject(UnauthenticatedErrorHandlerService);
   private readonly forbidden = inject(ForbiddenErrorHandlerService);
   private readonly notFound = inject(NotFoundErrorHandlerService);
@@ -19,9 +21,13 @@ export class GlobalErrorHandlerService {
 
   /**
    * delega el manejo del error al handler que corresponda al status.
-   * Si no hay status (0/undefined/null) no realiza ninguna acción. */
+   *
+   * El status 0 SÍ se maneja (network error, lo resuelve NetworkErrorHandlerService),
+   * por eso al `!status` se le suma la excepción `status !== 0`: así solo se ignoran los
+   * valores que no son un número real (undefined, null, NaN), que en la práctica nunca
+   * deberían llegar */
   handle(status: number, url: string): void {
-    if (!status) return;
+    if (!status && status !== 0) return;
 
     this.resolveHandler(status)(url);
   }
@@ -35,6 +41,7 @@ export class GlobalErrorHandlerService {
 
     /** objeto: status HTTP -> handler que lo resuelve */
     const HANDLER_BY_STATUS: Record<number, (url: string) => void> = {
+      0: (url: string) => this.network.handle(url),
       401: (url: string) => this.unauthenticated.handle(url),
       403: (url: string) => this.forbidden.handle(url),
       404: (url: string) => this.notFound.handle(url),

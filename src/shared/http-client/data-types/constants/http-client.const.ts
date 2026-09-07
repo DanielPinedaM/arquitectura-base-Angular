@@ -21,6 +21,15 @@ export const REQUIRED_KEYS = [
 /**
  * https://http.dev/status */
 const HTTP_STATUS_MESSAGES: Record<number, string> = {
+  /**
+   * 0 NO es un status HTTP real, ningun servidor lo devuelve.
+   * Es el value que HttpClient le asigna a HttpErrorResponse.status cuando la peticion
+   * NUNCA recibio respuesta: sin conexion a internet, DNS que no resuelve, CORS bloqueado,
+   * servidor caido o inalcanzable, certificado TLS invalido o peticion abortada.
+   *
+   * Desde el frontend es IMPOSIBLE saber cual de esas causas ocurrio */
+  0: 'Network Error',
+
   /** 1xx: Respuestas informativas */
   100: 'Continue',
   101: 'Switching Protocols',
