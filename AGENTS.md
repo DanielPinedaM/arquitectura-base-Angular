@@ -64,19 +64,6 @@ Esta PROHIBIDO:
 
 **Razon**: Existen librerías de terceros que dependen de Zone.js. Sin Zone.js, cualquier callback asíncrono de estas librerías no refrescará la vista automáticamente.
 
-# Buenas Practicas de TypeScript
-* Usar strict type checking
-
-* Preferir la inferencia de tipos cuando el tipo sea obvio
-
-* Prohibido el tipo `any`; usa `unknown` cuando el tipo sea incierto.
-
-* Preferir `interface` para tipos de objeto (`Producto`) y para el tipo de los elementos en arrays de objetos (`Producto[]`).
-
-* Usar `Record<Clave, Valor>` para objetos con claves dinámicas.
-
-* Usar `type` para tipos primitivos, literales y uniones.
-
 # Reglas **OBLIGATORIAS** de Angular
 Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento.
 
@@ -91,6 +78,19 @@ Antes de escribir código o responder, es **obligatorio** consultar estas fuente
 4. Skill `angular-developer` (`.claude/skills/angular-developer/SKILL.md` y `.claude/skills/angular-developer/references/`): El cómo, con ejemplos de código.
 
 5. Tus datos de entrenamiento: Permitidos, no están prohibidos, pero ceden ante cualquier fuente anterior.
+
+## Buenas Practicas de TypeScript
+* Usar strict type checking
+
+* Preferir la inferencia de tipos cuando el tipo sea obvio
+
+* Prohibido el tipo `any`; usa `unknown` cuando el tipo sea incierto.
+
+* Preferir `interface` para tipos de objeto (`Producto`) y para el tipo de los elementos en arrays de objetos (`Producto[]`).
+
+* Usar `Record<Clave, Valor>` para objetos con claves dinámicas.
+
+* Usar `type` para tipos primitivos, literales y uniones.
 
 ## Buenas Practicas de Angular
 * Usar lazy loading para las feature routes
