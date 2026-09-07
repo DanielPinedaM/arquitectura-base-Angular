@@ -1,4 +1,3 @@
-import { IBodyLogin } from '@/app/features/auth/data-types/interfaces/auth.interfaces';
 import { ILoginForm, loginSchema } from '@/app/features/auth/login/login.schema';
 import { environment } from '@/environments/environment';
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
@@ -124,12 +123,9 @@ export class LoginComponent implements OnInit {
   private async onSubmitLogin(): Promise<void> {
     const { email, password } = this.formModel();
 
-    const { encryptedEmail, encryptedPassword } = await this.encryptCredentials(
-      email,
-      password,
-    );
+    const { encryptedEmail, encryptedPassword } = await this.encryptCredentials(email, password);
 
-    const body: IBodyLogin = {
+    const body: ILoginForm = {
       email: encryptedEmail,
       password: encryptedPassword,
     };

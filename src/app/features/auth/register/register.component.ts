@@ -1,4 +1,3 @@
-import { IBodyRegister } from '@/app/features/auth/data-types/interfaces/auth.interfaces';
 import { IRegisterForm, registerSchema } from '@/app/features/auth/register/register.schema';
 import { environment } from '@/environments/environment';
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
@@ -84,7 +83,7 @@ export class RegisterComponent implements OnInit {
       password,
     );
 
-    const body: IBodyRegister = {
+    const body: Omit<IRegisterForm, 'confirmPassword'> = {
       nameUser: encryptedNameUser,
       email: encryptedEmail,
       password: encryptedPassword,

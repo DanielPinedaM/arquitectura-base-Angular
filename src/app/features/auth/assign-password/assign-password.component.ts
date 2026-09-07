@@ -2,7 +2,6 @@ import {
   assignPasswordSchema,
   IAssignPasswordForm,
 } from '@/app/features/auth/assign-password/assign-password.schema';
-import { IBodyAssignPassword } from '@/app/features/auth/data-types/interfaces/auth.interfaces';
 import { environment } from '@/environments/environment';
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
 import CryptoService from '@/shared/services/Crypto.service';
@@ -15,6 +14,11 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HlmInputPasswordImports } from '@spartan-ng/input-password';
 import { HlmLabelImports } from '@spartan-ng/label';
 import { firstValueFrom } from 'rxjs';
+
+interface IBodyAssignPassword {
+  id: number;
+  password: string;
+}
 
 const INITIAL_FORM_MODEL: IAssignPasswordForm = {
   password: '',
