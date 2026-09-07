@@ -1,4 +1,5 @@
 import { ErrorHandlerHelperService } from '@/shared/http-client/response/error-handling/services/error-handler-helper.service';
+import { HttpLogService } from '@/shared/http-client/services/http-log.service';
 import ToastService from '@/shared/services/Toast.service';
 import { inject, Service } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,12 +14,14 @@ export class UnauthenticatedErrorHandlerService {
   private readonly router = inject(Router);
   private readonly toast = inject(ToastService);
   private readonly helper = inject(ErrorHandlerHelperService);
+  private readonly log = inject(HttpLogService);
 
   /**
    * ejecuta las acciones globales para el status 401 */
   handle(url: string): void {
-    console.error('❌ [unauthenticated-error.handler.service.ts] error: ', {
-      status: 'Error 401: unauthenticated',
+    this.log.errorHandlerLogs({
+      fileName: 'unauthenticated-error.handler.service.ts',
+      status: 401,
       detail: 'El usuario no está autenticado o la sesión ha expirado',
       action: `Mostrar toast '${TOAST_MESSAGE}' y re-dirigir al usuario a la página de inicio de sesión`,
       url,

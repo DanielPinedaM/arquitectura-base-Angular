@@ -1,4 +1,5 @@
 import { environment } from '@/environments/environment';
+import { FALLBACK_MESSAGE } from '@/shared/http-client/data-types/constants/http-client.const';
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
 import { HttpContextToken, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
@@ -28,6 +29,22 @@ interface IResponseLogger {
   responseType?: HttpRequest<unknown>['responseType'];
   method: HttpRequest<unknown>['method'];
   urlWithParams: HttpRequest<unknown>['urlWithParams'];
+}
+
+/**
+ * objeto literal que imprime errorHandlerLogs, con la informacion
+ * de los handlers de status de error (401, 403, 404, 429 y >= 500) */
+interface IErrorHandlerLogger {
+  /** archivo del handler que origina el log, por ejemplo forbidden-error.handler.service.ts */
+  fileName: string;
+  /** status HTTP que maneja el handler, por ejemplo 403 */
+  status: number;
+  /** por que ocurrio el error */
+  detail: string;
+  /** que hace la aplicacion al recibir este status */
+  action: string;
+  /** URL de la peticion que devolvio el error */
+  url: string;
 }
 
 /**
@@ -91,6 +108,23 @@ export class HttpLogService {
     if (!this.canLog(req)) return;
 
     console.error('⏱️ timeout error: ', this.transformResponseToLogger(response, req));
+  }
+
+  /**
+   * ❌ imprime los logs de los handlers que manejan un status de error (401, 403, 404, 429 y >= 500).
+   * A diferencia de errorLogs, NO recibe la HttpRequest porque los handlers solo conocen la URL,
+   * por lo que el unico criterio para NO imprimir es el ambiente de produccion */
+  errorHandlerLogs({ fileName, status, detail, action, url }: IErrorHandlerLogger): void {
+    if (environment.NODE_ENV === 'production') return;
+
+    console.error(`❌ [${fileName}] error: `, {
+      status,
+      /** nombre del status HTTP, por ejemplo "Forbidden" para el status 403 */
+      statusMessage: FALLBACK_MESSAGE(status),
+      detail,
+      action,
+      url,
+    });
   }
 
   /**

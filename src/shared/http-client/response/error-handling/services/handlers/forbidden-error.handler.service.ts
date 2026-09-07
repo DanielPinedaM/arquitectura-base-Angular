@@ -1,4 +1,5 @@
 import { ErrorHandlerHelperService } from '@/shared/http-client/response/error-handling/services/error-handler-helper.service';
+import { HttpLogService } from '@/shared/http-client/services/http-log.service';
 import ToastService from '@/shared/services/Toast.service';
 import { inject, Service } from '@angular/core';
 
@@ -11,14 +12,16 @@ const TOAST_MESSAGE = 'Acceso denegado, no tiene permisos para realizar esta acc
 export class ForbiddenErrorHandlerService {
   private readonly toast = inject(ToastService);
   private readonly helper = inject(ErrorHandlerHelperService);
+  private readonly log = inject(HttpLogService);
 
   /**
    * ejecuta las acciones globales para el status 403 */
   handle(url: string): void {
-    console.error('❌ [forbidden-error.handler.service.ts] error: ', {
-      status: 'Error 403: Forbidden',
+    this.log.errorHandlerLogs({
+      fileName: 'forbidden-error.handler.service.ts',
+      status: 403,
       detail: 'El usuario está autenticado pero no tiene permisos para acceder al recurso',
-      action: `Mostrar toast ${TOAST_MESSAGE} y re-dirigir a la pagina anterior del historial`,
+      action: `Mostrar toast '${TOAST_MESSAGE}' y re-dirigir a la pagina anterior del historial`,
       url,
     });
 
