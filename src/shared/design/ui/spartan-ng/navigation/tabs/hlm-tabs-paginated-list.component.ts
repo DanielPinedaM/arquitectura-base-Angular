@@ -1,25 +1,24 @@
 import { CdkObserveContent } from '@angular/cdk/observers';
 import {
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    contentChildren,
-    type ElementRef,
-    input,
-    viewChild,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  contentChildren,
+  type ElementRef,
+  input,
+  viewChild,
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { type BrnPaginatedTabHeaderItem, BrnTabsPaginatedList, BrnTabsTrigger } from '@spartan-ng/brain/tabs';
 import { buttonVariants } from '@spartan-ng/button';
 import { classes, hlm } from '@spartan-ng/hlm-helper';
+import { listVariants } from '@spartan-ng/hlm-tabs-const';
 import type { ClassValue } from 'clsx';
 import type { Observable } from 'rxjs';
-import { listVariants } from '@spartan-ng/hlm-tabs-const';
 
 @Component({
 	selector: 'hlm-paginated-tabs-list',
 	imports: [CdkObserveContent],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'data-slot': 'tabs-paginated-list',
 	},

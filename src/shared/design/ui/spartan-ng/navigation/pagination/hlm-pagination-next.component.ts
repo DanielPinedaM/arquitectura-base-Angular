@@ -1,15 +1,14 @@
+import { HlmPaginationLinkDirective } from '@/shared/design/ui/spartan-ng/navigation/pagination/hlm-pagination-link.directive';
 import type { BooleanInput } from '@angular/cdk/coercion';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import type { RouterLink } from '@angular/router';
 import type { ButtonVariants } from '@spartan-ng/button';
 import { hlm } from '@spartan-ng/hlm-helper';
 import type { ClassValue } from 'clsx';
-import { HlmPaginationLinkDirective } from '@/shared/design/ui/spartan-ng/navigation/pagination/hlm-pagination-link.directive';
 
 @Component({
 	selector: 'hlm-pagination-next',
 	imports: [HlmPaginationLinkDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<a
 			hlmPaginationLink

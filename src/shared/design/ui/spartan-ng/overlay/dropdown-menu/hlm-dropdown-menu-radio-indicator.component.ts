@@ -3,7 +3,6 @@ import { classes } from '@spartan-ng/hlm-helper';
 
 @Component({
 	selector: 'hlm-dropdown-menu-radio-indicator',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: { 'data-slot': 'dropdown-menu-radio-item-indicator' },
 	template: `
 		<span class="material-symbols-outlined">check</span>

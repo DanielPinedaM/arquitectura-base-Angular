@@ -1,25 +1,23 @@
 import { BooleanInput } from '@angular/cdk/coercion';
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    effect,
-    ElementRef,
-    inject,
-    input,
-    linkedSignal,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  linkedSignal,
 } from '@angular/core';
-import { HlmInputGroupDirective, HlmInputGroupImports } from '@spartan-ng/input-group';
+import { injectHlmDatePicker, injectHlmDatePickerConfig, provideHlmDatePickerTrigger } from '@spartan-ng/hlm-date-picker-helper';
 import { HlmDatePickerTriggerBase } from '@spartan-ng/hlm-date-picker-interface';
-import { provideHlmDatePickerTrigger } from '@spartan-ng/hlm-date-picker-helper';
-import { injectHlmDatePicker, injectHlmDatePickerConfig } from '@spartan-ng/hlm-date-picker-helper';
+import { HlmInputGroupDirective, HlmInputGroupImports } from '@spartan-ng/input-group';
 
 @Component({
 	selector: 'hlm-date-picker-input',
 	imports: [HlmInputGroupImports],
 	providers: [provideHlmDatePickerTrigger(HlmDatePickerInputComponent)],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [HlmInputGroupDirective],
 	template: `
 		<input

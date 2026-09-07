@@ -3,7 +3,6 @@ import { classes } from '@spartan-ng/hlm-helper';
 
 @Component({
 	selector: 'hlm-pagination-ellipsis',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: { 'data-slot': 'pagination-ellipsis' },
 	template: `
 		<span class="material-symbols-outlined">more_horiz</span>

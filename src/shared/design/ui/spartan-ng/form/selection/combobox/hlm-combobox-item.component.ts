@@ -4,7 +4,6 @@ import { classes } from '@spartan-ng/hlm-helper';
 
 @Component({
 	selector: 'hlm-combobox-item',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [{ directive: BrnComboboxItem, inputs: ['id', 'disabled', 'value'] }],
 	host: { 'data-slot': 'combobox-item' },
 	template: `

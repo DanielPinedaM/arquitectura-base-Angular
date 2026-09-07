@@ -1,17 +1,17 @@
 import type { BooleanInput, NumberInput } from '@angular/cdk/coercion';
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    contentChild,
-    forwardRef,
-    input,
-    linkedSignal,
-    numberAttribute,
-    output,
-    signal,
-    viewChild,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  contentChild,
+  forwardRef,
+  input,
+  linkedSignal,
+  numberAttribute,
+  output,
+  signal,
+  viewChild,
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BrnFieldControl, provideBrnLabelable } from '@spartan-ng/brain/field';
@@ -19,11 +19,10 @@ import type { ChangeFn, TouchFn } from '@spartan-ng/brain/forms';
 import type { BrnOverlayState } from '@spartan-ng/brain/overlay';
 import { BrnPopover } from '@spartan-ng/brain/popover';
 import { HlmCalendarMultiComponent } from '@spartan-ng/calendar';
-import { HlmPopoverImports } from '@spartan-ng/popover';
-import { injectHlmDatePickerMultiConfig } from '@spartan-ng/hlm-date-picker-helper';
 import { HlmDatePickerTriggerToken } from '@spartan-ng/hlm-date-picker-const';
+import { injectHlmDatePickerMultiConfig, provideHlmDatePicker } from '@spartan-ng/hlm-date-picker-helper';
 import { HlmDatePickerBase } from '@spartan-ng/hlm-date-picker-interface';
-import { provideHlmDatePicker } from '@spartan-ng/hlm-date-picker-helper';
+import { HlmPopoverImports } from '@spartan-ng/popover';
 
 export const HLM_DATE_PICKER_MUTLI_VALUE_ACCESSOR = {
 	provide: NG_VALUE_ACCESSOR,
@@ -39,7 +38,6 @@ export const HLM_DATE_PICKER_MUTLI_VALUE_ACCESSOR = {
 		provideHlmDatePicker(HlmDatePickerMultiComponent),
 		provideBrnLabelable(HlmDatePickerMultiComponent),
 	],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [BrnFieldControl],
 	host: { class: 'block' },
 	template: `

@@ -1,7 +1,7 @@
+import { HlmDrawerOverlayDirective } from '@/shared/design/ui/spartan-ng/overlay/drawer/hlm-drawer-overlay.directive';
 import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
 import { BrnDialog, provideBrnDialogDefaultOptions } from '@spartan-ng/brain/dialog';
 import { BrnDrawer } from '@spartan-ng/brain/drawer';
-import { HlmDrawerOverlayDirective } from '@/shared/design/ui/spartan-ng/overlay/drawer/hlm-drawer-overlay.directive';
 
 @Component({
 	selector: 'hlm-drawer',
@@ -20,7 +20,6 @@ import { HlmDrawerOverlayDirective } from '@/shared/design/ui/spartan-ng/overlay
 			/** agregar opciones personalizadas aquí */
 		}),
 	],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<hlm-drawer-overlay />
 		<ng-content />

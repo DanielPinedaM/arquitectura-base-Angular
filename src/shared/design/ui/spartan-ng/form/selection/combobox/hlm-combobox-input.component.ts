@@ -1,13 +1,12 @@
 import { BooleanInput } from '@angular/cdk/coercion';
 import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { BrnComboboxAnchor, BrnComboboxImports, BrnComboboxPopoverTrigger } from '@spartan-ng/brain/combobox';
-import { HlmInputGroupDirective, HlmInputGroupImports } from '@spartan-ng/input-group';
 import { classes } from '@spartan-ng/hlm-helper';
+import { HlmInputGroupDirective, HlmInputGroupImports } from '@spartan-ng/input-group';
 
 @Component({
 	selector: 'hlm-combobox-input',
 	imports: [HlmInputGroupImports, BrnComboboxImports, BrnComboboxPopoverTrigger],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [BrnComboboxAnchor, HlmInputGroupDirective],
 	template: `
 		<input

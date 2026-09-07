@@ -4,7 +4,6 @@ import { classes } from '@spartan-ng/hlm-helper';
 
 @Component({
 	selector: 'hlm-select-scroll-down',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [BrnSelectScrollDown],
 	template: `
 		<span class="material-symbols-outlined">keyboard_arrow_down</span>

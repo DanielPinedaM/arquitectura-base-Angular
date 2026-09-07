@@ -1,20 +1,20 @@
+import { HlmSwitchThumbDirective } from '@/shared/design/ui/spartan-ng/form/selection/switch/hlm-switch-thumb.directive';
 import type { BooleanInput } from '@angular/cdk/coercion';
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    forwardRef,
-    input,
-    linkedSignal,
-    output,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  forwardRef,
+  input,
+  linkedSignal,
+  output,
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { ChangeFn, TouchFn } from '@spartan-ng/brain/forms';
 import { BrnSwitch, type BrnSwitchSize, BrnSwitchThumb } from '@spartan-ng/brain/switch';
 import { hlm } from '@spartan-ng/hlm-helper';
 import type { ClassValue } from 'clsx';
-import { HlmSwitchThumbDirective } from '@/shared/design/ui/spartan-ng/form/selection/switch/hlm-switch-thumb.directive';
 
 export const HLM_SWITCH_VALUE_ACCESSOR = {
 	provide: NG_VALUE_ACCESSOR,
@@ -26,7 +26,6 @@ export const HLM_SWITCH_VALUE_ACCESSOR = {
 	selector: 'hlm-switch',
 	imports: [BrnSwitchThumb, BrnSwitch, HlmSwitchThumbDirective],
 	providers: [HLM_SWITCH_VALUE_ACCESSOR],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'data-slot': 'switch',
 		class: 'contents',

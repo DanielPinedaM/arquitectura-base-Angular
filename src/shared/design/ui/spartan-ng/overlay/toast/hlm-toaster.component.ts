@@ -7,7 +7,6 @@ import type { ClassValue } from 'clsx';
 @Component({
 	selector: 'hlm-toaster',
 	imports: [BrnSonnerImports],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<brn-sonner-toaster
 			[class]="_computedClass()"

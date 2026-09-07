@@ -15,7 +15,6 @@ import type { ClassValue } from 'clsx';
 		BrnComboboxPopoverTrigger,
 		BrnFieldControlDescribedBy,
 	],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<button
 			brnComboboxTrigger

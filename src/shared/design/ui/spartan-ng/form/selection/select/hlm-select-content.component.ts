@@ -1,14 +1,13 @@
+import { HlmSelectScrollDownComponent } from '@/shared/design/ui/spartan-ng/form/selection/select/hlm-select-scroll-down.component';
+import { HlmSelectScrollUpComponent } from '@/shared/design/ui/spartan-ng/form/selection/select/hlm-select-scroll-up.component';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { BrnSelectContent } from '@spartan-ng/brain/select';
 import { classes, hlm } from '@spartan-ng/hlm-helper';
-import { HlmSelectScrollDownComponent } from '@/shared/design/ui/spartan-ng/form/selection/select/hlm-select-scroll-down.component';
-import { HlmSelectScrollUpComponent } from '@/shared/design/ui/spartan-ng/form/selection/select/hlm-select-scroll-up.component';
 
 @Component({
 	selector: 'hlm-select-content',
 	imports: [HlmSelectScrollUpComponent, HlmSelectScrollDownComponent],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [BrnSelectContent],
 	template: `
 		@if (showScroll()) {

@@ -8,7 +8,6 @@ import type { ClassValue } from 'clsx';
 @Component({
 	selector: 'hlm-select-trigger',
 	imports: [BrnSelectTrigger, BrnFieldControlDescribedBy],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<button
 			brnSelectTrigger

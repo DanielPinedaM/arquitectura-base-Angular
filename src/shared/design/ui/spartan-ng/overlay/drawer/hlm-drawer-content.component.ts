@@ -5,7 +5,6 @@ import { classes } from '@spartan-ng/hlm-helper';
 
 @Component({
 	selector: 'hlm-drawer-content',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [{ directive: BrnDrawerHandle, inputs: ['closeThreshold'] }],
 	host: {
 		'data-slot': 'drawer-content',

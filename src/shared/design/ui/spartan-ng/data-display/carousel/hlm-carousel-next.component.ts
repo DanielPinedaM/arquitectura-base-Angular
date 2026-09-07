@@ -6,7 +6,6 @@ import { hlm } from '@spartan-ng/hlm-helper';
 @Component({
 	selector: 'button[hlm-carousel-next], button[hlmCarouselNext]',
 	providers: [provideBrnButtonConfig({ variant: 'outline', size: 'icon-sm' })],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [{ directive: HlmButtonDirective, inputs: ['variant', 'size'] }],
 	host: {
 		'data-slot': 'carousel-next',

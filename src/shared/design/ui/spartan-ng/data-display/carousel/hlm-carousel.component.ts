@@ -1,14 +1,14 @@
 import { Directionality } from '@angular/cdk/bidi';
 import {
-    ChangeDetectionStrategy,
-    Component,
-    type InputSignal,
-    type Signal,
-    computed,
-    inject,
-    input,
-    signal,
-    viewChild,
+  ChangeDetectionStrategy,
+  Component,
+  type InputSignal,
+  type Signal,
+  computed,
+  inject,
+  input,
+  signal,
+  viewChild,
 } from '@angular/core';
 import { classes } from '@spartan-ng/hlm-helper';
 import type { EmblaEventType, EmblaOptionsType, EmblaPluginType } from 'embla-carousel';
@@ -17,7 +17,6 @@ import { EmblaCarouselDirective } from 'embla-carousel-angular';
 @Component({
 	selector: 'hlm-carousel',
 	imports: [EmblaCarouselDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'data-slot': 'carousel',
 		role: 'region',

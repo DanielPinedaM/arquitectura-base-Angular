@@ -1,15 +1,15 @@
 import type { BooleanInput } from '@angular/cdk/coercion';
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    forwardRef,
-    input,
-    linkedSignal,
-    model,
-    output,
-    viewChild,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  forwardRef,
+  input,
+  linkedSignal,
+  model,
+  output,
+  viewChild,
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BrnCheckbox } from '@spartan-ng/brain/checkbox';
@@ -28,7 +28,6 @@ export const HLM_CHECKBOX_VALUE_ACCESSOR = {
 	selector: 'hlm-checkbox',
 	imports: [BrnCheckbox],
 	providers: [HLM_CHECKBOX_VALUE_ACCESSOR],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [BrnFieldControlDescribedBy],
 	host: {
 		class: 'contents peer',

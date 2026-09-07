@@ -3,7 +3,6 @@ import { classes } from '@spartan-ng/hlm-helper';
 
 @Component({
 	selector: 'hlm-dropdown-menu-checkbox-indicator',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: { 'data-slot': 'dropdown-menu-checkbox-item-indicator' },
 	template: `
 		<span class="material-symbols-outlined">check</span>

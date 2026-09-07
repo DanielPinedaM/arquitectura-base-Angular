@@ -3,13 +3,12 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { BrnCalendarImports, BrnCalendarMulti, injectBrnCalendarI18n } from '@spartan-ng/brain/calendar';
 import { injectDateAdapter } from '@spartan-ng/brain/date-time';
 import { buttonVariants, HlmButtonImports } from '@spartan-ng/button';
-import { HlmSelectImports } from '@spartan-ng/select';
 import { classes, hlm } from '@spartan-ng/hlm-helper';
+import { HlmSelectImports } from '@spartan-ng/select';
 
 @Component({
 	selector: 'hlm-calendar-multi',
 	imports: [BrnCalendarImports, NgTemplateOutlet, HlmSelectImports, HlmButtonImports],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [
 		{
 			directive: BrnCalendarMulti,

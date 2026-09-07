@@ -6,7 +6,6 @@ import type { ClassValue } from 'clsx';
 @Component({
 	selector: 'hlm-accordion-trigger',
 	imports: [BrnAccordionImports],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<h3 brnAccordionHeader class="flex">
 			<button brnAccordionTrigger data-slot="accordion-trigger" [class]="_computedTriggerClass()">

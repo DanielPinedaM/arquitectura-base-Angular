@@ -1,13 +1,12 @@
+import { HlmComboboxChipRemoveDirective } from '@/shared/design/ui/spartan-ng/form/selection/combobox/hlm-combobox-chip-remove.directive';
 import type { BooleanInput } from '@angular/cdk/coercion';
 import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { BrnComboboxChip } from '@spartan-ng/brain/combobox';
 import { classes } from '@spartan-ng/hlm-helper';
-import { HlmComboboxChipRemoveDirective } from '@/shared/design/ui/spartan-ng/form/selection/combobox/hlm-combobox-chip-remove.directive';
 
 @Component({
 	selector: 'hlm-combobox-chip',
 	imports: [HlmComboboxChipRemoveDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [{ directive: BrnComboboxChip, inputs: ['value'] }],
 	host: { 'data-slot': 'combobox-chip' },
 	template: `

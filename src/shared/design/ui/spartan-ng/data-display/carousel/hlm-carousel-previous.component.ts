@@ -1,12 +1,11 @@
+import { HlmCarouselComponent } from '@/shared/design/ui/spartan-ng/data-display/carousel/hlm-carousel.component';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, untracked } from '@angular/core';
 import { HlmButtonDirective, provideBrnButtonConfig } from '@spartan-ng/button';
 import { hlm } from '@spartan-ng/hlm-helper';
-import { HlmCarouselComponent } from '@/shared/design/ui/spartan-ng/data-display/carousel/hlm-carousel.component';
 
 @Component({
 	selector: 'button[hlm-carousel-previous], button[hlmCarouselPrevious]',
 	providers: [provideBrnButtonConfig({ variant: 'outline', size: 'icon-sm' })],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [{ directive: HlmButtonDirective, inputs: ['variant', 'size'] }],
 	host: {
 		'data-slot': 'carousel-previous',

@@ -1,6 +1,6 @@
+import { HlmDialogOverlayDirective } from '@/shared/design/ui/spartan-ng/overlay/dialog/hlm-dialog-overlay.directive';
 import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
 import { BrnDialog, provideBrnDialogDefaultOptions } from '@spartan-ng/brain/dialog';
-import { HlmDialogOverlayDirective } from '@/shared/design/ui/spartan-ng/overlay/dialog/hlm-dialog-overlay.directive';
 
 @Component({
 	selector: 'hlm-dialog',
@@ -15,7 +15,6 @@ import { HlmDialogOverlayDirective } from '@/shared/design/ui/spartan-ng/overlay
 			/** agregar opciones personalizadas aquí */
 		}),
 	],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<hlm-dialog-overlay />
 		<ng-content />

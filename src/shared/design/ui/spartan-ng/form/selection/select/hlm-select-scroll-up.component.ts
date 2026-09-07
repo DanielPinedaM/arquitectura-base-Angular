@@ -4,7 +4,6 @@ import { classes } from '@spartan-ng/hlm-helper';
 
 @Component({
 	selector: 'hlm-select-scroll-up',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	hostDirectives: [BrnSelectScrollUp],
 	template: `
 		<span class="material-symbols-outlined">keyboard_arrow_up</span>

@@ -1,25 +1,24 @@
 import type { BooleanInput } from '@angular/cdk/coercion';
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    effect,
-    ElementRef,
-    inject,
-    input,
-    Renderer2,
-    signal,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  Renderer2,
+  signal,
 } from '@angular/core';
 import { injectExposedSideProvider, injectExposesStateProvider } from '@spartan-ng/brain/core';
 import { HlmButtonDirective } from '@spartan-ng/button';
 
-import { classes } from '@spartan-ng/hlm-helper';
 import { HlmSheetCloseDirective } from '@/shared/design/ui/spartan-ng/overlay/sheet/hlm-sheet-close.directive';
+import { classes } from '@spartan-ng/hlm-helper';
 
 @Component({
 	selector: 'hlm-sheet-content',
 	imports: [HlmButtonDirective, HlmSheetCloseDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'data-slot': 'sheet-content',
 		'[attr.data-side]': '_sideProvider.side()',

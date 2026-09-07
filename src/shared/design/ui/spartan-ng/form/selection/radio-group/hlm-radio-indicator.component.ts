@@ -3,7 +3,6 @@ import { classes } from '@spartan-ng/hlm-helper';
 
 @Component({
 	selector: 'hlm-radio-indicator',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'data-slot': 'radio-group-indicator',
 	},

@@ -5,8 +5,8 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject,
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { HlmButtonDirective } from '@spartan-ng/button';
 
-import { classes } from '@spartan-ng/hlm-helper';
 import { HlmDialogCloseDirective } from '@/shared/design/ui/spartan-ng/overlay/dialog/hlm-dialog-close.directive';
+import { classes } from '@spartan-ng/hlm-helper';
 
 type HlmDialogContentContext = {
 	$component?: ComponentType<unknown>;
@@ -17,7 +17,6 @@ type HlmDialogContentContext = {
 @Component({
 	selector: 'hlm-dialog-content',
 	imports: [NgComponentOutlet, HlmButtonDirective, HlmDialogCloseDirective],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		'data-slot': 'dialog-content',
 		'[attr.data-state]': 'state()',

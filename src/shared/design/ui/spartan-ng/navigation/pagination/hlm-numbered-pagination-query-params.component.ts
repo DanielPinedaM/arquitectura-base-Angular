@@ -1,24 +1,24 @@
-import type { BooleanInput, NumberInput } from '@angular/cdk/coercion';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    input,
-    model,
-    numberAttribute,
-    untracked,
-} from '@angular/core';
-import { HlmSelectImports } from '@spartan-ng/select';
-import { classes } from '@spartan-ng/hlm-helper';
-import { createPageArray, outOfBoundCorrection } from '@spartan-ng/hlm-pagination-helper';
-import { HlmPaginationDirective } from '@/shared/design/ui/spartan-ng/navigation/pagination/hlm-pagination.directive';
 import { HlmPaginationContentDirective } from '@/shared/design/ui/spartan-ng/navigation/pagination/hlm-pagination-content.directive';
 import { HlmPaginationEllipsisComponent } from '@/shared/design/ui/spartan-ng/navigation/pagination/hlm-pagination-ellipsis.component';
 import { HlmPaginationItemDirective } from '@/shared/design/ui/spartan-ng/navigation/pagination/hlm-pagination-item.directive';
 import { HlmPaginationLinkDirective } from '@/shared/design/ui/spartan-ng/navigation/pagination/hlm-pagination-link.directive';
 import { HlmPaginationNextComponent } from '@/shared/design/ui/spartan-ng/navigation/pagination/hlm-pagination-next.component';
 import { HlmPaginationPreviousComponent } from '@/shared/design/ui/spartan-ng/navigation/pagination/hlm-pagination-previous.component';
+import { HlmPaginationDirective } from '@/shared/design/ui/spartan-ng/navigation/pagination/hlm-pagination.directive';
+import type { BooleanInput, NumberInput } from '@angular/cdk/coercion';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  model,
+  numberAttribute,
+  untracked,
+} from '@angular/core';
+import { classes } from '@spartan-ng/hlm-helper';
+import { createPageArray, outOfBoundCorrection } from '@spartan-ng/hlm-pagination-helper';
+import { HlmSelectImports } from '@spartan-ng/select';
 
 @Component({
 	selector: 'hlm-numbered-pagination-query-params',
@@ -32,7 +32,6 @@ import { HlmPaginationPreviousComponent } from '@/shared/design/ui/spartan-ng/na
 		HlmPaginationEllipsisComponent,
 		HlmSelectImports,
 	],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 		<div class="flex items-center gap-1 text-sm text-nowrap text-gray-600">
 			<b>{{ totalItems() }}</b>

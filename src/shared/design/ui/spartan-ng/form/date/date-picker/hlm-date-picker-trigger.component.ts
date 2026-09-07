@@ -2,18 +2,16 @@ import { BooleanInput } from '@angular/cdk/coercion';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { BrnFieldControl, BrnFieldControlDescribedBy } from '@spartan-ng/brain/field';
 import { ButtonVariants, HlmButtonImports } from '@spartan-ng/button';
-import { HlmPopoverTriggerDirective } from '@spartan-ng/popover';
-import { hlm } from '@spartan-ng/hlm-helper';
-import { ClassValue } from 'clsx';
+import { injectHlmDatePicker, provideHlmDatePickerTrigger } from '@spartan-ng/hlm-date-picker-helper';
 import { HlmDatePickerTriggerBase } from '@spartan-ng/hlm-date-picker-interface';
-import { provideHlmDatePickerTrigger } from '@spartan-ng/hlm-date-picker-helper';
-import { injectHlmDatePicker } from '@spartan-ng/hlm-date-picker-helper';
+import { hlm } from '@spartan-ng/hlm-helper';
+import { HlmPopoverTriggerDirective } from '@spartan-ng/popover';
+import { ClassValue } from 'clsx';
 
 @Component({
 	selector: 'hlm-date-picker-trigger',
 	imports: [HlmButtonImports, HlmPopoverTriggerDirective, BrnFieldControlDescribedBy],
 	providers: [provideHlmDatePickerTrigger(HlmDatePickerTriggerComponent)],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: { 'data-slot': 'date-picker-trigger' },
 	template: `
 		<button
