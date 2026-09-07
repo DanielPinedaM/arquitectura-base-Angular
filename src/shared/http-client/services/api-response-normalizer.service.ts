@@ -36,11 +36,51 @@ export class ApiResponseNormalizerService {
   ): ApiResponse<T> {
     /**
      Caso 1:
+     status 0 (network error)                     -> data SIEMPRE es null.
+
+     La peticion NUNCA recibio respuesta del servidor, por lo tanto NO existe body de API.
+     Lo que HttpClient deja en HttpErrorResponse.error es un objeto del navegador
+     (ProgressEvent o el TypeError de fetch), NUNCA data del backend, por eso ese objeto
+     se DESCARTA en vez de exponerlo en data.
+
+     Esta validacion va ANTES que isApiContract porque sin respuesta del servidor
+     es IMPOSIBLE que el body cumpla el contrato ApiResponse<T> */
+    if (status === 0) {
+      return {
+        success: false,
+        status,
+        message: FALLBACK_MESSAGE(status),
+        data: null as T,
+      };
+    }
+
+    /**
+     Caso 2:
+     status 204 (no content)                      -> data SIEMPRE es null.
+
+     La peticion SI fue exitosa (success: true), pero el estandar HTTP prohibe que un 204
+     traiga body, y el navegador descarta cualquier body que el backend envie con ese status.
+     Por eso lo que llegue en rawBody (null, un string vacio, etc.) NO es data del backend
+     y se DESCARTA, garantizando que data sea siempre null y NUNCA '' ni undefined.
+
+     Igual que el Caso 1, va ANTES que isApiContract porque sin body
+     es IMPOSIBLE que la respuesta cumpla el contrato ApiResponse<T> */
+    if (status === 204) {
+      return {
+        success: true,
+        status,
+        message: fallbackMessage,
+        data: null as T,
+      };
+    }
+
+    /**
+     Caso 3:
      la API SI cumple el contrato ApiResponse<T>  -> se retorna la respuesta tal cual, SIN modificar. */
     if (this.isApiContract<T>(rawBody)) return rawBody;
 
     /**
-    Caso 2:
+    Caso 4:
     la API NO cumple el contrato                  -> se envuelve en ApiResponse<T> */
 
     /**
@@ -61,7 +101,7 @@ export class ApiResponseNormalizerService {
       : fallbackMessage;
 
     return {
-      success: this.isSuccessStatus(status), /** success se deriva del status */
+      success: this.isSuccessStatus(status) /** success se deriva del status */,
       status,
       message: messageFromBodyOrFallback,
       data: (rawBody ?? null) as T,
