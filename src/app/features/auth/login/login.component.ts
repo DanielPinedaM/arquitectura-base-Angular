@@ -125,8 +125,8 @@ export class LoginComponent implements OnInit {
     const { email, password } = this.formModel();
 
     const { encryptedEmail, encryptedPassword } = await this.encryptCredentials(
-      email.trim(),
-      password.trim(),
+      email,
+      password,
     );
 
     const body: IBodyLogin = {

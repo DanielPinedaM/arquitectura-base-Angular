@@ -79,9 +79,9 @@ export class RegisterComponent implements OnInit {
     const { nameUser, email, password } = this.formModel();
 
     const { encryptedNameUser, encryptedEmail, encryptedPassword } = await this.encryptRegister(
-      nameUser.trim(),
-      email.trim(),
-      password.trim(),
+      nameUser,
+      email,
+      password,
     );
 
     const body: IBodyRegister = {
