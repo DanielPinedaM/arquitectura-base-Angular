@@ -78,17 +78,19 @@ Esta PROHIBIDO:
 * Usar `type` para tipos primitivos, literales y uniones.
 
 # Reglas **OBLIGATORIAS** de Angular
-Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento:
+Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento.
 
-Antes de escribir código o responder, es **obligatorio** consultar las siguientes fuentes, cada una según su propósito:
+Antes de escribir código o responder, es **obligatorio** consultar estas fuentes, listadas de mayor a menor precedencia:
 
-1. tool `get_best_practices` del MCP server `angular-cli`: Reglas alineadas a la v22 del proyecto.
+1. Este `AGENTS.md`: La regla final ante cualquier conflicto.
 
-2. tool `search_documentation` del MCP server `angular-cli`: Documentación oficial de angular.dev, para citar.
+2. tool `get_best_practices` del MCP server `angular-cli`: Reglas alineadas a la v22 del proyecto.
 
-3. Skill `angular-developer` (`.claude/skills/angular-developer/SKILL.md` y `.claude/skills/angular-developer/references/`): El cómo, con ejemplos de código.
+3. tool `search_documentation` del MCP server `angular-cli`: Documentación oficial de angular.dev, para citar.
 
-Estas fuentes son la **única fuente de verdad** frente a tus datos de entrenamiento y su cumplimiento es **obligatorio**. Precedencia: `AGENTS.md` > MCP > skill > tus datos de entrenamiento.
+4. Skill `angular-developer` (`.claude/skills/angular-developer/SKILL.md` y `.claude/skills/angular-developer/references/`): El cómo, con ejemplos de código.
+
+5. Tus datos de entrenamiento: Último recurso, solo cuando ninguna fuente anterior cubra el caso.
 
 ## Buenas Practicas de Angular
 * Usar lazy loading para las feature routes
