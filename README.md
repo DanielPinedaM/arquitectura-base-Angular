@@ -861,7 +861,7 @@ src/
 │       │   │   └── content-type.interceptor.ts → asigna dinámicamente el header Content-Type en cada petición HTTP
 │       │   │
 │       │   ├── timeout.interceptor.ts → aplica tiempo máximo de 1 minuto por petición; si se supera, aborta y emite respuesta sintética con status 408
-│       │   └── with-credentials.interceptor.ts → agrega withCredentials a cada petición HTTP; excluye los endpoints de la constante URLS_WITHOUT_CREDENTIALS
+│       │   └── with-credentials.interceptor.ts → agrega withCredentials solo a los servicios internos (URLs que empiezan por environment.api); lo excluye en las APIs externas de terceros y en los endpoints de URLS_WITHOUT_CREDENTIALS
 │       │
 │       ├── response/ → normalización y manejo de respuestas HTTP (éxito y error) al contrato ApiResponse<T>
 │       │   ├── success.interceptor.ts → intercepta respuestas HTTP exitosas y las normaliza al contrato ApiResponse<T>
@@ -870,10 +870,11 @@ src/
 │       │       ├── error.interceptor.ts → captura errores HTTP, delega el manejo global, normaliza al contrato ApiResponse<T>, loguea y "se traga" el error (nunca lo propaga con throw)
 │       │       │
 │       │       └── services/
-│       │           ├── global-error-handler.service.ts → orquestador: según el código de estado delega en el handler correspondiente (401, 403, 404, 429, 5xx)
+│       │           ├── global-error-handler.service.ts → orquestador: según el código de estado delega en el handler correspondiente (0, 401, 403, 404, 429, 5xx)
 │       │           ├── error-handler-helper.service.ts → helpers de navegación compartidos entre los handlers (pathnameIsLogin, redirectToLogin, returnToBrowserHistory)
 │       │           │
 │       │           └── handlers/ → cada handler resuelve un único tipo de error HTTP (responsabilidad única)
+│       │               ├── network-error.handler.service.ts → status 0: la petición nunca recibió respuesta (sin internet, CORS, DNS o servidor caído); loguea en consola y notifica que no se pudo conectar
 │       │               ├── unauthenticated-error.handler.service.ts → status 401: redirige a /iniciar-sesion, oculta el loader y notifica con Toast
 │       │               ├── forbidden-error.handler.service.ts → status 403: vuelve atrás en el historial y notifica "acceso denegado"
 │       │               ├── not-found-error.handler.service.ts → status 404: loguea en consola y notifica un error genérico
@@ -2740,9 +2741,10 @@ Toda respuesta que pasa por `HttpClient` termina envuelta en el contrato `ApiRes
 | Escenario | Quién lo estandariza | Resultado |
 | --------- | -------------------- | --------- |
 | 4xx/5xx con o sin contrato | `error.interceptor` | Se envuelve, el error se "traga" y sale como respuesta sintética; además dispara los handlers globales (401/403/404/429/5xx) |
-| Error de red / servidor caído (`status 0`, body `ProgressEvent`) | `error.interceptor` | `success: false`, message = `error.message` de Angular; el handler global no actúa (status 0 se ignora a propósito) |
+| Error de red / servidor caído (`status 0`, body `ProgressEvent`) | `error.interceptor` | `success: false`, `data: null` (el `ProgressEvent` se descarta), message = `Network Error`; el handler global SÍ actúa: `network-error.handler.service.ts` |
+| Respuesta sin body (`status 204`) | `success.interceptor` | `success: true`, `data: null` (nunca `''` ni `undefined`), message = `No Content` |
 | JSON malformado del backend | `error.interceptor` (Angular lo reporta como error de parsing) | Envuelto con el message de parsing de Angular |
-| Acciones globales según el status de error (401/403/404/429/5xx) | `global-error-handler.service.ts` (orquestador, invocado por `error.interceptor`) | Redirige cada status a su handler dedicado: 401 → `unauthenticated`, 403 → `forbidden`, 404 → `not-found`, 429 → `too-many-requests` y cualquier status >= 500 se normaliza al bucket 500 → `server-error`. Si el status no está mapeado (o es 0) no ejecuta ninguna acción (`noop`) |
+| Acciones globales según el status de error (0/401/403/404/429/5xx) | `global-error-handler.service.ts` (orquestador, invocado por `error.interceptor`) | Redirige cada status a su handler dedicado: 0 → `network`, 401 → `unauthenticated`, 403 → `forbidden`, 404 → `not-found`, 429 → `too-many-requests` y cualquier status >= 500 se normaliza al bucket 500 → `server-error`. Si el status no está mapeado no ejecuta ninguna acción (`noop`) |
 
 ## Reglas de `src\shared\http-client`
 1. **PROHIBIDO** escribir logica de negocio/dominio en cualquier archivo de `src\shared\http-client`: todo su codigo tiene que ser agnostico al negocio, es decir, limitarse a responsabilidades transversales de HTTP (interceptores, normalizacion del contrato `ApiResponse<T>`, manejo global de errores, loader, logs) y funcionar igual en cualquier proyecto sin conocer las features que lo consumen.
