@@ -541,7 +541,12 @@ git commit y git push
 > [!CAUTION]
 > ⚠️ Advertencia
 >
-> Esta skill es muy buena, pero gasta muchos tokens. Usala con cuidado
+> Usar esta skill con ciudado, es muy buena, pero:
+> 1. Gasta muchos tokens
+>
+> 2. Si intentas solucionar un bug con esta skill sin entender el código, es probable que introduzcas nuevos bugs.
+
+Esta skill es muy buena, pero . Usala con cuidado
 
 Mira [este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿como usar y que es `playwright-cli`?
 
