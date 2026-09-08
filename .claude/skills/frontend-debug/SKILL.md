@@ -16,11 +16,18 @@ Hay exactamente dos modos y se comportan distinto:
 | | Modo AUTOMATIZAR | Modo DEPURAR |
 |---|---|---|
 | Para qué sirve | ejecutar o automatizar un flujo de la app | encontrar la causa de un bug o de un comportamiento incorrecto |
-| Modifica código fuente | **no** | sí, solo instrumentación temporal |
-| Diagnostica (`console`, `network`, `eval`, `screenshot`) | **no** | sí |
+| Modifica código fuente | **no** | sí, en dos casos |
+| Diagnostica (`console`, `requests`, `eval`, `screenshot`) | **no** | sí |
 | Pregunta antes de terminar | **no**, ejecuta y reporta | sí, obligatorio antes de corregir |
 
-**El modo lo elige el usuario, no tú.** Es lo primero de la skill: antes de leer el `--help`, antes de arrancar el dev server y antes de abrir el navegador, pregúntaselo con `AskUserQuestion`. No lo deduzcas de cómo redactó la petición, ni siquiera cuando uno de los dos parezca evidente: "prueba el login" puede ser ejecutar el flujo o averiguar por qué falla, y equivocarse cuesta una sesión entera de instrumentación que nadie pidió.
+Los dos casos en que el modo DEPURAR escribe en el código fuente:
+
+1. **Instrumentación temporal** — `console.log` marcados con `// DBG-<id>`, y `throw` para forzar un `catch` cuando el fallo no se puede inducir desde la red. No cambia el comportamiento de la app, se aplica sin preguntar y **se borra en la misma respuesta** (sección "7.2 Borrar la instrumentación").
+2. **La corrección del bug** — solo la opción que el usuario autorizó al responder el `AskUserQuestion` de la sección "6.6 PARAR y preguntar — nunca corregir por tu cuenta". Permanece en el repo.
+
+Cualquier otra edición está prohibida, incluidos los bugs que encuentres de paso mientras depuras: repórtalos y sigue con el autorizado.
+
+**El modo lo elige el usuario, no tú.** Preguntar con `AskUserQuestion`. No lo deduzcas de cómo redactó la petición, ni siquiera cuando uno de los dos parezca evidente: "prueba el login" puede ser ejecutar el flujo o averiguar por qué falla, y equivocarse cuesta una sesión entera de instrumentación que nadie pidió.
 
 La pregunta lleva dos opciones, y en cada descripción lo que ese modo implica de verdad — si va a tocar el código y si va a parar a preguntar antes de corregir:
 
@@ -88,19 +95,9 @@ Por eso **todos** los comandos de este documento van con `pnpm exec` y nunca inv
 
 ### Los comandos de este documento son ejemplos, no una lista blanca
 
-Esta skill **NO limita** qué comandos de `playwright-cli` puedes ejecutar. Los que aparecen aquí — `open`, `snapshot`, `click`, `console`, `network`, `eval`, `screenshot`, `route`, `close` — son los que resuelven la mayoría de los casos, nada más.
+Esta skill **NO limita** qué comandos de `playwright-cli` puedes ejecutar. Los que aparecen aquí — `open`, `snapshot`, `click`, `console`, `requests`, `request`, `eval`, `screenshot`, `route`, `close` — son los que resuelven la mayoría de los casos, nada más.
 
-Si necesitas otro, **búscalo en `.claude/skills/playwright-cli/SKILL.md` o en `pnpm exec playwright-cli --help` y ejecútalo.** Hay muchos que este documento no menciona y que resuelven una situación concreta mejor que cualquier rodeo:
-
-| Comando | Cuándo te salva |
-|---|---|
-| `find` | buscar texto en un snapshot enorme sin volcarlo entero |
-| `upload` | un `input[type=file]` |
-| `dialog-accept` / `dialog-dismiss` | un `confirm()` o `alert()` que bloquea el flujo |
-| `resize` | reproducir un bug que solo aparece en cierto viewport |
-| `cookie-set` / `sessionstorage-set` | saltarte un login para llegar antes al paso que falla |
-| `hover`, `check`, `select`, `drag` | interacciones que un `click` no cubre |
-| `tab-close`, `-s=<sesión>` | flujos con varias pestañas o sesiones en paralelo |
+Si necesitas otro, **búscalo en `.claude/skills/playwright-cli/SKILL.md` o en `pnpm exec playwright-cli --help` y ejecútalo.** Hay muchos que este documento no menciona y que resuelven una situación concreta mejor que cualquier rodeo
 
 Usar el comando adecuado siempre es mejor que forzar uno de los ejemplos de este documento.
 
@@ -165,7 +162,7 @@ Si el usuario sigue con el mismo bug en el turno siguiente, vuelves a arrancarlo
 
 ## 5. Modo AUTOMATIZAR
 
-Ejecutar el flujo, nada más. Aquí **no se diagnostica**: sin `screenshot`, sin `console`, sin `network`, sin `eval`. Esas son las herramientas del modo DEPURAR, descritas en la sección "6.2 Observar desde fuera (antes de tocar el código)", y aquí solo añaden ruido a un flujo que se pidió *ejecutar*, no auditar.
+Ejecutar el flujo, nada más. Aquí **no se diagnostica**: sin `screenshot`, sin `console`, sin `requests`, sin `eval`. Esas son las herramientas del modo DEPURAR, descritas en la sección "6.2 Observar desde fuera (antes de tocar el código)", y aquí solo añaden ruido a un flujo que se pidió *ejecutar*, no auditar.
 
 1. Abre la app y toma un `snapshot` para obtener los refs.
 2. Ejecuta el flujo completo de punta a punta con los comandos de interacción. Re-snapshot después de cada navegación o cambio grande del DOM: los refs se invalidan.
@@ -191,18 +188,23 @@ La mayoría de los bugs se identifican aquí sin editar nada:
 ```bash
 pnpm exec playwright-cli console error     # errores de la consola del navegador
 pnpm exec playwright-cli console           # todo lo que loguea la app
-pnpm exec playwright-cli network --filter="api" --request-body   # peticiones reales
+pnpm exec playwright-cli requests --filter="/api/.*"   # lista numerada de las peticiones reales
+pnpm exec playwright-cli request 5         # detalle completo de la petición nº5
 pnpm exec playwright-cli eval "() => ..."  # inspeccionar DOM o estado global
 pnpm exec playwright-cli screenshot        # bugs visuales o de maquetación
 ```
 
-`network` te da URL, método, status, tiempo y cuerpo de cada petición real que hizo el navegador, con sus headers y cookies. Eso reemplaza a la mayoría de los `console.log` alrededor de llamadas HTTP. Úsalo primero.
+Las peticiones reales son **dos comandos, no uno**: `requests` lista todo lo que pidió el navegador desde que cargó la página, numerado; `request <n>` abre una de esas por su número y te da URL, método, status, tiempo, headers, cookies y los cuerpos de ida y vuelta. Eso reemplaza a la mayoría de los `console.log` alrededor de llamadas HTTP. Úsalo primero.
+
+- El `--filter` de `requests` es un **regexp** sobre la URL, no texto suelto: `--filter="/api/.*user"`.
+- Por defecto omite recursos estáticos (imágenes, fuentes, scripts). Agrega `--static` solo si sospechas de uno.
+- Si el detalle completo es demasiado grande, pide solo la parte que necesitas: `request-headers <n>`, `request-body <n>`, `response-headers <n>`, `response-body <n>`.
 
 **Solo pasa a instrumentar el código si esto no basta.**
 
 ### 6.3 Aislar frontend vs backend
 
-Si el fallo involucra una API, repite la petición desde la terminal con `curl` (mismo método, cuerpo y headers de auth que viste en `network`):
+Si el fallo involucra una API, repite la petición desde la terminal con `curl`, copiando el método, el cuerpo y los headers de auth exactos que te devolvió `request <n>`:
 
 - El endpoint responde bien por `curl` pero mal en la app → el bug es del frontend.
 - El endpoint responde mal por `curl` → el bug es del backend; deja de instrumentar el frontend.
@@ -261,10 +263,12 @@ Después de cada tanda de instrumentación: recarga, repite el flujo, y lee `pla
 Para probar el `catch` y no solo el `try`, **prefiere forzar el fallo desde la red**, sin tocar el código:
 
 ```bash
-pnpm exec playwright-cli route "**/api/<recurso>" --body='{"error":"forzado"}' --content-type=application/json
+pnpm exec playwright-cli route "**/api/<recurso>" --status=500 --body='{"error":"forzado"}' --content-type=application/json
 ```
 
-Consulta `playwright-cli route --help` para las opciones de status y abort de tu versión. Esto es reversible, no deja residuos en el repo y ejercita el `catch` real.
+El `--status` de error es obligatorio: sin él `route` responde **200** y el flujo sigue por el camino feliz con un body raro, sin llegar nunca al `catch`. Consulta `playwright-cli route --help` para las opciones de headers y content-type de tu versión.
+
+Y `route` no anula la petición: para simular una caída de red en lugar de una respuesta de error, usa `pnpm exec playwright-cli network-state-set offline` y restaura con `online`. Ambas cosas son reversibles, no dejan residuos en el repo y ejercitan el `catch` real.
 
 Modifica el código para forzar un throw **solo** cuando el fallo no se pueda inducir desde fuera, y solo en el `catch` del flujo bajo investigación. No recorras el proyecto forzando todos los `catch`.
 
@@ -282,7 +286,7 @@ Un diagnóstico sin evidencia no es un diagnóstico. Si no puedes señalar el lo
 
 ### 6.7 Corregir y verificar
 
-Aplica solo la opción elegida. Después, vuelve a ejecutar el flujo completo con playwright-cli: interacción, `console error` limpio, `network` con el status esperado, y screenshot final. Repite hasta que pase. Un "ya debería funcionar" sin ejecución no cuenta como verificación.
+Aplica solo la opción elegida. Después, vuelve a ejecutar el flujo completo con playwright-cli: interacción, `console error` limpio, `requests` con el status esperado, y screenshot final. Repite hasta que pase. Un "ya debería funcionar" sin ejecución no cuenta como verificación.
 
 ## 7. Limpieza y verificación obligatorias
 
