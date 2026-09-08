@@ -2,7 +2,7 @@
 name: frontend-debug
 description: Depura bugs y automatiza flujos de UI ejecutando la app real en el navegador con playwright-cli, de forma agnóstica al framework (Angular, React/Next, Vue/Nuxt, Svelte, Astro, vanilla). Úsala siempre que el usuario reporte un bug de interfaz, diga que algo "no funciona", "no carga", "no guarda", "da error" o "se ve mal", pida reproducir o diagnosticar un fallo, pida verificar visualmente un cambio de maquetación, o pida automatizar o ejecutar un flujo de la app (login, alta de registro, checkout, wizard). NO es para escribir tests de Jest, Vitest o Playwright Test: es para depuración interactiva y automatización asistida por agente contra la app corriendo.
 when_to_use: Frases típicas que la disparan - "hay un bug en X", "no me funciona el formulario", "revisa por qué falla", "reprodúcelo y dime qué pasa", "prueba el flujo completo de", "automatiza el proceso de", "toma un screenshot de", "mira la consola del navegador", "el botón no hace nada".
-allowed-tools: Read, Grep, Glob, Bash(pnpm exec playwright-cli *), Bash(pnpm run *), Bash(pnpm install), Bash(curl *), Bash(git diff *), Bash(git status *), AskUserQuestion, TaskStop
+allowed-tools: Read, Edit, Write, Grep, Glob, Bash(pnpm exec playwright-cli:*), Bash(pnpm run:*), Bash(pnpm install), Bash(curl:*), Bash(grep:*), Bash(netstat:*), Bash(taskkill:*), Bash(git status:*), Bash(git diff:*), Bash(git stash:*), AskUserQuestion, TaskStop
 ---
 
 # Depuración y automatización de frontend con `playwright-cli`
@@ -90,7 +90,7 @@ Por eso **todos** los comandos de este documento van con `pnpm exec` y nunca inv
 
 **Ignora la sección «Installation» de la skill oficial de Microsoft.** Esa sección asume un binario global y manda hacer `npm install -g @playwright/cli@latest`. Aquí está **prohibido**: traería una versión distinta de la que fija `pnpm-lock.yaml`, con otros comandos y otras flags, y el diagnóstico dejaría de ser reproducible. Lo mismo vale para `pnpm dlx`, `npx` y `bunx`, que resuelven el paquete fuera del lockfile.
 
-- Si `pnpm exec playwright-cli --help` falla → faltan las dependencias del proyecto: `pnpm install`. Nunca `pnpm add` ni `npm install -g`, el paquete ya está declarado.
+- Si `pnpm exec playwright-cli --help` no imprime la lista de comandos → faltan las dependencias del proyecto: `pnpm install`. Nunca `pnpm add` ni `npm install -g`, el paquete ya está declarado. Júzgalo por la salida, no por el código de salida: en Windows `--help` imprime la ayuda correcta y aun así termina en `127` con un `Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)`; eso no es un fallo y no justifica reinstalar nada.
 - Si al ejecutarlo avisa de que hay una versión más nueva → **no actualices**. Subir la versión es tocar las dependencias del proyecto, y la sección "8. Límites" lo prohíbe sin preguntar antes.
 
 ### Los comandos de este documento son ejemplos, no una lista blanca
@@ -189,16 +189,16 @@ La mayoría de los bugs se identifican aquí sin editar nada:
 pnpm exec playwright-cli console error     # errores de la consola del navegador
 pnpm exec playwright-cli console           # todo lo que loguea la app
 pnpm exec playwright-cli requests --filter="/api/.*"   # lista numerada de las peticiones reales
-pnpm exec playwright-cli request 5         # detalle completo de la petición nº5
+pnpm exec playwright-cli request 5         # detalle de la petición nº5
 pnpm exec playwright-cli eval "() => ..."  # inspeccionar DOM o estado global
 pnpm exec playwright-cli screenshot        # bugs visuales o de maquetación
 ```
 
-Las peticiones reales son **dos comandos, no uno**: `requests` lista todo lo que pidió el navegador desde que cargó la página, numerado; `request <n>` abre una de esas por su número y te da URL, método, status, tiempo, headers, cookies y los cuerpos de ida y vuelta. Eso reemplaza a la mayoría de los `console.log` alrededor de llamadas HTTP. Úsalo primero.
+Las peticiones reales son **dos comandos, no uno**: `requests` lista todo lo que pidió el navegador desde que cargó la página, numerado; `request <n>` abre una de esas por su número y te da URL, método, status, tiempo y los headers de ida y vuelta. Eso reemplaza a la mayoría de los `console.log` alrededor de llamadas HTTP. Úsalo primero.
 
 - El `--filter` de `requests` es un **regexp** sobre la URL, no texto suelto: `--filter="/api/.*user"`.
 - Por defecto omite recursos estáticos (imágenes, fuentes, scripts). Agrega `--static` solo si sospechas de uno.
-- Si el detalle completo es demasiado grande, pide solo la parte que necesitas: `request-headers <n>`, `request-body <n>`, `response-headers <n>`, `response-body <n>`.
+- `request <n>` **no trae los cuerpos**: pídelos aparte con `request-body <n>` y `response-body <n>`. Si el detalle es demasiado grande, pide solo la parte que necesitas: `request-headers <n>`, `response-headers <n>`.
 
 **Solo pasa a instrumentar el código si esto no basta.**
 
@@ -256,7 +256,7 @@ Instrumenta el **camino sospechoso**, no el archivo entero. Un log de más entie
 - Dentro del render o template de un componente reactivo, ni en un `computed`/`getter` que se recalcula en cada render: genera cientos de líneas por interacción.
 - En un handler de alta frecuencia (`scroll`, `mousemove`, `resize`, `input`) sin filtro.
 
-Después de cada tanda de instrumentación: recarga, repite el flujo, y lee `playwright-cli console`. Ajusta y repite. Es un ciclo, no un volcado único.
+Después de cada tanda de instrumentación: recarga, repite el flujo, y lee `pnpm exec playwright-cli console`. Ajusta y repite. Es un ciclo, no un volcado único.
 
 ### 6.5 Forzar la rama de error
 
@@ -266,7 +266,7 @@ Para probar el `catch` y no solo el `try`, **prefiere forzar el fallo desde la r
 pnpm exec playwright-cli route "**/api/<recurso>" --status=500 --body='{"error":"forzado"}' --content-type=application/json
 ```
 
-El `--status` de error es obligatorio: sin él `route` responde **200** y el flujo sigue por el camino feliz con un body raro, sin llegar nunca al `catch`. Consulta `playwright-cli route --help` para las opciones de headers y content-type de tu versión.
+El `--status` de error es obligatorio: sin él `route` responde **200** y el flujo sigue por el camino feliz con un body raro, sin llegar nunca al `catch`. Consulta `pnpm exec playwright-cli route --help` para las opciones de headers y content-type de tu versión.
 
 Y `route` no anula la petición: para simular una caída de red en lugar de una respuesta de error, usa `pnpm exec playwright-cli network-state-set offline` y restaura con `online`. Ambas cosas son reversibles, no dejan residuos en el repo y ejercitan el `catch` real.
 
@@ -302,7 +302,7 @@ No dejes nada vivo en background. En este orden:
    pnpm exec playwright-cli close
    ```
 
-   Si abriste sesiones con nombre o varias ventanas, `playwright-cli close-all`.
+   Si abriste sesiones con nombre o varias ventanas, `pnpm exec playwright-cli close-all`.
 
 2. **El dev server:** `TaskStop` con el `task_id` del paso 3 de la sección "4. Detectar el entorno (nunca asumirlo)".
 
@@ -312,14 +312,21 @@ No dejes nada vivo en background. En este orden:
    curl -sS -o /dev/null -w "%{http_code}" http://localhost:<puerto>
    ```
 
-   La conexión tiene que fallar. Si el puerto sigue respondiendo, el proceso quedó vivo: localízalo y mátalo antes de dar nada por terminado.
+   La conexión tiene que fallar. Si el puerto sigue respondiendo, el proceso quedó vivo, y es lo normal: `TaskStop` mata el wrapper de `pnpm`, pero el dev server corre en un proceso hijo de Node que sobrevive, sea cual sea el framework. Localízalo por el puerto y mátalo con todo su árbol de hijos antes de dar nada por terminado:
+
+   ```bash
+   netstat -ano | grep ":<puerto>.*LISTENING"   # la última columna es el PID
+   taskkill //PID <pid> //T //F                 # en PowerShell: taskkill /PID <pid> /T /F
+   ```
+
+   Vuelve a lanzar el `curl` y no sigas hasta que la conexión falle.
 
 Esto aplica **siempre**, no solo cuando la tarea sale bien: también si abandonas el diagnóstico, si el arranque falló a medias, si el usuario cambia de tema, o si te quedas esperando su respuesta a un `AskUserQuestion`. Un dev server huérfano ocupa el puerto, así que el siguiente arranque falla o —peor— te conectas sin darte cuenta a la instancia vieja y depuras contra un build que ya no corresponde al código.
 
 ### 7.2 Borrar la instrumentación
 
 ```bash
-grep -rn "DBG-<id>" . --exclude-dir=node_modules --exclude-dir=.git
+grep -rn "DBG-<id>" . --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=.claude
 ```
 
 Borra cada coincidencia, junto con cualquier `throw` temporal que hayas añadido para forzar un `catch`. Luego:
@@ -350,7 +357,7 @@ Si el linter marca errores en las líneas que tocaste, arréglalos. Si los marca
 
 ### 7.4 Ejecutar el build
 
-El último control: con la instrumentación borrada y el linter en verde, comprueba que el proyecto compila. **Lee los scripts del `package.json`** igual que en el paso anterior: no asumas que existe un `build` a secas — en este proyecto son `build:test` y `build:prod`.
+El último control: con la instrumentación borrada y el linter ya resuelto según el paso anterior, comprueba que el proyecto compila. **Lee los scripts del `package.json`** igual que en el paso anterior: no asumas que existe un `build` a secas — en este proyecto son `build:test` y `build:prod`.
 
 ```bash
 pnpm run <script-de-build>
