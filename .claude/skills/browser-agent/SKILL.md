@@ -1,5 +1,5 @@
 ---
-name: frontend-debug
+name: browser-agent
 description: Depura bugs y automatiza flujos de UI ejecutando la app real en el navegador con playwright-cli, de forma agnóstica al framework (Angular, React/Next, Vue/Nuxt, Svelte, Astro, vanilla). Úsala siempre que el usuario reporte un bug de interfaz, diga que algo "no funciona", "no carga", "no guarda", "da error" o "se ve mal", pida reproducir o diagnosticar un fallo, pida verificar visualmente un cambio de maquetación, o pida automatizar o ejecutar un flujo de la app (login, alta de registro, checkout, wizard). NO es para escribir tests de Jest, Vitest o Playwright Test: es para depuración interactiva y automatización asistida por agente contra la app corriendo.
 when_to_use: Frases típicas que la disparan - "hay un bug en X", "no me funciona el formulario", "revisa por qué falla", "reprodúcelo y dime qué pasa", "prueba el flujo completo de", "automatiza el proceso de", "toma un screenshot de", "mira la consola del navegador", "el botón no hace nada".
 allowed-tools: Read, Edit, Write, Grep, Glob, Bash(pnpm exec playwright-cli *), Bash(pnpm run *), Bash(pnpm install), Bash(curl *), Bash(grep *), Bash(netstat *), Bash(taskkill *), Bash(git status *), Bash(git diff *), Bash(git stash *), AskUserQuestion, TaskStop
@@ -74,7 +74,7 @@ Las dos skills son **DIFERENTES** y ninguna sustituye a la otra:
 
 * **`playwright-cli`**: lista y explicación de los comandos que permiten a la IA controlar el navegador — sintaxis, refs (`e15`), snapshots, sesiones. Es el **catálogo de comandos**: qué se puede teclear y con qué flags.
 
-* **`frontend-debug`** (este documento): llama a la skill `playwright-cli` y le explica a la IA **cómo usar** esos comandos para automatizar un proceso o solucionar un bug — en qué orden, en qué momento, cuándo parar y qué está prohibido. Es el **criterio**, no el catálogo.
+* **`browser-agent`** (este documento): llama a la skill `playwright-cli` y le explica a la IA **cómo usar** esos comandos para automatizar un proceso o solucionar un bug — en qué orden, en qué momento, cuándo parar y qué está prohibido. Es el **criterio**, no el catálogo.
 
 Consecuencia práctica: este documento **no repite** la mecánica de los comandos, así que leerlo solo no basta para teclear nada. Y `playwright-cli` **no decide** nada sobre cuándo aplicarlos, así que leerlo solo tampoco basta: sabrías ejecutar comandos, pero no cuál usar en cada paso, ni cuándo dejar de instrumentar, ni cuándo preguntar antes de corregir. Se usan **juntas**.
 
