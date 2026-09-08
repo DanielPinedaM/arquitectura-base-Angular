@@ -568,11 +568,6 @@ Las skills son **DIFERENTES**:
 | ¿Genera el build de la aplicacion?                                              | ❌ No                                     | ✅ Sí                                       |
 | ¿Abre el navegador y usa comandos de `playwright-cli`?                          | ✅ Sí                                     | ✅ Sí                                       |
 
-Ejemplos:
-**Modo Automatizar:** Llenar un formulario muchas veces.
-
-**Modo Depurar:** La pagina web no es responsive, corrigela
-
 **SIEMPRE** que necesites controlar el navegador con la IA, llamar la skill `browser-agent` y **NO** la skill `playwright-cli`. Usar este prompt:
 
 ***Ejemplo de Prompt:***
