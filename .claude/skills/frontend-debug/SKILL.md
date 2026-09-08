@@ -2,7 +2,7 @@
 name: frontend-debug
 description: Depura bugs y automatiza flujos de UI ejecutando la app real en el navegador con playwright-cli, de forma agnóstica al framework (Angular, React/Next, Vue/Nuxt, Svelte, Astro, vanilla). Úsala siempre que el usuario reporte un bug de interfaz, diga que algo "no funciona", "no carga", "no guarda", "da error" o "se ve mal", pida reproducir o diagnosticar un fallo, pida verificar visualmente un cambio de maquetación, o pida automatizar o ejecutar un flujo de la app (login, alta de registro, checkout, wizard). NO es para escribir tests de Jest, Vitest o Playwright Test: es para depuración interactiva y automatización asistida por agente contra la app corriendo.
 when_to_use: Frases típicas que la disparan - "hay un bug en X", "no me funciona el formulario", "revisa por qué falla", "reprodúcelo y dime qué pasa", "prueba el flujo completo de", "automatiza el proceso de", "toma un screenshot de", "mira la consola del navegador", "el botón no hace nada".
-allowed-tools: Read, Edit, Write, Grep, Glob, Bash(pnpm exec playwright-cli:*), Bash(pnpm run:*), Bash(pnpm install), Bash(curl:*), Bash(grep:*), Bash(netstat:*), Bash(taskkill:*), Bash(git status:*), Bash(git diff:*), Bash(git stash:*), AskUserQuestion, TaskStop
+allowed-tools: Read, Edit, Write, Grep, Glob, Bash(pnpm exec playwright-cli *), Bash(pnpm run *), Bash(pnpm install), Bash(curl *), Bash(grep *), Bash(netstat *), Bash(taskkill *), Bash(git status *), Bash(git diff *), Bash(git stash *), AskUserQuestion, TaskStop
 ---
 
 # Depuración y automatización de frontend con `playwright-cli`
@@ -56,7 +56,7 @@ Detente en ese punto exacto y usa `AskUserQuestion`:
 
 Ninguna otra sección de este documento te autoriza a rellenar vacíos, inventar comportamiento, deducir requisitos ni tomar decisiones de diseño que no estén especificadas explícitamente. Ante la duda, se pregunta.
 
-Los tres momentos en que preguntar ya está fijado por el procedimiento —el modo (sección "1. Elegir el modo — pregúntalo antes de ejecutar nada"), el entorno a levantar (sección "4. Detectar el entorno (nunca asumirlo)", paso 2) y el diagnóstico antes de corregir (sección "6.6 PARAR y preguntar — nunca corregir por tu cuenta")— son casos particulares de esta regla, no la lista completa de cuándo aplicarla.
+Los cuatro momentos en que preguntar ya está fijado por el procedimiento —el modo (sección "1. Elegir el modo — pregúntalo antes de ejecutar nada"), el entorno a levantar (sección "4. Detectar el entorno (nunca asumirlo)", paso 2), el diagnóstico antes de corregir (sección "6.6 PARAR y preguntar — nunca corregir por tu cuenta") y el fallo del build (sección "7.4 Ejecutar el build")— son casos particulares de esta regla, no la lista completa de cuándo aplicarla.
 
 ## 3. Mecánica de playwright-cli
 
@@ -376,11 +376,20 @@ Si hay varios, usa el de test o desarrollo, nunca el de producción: detecta los
 
 Diagnostica desde el archivo y la línea que da la propia salida, no adivinando. Si la salida es larga, no la resumas de memoria: vuelve a leerla y cita el mensaje exacto.
 
-Si el build falla, **arréglalo antes de entregar**. Y antes de dar por hecho que "ya estaba roto de antes", compruébalo en vez de suponerlo: `git stash`, build, `git stash pop`. Si efectivamente fallaba sin tus cambios, dilo en el reporte y no lo arregles por tu cuenta — es trabajo fuera de la corrección autorizada, ver la sección "8. Límites".
+Si el build falla, aplica la sección "6.6 PARAR y preguntar — nunca corregir por tu cuenta" tal cual está escrita ahí. Lo único que este paso añade es qué llevar a esa pregunta, porque la salida del build mezcla dos tipos de error:
+
+1. Los que **NO** están relacionados con el bug buscado por el usuario.
+2. Los que **SÍ** están relacionados con el bug buscado por el usuario.
+
+Sepáralos revisando el working directory, nunca suponiendo: `git stash` y build — lo que sigue fallando sin tus cambios es del tipo 1 —, luego `git stash pop` y build — lo que aparece solo con tus cambios aplicados es del tipo 2.
+
+Lleva los dos tipos a la pregunta, en listas separadas, cada error con el archivo, la línea y el mensaje exacto de la salida. **Si un tipo no tiene errores, dilo y no inventes ninguno**: "no hay errores ajenos al bug buscado" y "no hay errores relacionados con el bug buscado" son las respuestas que corresponden cuando esa lista está vacía.
+
+Los errores del tipo 1 son trabajo fuera de la corrección autorizada: no los toques salvo que el usuario elija arreglarlos en esa pregunta, ver la sección "8. Límites".
 
 ## 8. Límites
 
 - No escribas tests de Jest, Vitest, Cypress ni Playwright Test. Si el usuario quiere cobertura permanente, dilo y pregunta; no lo hagas por iniciativa propia.
 - No refactorices, renombres ni "mejores" código que no forma parte de la corrección autorizada.
-- No cambies configuración del proyecto, dependencias ni variables de entorno sin preguntar.
+- No alteres el proyecto original —configuración, funcionalidad, maquetación, dependencias ni variables de entorno— por iniciativa propia. Cámbialo solo si el usuario lo pidió explícitamente, o si preguntaste antes y autorizó ese cambio.
 - No inventes la causa del bug. Si tras la instrumentación no está claro, reporta lo que descartaste y lo que falta por descartar.
