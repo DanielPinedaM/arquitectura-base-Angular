@@ -151,9 +151,9 @@ export class ApiResponseNormalizerService {
 
     /** (d) que los tipos de datos de los values sean correctos (data NO se valida porque es tipo <T>) */
     return (
-      typeof response?.[API_RESPONSE_KEYS.success] === 'boolean' &&
-      typeof response?.[API_RESPONSE_KEYS.status] === 'number' &&
-      typeof response?.[API_RESPONSE_KEYS.message] === 'string'
+      typeof response[API_RESPONSE_KEYS.success] === 'boolean' &&
+      typeof response[API_RESPONSE_KEYS.status] === 'number' &&
+      typeof response[API_RESPONSE_KEYS.message] === 'string'
     );
   }
 
