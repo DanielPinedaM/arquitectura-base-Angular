@@ -4,7 +4,8 @@ import {
   REQUIRED_KEYS,
 } from '@/shared/http-client/data-types/constants/http-client.const';
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
-import { Service } from '@angular/core';
+import { HttpClientHelpersService } from '@/shared/http-client/services/http-client-helpers.service';
+import { inject, Service } from '@angular/core';
 
 /**
  * intermediario que valida y normaliza TODAS las respuestas HTTP al contrato ApiResponse<T>.
@@ -13,6 +14,8 @@ import { Service } from '@angular/core';
  * success, status, message y data. */
 @Service()
 export class ApiResponseNormalizerService {
+  private readonly helper = inject(HttpClientHelpersService);
+
   /**
    * valida y normaliza el body crudo de CUALQUIER respuesta HTTP (exitosa o erronea) al contrato ApiResponse<T>.
    *
@@ -109,21 +112,44 @@ export class ApiResponseNormalizerService {
   }
 
   /**
-   * valida (a) que existan TODAS las keys del contrato
-   * y (b) que los tipos de sus values sean correctos.
+   * valida (a) que el body sea un objeto literal {},
+   * (b) que traiga al menos tantas keys como exige el contrato ApiResponse<T>,
+   * (c) que existan TODAS las keys del contrato
+   * y (d) que los tipos de sus values sean correctos.
    *
    * En `data` solo se valida que la key exista, porque su tipo es <T> */
   private isApiContract<T>(value: unknown): value is ApiResponse<T> {
-    if (typeof value !== 'object' || value === null) return false;
+    /**
+     * (a) que sea un objeto literal {}, delegado en el helper isLiteralObject.
+     *
+     * Reemplaza a `typeof value !== 'object' || value === null` porque, ademas de descartar
+     * null, tambien descarta arrays, Date, Map, instancias de clase, etc., que NUNCA cumplen
+     * el contrato. Su type predicate (value is Record<string | symbol, unknown>) es el que
+     * habilita, ya tipado, tanto literalObjectLength(value) como la conversion
+     * a Record<keyof ApiResponse, unknown> */
+    if (!this.helper.isLiteralObject(value)) return false;
+
+    /** numero de keys que EXIGE el contrato ApiResponse<T> */
+    const requiredKeysLength: number = REQUIRED_KEYS.length;
+
+    /** numero de keys que REALMENTE trae el body de la API */
+    const responseLength: number = this.helper.literalObjectLength(value);
+
+    /**
+     * (b) que la API traiga >= keys que el contrato.
+     *
+     * Descarta por longitud, ANTES de recorrer las keys una a una, cualquier objeto literal
+     * demasiado corto para cumplir el contrato ({} vacio, un body parcial, etc.) */
+    if (responseLength < requiredKeysLength) return false;
 
     const response = value as Record<keyof ApiResponse, unknown>;
 
-    /** (a) que las keys existan */
+    /** (c) que las keys existan */
     const hasAllKeys: boolean = REQUIRED_KEYS.every((key) => key in response);
 
     if (!hasAllKeys) return false;
 
-    /** (b) que los tipos de datos de los values sean correctos (data NO se valida porque es tipo <T>) */
+    /** (d) que los tipos de datos de los values sean correctos (data NO se valida porque es tipo <T>) */
     return (
       typeof response?.[API_RESPONSE_KEYS.success] === 'boolean' &&
       typeof response?.[API_RESPONSE_KEYS.status] === 'number' &&
