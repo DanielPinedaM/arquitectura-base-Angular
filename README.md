@@ -755,7 +755,9 @@ NO  → dejarlo como está
 
 Si detectas varias infracciones en la misma pasada, agrúpalas en una sola llamada a `AskUserQuestion`, una pregunta por infracción.
 
-# 📁 Estructura Base del Proyecto
+# Estructura del Proyecto
+
+## Árbol de Directorios
 La siguiente estructura NO es una lista exhaustiva de los archivos del proyecto, es la **arquitectura base de referencia**: el patrón que define cómo se organiza el código y que toda la aplicación debe seguir, sin importar cuánto crezca el proyecto o cuántas features se agreguen.
 
 ```txt
@@ -943,7 +945,7 @@ src/
             └── theme.css → variables de Tailwind
 ```
 
-# Feature Architecture
+## Feature Architecture
 
 Este proyecto utiliza **Feature Architecture** sobre Angular
 
@@ -957,12 +959,7 @@ Un archivo no debe moverse a `shared` únicamente porque se reutiliza en varias 
 
 La reutilización no convierte automáticamente un archivo en código compartido (`shared`)
 
-# Regla de Ubicación de Archivos y Carpetas
-
-
-
-
-
+## Regla de Ubicación de Archivos y Carpetas
 
 > [!WARNING]
 > # ***INCOMPLETO - verificar manualmente otra vez todo este readme md, para pasar readme md de next a angular***
@@ -974,9 +971,9 @@ La reutilización no convierte automáticamente un archivo en código compartido
 
 
 
-# Diferencia entre `src/app/features` y `src/shared`
+## Diferencia entre `src/app/features` y `src/shared`
 
-## `src/app/features`
+### `src/app/features`
 
 Contiene código específico de una funcionalidad del sistema.
 
@@ -995,7 +992,7 @@ La lógica de negocio nunca debe salir de su feature.
 
 * `src/app/features/*/services/stores`: gestión de datos propios de la feature.
 
-## `src/shared`
+### `src/shared`
 
 Contiene únicamente código reutilizable y completamente agnóstico al dominio.
 
@@ -1016,9 +1013,9 @@ Contiene únicamente código reutilizable y completamente agnóstico al dominio.
 
 * `src/shared/services/stores`: estado global de toda la aplicación.
 
-# Diferencia entre `components` y `ui`
+## Diferencia entre `components` y `ui`
 
-## ui
+### ui
 
 `ui` contiene exclusivamente componentes de presentación y maquetación.
 
@@ -1028,7 +1025,7 @@ Un componente de `ui` no puede conocer logica de negocio, entidades del sistema 
 
 Su única responsabilidad es renderizar interfaz reutilizable.
 
-## components
+### components
 
 `components` contiene componentes con lógica de negocio específica de la feature donde están definidos.
 
@@ -1036,7 +1033,7 @@ Un componente pertenece a `components` cuando conoce el dominio, participa en un
 
 La lógica de negocio siempre pertenece a `components`, nunca a `ui`.
 
-## Prohibido `src/shared/components`
+### Prohibido `src/shared/components`
 
 La carpeta `src/shared/components` está prohibida.
 
@@ -1061,9 +1058,9 @@ Las únicas ubicaciones válidas para componentes compartidos es:
 
 * `src/shared/design/ui`
 
-# Diferencia entre `ui` y `layouts`
+## Diferencia entre `ui` y `layouts`
 
-## ui
+### ui
 
 `ui` contiene exclusivamente componentes de presentación y maquetación reutilizables.
 
@@ -1079,7 +1076,7 @@ Un componente de `ui` **NO** debe actuar como contenedor principal de una pantal
 * Modal
 * Card
 
-## layouts
+### layouts
 
 `layouts` contiene contenedores padre reutilizables encargados de definir la estructura visual de páginas, secciones o flujos.
 
@@ -1093,7 +1090,7 @@ Un layout puede contener múltiples componentes de `ui`, pero un componente de `
 * DashboardLayout
 * HomeLayout
 
-## Regla de ubicación
+### Regla de ubicación
 
 La ubicación depende del alcance de reutilización:
 
@@ -1107,8 +1104,7 @@ La ubicación depende del alcance de reutilización:
 
 La decisión de ubicar un archivo en `features` o `shared` depende de su conocimiento del dominio y alcance de reutilización, no de si es un `ui` o un `layout`.
 
-# 🔀 Enrutado
-
+## Enrutado
 El nombre de las carpetas dentro de `src/app` tiene que coincidir exactamente con las rutas definidas en `src/app/app.routes.ts`
 
 Esto permite ubicar los componentes que corresponden a cada URL
@@ -1163,7 +1159,7 @@ En este ejemplo:
 
 - `AuthGuard` protege automáticamente todas las rutas hijas gracias a `canActivateChild`
 
-# 🔒 Protección de Rutas
+## Protección de Rutas
 
 Todas las páginas protegidas de la aplicación deben ser `children` de `MainWrapperComponent`.
 
