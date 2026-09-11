@@ -945,6 +945,29 @@ src/
             └── theme.css → variables de Tailwind
 ```
 
+## Sufijos en Nombres de Archivos
+[Angular moderno eliminó la necesidad de usar sufijos](https://angular.dev/cli/new#options) como `.component`, `.service`, `.directive`, `.pipe`, etc. porque el decorador de Angular (`@Component`, `@Injectable`, etc.) ya indica qué hace el archivo.
+
+### Convención usada en este proyecto
+Aunque Angular moderno ya no obliga a usar sufijos, en este proyecto **sí** se usan, porque hacen explícito el tipo de cada archivo en su nombre, lo que evita ambigüedades y mantiene la consistencia al recorrer carpetas y leer imports en un proyecto grande.
+
+### ¿Dónde están definidos los sufijos?
+En `angular.json`, en la key `schematics` del proyecto `front`, que está dentro de la key `projects`:
+
+```jsonc
+{
+  "projects": {
+    "front": {
+      "schematics": {
+        // aquí dentro está definido el sufijo de cada tipo de archivo
+      }
+    }
+  }
+}
+```
+
+Cada entrada de `@schematics/angular` dentro de esa key define el sufijo con el que el Angular CLI genera ese tipo de archivo.
+
 ## Feature Architecture
 
 Este proyecto utiliza **Feature Architecture** sobre Angular
@@ -2868,29 +2891,6 @@ Además, `GatewayApiService` maneja:
 * logger
 * validaciones de seguridad (guards)
 ```
-
-# Sufijos en nombres de archivos
-[Angular moderno eliminó la necesidad de usar sufijos](https://angular.dev/cli/new#options) como `.component`, `.service`, `.directive`, `.pipe`, etc. porque el decorador de Angular (`@Component`, `@Injectable`, etc.) ya indica qué hace el archivo.
-
-## Convención usada en este proyecto
-Aunque Angular moderno ya no obliga a usar sufijos, en este proyecto **sí** se usan, porque hacen explícito el tipo de cada archivo en su nombre, lo que evita ambigüedades y mantiene la consistencia al recorrer carpetas y leer imports en un proyecto grande.
-
-## ¿Dónde están definidos los sufijos?
-En `angular.json`, en la key `schematics` del proyecto `front`, que está dentro de la key `projects`:
-
-```jsonc
-{
-  "projects": {
-    "front": {
-      "schematics": {
-        // aquí dentro está definido el sufijo de cada tipo de archivo
-      }
-    }
-  }
-}
-```
-
-Cada entrada de `@schematics/angular` dentro de esa key define el sufijo con el que el Angular CLI genera ese tipo de archivo.
 
 # Evitar Prop Drilling y Usar Data Down, Events Up
 name: prop-drilling
