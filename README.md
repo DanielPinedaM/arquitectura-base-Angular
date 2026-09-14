@@ -502,6 +502,8 @@ Ambos son mantenidos por el equipo oficial de Angular (Google), y tambien le ens
 
 ## 🔗 Enlaces con Respositorios de Skills
 
+* ## [Skills escritas por el equipo oficial de Angular (Google)](https://github.com/angular/skills)
+
 * ## [Web de Vercel con múltiples repositorios de Skills sobre distintos temas](https://www.skills.sh/)
 
 * ## [Skills para UI / Maquetación](https://www.ui-skills.com/)
@@ -641,9 +643,9 @@ they do not come with default styles (...)
 
 > [!NOTE]
 >
-> Esto es una guia. **NO** debes hacer lo siguiente porque el MCP ya estan configurado
+> Esto es una guia. **NO** debes hacer lo siguiente porque el MCP ya esta configurado
 >
-> Para explicar como configurar MCP, se usa como ejemplo [`angular-cli MCP`](https://angular.dev/ai/mcp)
+> Para explicar como configurar MCP, se usa como ejemplo `angular-cli MCP`
 
 1. Este comando instala el MCP de `angular-cli` con el `--scope project`. Es decir, configura el MCP para que se ejecute únicamente en este proyecto y pueda compartirse con el resto del equipo mediante Git:
 
@@ -651,7 +653,7 @@ they do not come with default styles (...)
 !claude mcp add angular-cli --scope project -- pnpm dlx @angular/cli mcp
 ```
 
-2. En la ruta raiz del proyecto crear archivo `.mcp.json` que contenga
+2. Verificar de que el comando automaticamente haya creado archivo `.mcp.json` en la ruta raiz del proyecto que contenga:
 
 ```json
 {
@@ -670,10 +672,13 @@ they do not come with default styles (...)
 }
 ```
 
-## [`angular-cli MCP`](https://angular.dev/ai/mcp)
+## `angular-cli MCP`
+
+Sirve para que la IA acceda a la documentación oficial de angular. Esto permite que la IA tenga datos actualizados de como escribir codigo de Angular.
+
+También cuenta con muchas otras funcionalidades (tools) disponibles en este enlace. Es **IMPORTANTE** que leas este enlace:
 
 # [🔗 Enlace - Tools de `angular-cli` MCP](https://angular.dev/ai/mcp)
-Sirve para que la IA acceda a la documentación oficial de angular. Esto permite que la IA tenga datos actualizados de como escribir codigo de Angular.
 
 Para que funcione el  `angular-cli` MCP solamente la primera vez que haces `git pull` del repositorio es necesario hacer los siguientes pasos:
 
@@ -705,13 +710,20 @@ La salida de la terminal debe ser:
 
 Ejecutar este prompt:
 ```console
-usar search_documentation de angular-cli MCP para citar textualmente la definición de Forms with signals
+usar la tool search_documentation de angular-cli MCP para citar textualmente la definición de Forms with signals
 ```
 
 La salida de la terminal debe incluir:
+
 ```console
 Called angular-cli
+
+Signal Forms manage form state using
+Angular signals to provide automatic synchronization between
+your data model and the UI with Angular Signals
 ```
+
+La cita corresponde a [este link de la documentación oficial de Angular](https://angular.dev/essentials/signal-forms)
 
 # Ejemplos de Prompts de ¿Como Usar IA en este Proyecto?
 
