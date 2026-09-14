@@ -71,9 +71,9 @@ Antes de escribir código o responder, es **obligatorio** consultar estas fuente
 
 1. Este `AGENTS.md`: La regla final ante cualquier conflicto.
 
-2. tool `get_best_practices` del MCP server `angular-cli`: Reglas alineadas a la v22 del proyecto.
+2. tool `get_best_practices` del MCP server `angular-cli`: Reglas del proyecto.
 
-3. tool `search_documentation` del MCP server `angular-cli`: Documentación oficial de angular.dev, para citar.
+3. tool `search_documentation` del MCP server `angular-cli`: Documentación oficial de angular.dev
 
 4. Skill `angular-developer` (`.claude/skills/angular-developer/SKILL.md` y `.claude/skills/angular-developer/references/`): El cómo, con ejemplos de código.
 
