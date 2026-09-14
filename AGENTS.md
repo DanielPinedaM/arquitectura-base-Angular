@@ -67,7 +67,7 @@ Esta PROHIBIDO:
 # Reglas **OBLIGATORIAS** de Angular
 Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento.
 
-Antes de escribir código o responder, es **obligatorio** consultar estas fuentes, listadas de mayor a menor precedencia:
+Antes de escribir código o responder, es **OBLIGATORIO** consultar estas fuentes, listadas de mayor a menor precedencia:
 
 1. Este `AGENTS.md`: La regla final ante cualquier conflicto.
 
