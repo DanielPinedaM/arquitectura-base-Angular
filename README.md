@@ -166,7 +166,7 @@ source ~/.bashrc
 5. Para verificar que funcione ejecutar los siguientes comandos en el siguiente orden:
 
 ```console
-cd /ruta/a/tu/proyecto
+cd /ruta/a/carpeta/raiz/del/proyecto
 ```
 
 ```console
@@ -445,6 +445,22 @@ Las IAs de pago y desde la terminal tienen mejoras respecto a otras plataformas:
 # 🅰️ Configurar Angular para que Funcione con IA
 Estas configuraciones ya estan listas para funcionar. Solo debes seguir los pasos a continuación para verificar que funcionen correctamente.
 
+# Antes de Probar que Funcione Angular con IA
+Hacer esto:
+
+1. Abrir Git Bash
+
+2. Abrir la carpeta del proyecto
+```console
+cd /ruta/a/carpeta/raiz/del/proyecto
+```
+
+3. Ejecutar claude con todos los permisos:
+
+```console
+claude --dangerously-skip-permissions
+```
+
 # [📜 `AGENTS.md`](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks)
 Es un prompt que siempre se envia a Claude. Sirve para que Claude:
 * Respete la arquitectura de software del proyecto.
@@ -464,8 +480,23 @@ citarme textualmente de `angular-cli` MCP ¿que es Signal? y ejemplo
 La salida debe contener algo similar a esto:
 
 ```txt
-Angular Signals is a system that granularly tracks how and where your state is used throughout an application, allowing the framework to optimize rendering updates.
+Angular Signals is a system that granularly tracks
+how and where your state is used throughout an application,
+allowing the framework to optimize rendering updates.
 ```
+
+# Diferencia Entre Skills y MCP
+
+**Skill:** Es un archivo Markdown llamado `SKILL.md` que contiene instrucciones para enseñarle a la IA cómo ejecutar un proceso, o para darle conocimiento sobre un tema. La IA carga ese contenido directamente en su contexto antes de responder.
+
+**Model Context Protocol (MCP):** Es un protocolo (no es exactamente una API REST, aunque es similar) que permite que una IA se comunique con sistemas externos —herramientas, servicios o fuentes de datos— de forma estandarizada. Un servidor MCP puede exponer *tools* (funciones que la IA puede invocar), *resources* (datos) y *prompts* (plantillas)
+
+## Diferencia Entre MCP `angular-cli` y Skill `angular-developer`
+Ambos son mantenidos por el equipo oficial de Angular (Google), y tambien le enseñan a la IA como hacer codigo con Angular. La diferencia es:
+
+**MCP `angular-cli`** expone *tools* que la IA invoca en tiempo real, como `search_documentation` (busca en la documentación oficial de angular.dev) y `get_best_practices` (obtiene la guía oficial de buenas prácticas). El MCP no almacena esa teoría: la consulta dinámicamente cada vez que se necesita. Su contenido es la teoria de Angular
+
+**skill `angular-developer`** Su contenido siempre es el mismo, a diferencia de MCP `angular-cli`, contiene mas ejemplos de la teoiria de Angular
 
 # Skills
 
@@ -586,31 +617,74 @@ rutas especificas de donde estan los archivos, componentes, funciones, etc.
 que necesita para ejecutar el proceso >>>
 ```
 
+## 💻 [`angular-developer`](https://github.com/angular/skills)
+Skill del equipo oficial de Angular (Google) que contiene un resumen de la documentación oficial con ejemplos
+
+Para probar que funcione envia este prompt a Claude:
+
+```txt
+/angular-developer de la skill citarme textualmente Angular Aria, titulo Styling Headless Components
+```
+
+La salida debe contener algo similar a esto:
+
+```txt
+Because Angular Aria components are headless,
+they do not come with default styles (...)
+```
+
 # MCP
 
 # [🔗 Enlace - Repositorios de MCP](https://mcpservers.org/es/)
 
-## angular-cli MCP para que Claude Code Acceda a la Documentación Oficial de Angular
-1. Abrir Git Bash
+## ¿Como Configurar MCP?
 
-2. Abrir la carpeta del proyecto
-```console
-cd /ruta/a/tu/proyecto
+> [!NOTE]
+>
+> Esto es una guia. **NO** debes hacer lo siguiente porque el MCP ya estan configurado
+>
+> Para explicar como configurar MCP, se usa como ejemplo [`angular-cli MCP`](https://angular.dev/ai/mcp)
+
+1. Este comando instala el MCP de `angular-cli` con el `--scope project`. Es decir, configura el MCP para que se ejecute únicamente en este proyecto y pueda compartirse con el resto del equipo mediante Git:
+
+```bash
+!claude mcp add angular-cli --scope project -- pnpm dlx @angular/cli mcp
 ```
 
-3. Iniciar claude
-```console
-claude
+2. En la ruta raiz del proyecto crear archivo `.mcp.json` que contenga
+
+```json
+{
+  "mcpServers": {
+    "angular-cli": {
+      "type": "stdio",
+      "command": "pnpm",
+      "args": [
+        "dlx",
+        "@angular/cli",
+        "mcp"
+      ],
+      "env": {}
+    }
+  }
+}
 ```
 
-4. Seleccionar la opcion
+## [`angular-cli MCP`](https://angular.dev/ai/mcp)
+
+# [🔗 Enlace - Tools de `angular-cli` MCP](https://angular.dev/ai/mcp)
+Sirve para que la IA acceda a la documentación oficial de angular. Esto permite que la IA tenga datos actualizados de como escribir codigo de Angular.
+
+Para que funcione el  `angular-cli` MCP solamente la primera vez que haces `git pull` del repositorio es necesario hacer los siguientes pasos:
+
+1. Seleccionar la opcion
+
 ```txt
 2. Use this and all future MCP servers in this project
 ```
 
-5. En el archivo `.mcp.json` ya esta configurada la conexion al MCP
+2. Para verificar conexión al MCP, ejecutar:
 
-6. Para verificar conexión al MCP, ejecutar:
 ```console
 !claude mcp list
 ```
@@ -639,27 +713,11 @@ La salida de la terminal debe incluir:
 Called angular-cli
 ```
 
-> [!NOTE]
-> **NO** debes hacer lo siguiente porque ya esta configurado
->
-> Este comando instala el MCP de `angular-cli` con el `--scope project`. Es decir, configura el MCP para que se ejecute únicamente en este proyecto y pueda compartirse con el resto del equipo mediante Git.
->
-> ```bash
-> !claude mcp add angular-cli --scope project -- pnpm dlx @angular/cli mcp
-> ```
+# Ejemplos de Prompts de ¿Como Usar IA en este Proyecto?
 
-# [🔗 Enlace - Tools de `angular-cli` MCP](https://angular.dev/ai/mcp)
-
-
-## Diferencia Entre Angular MCP y X
-X es para UI
-
-angular-cli es para conecptos de angular
-
-## Ejemplos de ¿Como Usar IA en este Proyecto?
 **Iniciar tutorial paso a paso:**
 ```txt
-usar ai_tutor de angular-cli MCP para explicarme Forms with signals
+usar la tool ai_tutor de angular-cli MCP para explicarme Forms with signals
 ```
 
 **Refactorizar:**
@@ -670,14 +728,6 @@ usar get_best_practices de angular-cli MCP para refactorizar el componente que e
 **Migrar a Signals:**
 ```txt
 usar search_documentation de angular-cli MCP para migrar a signals el componente que esta en la ruta src/***
-```
-
-**Crear una nueva feature:**
-```txt
-usar search_documentation y get_best_practices de angular-cli MCP para crear un nuevo componente en src/*** que contenga Form with signals usando spartan ui. Con los siguientes campos:
-- nombre: tipo string, minimo 5 caracteres
-
-- celular: tipo number, minimo 10 caracteres
 ```
 
 # Reglas Obligatorias para Skill
