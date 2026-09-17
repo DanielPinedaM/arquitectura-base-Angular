@@ -210,6 +210,8 @@ Usar VS Code o cualquier editor basado en VS Code (Antigravity, Cursor, Windsurf
 
 * [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
 
+* [HTML CSS Support](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css)
+
 No es necesario buscar cada extensión manualmente en el marketplace: el archivo `.vscode/extensions.json` ya está configurado con esas extensiones como recomendadas. Al abrir el proyecto, el editor mostrará una notificación sugiriendo instalarlas; también puede instalarlas desde la pestaña **Extensions** filtrando por `@recommended`.
 
 La configuración de autocompletado, formateo de código y linter ya está incluida en los siguientes archivos. No es necesario realizar modificaciones adicionales:
@@ -748,9 +750,14 @@ usar search_documentation de angular-cli MCP para migrar a signals el componente
 Aplican a toda respuesta o modificación de código de este proyecto.
 
 ## 1. Autoridad de la skill
-Las decisiones de arquitectura, estructura y convenciones definidas en esta skill son la fuente de la verdad del proyecto. No las cuestiones, no las reemplaces, no las contradigas y no las ignores. Esta restricción aplica solo a lo que la skill define de forma explícita; fuera de ese alcance rige el "3. Caso no definido en la skill".
+Las decisiones de arquitectura, estructura y convenciones definidas en esta skill son la fuente de la verdad del proyecto. No las cuestiones, no las reemplaces, no las contradigas y no las ignores. Desobedecerlas genera malas practicas y código inescalable. Esta restricción aplica solo a lo que la skill define de forma explícita; fuera de ese alcance rige el "3. Caso no definido en la skill".
 
-## 2. Instrucción que contradice una regla definida
+## 2. # Ante cualquier error
+Esta regla aplica en cualquier momento. Si encuentras algún error, inconsistencia, duda o ambigüedad, debes detenerte y consultarme antes de realizar cualquier modificación. No puedes asumir ni deducir implementaciones. Es preferible preguntar para aclarar una duda que asumir una solución.
+
+La única excepción a esta regla es lo establecido en la regla anterior: 1. Autoridad de la skill.
+
+## 3. Instrucción que contradice una regla definida
 Se aplica cuando la instrucción recibida contradice una regla explícitamente definida en esta skill.
 
 Acción: implementa estrictamente lo definido en la skill. No preguntes, no propongas alternativas, no pidas confirmación.
@@ -771,27 +778,12 @@ Motivo:         <por qué lo solicitado rompe la arquitectura, en una línea>
 
 La cita debe ser literal, no una paráfrasis. Si no puedes copiar el texto exacto de la skill, la regla no está definida: aplica "3. Caso no definido en la skill"
 
-## 3. Caso no definido en la skill
+## 4. Caso no definido en la skill
 Se aplica cuando el caso, problema o pregunta no está definido de forma explícita en esta skill.
 
 Acción: resuélvelo con tu comportamiento por defecto. La skill no restringe este caso y no altera tu forma normal de trabajar.
 
-Antes de implementar, emite:
-
-```txt
-La implementación no está definida en la skill por lo que se ha decidido usar otra solución.
-
-Caso:              <descripción en una línea>
-Solución aplicada: <solución elegida>
-```
-
-Pregunta con `AskUserQuestion` solo cuando sea necesario:
-* Existen varias soluciones válidas y la elección cambia el resultado.
-* La solución exige introducir un patrón, dependencia o estructura que la skill no contempla y que se aparta de sus convenciones. En este caso la pregunta debe incluir explícitamente si se autoriza la desviación.
-
-Si ninguna de las dos condiciones aplica, implementa sin preguntar.
-
-## 4. Código existente que ya viola la arquitectura
+## 5. Código existente que ya viola la arquitectura
 Se aplica cuando detectas código ya escrito que incumple una regla de esta skill.
 
 No lo corrijas por iniciativa propia. Emite:
@@ -1307,9 +1299,484 @@ export const routes: Routes = [
 * `hlm-date-picker-multi`
 * `hlm-date-range-picker`
 
-# 💅 Maquetación
+# Maquetación
 
-## Componentes de interfaz (UI): uso y maquetación
+## Iconos
+
+**NO** instales otra libreria para iconos porque en este proyecto es estandar usar [Material Symbols Icons](https://fonts.google.com/icons)
+
+Dar prioridad a usar los iconos de Material Symbols Icons
+
+Usar siempre la siguiente estructura:
+
+```html
+<!-- my-component.component.html -->
+
+<span class="material-symbols-outlined"> home </span>
+```
+
+La clase:
+
+```html
+material-symbols-outlined
+```
+
+No debe modificarse ni reemplazarse.
+
+Esa clase es la que permite renderizar correctamente los Material Symbols Icons.
+
+Lo único que debe cambiar es el nombre del icono:
+
+```html
+home
+```
+
+Dependiendo del icono que se quiera mostrar.
+
+**Correcto**
+
+```html
+<span class="material-symbols-outlined"> delete </span>
+```
+
+```html
+<span class="material-symbols-outlined"> settings </span>
+```
+
+```html
+<span class="material-symbols-outlined"> search </span>
+```
+
+No agregar imágenes/SVGs manualmente si el icono ya existe en Material Symbols Icons
+
+Cuando el icono no este en Material Symbols Icons, entonces agregarlo dentro de la carpeta assets de Angular
+
+## Uso de Tailwind con Angular
+El texto a continuación es una guia de los breaking changes mas importantes de Tailwind 4 que esta basado en la documentación oficial.
+
+**Enlaces de Referencia**
+**NO** es necesario leer estos enlaces; se incluyen únicamente como referencia:
+* [Breaking changes de Tailwind 4](https://tailwindcss.com/blog/tailwindcss-v4)
+
+* [Tema oscuro en Tailwind](https://tailwindcss.com/docs/dark-mode)
+
+* [Media Queries (Breakpoints) de Tailwind](https://tailwindcss.com/docs/responsive-design)
+
+* [@layer y Preflight en Tailwind](https://tailwindcss.com/docs/preflight)
+
+* Uso de `@apply` de Tailwind:
+  * [Tutorial](https://x.com/adamwathan/status/1226511611592085504)
+  * [X (Twitter)](https://x.com/adamwathan/status/1559250403547652097)
+
+**Regla:**
+Este proyecto usa Tailwind 4. Está **PROHIBIDO** el uso de patrones legacy de Tailwind 3 y versiones anteriores, debido a que esto causa errores en la compilación de la aplicación.
+
+### Tabla Comparativa de Tailwind 4 VS Tailwind 3
+
+| Configuración               | Patrones Legacy de Tailwind 3                                          | Patrones de Tailwind 4                                                          |
+| --------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Archivo de configuración    | `tailwind.config.ts`                                                   | `@theme` en archivo .css                                                        |
+| Importar el CSS de Tailwind | `@tailwind base;`<br>`@tailwind components;`<br>`@tailwind utilities;` | `@import "tailwindcss"`                                                         |
+| Modo oscuro                 | `darkMode: "class"`                                                    | `@custom-variant dark (&:where(.dark, .dark *))`                                |
+| Colores personalizados      | `theme.extend.colors`                                                  | `@theme { --color-*: value }`                                                   |
+| Animaciones                 | `require("tailwindcss-animate")`                                       | `@keyframes` de CSS en `@theme` + `@starting-style` para animaciones de entrada |
+| Modificador `!important`    | `!flex` (al inicio, después de variantes)                              | `flex!` (al final del nombre de clase)                                          |
+
+### Archivo de Configuración de Tailwind
+
+**Ejemplo Incorrecto - Configurar Tailwind 3 con archivo `.js`**
+
+```js
+/* tailwind.config.js */
+
+module.exports = {
+  content: [
+    "./src/**/*.{html,ts}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        "primary-color": "oklch(62.8% 0.258 29.23)" // #FF0000
+      },
+    },
+  },
+};
+```
+
+**Ejemplo Correcto - Configurar Tailwind 4 con archivo `.css`**
+
+```CSS
+@theme {
+  --color-primary-color: oklch(62.8% 0.258 29.23); // #FF0000
+}
+```
+
+### Configurar PostCSS
+Para configurar Tailwind 4, en la carpeta raiz del proyecto debe existir un archivo `.postcssrc.json` que contenga lo siguiente:
+
+```JSON
+{
+  "plugins": {
+    "@tailwindcss/postcss": {}
+  }
+}
+```
+
+### Importar el CSS de Tailwind
+Para importar Tailwind 4 desde el archivo CSS de estilos globales (por ejemplo, `src/css/global.css`) existen dos formas:
+
+#### Forma 1 - `@import`
+Para Tailwind 4 usar:
+
+```CSS
+@import 'tailwindcss';
+```
+
+Prohibido usar la configuración de import de Tailwind 3:
+
+```CSS
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+#### Forma 2 - `@layer` - CSS Cascade Layers
+En Tailwind 4 `@layer` permite personalizar:
+* Los estilos que se importan de Tailwind.
+
+* El orden de las capas de estilos.
+
+Por defecto, el orden de las capas de Tailwind 4 es el siguiente. En este ejemplo solo incluye las capas de Tailwind 4 y no de ningun otro estilo CSS ni libreria de UI:
+
+```CSS
+@layer theme, base, components, utilities;
+```
+
+### Tema oscuro
+Para aplicar estilos del tema oscuro, usar siempre la variante `dark:` de Tailwind directamente en el HTML.
+
+**Ejemplo Correcto:**
+
+```html
+<div class="bg-white dark:bg-gray-900">
+  <!-- ... -->
+</div>
+```
+
+No escribas estilos del tema oscuro en archivos CSS.
+
+**Ejemplo Incorrecto:**
+
+```css
+.container {
+  background: white;
+
+  .dark & {
+    background: #111827;
+  }
+}
+```
+
+La única excepción son las variables de color del tema de Spartan ng. Estas se definen en CSS, una vez para el tema claro y otra para el oscuro, y se exponen a Tailwind con `@theme inline`
+
+**Ejemplo Correcto:**
+
+```css
+@theme inline {
+  --color-card: var(--card);
+}
+
+:root {
+  --card: oklch(1 0 0);
+}
+
+:root.dark {
+  --card: oklch(0.205 0 0);
+}
+```
+
+Las clases generadas a partir de estas variables, como `bg-card`, cambian de tema automáticamente, así que no necesitan `dark:`.
+
+### Valores de Utilidad Dinámicos y Variantes (Variable `--spacing`)
+Las utilidades y variantes de Tailwind 4 permiten aceptar determinados tipos de valores arbitrarios sin necesidad de ninguna configuración ni de recurrir a la sintaxis de valores arbitrarios.
+
+Por ejemplo, en Tailwind 4 puedes crear cuadrículas de cualquier tamaño directamente:
+
+```HTML
+<div class="grid grid-cols-15">
+  <!-- ... -->
+</div>
+```
+
+También puedes usar atributos `data-*` booleanos personalizados sin necesidad de definirlos previamente:
+
+```HTML
+<div data-current class="opacity-75 data-current:opacity-100">
+  <!-- ... -->
+</div>
+```
+
+Incluso las utilidades de espaciado, como `px-*`, `mt-*`, `w-*` y `h-*`, ahora se derivan dinámicamente de una única variable de escala de espaciado y aceptan cualquier valor directamente. Cada clase de espaciado es el número de la clase multiplicado por la variable `--spacing`:
+
+```CSS
+/* CSS generado */
+
+@layer theme {
+  :root {
+    --spacing: 0.25rem;
+  }
+}
+
+@layer utilities {
+  .mt-8 {
+    margin-top: calc(var(--spacing) * 8);
+  }
+  .w-17 {
+    width: calc(var(--spacing) * 17);
+  }
+  .pr-29 {
+    padding-right: calc(var(--spacing) * 29);
+  }
+}
+```
+
+## ¿Cómo Usar Tailwind y CSS Juntos?
+Los componentes se estilizan solo con clases de Tailwind en su plantilla. CSS se usa solo para estilos globales y para configurar librerías de UI, como las variables de tema de Spartan.
+
+**Reglas:**
+* No escribas CSS que sobrescriba clases de Tailwind ni que compita con ellas por especificidad.
+
+* No escribas estilos de componentes en archivos CSS.
+
+* En los componentes de Angular está prohibido usar:
+  * El atributo `style`.
+  * `[style.propiedad]`
+  * `[ngStyle]`.
+  * Las propiedades `styles`, `styleUrl` y `styleUrls` del decorador `@Component`.
+
+### Anidamiento de Selectores CSS (CSS Nesting)
+Para aplicar estilos a elementos dentro de otro elemento, anida sus selectores con CSS Nesting. No repitas el selector del padre en una regla aparte.
+
+**Ejemplo correcto**
+
+```CSS
+div.parent {
+  border: 1px solid green;
+
+  p.child {
+    color: red;
+  }
+}
+```
+
+**Ejemplo incorrecto**
+
+```CSS
+div.parent {
+  border: 1px solid green;
+}
+
+div.parent p.child {
+  color: red;
+}
+```
+
+### Unidades Relativas al Viewport
+Esta regla aplica a Tailwind y a CSS en las siguientes propiedades de tamaño:
+
+* **Tailwind:** `h-*`, `min-h-*`, `max-h-*`, `w-*`, `min-w-*` y `max-w-*`.
+
+* **CSS:** `height`, `min-height`, `max-height`, `width`, `min-width` y `max-width`.
+
+Para medidas relativas al viewport, usa `dvh` y `dvw`. No uses `vh` ni `vw`, tampoco en valores arbitrarios como `h-[100vh]`.
+
+**Ejemplo Correcto:**
+
+```html
+<div class="h-dvh w-dvw">
+  <!-- ... -->
+</div>
+```
+
+```css
+.layout {
+  height: 100dvh;
+  width: 100dvw;
+}
+```
+
+**Ejemplo Incorrecto:**
+
+```html
+<div class="h-screen w-screen">
+  <!-- ... -->
+</div>
+```
+
+```css
+.layout {
+  height: 100vh;
+  width: 100vw;
+}
+```
+
+### Colores
+Esta regla aplica a Tailwind y a CSS. Todo color debe escribirse en `oklch` en:
+
+* **Tailwind:** variables de `@theme` y valores arbitrarios.
+
+* **CSS:** variables CSS y cualquier propiedad que reciba un color, como `color`, `background-color`, `border-color`, etc.
+
+No uses hexadecimal, `rgb()`, `rgba()`, `hsl()`, `hsla()` ni nombres de color como `red`.
+
+Las clases de la paleta predeterminada de Tailwind, como `bg-red-500`, están permitidas.
+
+**Ejemplo Correcto:**
+
+```css
+@theme {
+  --color-blue-azure: oklch(64.1% 0.172 247.8); /* #0191ee */
+}
+
+.header {
+  border-color: oklch(62.8% 0.258 29.23);
+}
+```
+
+```html
+<div class="bg-[oklch(62.8%_0.258_29.23)]"></div>
+```
+
+**Ejemplo Incorrecto:**
+
+```css
+@theme {
+  --color-blue-azure: #0191ee;
+}
+
+:root {
+  --card: #fff;
+}
+
+.header {
+  border-color: rgb(255 0 0);
+}
+```
+
+```html
+<div class="bg-[rgb(255_0_0)]"></div>
+```
+
+### `@apply`
+Prohibido usar `@apply` de Tailwind
+
+***Ejemplo incorrecto:***
+
+```HTML
+<!-- my-component.component.html -->
+
+<button class="button">
+  Boton
+</button>
+```
+
+```CSS
+.button {
+  @apply bg-red-600 text-white px-4 py-2 rounded-lg;
+}
+```
+
+## Media Queries (Breakpoints)
+Tailwind y CSS usan los mismos breakpoints: los definidos en `@theme`. Está prohibido usar otros valores.
+
+```css
+@theme {
+  /* celular */
+  --breakpoint-xsm: 30rem; /* @media (min-width: 480px) { ... } */
+
+  /* tablet */
+  --breakpoint-sm: 40rem; /* @media (min-width: 640px) { ... } */
+  --breakpoint-md: 48rem; /* @media (min-width: 768px) { ... } */
+  --breakpoint-lg: 64rem; /* @media (min-width: 1024px) { ... } */
+
+  /* pantalla computador portatil */
+  --breakpoint-xl: 80rem; /* @media (min-width: 1280px) { ... } */
+
+  /* monitor */
+  --breakpoint-2xl: 96rem; /* @media (min-width: 1536px) { ... } */
+  --breakpoint-3xl: 120rem; /* @media (min-width: 1920px) { ... } */
+}
+```
+
+`xsm` y `3xl` son propios del proyecto. El resto son los predeterminados de Tailwind 4.
+
+### Mobile first
+Tailwind y CSS se escriben mobile first
+
+**Correcto:**
+
+```html
+<!-- my-component.component.html -->
+
+<!-- base: móvil; md: desde 768px; lg: desde 1024px -->
+<div class="p-4 text-sm md:p-6 md:text-base lg:p-8"></div>
+```
+
+### Media Queries en CSS
+Las media queries en CSS solo se usan en estilos globales. Los componentes usan los prefijos de Tailwind.
+
+**Correcto:**
+
+```css
+/* archibo global de CSS  */
+
+h1 {
+  color: red;
+
+  @media (min-width: 768px) {
+    color: blue;
+  }
+}
+```
+
+**Incorrecto**
+
+```css
+/* es incorrecto porque usa max-width (desktop first) */
+h1 {
+  fcolor: red;
+
+  @media (max-width: 767px) {
+    color: blue;
+  }
+}
+```
+
+```css
+/* es incorrecto porque mezcla min-width y max-width en la misma media query */
+h1 {
+  color: red;
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    color: blue;
+  }
+}
+```
+
+```css
+/* my-component.css */
+
+/* es incorrecto porque son estilos de componente en un archivo CSS */
+.card {
+  padding: 1rem;
+
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+  }
+}
+```
+
+## Componentes de UI
 Este proyecto usa los componentes de Spartan NG que están instalados en `src\shared\design\ui\spartan-ng`.
 
 Spartan NG tiene dos capas:
@@ -1564,487 +2031,21 @@ Cada carpeta de componente tiene su barrel export en `index.ts`, que reexporta t
 | Textarea                                                         | `src\shared\design\ui\spartan-ng\form\text\textarea`             |
 | Tooltip                                                          | `src\shared\design\ui\spartan-ng\overlay\tooltip`                |
 
-## 🧱 Configuración de Tailwind 4
 
-[Igual que como se muestra en la documentacion](https://tailwindcss.com/blog/tailwindcss-v4#css-first-configuration)
+## Estilos Globales para Botones
 
-En este proyecto se está utilizando **Tailwind CSS V4**, por lo tanto el archivo `tailwind.config.js` ya no se utiliza y se considera **obsoleto** en esta arquitectura.
+**Enlaces de Referencia**
+**NO** es necesario leer estos enlaces; se incluyen únicamente como referencia. Está guía de estilos para botones está basada en:
 
-La configuración de Tailwind ahora se realiza en el archivo `src/styles/global/css/theme/tailwind`
+* [Botones de Bootstrap 5](https://getbootstrap.com/docs/5.3/components/buttons/)
 
-Esto permite centralizar la definición de tokens de diseño (colores, media queries, etc.) sin necesidad de configuración en archivo JavaScript.
+* [Tailwind 4 font-size](https://tailwindcss.com/docs/font-size)
 
-**❌ Incorrecto - Configurar Tailwind 3 con `.js`**
+* [Tailwind 4 line-height](https://tailwindcss.com/docs/line-height)
 
-```js
-/* tailwind.config.js */
+* [Tailwind 4 padding](https://tailwindcss.com/docs/padding)
 
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        "primary-color": "oklch(62.8% 0.258 29.23)" // #FF0000
-      },
-    },
-  },
-};
-```
-
-**✅ Correcto - Configurar Tailwind 4 con `.css`**
-
-```CSS
-/* src/styles/global/css/theme/tailwind/theme.css */
-
-@theme {
-  --color-primary-color: oklch(62.8% 0.258 29.23); // #FF0000
-}
-```
-
-## 🎨 Variables de Colores Tailwind y Sass
-
-[Documentación de variables de Tailwind 4](https://tailwindcss.com/blog/tailwindcss-v4#css-theme-variables)
-
-Las variables con nombres de los colores de **Sass** en `src/styles/global/variable.scss` y **Tailwind** en `src/styles/global/css/theme/tailwind/theme.css` deben mantener exactamente el mismo nombre y el mismo valor.
-
-Esto garantiza que los colores sean los mismos entre los estilos globales definidos en Sass y los estilos de cada componente definidos con Tailwind.
-
-***✅ Ejemplo Correcto:***
-
-En Sass y Tailwind ambos colores tienen exactamente el mismo nombre `primary-color` y son el mismo valor con color rojo `oklch(62.8% 0.258 29.23)`
-
-```scss
-/*
-src/styles/global/variable.scss
-
-colores de Sass */
-$primary-color: oklch(62.8% 0.258 29.23) ;
-```
-
-```CSS
-/*
-src/styles/global/css/theme/tailwind/theme.css
-
-colores de Tailwind */
-@theme {
-  --color-primary-color: oklch(62.8% 0.258 29.23) ;
-}
-```
-
-***❌ Ejemplo Incorrecto:***
-
-Los nombres o valores no coinciden entre Sass y Tailwind.
-
-
-```scss
-/*
-src/styles/global/variable.scss
-
-colores de Sass */
-$primary-color: oklch(62.8% 0.258 29.23); // color rojo
-```
-
-```css
-/*
-src/styles/global/css/theme/tailwind/theme.css
-
-colores de Tailwind */
-@theme {
-  --color-brand-primary: oklch(54.6% 0.245 262.881); /* color azul */
-}
-```
-
-### 🎨 Formato de Colores
-
-Todos los colores del proyecto se definen utilizando el formato `oklch`.
-
-***✅ Ejemplo Correcto***
-
-```scss
-oklch(62.8% 0.258 29.23)
-```
-
-***❌ Ejemplo Incorrecto***
-
-```scss
-/* Hexadecimal */
-#FF0000
-
-/* RGB */
-rgb(255 0 0)
-
-/* RGBA */
-rgba(255 0 0 / 50%)
-
-/* HSL  */
-hsl(0 100% 50%)
-
-/* HSLA */
-hsla(0, 100%, 50%, 0.5)
-```
-
-### 🎨 Tailwind Custom Values
-
-Cuando se utilicen colores mediante valores arbitrarios de Tailwind, el color también debe estar definido en formato `oklch`.
-
-***✅ Ejemplo Correcto***
-
-```html
-<div class="bg-[oklch(62.8%_0.258_29.23)]"></div>
-```
-
-***❌ Ejemplo Incorrecto***
-
-```html
-<!-- Hexadecimal -->
-<div class="bg-[#FF0000]"></div>
-
-<!-- RGB -->
-<div class="bg-[rgb(255_0_0)]"></div>
-
-<!-- RGBA -->
-<div class="bg-[rgba(255_0_0_/_50%)]"></div>
-
-<!-- HSL -->
-<div class="bg-[hsl(0_100%_50%)]"></div>
-
-<!-- HSLA -->
-<div class="bg-[hsla(0,_100%,_50%,_0.5)]"></div>
-```
-
-## 🤔 ¿Cómo Usar Tailwind y Sass Juntos?
-
-### ✅ PATRÓN CORRECTO (OBLIGATORIO)
-
-👉 Separación estricta de responsabilidades:
-
-* ***Sass*** para estilos globales en `src/styles/global/...`
-
-```ts
-/* my-component.component.ts */
-import { Component, signal } from '@angular/core';
-import { HlmTableImports } from '@spartan-ng/data-table';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
-
-const PRODUCTS: Product\[] = \[
-  { id: 1, name: 'Laptop', price: 2500 },
-  { id: 2, name: 'Mouse', price: 50 },
-]
-
-@Component({
-  selector: 'app-my-component',
-  imports: [HlmTableImports],
-  templateUrl: './my-component.component.html',
-})
-export class MyComponent {
-  readonly products = signal<Product\[]>(PRODUCTS);
-}
-```
-
-```HTML
-<!-- my-component.component.html -->
-
-<div hlmTableContainer>
-    <table hlmTable>
-        <thead hlmTableHeader>
-            <tr hlmTableRow>
-                <th hlmTableHead>Identificacion</th>
-                <th hlmTableHead>Nombre</th>
-                <th hlmTableHead>Precio</th>
-            </tr>
-        </thead>
-
-        <tbody hlmTableBody>
-            @for (product of products(); track product.id) {
-                <tr hlmTableRow>
-                    <td hlmTableCell>{{ product.id }}</td>
-                    <td hlmTableCell>{{ product.name }}</td>
-                    <td hlmTableCell>{{ product.price }}</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-```
-
-```scss
-// estilo global para tablas en src/styles/global/_table.scss
-@use './variable.scss' as variable;
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-
-  thead,
-  tfoot,
-  th {
-    background-color: variable.$blue-ocean;
-    color: oklch(100% 0 0); /\* #ffffff \*/
-  }
-
-  // ...
-}
-```
-
-* ***Tailwind*** para estilos especificos de cada componente en:
-
-* `src/app/...`
-
-* `src/shared/design/layouts/...`
-
-* `src/shared/design/ui/...`
-
-```html
-<!-- my-component.component.html -->
-
-<h1 class="text-center text-blue-600">
-  Guardar
-</h1>
-```
-
-### 🚨 PRINCIPIO BASE (INNEGOCIABLE)
-
-* ❌ Tailwind y Sass **NO** se mezclan en la capa de UI
-* ❌ **NO** existen overrides entre Sass y Tailwind
-* ❌ **NO** se resuelve con especificidad
-* ❌ **NO** está permitido usar `!important` ni en Sass ni en Tailwind
-* ❌ **NO** se duplican responsabilidades de estilos
-* ❌ **NO** se crean estilos visuales en Sass para componentes
-
-👉 Si esto ocurre, la arquitectura está mal diseñada.
-
-### ❌ LOS COMPONENTES DE ANGULAR NO PUEDEN USAR:
-
-* Estilos en linea `style=" "` 
-* Binding de estilo `[style.prop]`
-* Directiva `[ngStyle]=" "`
-* `styleUrls: ['./component.scss']`
-* `styleUrls: ['./component.css']`
-
-### 🚫 En Sass global
-
-Está prohibido:
-
-* Estilos de UI de componentes
-* Cards, layouts
-* Selectores por ID para componentes
-* Overrides de Tailwind
-* Diseño de interfaces completas
-
-### 🚨 ANTIPATRÓN - ERROR CRÍTICO
-
-```ts
-/* my-component.component.ts */
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-my-component',
-  templateUrl: './my-component.component.html',
-  styleUrls: ['./my-component.component.scss']
-})
-export class MyComponent {}
-```
-
-```scss
-/* my-component.component.scss */
-
-#btn-guardar {
-  background-color: blue !important;
-}
-
-.card {
-  background-color: white;
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid oklch(92.2% 0.005 264);
-}
-```
-
-```html
-<!-- my-component.component.html -->
-
-<button id="btn-guardar" class="bg-red-600!">
-  Guardar
-</button>
-
-<div class="card">
-  Contenido de la card
-</div>
-```
-
-### ❌ PROHIBIDO USAR `@apply` DE TAILWIND
-
-En estos enlaces el creador de Tailwind explica porque **NO** usar `@apply`:
-
-* [Tutorial](https://x.com/adamwathan/status/1226511611592085504)
-* [X (Twitter)](https://x.com/adamwathan/status/1559250403547652097)
-
-Está estrictamente prohibido utilizar la directiva `@apply` de Tailwind.
-
-Esto incluye cualquier uso dentro de archivos:
-
-* `.css`
-* `.scss`
-* cualquier archivo de estilos globales o de componentes
-
-***❌ EJEMPLO INCORRECTO USANDO  `@apply`***
-
-```scss
-/* src/styles/global/scss/main.scss 
-
-❌ MAL: usando Tailwind dentro de Sass/CSS con @apply */
-
-.button {
-  @apply bg-red-600 text-white px-4 py-2 rounded-lg;
-}
-```
-
-```html
-<!-- my-component.component.html -->
-
-<button class="button">
-  Boton
-</button>
-```
-
-## 🖼️ Ruta de Iconos e Imagenes
-
-Debes crear las siguientes carpetas:
-
-```txt
-src/
-└── assets/
-    ├── icon/
-    └── img/
-```
-
-**✅ Correcto:**
-
-Al usar la etiqueta `<img>`, siempre utilizar rutas **absolutas** desde `/assets`.
-
-```html
-<!-- my-component.component.html -->
-
-<!-- usar slash al principio de /assets -->
-<img src="/assets/img/logo.png" alt="Logo" />
-```
-
-**❌ Incorrecto:**
-
-**NO** usar rutas **relativas** para acceder a imágenes e iconos
-
-```html
-<!-- my-component.component.html -->
-
-<!-- es incorrecto porque se escribe ../ -->
-<img src="../../../assets/img/logo.png" alt="Logo" />
-```
-
-```html
-<!-- my-component.component.html -->
-
-<!-- es incorrecto porque NO se escribio el slash al principio de assets -->
-<img src="assets/img/logo.png" alt="Logo" />
-```
-
-### Imagenes
-
-Las **imágenes** del proyecto se deben guardar dentro de la carpeta:
-
-```txt
-src/assets/img/
-```
-
-Ejemplo:
-
-```html
-<!-- my-component.component.html -->
-
-<img src="/assets/img/my-image.png" alt="image" />
-```
-
-### Iconos
-
-**NO** instales otra libreria para iconos porque en este proyecto es estandar usar [Material Symbols Icons](https://fonts.google.com/icons)
-
-Dar prioridad a usar los iconos de [Material Symbols Icons](https://fonts.google.com/icons)
-
-Usar siempre la siguiente estructura:
-
-```html
-<!-- my-component.component.html -->
-
-<span class="material-symbols-outlined"> home </span>
-```
-
-La clase:
-
-```html
-material-symbols-outlined
-```
-
-No debe modificarse ni reemplazarse.
-
-Esa clase es la que permite renderizar correctamente los Material Symbols Icons.
-
-Lo único que debe cambiar es el nombre del icono:
-
-```html
-home
-```
-
-Dependiendo del icono que se quiera mostrar.
-
-Ejemplos:
-
-```html
-<span class="material-symbols-outlined"> delete </span>
-```
-
-```html
-<span class="material-symbols-outlined"> settings </span>
-```
-
-```html
-<span class="material-symbols-outlined"> search </span>
-```
-
-No agregar imágenes/SVGs manualmente si el icono ya existe en [Material Symbols Icons](https://fonts.google.com/icons)
-
-Cuando el icono no este en [Material Symbols Icons](https://fonts.google.com/icons), entonces agregarlo dentro de la carpeta `src/assets/icon/...`.
-
-Los **iconos** del proyecto se deben guardar dentro de la carpeta
-
-```txt
-src/assets/icon/
-```
-
-Ejemplo:
-
-```html
-<!-- my-component.component.html -->
-
-<img src="/assets/icon/logo.png" alt="Logo" />
-```
-
-## 🔘 Estilos Globales para Botones
-
-Está guía de estilos para botones está basada en:
-
-- [Arquitectura de Bootstrap 5.3 para botones](https://getbootstrap.com/docs/5.3/components/buttons/)
-
-- [Tailwind 4 font-size](https://tailwindcss.com/docs/font-size)
-
-- [Tailwind 4 line-height](https://tailwindcss.com/docs/line-height)
-
-- [Tailwind 4 padding](https://tailwindcss.com/docs/padding)
-
-**❌ Incorrecto:**
+**Incorrecto:**
 
 Usar etiquetas `<img>` para iconos porque las imágenes no se integran correctamente con la arquitectura CSS de los botones y dificultan aplicar estilos dinámicos como:
 
@@ -2109,9 +2110,8 @@ Esto genera:
 - Rompen fácilmente en dark mode.
 - Vuelven el CSS más complejo y frágil.
 
-**✅ Correcto:**
-
-Los iconos de los botones deben utilizar [Material Symbols Icons](https://fonts.google.com/icons)
+**Correcto:**
+Los iconos de los botones deben utilizar Material Symbols Icons
 
 [Material Symbols Icons](https://fonts.google.com/icons) funcionan como texto estilizable mediante CSS, lo que permite integrarlos correctamente con la arquitectura visual del proyecto.
 
@@ -2121,7 +2121,7 @@ Los iconos de los botones deben utilizar [Material Symbols Icons](https://fonts.
 </button>
 ```
 
-**❌ Incorrecto:**
+**Incorrecto:**
 
 Usar Tailwind CSS para definir estilos de botones directamente en cada componente, ya que esto genera estilos inconsistentes y no escalables:
 
@@ -2743,7 +2743,7 @@ Funciona para cualquier variante de botón, sin importar su estilo (fondo, borde
 
 ### Ubicación de Iconos y Texto en Botones
 
-**❌ Incorrecto:**
+**Incorrecto:**
 
 Usar [flex-direction](https://tailwindcss.com/docs/flex-direction) para cambiar ubicacion de iconos:
 
@@ -2780,7 +2780,7 @@ Cambiar la ubicación del icono y texto en el HTML, sin usar Sass ni Tailwind.
 </button>
 ```
 
-# 🔌 Consumo de API
+# Consumo de API
 
 ## Contrato `ApiResponse<T>`
 `ApiResponse<T>` es la interface que define la estructura unica con la que el frontend recibe **TODAS** las respuestas de las APIs (internas y externas). Sin importar que responda el backend, `src\shared\http-client` envuelve toda respuesta HTTP en este contrato; el generico `<T>` tipa el contenido de `data`:
@@ -2800,7 +2800,7 @@ Ruta del import:
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
 ```
 
-## 🔀 Flujo para Consumir API:
+## Flujo para Consumir API:
 Toda petición tiene que pasa primero por `src\shared\http-client`, y desde ahí se dirige a las APIs internas y externas. Los dos destinos posibles del flujo son:
 
 ```txt
@@ -2827,7 +2827,7 @@ Toda petición tiene que pasa primero por `src\shared\http-client`, y desde ahí
 └──────────────────────────────────┘  └──────────────────────────────────┘
 ```
 
-## 📥 Estandarización de Respuestas al Contrato `ApiResponse<T>`
+## Estandarización de Respuestas al Contrato `ApiResponse<T>`
 Toda respuesta que pasa por `HttpClient` termina envuelta en el contrato `ApiResponse<T>`, sin importar el escenario:
 
 | Escenario | Quién lo estandariza | Resultado |
@@ -2957,16 +2957,13 @@ Además, `GatewayApiService` maneja:
 ```
 
 # Evitar Prop Drilling y Usar Data Down, Events Up
-name: prop-drilling
 
-description: Prohíbe el prop drilling en componentes Angular. Obliga el patrón data down (`input()`) / events up (`output()`) y define las alternativas permitidas cuando un dato debe cruzar componentes intermedios.
-
-when_to_use: Aplicar SIEMPRE que se diseñe, cree, divida, modifique o refactorice un componente, o que se defina cómo se comunican dos componentes. Triggers — "crea un componente", "nuevo componente", "refactoriza este componente", "divide este componente", "extrae un componente", "agrega un input", "agrega un output", "pasa este dato al hijo", "el hijo debe avisar al padre", "comunicar componentes", "mover el estado", "levantar el estado", "crea un wrapper", "crea un layout", "revisa este componente".
-
-## Regla
+**Regla:**
 PROHIBIDO el prop drilling. Toda comunicación entre componentes usa **data down, events up**.
 
-## Definiciones
+Aplicar SIEMPRE que se diseñe, cree, divida, modifique o refactorice un componente, o que se defina cómo se comunican dos componentes.
+
+**Definiciones:**
 * **Data down:** el padre pasa el dato al hijo **directo** con `input()`. El hijo lo consume; nunca lo muta.
 
 * **Events up:** el hijo notifica al padre **directo** con `output()`. El padre es dueño del estado y el único que lo actualiza.
@@ -2999,3 +2996,47 @@ Un `input()` que el hijo directo sí consume NO es prop drilling. Lo prohibido e
 
 ## Al Refactorizar
 Antes de modificar un componente, recorrer la cadena de `input()`/`output()` de arriba abajo y listar los que atraviesan componentes intermedios. Cada uno es una violación y debe eliminarse aplicando las alternativas.
+
+# Rutas Absolutas en `import` e Imágenes
+La regla es la misma para `import` e imágenes: siempre usar ruta absoluta. Está prohibido usar rutas relativas.
+
+Para los `import`, usar los alias definidos en `paths` de `tsconfig.json`.
+
+**Correcto:**
+
+```html
+<!-- my-component.component.html -->
+
+<!-- usar slash al principio de /assets -->
+<img src="/assets/img/logo.png" alt="Logo" />
+```
+
+```ts
+// my-component.component.ts
+
+// usar el alias @/ definido en tsconfig.json
+import { MyComponent } from '@/app/features/my-feature/my-component/my-component.component';
+```
+
+**Incorrecto:**
+
+```html
+<!-- my-component.component.html -->
+
+<!-- es incorrecto porque se escribe ../ -->
+<img src="../../../assets/img/logo.png" alt="Logo" />
+```
+
+```html
+<!-- my-component.component.html -->
+
+<!-- es incorrecto porque NO se escribió el slash al principio de assets -->
+<img src="assets/img/logo.png" alt="Logo" />
+```
+
+```ts
+// my-component.component.ts
+
+// es incorrecto porque se escribe ../ en lugar de usar el alias @/
+import { MyComponent } from '../../features/my-feature/my-component/my-component.component';
+```
