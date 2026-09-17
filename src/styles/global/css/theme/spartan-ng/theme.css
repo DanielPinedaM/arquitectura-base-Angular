@@ -36,7 +36,7 @@ https://spartan.ng/documentation/theming */
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* tema claro de spartan ng - PRUEBA: paleta morada temporal para verificar el theming */
+/* tema claro de spartan ng */
 :root {
   /* Radio de bordes (border-radius) */
   --radius: 0.625rem;
@@ -74,7 +74,7 @@ https://spartan.ng/documentation/theming */
   --sidebar-ring: oklch(0.65 0.18 300);
 }
 
-/* tema oscuro de spartan ng - PRUEBA: paleta morada temporal para verificar el theming */
+/* tema oscuro de spartan ng */
 :root.dark {
   /* Superficies elevadas: cards y popovers */
   --card: oklch(0.205 0 0);
