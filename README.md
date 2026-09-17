@@ -1190,7 +1190,7 @@ Esto permite ubicar los componentes que corresponden a cada URL
 
 Además,
 
-**✅ Correcto:**
+**Correcto:**
 
 ```txt
 src/app/
@@ -1274,7 +1274,7 @@ export const routes: Routes = [
 ];
 ```
 
-# 📅 Fechas
+# Fechas
 1. **OBLIGATORIO** usar Luxon para el manejo de fechas y horas. **PROHIBIDO** utilizar `new Date()` nativo de JavaScript o cualquier otra librería diferente de Luxon.
 
 2. En todos los componentes definidos en la sección **"Componentes Permitidos de Calendarios"**, toda su interfaz pública de fechas (`input()` y `output()`, como `dateChange`) es de tipo Luxon `DateTime`.
@@ -1384,7 +1384,7 @@ Este proyecto usa Tailwind 4. Está **PROHIBIDO** el uso de patrones legacy de T
 
 ### Archivo de Configuración de Tailwind
 
-**Ejemplo Incorrecto - Configurar Tailwind 3 con archivo `.js`**
+**Incorrecto - Configurar Tailwind 3 con archivo `.js`**
 
 ```js
 /* tailwind.config.js */
@@ -1465,7 +1465,7 @@ Para aplicar estilos del tema oscuro, usar siempre la variante `dark:` de Tailwi
 
 No escribas estilos del tema oscuro en archivos CSS.
 
-**Ejemplo Incorrecto:**
+**Incorrecto:**
 
 ```css
 .container {
@@ -1569,7 +1569,7 @@ div.parent {
 }
 ```
 
-**Ejemplo incorrecto**
+**Incorrecto**
 
 ```CSS
 div.parent {
@@ -1605,7 +1605,7 @@ Para medidas relativas al viewport, usa `dvh` y `dvw`. No uses `vh` ni `vw`, tam
 }
 ```
 
-**Ejemplo Incorrecto:**
+**Incorrecto:**
 
 ```html
 <div class="h-screen w-screen">
@@ -1647,7 +1647,7 @@ Las clases de la paleta predeterminada de Tailwind, como `bg-red-500`, están pe
 <div class="bg-[oklch(62.8%_0.258_29.23)]"></div>
 ```
 
-**Ejemplo Incorrecto:**
+**Incorrecto:**
 
 ```css
 @theme {
@@ -1670,7 +1670,7 @@ Las clases de la paleta predeterminada de Tailwind, como `bg-red-500`, están pe
 ### `@apply`
 Prohibido usar `@apply` de Tailwind
 
-***Ejemplo incorrecto:***
+***Incorrecto:***
 
 ```HTML
 <!-- my-component.component.html -->
@@ -1873,7 +1873,7 @@ Aplica a los pasos 1 y 2. En Angular la etiqueta `<button>` es el **elemento anf
 
 Lo que está prohibido es escribir un `<button>` **desnudo**, es decir, sin ninguna de las dos directivas de botón:
 
-**Ejemplo Incorrecto:**
+**Incorrecto:**
 ```html
 <button class="btn btn-primary btn-background" (click)="save()">Guardar</button>
 <button hlmDialogTrigger>Abrir</button>
@@ -2168,7 +2168,7 @@ Esto genera:
 - Inconsistencias visuales.
 - Dificultad para reutilizar un estándar de diseño.
 
-**✅ Correcto:**
+**Correcto:**
 
 Las clases de botones deben representar una sola responsabilidad y ser **composables**.
 
@@ -2189,7 +2189,7 @@ Cada clase modifica únicamente una característica específica del botón. Esto
 | `_mixins.scss`       | Codigo de Sass reutilizable que se repite en diferentes archivos de src\styles\global\scss\buttons                                                                                | `@mixin btn-base-size {}`                                        |
 | `_tokens.scss`       | Variables globales de Sass utilizadas por todo el sistema de botones. Centraliza colores, tamaños tipográficos y escalas de espaciado para mantener consistencia visual.     | `$primary: oklch(...);`                                          |
 
-### 📖 Manual de Uso para Dar Estilos a Botones
+### Manual de Uso para Dar Estilos a Botones
 
 Esta guía explica cómo utilizar correctamente los estilos globales de botones definidos en:
 
@@ -2197,26 +2197,26 @@ Esta guía explica cómo utilizar correctamente los estilos globales de botones 
 src/styles/global/scss/buttons
 ```
 
-### ✨ UI/UX
+### UI/UX
 
 En el diseño de interfaces (UI/UX), el color de un botón no es solo decorativo:
 cada variante representa una intención de acción dentro del sistema.
 
 Esto ayuda al usuario a entender rápidamente qué va a ocurrir antes de hacer clic.
 
-**🔴 Los colores fuertes:**
+**Los colores fuertes:**
 
 - Capturan atención.
 - Indican importancia.
 - El usuario lo identifica como el botón más importante para hacer clic.
 
-**⚪ Los colores suaves o transparentes:**
+**Los colores suaves o transparentes:**
 
 - Reducen distracción.
 - Bajan la jerarquía visual.
 - Mantienen el foco en el contenido principal.
 
-**📏 Reglas de UI/UX**
+**Reglas de UI/UX**
 
 - Solo debe existir 1 acción primaria por pantalla (colores fuertes).
 - Las acciones secundarias deben tener menor jerarquía visual (colores suaves).
@@ -2233,9 +2233,9 @@ Incluye estilos fundamentales como `padding`, `font-size`, alineación del conte
 
 Por defecto, `.btn` tiene `background-color: transparent`, por lo que **no representa un botón visual completo por sí sola**. Su función es servir como base para que las variantes (`.btn-primary`, `.btn-outline-*`, etc.) apliquen el estilo visual final.
 
-- Botones **activados** usan `cursor: pointer` 👆🏻 para indicar que el botón es interactivo y puede ser clickeado.
+- Botones **activados** usan `cursor: pointer` para indicar que el botón es interactivo y puede ser clickeado.
 
-- Botones **desactivados** usan `cursor: not-allowed` 🚫 para indicar que el botón no está disponible y no puede ser clickeado.
+- Botones **desactivados** usan `cursor: not-allowed` para indicar que el botón no está disponible y no puede ser clickeado.
 
 ```html
 <button class="btn">
@@ -2273,17 +2273,17 @@ Por defecto, `.btn` tiene `background-color: transparent`, por lo que **no repre
 
 En sistemas de diseño modernos, los botones se clasifican según su nivel de importancia y riesgo de la acción:
 
-| Tipo de boton    | Significado                                                    |
-| ---------------- | -------------------------------------------------------------- |
-| 🔵 **Primary**   | acción principal (continuar / confirmar / guardar)             |
-| ⚪ **Secondary** | acción secundaria (cancelar / salir)                           |
-| 👻 **Ghost**     | acción discreta sin estructura visual fuerte - no tiene border |
-| 🔴 **Danger**    | eliminar o destruir                                            |
-| 🟡 **Warning**   | advertencia                                                    |
-| 🟢 **Success**   | confirmación positiva                                          |
-| 🔷 **Info**      | información                                                    |
-| 🔗 **Link**      | navegación / enlaces                                           |
-| ⚫ **Dark**      | variante de alto contraste para acciones neutras o de soporte  |
+| Tipo de boton | Significado                                                    |
+| ------------- | -------------------------------------------------------------- |
+| Primary       | acción principal (continuar / confirmar / guardar)             |
+| Secondary     | acción secundaria (cancelar / salir)                           |
+| Ghost         | acción discreta sin estructura visual fuerte - no tiene border |
+| Danger        | eliminar o destruir                                            |
+| Warning       | advertencia                                                    |
+| Success       | confirmación positiva                                          |
+| Info          | información                                                    |
+| Link          | navegación / enlaces                                           |
+| Dark          | variante de alto contraste para acciones neutras o de soporte  |
 
 ![variantes-con-color-de-fondo](./docs/readme-md/img/button/variantes-con-color-de-fondo.png)
 
@@ -2592,7 +2592,7 @@ Es obligatorio que, cuando el botón contenga únicamente un icono (sin texto), 
 </button>
 ```
 
-### 🚫 Boton desactivado `cursor: not-allowed`
+### Boton desactivado `cursor: not-allowed`
 
 Agregar el atributo booleano de HTML `disabled` a la etiqueta `<button>` hace que los botones tomen estilos de desactivados.
 
@@ -2626,7 +2626,7 @@ El estilo de boton desactivado se aplica a cualquier tipo de boton.
 <button disabled class="btn btn-link" routerLink="/home">Link</button>
 ```
 
-### 📐 Tamaños
+### Tamaños
 
 Puedes modificar el tamaño de cualquier variante de botón, sin importar su estilo (fondo, borde o ghost).
 
@@ -2754,7 +2754,7 @@ Usar [flex-direction](https://tailwindcss.com/docs/flex-direction) para cambiar 
 </button>
 ```
 
-**✅ Correcto:**
+**Correcto:**
 
 Cambiar la ubicación del icono y texto en el HTML, sin usar Sass ni Tailwind.
 
