@@ -71,13 +71,15 @@ Antes de escribir código o responder, es **OBLIGATORIO** consultar estas fuente
 
 1. Este `AGENTS.md`: La regla final ante cualquier conflicto.
 
-2. tool `get_best_practices` del MCP server `angular-cli`: Reglas del proyecto.
+2. Skill `angular-conventions` (`.claude/skills/angular-conventions/SKILL.md` y `.claude/skills/angular-conventions/rules/`): Estándares de arquitectura, codigo, UI, estilos, formularios, fechas y consumo de API.
 
-3. tool `search_documentation` del MCP server `angular-cli`: Documentación oficial de angular.dev
+3. tool `get_best_practices` del MCP server `angular-cli`: Reglas del proyecto.
 
-4. Skill `angular-developer` (`.claude/skills/angular-developer/SKILL.md` y `.claude/skills/angular-developer/references/`): El cómo, con ejemplos de código.
+4. tool `search_documentation` del MCP server `angular-cli`: Documentación oficial de angular.dev
 
-5. Tus datos de entrenamiento: Permitidos, no están prohibidos, pero ceden ante cualquier fuente anterior.
+5. Skill `angular-developer` (`.claude/skills/angular-developer/SKILL.md` y `.claude/skills/angular-developer/references/`): El cómo, con ejemplos de código.
+
+6. Tus datos de entrenamiento: Permitidos, no están prohibidos, pero ceden ante cualquier fuente anterior.
 
 ## Buenas Practicas de TypeScript
 * Usar strict type checking
