@@ -7,25 +7,12 @@
 
 # Reglas de Idioma
 
-## Responder en Español
-Responder en español siempre, excepto lo que esta en "Excepciones, Responder en Ingles"
-
-Es decir, redactar en español todas las explicaciones, comentarios de codigo, respuestas, preguntas, descripciones, análisis, recomendaciones, documentación y mensajes dirigidos al usuario. Con la excepcion de lo siguiente que tiene que estar en ingles:
-
-## Excepciones, Responder en Ingles
-* Términos técnicos de uso común en desarrollo de software: middleware, service, controller, repository, signal, interceptor, provider, endpoint, payload, patrones de diseño, etc.
-
-* Nombres de frameworks, librerías, paquetes, APIs
-
-* Código fuente (todo, **excepto los comentarios de codigo**): Identificadores, nombres de archivos y carpetas, clases, interface, enum, métodos, funciones, parámetros, variables, ruta base del controlador de Nest, ruta de endpoint de Nest
-
 ## Excepciones dentro de las Excepciones, esto debe estar en Español
 Aunque la sección anterior indica que los "nombres de archivos y carpetas" van en inglés, existen dos casos puntuales que quedan **excluidos de esa excepción** y por lo tanto deben estar en español:
 
 1. Los `value` de `path` definidos en `src/app/app.routes.ts`
 2. Las carpetas dentro de `src/app/features/<feature>` que representen una ruta y que estén asociadas a un enrutado en `src/app/app.routes.ts`
 
-### Explicación
 Cada carpeta dentro de `<feature>` que represente una ruta, y que esté asociada a un enrutado en `src/app/app.routes.ts`, tiene que estar en español.
 
 ### Ejemplo
