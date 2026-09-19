@@ -1363,11 +1363,11 @@ export const routes: Routes = [
 
 1. Usar Luxon para el manejo de fechas y horas. **PROHIBIDO** utilizar `new Date()` nativo de JavaScript o cualquier otra librería de fechas diferente de Luxon.
 
-2. En todos los componentes definidos en la sección **"Componentes Permitidos de Calendarios"**, toda su interfaz pública de fechas (`input()` y `output()`, como `dateChange`) es de tipo Luxon `DateTime`.
+2. En todos los componentes definidos en la sección [Componentes Permitidos de Calendarios](#componentes-permitidos-de-calendarios), toda su interfaz pública de fechas (`input()` y `output()`, como `dateChange`) es de tipo Luxon `DateTime`.
 
 3. Usar los calendarios  para la selección de fechas definidos en "Componentes de Calendarios". **PROHIBIDO** usar cualquier otro componente de calendario, incluyendo el `<input type="date">` nativo de HTML.
 
-4. Usar exclusivamente los componentes definidos en la sección **"Componentes Permitidos de Calendarios"** para la selección de fechas. **PROHIBIDO** utilizar cualquier otro componente de calendario, incluyendo la etiqueta`<input type="date">` nativa de HTML.
+4. Usar exclusivamente los componentes definidos en la sección [Componentes Permitidos de Calendarios](#componentes-permitidos-de-calendarios) para la selección de fechas. **PROHIBIDO** utilizar cualquier otro componente de calendario, incluyendo la etiqueta`<input type="date">` nativa de HTML.
 
 5. Mantener en zona horaria local el `DateTime` de Luxon que entra o sale de los componentes definidos en la sección **"Calendarios permitidos"**, a través de sus `input()` y `output()` (`date`, `dateChange`, etc.), ya que representan una fecha seleccionada por el usuario. **PROHIBIDO** convertir ese `DateTime` a UTC (`.toUTC()`) dentro del flujo de estos componentes. Si necesitas persistir un instante (por ejemplo, `createdAt`) o enviarlo en el **payload** al backend, convierte ese `DateTime` a UTC únicamente justo antes de persistirlo o incluirlo en el payload, nunca antes. Este valor viaja en el payload como un `string` en formato ISO 8601 UTC (`YYYY-MM-DDTHH:mm:ssZ`), por ejemplo: `2024-06-15T14:30:00Z`.
 
