@@ -95,7 +95,7 @@ Antes de escribir código o responder, es **OBLIGATORIO** consultar estas fuente
 * Usar `type` para tipos primitivos, literales y uniones.
 
 ## Buenas Practicas de Angular
-* Usar lazy loading para las feature routes
+* Usar lazy loading para todas las rutas de `src\app\app.routes.ts`
 
 * NO uses los decoradores `@HostBinding` ni `@HostListener`. Coloca los host bindings dentro del objeto host del decorador `@Component` o `@Directive`.
 
