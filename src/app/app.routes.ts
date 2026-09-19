@@ -1,24 +1,6 @@
 ﻿import { AuthGuard } from '@/shared/guards/auth.guard';
 import { Routes } from '@angular/router';
 
-// #region - error 404 ruta inexistente
-import { NotFound404Component } from '@/shared/design/ui/not-found-404/not-found-404.component';
-// #endregion
-
-// #region - contenedor principal de paginas despues de loguearse
-import { MainWrapperComponent } from '@/shared/design/layouts/main-wrapper/main-wrapper.component';
-// #endregion
-
-// #region autenticacion
-import { AssignPasswordComponent } from '@/app/features/auth/assign-password/assign-password.component';
-import { MainAuthComponent } from '@/app/features/auth/design/layouts/main-auth/main-auth.component';
-import { LoginComponent } from '@/app/features/auth/login/login.component';
-import { RecoverPasswordComponent } from '@/app/features/auth/recover-password/recover-password.component';
-import { RegisterComponent } from '@/app/features/auth/register/register.component';
-// #endregion
-
-import { BotsComponent } from '@/app/features/bots/bots.component';
-
 export const routes: Routes = [
   // cuando NO se copia una ruta, se re-dirige al login
   {
@@ -27,47 +9,73 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 
+  // #region autenticacion
   {
     path: '',
-    component: MainAuthComponent,
+    loadComponent: () =>
+      import('@/app/features/auth/design/layouts/main-auth/main-auth.component').then(
+        (c) => c.MainAuthComponent,
+      ),
+
     children: [
       {
         path: 'iniciar-sesion',
-        component: LoginComponent,
+        loadComponent: () =>
+          import('@/app/features/auth/login/login.component').then((c) => c.LoginComponent),
       },
       {
         path: 'recuperar-clave',
-        component: RecoverPasswordComponent,
+        loadComponent: () =>
+          import('@/app/features/auth/recover-password/recover-password.component').then(
+            (c) => c.RecoverPasswordComponent,
+          ),
       },
       {
         path: 'asignar-nueva-clave/:id',
-        component: AssignPasswordComponent,
+        loadComponent: () =>
+          import('@/app/features/auth/assign-password/assign-password.component').then(
+            (c) => c.AssignPasswordComponent,
+          ),
       },
       {
         path: 'registrarme',
-        component: RegisterComponent,
+        loadComponent: () =>
+          import('@/app/features/auth/register/register.component').then(
+            (c) => c.RegisterComponent,
+          ),
       },
     ],
   },
+  // #endregion
 
+  // #region contenedor principal de paginas despues de loguearse
   {
     path: '',
-    component: MainWrapperComponent,
+    loadComponent: () =>
+      import('@/shared/design/layouts/main-wrapper/main-wrapper.component').then(
+        (c) => c.MainWrapperComponent,
+      ),
 
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
 
     children: [
       {
-        // /bots
         path: 'bots',
-        component: BotsComponent,
+        loadComponent: () =>
+          import('@/app/features/bots/bots.component').then((c) => c.BotsComponent),
       },
     ],
   },
+  // #endregion
 
+  // #region error 404 ruta inexistente
   {
     path: '**',
-    component: NotFound404Component,
+    loadComponent: () =>
+      import('@/shared/design/ui/not-found-404/not-found-404.component').then(
+        (c) => c.NotFound404Component,
+      ),
   },
+  // #endregion
 ];
