@@ -262,7 +262,7 @@ pn i
 | `pn start:test`  | Pruebas      | `src/environments/environment.test.ts`      |
 | `pn start:prod`  | Producción   | `src/environments/environment.prod.ts`      |
 
-# 🚀 Generar Carpeta `dist` (build) para Desplegar
+# 🚀 Generar Carpeta `dist` (Build) para Desplegar
 
 | Comando         | Ambiente     | Variable de Entorno                   |
 | --------------- | ------------ | -------------------------------------- |
@@ -278,7 +278,7 @@ El ambiente queda **hardcodeado dentro de la carpeta `dist`** durante el build. 
 ***Motivo:*** Los comandos `build:*` usan `fileReplacements` de `angular.json`, que reemplaza `src/environments/environment.ts` por el archivo del ambiente **antes** de compilar. Es decir, **las variables de entorno quedan hardcodeadas dentro de los archivos `.js` generados**, no se leen en tiempo de ejecución.
 
 ## Pasos
-1. Generar la carpeta `dist` con el ambiente deseado, usando uno de los comandos de la sección "Generar Carpeta `dist` (build) para Desplegar"
+1. Generar la carpeta `dist` con el ambiente deseado, usando uno de los comandos de la sección "[Generar Carpeta `dist` (Build) para Desplegar](#-generar-carpeta-dist-build-para-desplegar)"
 
 2. Ejecutar la carpeta `dist`
 
@@ -339,7 +339,7 @@ En ambas formas, el debugger se vuelve a adjuntar automáticamente cada vez que 
 
 **Desde navegador:** Es mas rápido de usar, solamente abra el navegador y empiece a depurar. Usar cuando necesite una depuración rápida sin editar código.
 
-## 1️⃣ Launch: el editor ejecuta el script
+## 1️⃣ Launch: El Editor Ejecuta el Script
 1. Si el frontend ya esta ejecutandose con `pn start:local`, `pn start:test` o `pn start:prod`, deténgalo antes de iniciar el debugging. De lo contrario, se producirán errores.
 
 2. Colocar los breakpoints, escribiendo en el código
@@ -366,7 +366,7 @@ debugger;
 
 6. En el editor de codigo abrir el archivo que se quiere depurar y que contiene `debugger;`
 
-## 2️⃣ Desde navegador
+## 2️⃣ Desde Navegador
 1. Colocar los breakpoints, escribiendo en el código:
 
 ```ts
@@ -401,7 +401,7 @@ debugger;
 >
 > Aunque es un texto largo, aprenderás la arquitectura, buenas prácticas y a detectar revisando el código, cuando la IA alucina
 
-# [🔗 Enlace - HTTP Cats - Explicación de los status HTTP](https://http.cat/)
+# [🔗 Enlace - HTTP Cats - Explicación de los Status HTTP](https://http.cat/)
 
 # 🤖 Uso de IA
 
@@ -543,13 +543,13 @@ how and where your state is used throughout an application,
 allowing the framework to optimize rendering updates.
 ```
 
-# Diferencia Entre Skills y MCP
+# Diferencia entre Skills y MCP
 
 **Skill:** Es un archivo Markdown llamado `SKILL.md` que contiene instrucciones para enseñarle a la IA cómo ejecutar un proceso, o para darle conocimiento sobre un tema. La IA carga ese contenido directamente en su contexto antes de responder.
 
 **Model Context Protocol (MCP):** Es un protocolo (no es exactamente una API REST, aunque es similar) que permite que una IA se comunique con sistemas externos —herramientas, servicios o fuentes de datos— de forma estandarizada. Un servidor MCP puede exponer *tools* (funciones que la IA puede invocar), *resources* (datos) y *prompts* (plantillas)
 
-## Diferencia Entre MCP `angular-cli` y Skill `angular-developer`
+## Diferencia entre MCP `angular-cli` y Skill `angular-developer`
 Ambos son mantenidos por el equipo oficial de Angular (Google), y tambien le enseñan a la IA como hacer codigo con Angular. La diferencia es:
 
 **MCP `angular-cli`** expone *tools* que la IA invoca en tiempo real, como `search_documentation` (busca en la documentación oficial de angular.dev) y `get_best_practices` (obtiene la guía oficial de buenas prácticas). El MCP no almacena esa teoría: la consulta dinámicamente cada vez que se necesita. Su contenido es la teoria de Angular
@@ -605,7 +605,7 @@ Hay dos alcances:
 
 5. Eliminar `skills-lock.json`
 
-### Forma 2 - Descargar skill sin comando
+### Forma 2 - Descargar Skill sin Comando
 1. Buscar un repositorio con una skill
 
 2. Descargar el repositorio
@@ -786,7 +786,7 @@ your data model and the UI with Angular Signals
 
 La cita corresponde a [este link de la documentación oficial de Angular](https://angular.dev/essentials/signal-forms)
 
-# Ejemplos de Prompts de ¿Como Usar IA en este Proyecto?
+# Ejemplos de Prompts de ¿Como Usar IA en Este Proyecto?
 
 **Iniciar tutorial paso a paso:**
 ```txt
@@ -806,15 +806,15 @@ usar search_documentation de angular-cli MCP para migrar a signals el componente
 # Reglas Obligatorias para Skill
 Aplican a toda respuesta o modificación de código de este proyecto.
 
-## 1. Autoridad de la skill
-Las decisiones de arquitectura, estructura y convenciones definidas en esta skill son la fuente de la verdad del proyecto. No las cuestiones, no las reemplaces, no las contradigas y no las ignores. Desobedecerlas genera malas practicas y código inescalable. Esta restricción aplica solo a lo que la skill define de forma explícita; fuera de ese alcance rige el [4. Caso no definido en la skill](#4-caso-no-definido-en-la-skill).
+## 1. Autoridad de la Skill
+Las decisiones de arquitectura, estructura y convenciones definidas en esta skill son la fuente de la verdad del proyecto. No las cuestiones, no las reemplaces, no las contradigas y no las ignores. Desobedecerlas genera malas practicas y código inescalable. Esta restricción aplica solo a lo que la skill define de forma explícita; fuera de ese alcance rige el [4. Caso no Definido en la Skill](#4-caso-no-definido-en-la-skill).
 
-## 2. Ante cualquier error
+## 2. Ante Cualquier Error
 Esta regla aplica en cualquier momento. Si encuentras algún error, inconsistencia, duda o ambigüedad, debes detenerte y consultarme antes de realizar cualquier modificación. No puedes asumir ni deducir implementaciones. Es preferible preguntar para aclarar una duda que asumir una solución.
 
-La única excepción a esta regla es lo establecido en la regla anterior: [1. Autoridad de la skill](#1-autoridad-de-la-skill).
+La única excepción a esta regla es lo establecido en la regla anterior: [1. Autoridad de la Skill](#1-autoridad-de-la-skill).
 
-## 3. Instrucción que contradice una regla definida
+## 3. Instrucción que Contradice una Regla Definida
 Se aplica cuando la instrucción recibida contradice una regla explícitamente definida en esta skill.
 
 Acción: implementa estrictamente lo definido en la skill. No preguntes, no propongas alternativas, no pidas confirmación.
@@ -833,14 +833,14 @@ Implementado:   <lo que define la skill>
 Motivo:         <por qué lo solicitado rompe la arquitectura, en una línea>
 ```
 
-La cita debe ser literal, no una paráfrasis. Si no puedes copiar el texto exacto de la skill, la regla no está definida: aplica [4. Caso no definido en la skill](#4-caso-no-definido-en-la-skill)
+La cita debe ser literal, no una paráfrasis. Si no puedes copiar el texto exacto de la skill, la regla no está definida: aplica [4. Caso no Definido en la Skill](#4-caso-no-definido-en-la-skill)
 
-## 4. Caso no definido en la skill
-Se aplica cuando el caso, problema o pregunta no está definido en la [tabla de contenido](#tabla-de-contenido)
+## 4. Caso no Definido en la Skill
+Se aplica cuando el caso, problema o pregunta no está definido en la [Tabla de Contenido](#tabla-de-contenido)
 
 Acción: resuélvelo con tu comportamiento por defecto. La skill no restringe este caso y no altera tu forma normal de trabajar.
 
-## 5. Código existente que ya viola la arquitectura
+## 5. Código Existente que Ya Viola la Arquitectura
 Se aplica cuando detectas código ya escrito que incumple una regla de esta skill.
 
 No lo corrijas por iniciativa propia. Emite:
@@ -869,7 +869,7 @@ NO  → dejarlo como está
 Si detectas varias infracciones en la misma pasada, agrúpalas en una sola llamada a `AskUserQuestion`, una pregunta por infracción.
 
 ## 6. ¿Como Leer la Skill?
-Leer **bajo demanda** los archivos `.md` ubicados en `/skills/angular-conventions/rules/`: usa la [tabla de contenido](#tabla-de-contenido) como referencia para inferir cuales archivos son necesarios para la tarea que estas resolviendo, y accede unicamente a esos archivos.
+Leer **bajo demanda** los archivos `.md` ubicados en `/skills/angular-conventions/rules/`: usa la [Tabla de Contenido](#tabla-de-contenido) como referencia para inferir cuales archivos son necesarios para la tarea que estas resolviendo, y accede unicamente a esos archivos.
 
 **Razon**: Leer todos los archivos consume contexto y tokens innecesariamente.
 
@@ -1087,10 +1087,10 @@ src/
 ## Sufijos en Nombres de Archivos
 [Angular moderno eliminó la necesidad de usar sufijos](https://angular.dev/cli/new#options) como `.component`, `.service`, `.directive`, `.pipe`, etc. porque el decorador de Angular (`@Component`, `@Injectable`, etc.) ya indica qué hace el archivo.
 
-### Convención usada en este proyecto
+### Convención Usada en Este Proyecto
 Aunque Angular moderno ya no obliga a usar sufijos, en este proyecto **sí** se usan, porque hacen explícito el tipo de cada archivo en su nombre, lo que evita ambigüedades y mantiene la consistencia al recorrer carpetas y leer imports en un proyecto grande.
 
-### ¿Dónde están definidos los sufijos?
+### ¿Dónde Están Definidos los Sufijos?
 En `angular.json`, en la key `schematics` del proyecto `front`, que está dentro de la key `projects`:
 
 ```jsonc
@@ -1252,7 +1252,7 @@ Un layout puede contener múltiples componentes de `ui`, pero un componente de `
 * DashboardLayout
 * HomeLayout
 
-### Regla de ubicación
+### Regla de Ubicación
 
 La ubicación depende del alcance de reutilización:
 
@@ -1365,11 +1365,11 @@ export const routes: Routes = [
 
 2. En todos los componentes definidos en la sección [Componentes Permitidos de Calendarios](#componentes-permitidos-de-calendarios), toda su interfaz pública de fechas (`input()` y `output()`, como `dateChange`) es de tipo Luxon `DateTime`.
 
-3. Usar los calendarios  para la selección de fechas definidos en "Componentes de Calendarios". **PROHIBIDO** usar cualquier otro componente de calendario, incluyendo el `<input type="date">` nativo de HTML.
+3. Usar los calendarios  para la selección de fechas definidos en [Componentes Permitidos de Calendarios](#componentes-permitidos-de-calendarios). **PROHIBIDO** usar cualquier otro componente de calendario, incluyendo el `<input type="date">` nativo de HTML.
 
 4. Usar exclusivamente los componentes definidos en la sección [Componentes Permitidos de Calendarios](#componentes-permitidos-de-calendarios) para la selección de fechas. **PROHIBIDO** utilizar cualquier otro componente de calendario, incluyendo la etiqueta`<input type="date">` nativa de HTML.
 
-5. Mantener en zona horaria local el `DateTime` de Luxon que entra o sale de los componentes definidos en la sección **"Calendarios permitidos"**, a través de sus `input()` y `output()` (`date`, `dateChange`, etc.), ya que representan una fecha seleccionada por el usuario. **PROHIBIDO** convertir ese `DateTime` a UTC (`.toUTC()`) dentro del flujo de estos componentes. Si necesitas persistir un instante (por ejemplo, `createdAt`) o enviarlo en el **payload** al backend, convierte ese `DateTime` a UTC únicamente justo antes de persistirlo o incluirlo en el payload, nunca antes. Este valor viaja en el payload como un `string` en formato ISO 8601 UTC (`YYYY-MM-DDTHH:mm:ssZ`), por ejemplo: `2024-06-15T14:30:00Z`.
+5. Mantener en zona horaria local el `DateTime` de Luxon que entra o sale de los componentes definidos en la sección [Componentes Permitidos de Calendarios](#componentes-permitidos-de-calendarios), a través de sus `input()` y `output()` (`date`, `dateChange`, etc.), ya que representan una fecha seleccionada por el usuario. **PROHIBIDO** convertir ese `DateTime` a UTC (`.toUTC()`) dentro del flujo de estos componentes. Si necesitas persistir un instante (por ejemplo, `createdAt`) o enviarlo en el **payload** al backend, convierte ese `DateTime` a UTC únicamente justo antes de persistirlo o incluirlo en el payload, nunca antes. Este valor viaja en el payload como un `string` en formato ISO 8601 UTC (`YYYY-MM-DDTHH:mm:ssZ`), por ejemplo: `2024-06-15T14:30:00Z`.
 
 6. En `src/shared/services/Luxon.service.ts` existen funciones utilitarias reutilizables para el manejo y formateo de fechas y horas con Luxon. Reutilizarlas cuando cubran la necesidad. **PROHIBIDO** duplicar su funcionalidad. Estas funciones no contienen lógica de negocio.
 
@@ -1538,7 +1538,7 @@ Por defecto, el orden de las capas de Tailwind 4 es el siguiente. En este ejempl
 @layer theme, base, components, utilities;
 ```
 
-### Tema oscuro
+### Tema Oscuro
 Para aplicar estilos del tema oscuro, usar siempre la variante `dark:` de Tailwind directamente en el HTML.
 
 **Correcto:**
@@ -1865,7 +1865,7 @@ h1 {
 ### Sintaxis de Rango
 Escribir las media queries con la sintaxis de rango (operadores de comparación) de CSS Media Queries Level 4. Está **PROHIBIDO** usar los prefijos `min-width` y `max-width`.
 
-La sintaxis de rango también se escribe como se especifica en el titulo [Mobile First](#Mobile-First): se parte del estilo base de móvil y se amplía hacia arriba con `width >=`. Por lo tanto, dentro de la sintaxis de rango también está **PROHIBIDO** `width <=` (desktop first) y acotar entre dos anchos (`768px <= width <= 1023px`).
+La sintaxis de rango también se escribe como se especifica en el titulo [Mobile First](#mobile-first): se parte del estilo base de móvil y se amplía hacia arriba con `width >=`. Por lo tanto, dentro de la sintaxis de rango también está **PROHIBIDO** `width <=` (desktop first) y acotar entre dos anchos (`768px <= width <= 1023px`).
 
 | Sintaxis Legacy (prohibida)                         | Sintaxis de rango (obligatoria)     | ¿Mobile first? |
 | --------------------------------------------------- | ----------------------------------- | -------------- |
@@ -1993,29 +1993,29 @@ Spartan NG tiene dos capas:
 
 Esta regla aplica a **cualquier componente visual del proyecto** (formularios, cards, badges, tooltips, layouts, etc.), no solo a formularios.
 
-### Orden de decisión
+### Orden de Decisión
 Para construir cualquier elemento de UI, evaluar en este orden y detenerse en el primer caso que aplique:
 
-1. **¿El componente está en "Componentes permitidos"?**
+1. **¿El componente está en "[Componentes Permitidos](#componentes-permitidos)"?**
    Usar el componente helm de Spartan de la lista. Está prohibido usar su equivalente nativo de HTML.
    Ejemplo: existe la etiqueta nativa `<dialog>` de HTML, pero como `Dialog` está en la lista, se debe usar el `Dialog` de Spartan (`<hlm-dialog>` y sus directivas).
 
 2. **¿El componente es un botón?**
-   Ir a **"Orden de Decisión para Botones"** y aplicar sus 3 pasos. Esa sección resuelve el caso completo: **no** continuar con los pasos 3 ni 4 de esta lista.
+   Ir a [Orden de Decisión para Botones](#orden-de-decisión-para-botones) y aplicar sus 3 pasos. Esa sección resuelve el caso completo: **no** continuar con los pasos 3 ni 4 de esta lista.
 
 3. **¿El componente NO está en la lista y NO es un botón?**
    Maquetar con Tailwind. En este caso sí se usan elementos HTML nativos (`<div>`, `<span>`, etc.) como base del maquetado. Ejemplo: `Card` no está en la lista, se maqueta con Tailwind sobre `<div>`.
 
 4. **Alcance de la prohibición de HTML nativo (aplica a los casos 1, 2 y 3):**
    El HTML nativo solo está prohibido en dos situaciones:
-   * (a) Cuando existe un equivalente en "Componentes permitidos": usar Spartan ng, no el nativo.
+   * (a) Cuando existe un equivalente en "[Componentes Permitidos](#componentes-permitidos)": usar Spartan ng, no el nativo.
 
-   * (b) La etiqueta `<button>` nativa: ver **"Orden de Decisión para Botones"**.
+   * (b) La etiqueta `<button>` nativa: ver [Orden de Decisión para Botones](#orden-de-decisión-para-botones).
 
    En cualquier otro caso (componentes que no están en la lista), el HTML nativo es la base esperada para maquetar con Tailwind.
 
-### Refuerzo para formularios
-Además de lo anterior, en formularios usar los componentes de Spartan de "Componentes permitidos" para todos los controles disponibles (checkbox, input, label, Radio Group, Select, Switch, textarea, etc.). No se permite ningún control de formulario en HTML nativo cuando existe su equivalente en la lista.
+### Refuerzo para Formularios
+Además de lo anterior, en formularios usar los componentes de Spartan de "[Componentes Permitidos](#componentes-permitidos)" para todos los controles disponibles (checkbox, input, label, Radio Group, Select, Switch, textarea, etc.). No se permite ningún control de formulario en HTML nativo cuando existe su equivalente en la lista.
 
 Para el formulario en sí, sí se permite usar la etiqueta nativa `<form>` de HTML junto con Angular Forms with signals para el manejo de estado y validación.
 
@@ -2039,7 +2039,7 @@ Todo se decide con una sola pregunta: **¿el archivo que estás editando _implem
 > | `hlmBtn`  | `button[hlmBtn], a[hlmBtn]`    |
 > | `appBtn`  | `button[appBtn], a[appBtn]`    |
 
-#### Paso 1 - Botón interno de la librería de UI → `hlmBtn` de Spartan NG
+#### Paso 1 - Botón Interno de la Librería de UI → `hlmBtn` de Spartan NG
 **Condición:** el botón se escribe **dentro** de `src/shared/design/ui/spartan-ng`, en el archivo que implementa o define un componente de Spartan NG.
 
 **Usar:** la directiva `hlmBtn` de `src/shared/design/ui/spartan-ng/form/action/button` — alias `@spartan-ng/button`.
@@ -2056,7 +2056,7 @@ Así lo hace la propia librería:
 
 **Alcance:** esta regla aplica **únicamente** al código que implementa o define los componentes de la librería de UI. **NO** aplica al código de la aplicación donde esos componentes son consumidos — ese caso lo resuelve el paso 2.
 
-#### Paso 2 - Botón fuera de la librería de UI → Directiva `appBtn`
+#### Paso 2 - Botón Fuera de la Librería de UI → Directiva `appBtn`
 **Condición:** el botón **NO** se escribe dentro de `src/shared/design/ui/spartan-ng`. Ocurre en cualquiera de estos dos casos:
 
 **2.1. El botón se usa al consumir un componente de la librería de UI.**
@@ -2075,7 +2075,7 @@ Ejemplo: Iniciar sesión, Guardar, Cancelar, Crear, Editar, Eliminar, Buscar, Ac
 >
 > Al crear la directiva, alinear selector e inputs con lo documentado aquí, o actualizar esta sección para que coincida con la implementación real.
 
-#### PROHIBIDA la etiqueta `<button>` nativa de HTML sin directiva de botón
+#### PROHIBIDA la Etiqueta `<button>` Nativa de HTML sin Directiva de Botón
 Aplica a los pasos 1 y 2. En Angular la etiqueta `<button>` es el **elemento anfitrión**: tanto `hlmBtn` como `appBtn` son directivas de atributo y no existen sin ella.
 
 Lo que está prohibido es escribir un `<button>` **desnudo**, es decir, sin ninguna de las dos directivas de botón:
@@ -2094,7 +2094,7 @@ Lo que está prohibido es escribir un `<button>` **desnudo**, es decir, sin ning
 
 La misma regla aplica a `<a>`: prohibido un `<a>` con apariencia de botón sin `appBtn`.
 
-#### Cómo combinar el botón composable con las directivas de Spartan
+#### Cómo Combinar el Botón Composable con las Directivas de Spartan
 Los triggers y los cierres de Spartan son **directivas de comportamiento**: aportan accesibilidad y estado, pero **ningún estilo**. Por eso conviven en el mismo `<button>` que `appBtn`, que aporta los estilos.
 
 Sus selectores exigen la etiqueta `<button>`, así que esta convivencia es la única forma válida de consumirlos:
@@ -2131,7 +2131,7 @@ Sus selectores exigen la etiqueta `<button>`, así que esta convivencia es la ú
 </hlm-dialog>
 ```
 
-#### Piezas que traen `hlmBtn` incrustado
+#### Piezas que Traen `hlmBtn` Incrustado
 Algunas piezas de Spartan traen los estilos de botón incrustados y **no se pueden desactivar**. Lo hacen por dos mecanismos:
 
 * **`hostDirectives`** que aplican `HlmButton` al elemento anfitrión (`hlmAlertDialogAction`, `hlmAlertDialogCancel`, `hlmInputGroupButton`, `hlmCarouselNext`, `hlmCarouselPrevious`).
@@ -2172,8 +2172,8 @@ En ambos casos el elemento recibe las clases Tailwind de Spartan. Se resuelven c
 </hlm-alert-dialog-footer>
 ```
 
-### Dependencias internas de los componentes permitidos
-Si un componente de "Componentes permitidos" depende de otros componentes helm de Spartan NG para funcionar, esas dependencias sí se pueden usar aunque no estén listadas explícitamente. Dependencias reales de este proyecto:
+### Dependencias Internas de los Componentes Permitidos
+Si un componente de [Componentes Permitidos](#componentes-permitidos) depende de otros componentes helm de Spartan NG para funcionar, esas dependencias sí se pueden usar aunque no estén listadas explícitamente. Dependencias reales de este proyecto:
 
 | Componente       | Depende de                                        |
 | ---------------- | ------------------------------------------------- |
@@ -2187,21 +2187,21 @@ Si un componente de "Componentes permitidos" depende de otros componentes helm d
 | `Input Password` | `Input Base` + `Input Group` + `Button`           |
 | `Carousel`       | `Button`                                          |
 
-`Button` (`@spartan-ng/button`) e `Input Base` (`@spartan-ng/input-base`) son los dos requisitos que **no** aparecen en la tabla "Componentes permitidos", y son justamente el caso que cubre esta regla: solo se usan internamente para construir los demás componentes.
+`Button` (`@spartan-ng/button`) e `Input Base` (`@spartan-ng/input-base`) son los dos requisitos que **no** aparecen en la tabla [Componentes Permitidos](#componentes-permitidos), y son justamente el caso que cubre esta regla: solo se usan internamente para construir los demás componentes.
 
-Los botones se resuelven aparte, con **"Orden de Decisión para Botones"**: dentro de `src/shared/design/ui/spartan-ng` se usa la directiva `hlmBtn`, y al consumir esos componentes desde la aplicación se usa la directiva `appBtn` de `src/shared/design/ui/buttons`.
+Los botones se resuelven aparte, con [Orden de Decisión para Botones](#orden-de-decisión-para-botones): dentro de `src/shared/design/ui/spartan-ng` se usa la directiva `hlmBtn`, y al consumir esos componentes desde la aplicación se usa la directiva `appBtn` de `src/shared/design/ui/buttons`.
 
 ### Data Table
 Solo se permite el patrón "Data Table" de Spartan, construido sobre las directivas `Table` (`hlmTable`, `hlmTr`, `hlmTh`, `hlmTd`, etc.) + **`@tanstack/angular-table`**, incluyendo paginación y sorting. Es decir, se usa el conjunto completo Data Table (Table + TanStack + paginación + sorting), no una tabla estática suelta. No esta permitiro usar la etiqueta `<table>` nativa de HTML
 
 ### Prohibiciones
-* Prohibido instalar componentes nuevos de Spartan (vía su CLI, por ejemplo: `pnpm ng g @spartan-ng/cli:ui <componente>` o `nx g @spartan-ng/cli:ui <componente>`) distintos a los de "Componentes permitidos".
+* Prohibido instalar componentes nuevos de Spartan (vía su CLI, por ejemplo: `pnpm ng g @spartan-ng/cli:ui <componente>` o `nx g @spartan-ng/cli:ui <componente>`) distintos a los de "[Componentes Permitidos](#componentes-permitidos)".
 
 * Prohibido usar cualquier librería de UI externa (Angular Material, PrimeNG, NG-ZORRO, etc.).
 
 * Prohibido usar `input-base` (`src\shared\design\ui\spartan-ng\form\text\input\input-base`) fuera de `src/shared`. Es una pieza interna que solo existe para construir `input-text`, `input-number`, `input-password` e `input-email`. Fuera de `src/shared` se usa uno de esos cuatro, nunca el base.
 
-### Componentes permitidos
+### Componentes Permitidos
 Los componentes están agrupados en cuatro categorías dentro de `src\shared\design\ui\spartan-ng`: `overlay`, `form`, `navigation` y `data-display`.
 
 Siempre para importar los componentes usar los import alias de Spartan ng que estan en `tsconfig.json`
@@ -2530,7 +2530,7 @@ Algunos botones usan colores claros en el texto o borde, por lo que deben coloca
 <button class="btn btn-dark btn-outline">Dark</button>
 ```
 
-### Botones con sombra
+### Botones con Sombra
 
 `btn-shadow` agrega una sombra a cualquier variante de botón, sin importar su estilo (fondo, borde o ghost).
 
@@ -2799,7 +2799,7 @@ Cuando el botón contenga únicamente un icono (sin texto), se utilicen las clas
 </button>
 ```
 
-### Boton desactivado `cursor: not-allowed`
+### Boton Desactivado `cursor: not-allowed`
 
 Agregar el atributo booleano de HTML `disabled` a la etiqueta `<button>` hace que los botones tomen estilos de desactivados.
 
@@ -3111,7 +3111,7 @@ Toda respuesta que pasa por `HttpClient` termina envuelta en el contrato `ApiRes
 
 ## Casos Donde Usar `HttpClient`
 
-## Casos donde Usar `resource()`
+## Casos Donde Usar `resource()`
 Para peticiones HTTP usa `httpResource()` o `HttpClient`, no `resource()` + `fetch`: pasa por el stack de `HttpClient` (interceptors, auth, manejo de errores) y te ahorra escribir params/loader a mano.
 
 ## Casos Donde Usar `toSignal`
@@ -3179,7 +3179,7 @@ Aplicar SIEMPRE que se diseñe, cree, divida, modifique o refactorice un compone
 
 Un `input()` que el hijo directo sí consume NO es prop drilling. Lo prohibido es el componente de paso.
 
-## Alternativas, en este Orden
+## Alternativas, en Este Orden
 1. **Composición, reestructurar el árbol de componentes:** eliminar o reubicar el componente intermedio para que el que produce el dato y el que lo consume queden padre/hijo directos. No usa ninguna API extra, cambia la forma del árbol. Es la opción por defecto.
 
 2. **Content projection con `ng-content`:** cuando el componente intermedio debe existir, que proyecte el contenido en lugar de reenviar `input()`/`output()`. Así el padre queda conectado directamente con el componente que consume el dato.
