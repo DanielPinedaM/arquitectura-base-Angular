@@ -222,13 +222,13 @@ La configuración de autocompletado, formateo de código y linter ya está inclu
 * `eslint.config.js`
 
 # ⚙️ Entorno de Ejecución
-Obligatorio el uso de Node.js, prohibido usar alternativas como:
+Usar Node.js, prohibido usar alternativas como:
 
 * [Bun](https://bun.com/)
 * [Deno](https://deno.com/)
 
 # 📦 Manejador de Paquetes
-Obligatorio el uso de `pnpm`, `pnpm-lock.yaml` y `pnpm dlx <paquete>` version `>=11.0.0 <12.0.0`. Esta 🚫 **BLOQUEADO** el uso de otras alternativas como:
+Usar `pnpm`, `pnpm-lock.yaml` y `pnpm dlx <paquete>` version `>=11.0.0 <12.0.0`. Esta 🚫 **BLOQUEADO** el uso de otras alternativas como:
 
 | Concepto ⬇️ / Nombre manejador de paquetes ➡️            | `npm`                                   | `yarn`                              |
 | --------------------------------------------------------- | --------------------------------------- | ----------------------------------- |
@@ -236,7 +236,7 @@ Obligatorio el uso de `pnpm`, `pnpm-lock.yaml` y `pnpm dlx <paquete>` version `>
 | Ejecutar un paquete temporal (sin instalarlo globalmente) | `npx <paquete>`<br>`npm exec <paquete>` | `yarn dlx <paquete>` *(Yarn Berry)* |
 
 # 🟢 Administrador de Versiones para Node.js
-Obligatorio el uso de `fnm`. Está prohibido usar alternativas como:
+Usar `fnm`. Está prohibido usar alternativas como:
 
 * nvm
 * volta
@@ -247,6 +247,8 @@ Este proyecto usa Node.js 24.18.0
 Para todos los comandos de `pnpm` usar el alias `pn`
 
 # 📦 Instalar Paquetes
+
+Este comando instala Angular, TypeScript, Tailwind, etc:
 
 ```console
 pn i
@@ -1356,17 +1358,20 @@ export const routes: Routes = [
 ```
 
 # Fechas
-1. **OBLIGATORIO** usar Luxon para el manejo de fechas y horas. **PROHIBIDO** utilizar `new Date()` nativo de JavaScript o cualquier otra librería diferente de Luxon.
+
+**Reglas:**
+
+1. Usar Luxon para el manejo de fechas y horas. **PROHIBIDO** utilizar `new Date()` nativo de JavaScript o cualquier otra librería de fechas diferente de Luxon.
 
 2. En todos los componentes definidos en la sección **"Componentes Permitidos de Calendarios"**, toda su interfaz pública de fechas (`input()` y `output()`, como `dateChange`) es de tipo Luxon `DateTime`.
 
-3. **OBLIGATORIO** usar los calendarios  para la selección de fechas definidos en "Componentes de Calendarios". **PROHIBIDO** usar cualquier otro componente de calendario, incluyendo el `<input type="date">` nativo de HTML.
+3. Usar los calendarios  para la selección de fechas definidos en "Componentes de Calendarios". **PROHIBIDO** usar cualquier otro componente de calendario, incluyendo el `<input type="date">` nativo de HTML.
 
-4. **OBLIGATORIO** utilizar exclusivamente los componentes definidos en la sección **"Componentes Permitidos de Calendarios"** para la selección de fechas. **PROHIBIDO** utilizar cualquier otro componente de calendario, incluyendo la etiqueta`<input type="date">` nativa de HTML.
+4. Usar exclusivamente los componentes definidos en la sección **"Componentes Permitidos de Calendarios"** para la selección de fechas. **PROHIBIDO** utilizar cualquier otro componente de calendario, incluyendo la etiqueta`<input type="date">` nativa de HTML.
 
-5. **OBLIGATORIO** mantener en zona horaria local el `DateTime` de Luxon que entra o sale de los componentes definidos en la sección **"Calendarios permitidos"**, a través de sus `input()` y `output()` (`date`, `dateChange`, etc.), ya que representan una fecha seleccionada por el usuario. **PROHIBIDO** convertir ese `DateTime` a UTC (`.toUTC()`) dentro del flujo de estos componentes. Si necesitas persistir un instante (por ejemplo, `createdAt`) o enviarlo en el **payload** al backend, convierte ese `DateTime` a UTC únicamente justo antes de persistirlo o incluirlo en el payload, nunca antes. **OBLIGATORIO** que ese valor viaje en el payload como un `string` en formato ISO 8601 UTC (`YYYY-MM-DDTHH:mm:ssZ`), por ejemplo: `2024-06-15T14:30:00Z`.
+5. Mantener en zona horaria local el `DateTime` de Luxon que entra o sale de los componentes definidos en la sección **"Calendarios permitidos"**, a través de sus `input()` y `output()` (`date`, `dateChange`, etc.), ya que representan una fecha seleccionada por el usuario. **PROHIBIDO** convertir ese `DateTime` a UTC (`.toUTC()`) dentro del flujo de estos componentes. Si necesitas persistir un instante (por ejemplo, `createdAt`) o enviarlo en el **payload** al backend, convierte ese `DateTime` a UTC únicamente justo antes de persistirlo o incluirlo en el payload, nunca antes. Este valor viaja en el payload como un `string` en formato ISO 8601 UTC (`YYYY-MM-DDTHH:mm:ssZ`), por ejemplo: `2024-06-15T14:30:00Z`.
 
-6. En `src/shared/services/Luxon.service.ts` existen funciones utilitarias reutilizables para el manejo y formateo de fechas y horas con Luxon. **OBLIGATORIO** reutilizarlas cuando cubran la necesidad. **PROHIBIDO** duplicar su funcionalidad. Estas funciones no contienen lógica de negocio.
+6. En `src/shared/services/Luxon.service.ts` existen funciones utilitarias reutilizables para el manejo y formateo de fechas y horas con Luxon. Reutilizarlas cuando cubran la necesidad. **PROHIBIDO** duplicar su funcionalidad. Estas funciones no contienen lógica de negocio.
 
 ## Componentes Permitidos de Calendarios
 
@@ -2010,7 +2015,7 @@ Para construir cualquier elemento de UI, evaluar en este orden y detenerse en el
    En cualquier otro caso (componentes que no están en la lista), el HTML nativo es la base esperada para maquetar con Tailwind.
 
 ### Refuerzo para formularios
-Además de lo anterior, en formularios es obligatorio usar los componentes de Spartan de "Componentes permitidos" para todos los controles disponibles (checkbox, input, label, Radio Group, Select, Switch, textarea, etc.). No se permite ningún control de formulario en HTML nativo cuando existe su equivalente en la lista.
+Además de lo anterior, en formularios usar los componentes de Spartan de "Componentes permitidos" para todos los controles disponibles (checkbox, input, label, Radio Group, Select, Switch, textarea, etc.). No se permite ningún control de formulario en HTML nativo cuando existe su equivalente en la lista.
 
 Para el formulario en sí, sí se permite usar la etiqueta nativa `<form>` de HTML junto con Angular Forms with signals para el manejo de estado y validación.
 
@@ -2071,7 +2076,7 @@ Ejemplo: Iniciar sesión, Guardar, Cancelar, Crear, Editar, Eliminar, Buscar, Ac
 > Al crear la directiva, alinear selector e inputs con lo documentado aquí, o actualizar esta sección para que coincida con la implementación real.
 
 #### PROHIBIDA la etiqueta `<button>` nativa de HTML sin directiva de botón
-Aplica a los pasos 1 y 2. En Angular la etiqueta `<button>` es el **elemento anfitrión obligatorio**: tanto `hlmBtn` como `appBtn` son directivas de atributo y no existen sin ella.
+Aplica a los pasos 1 y 2. En Angular la etiqueta `<button>` es el **elemento anfitrión**: tanto `hlmBtn` como `appBtn` son directivas de atributo y no existen sin ella.
 
 Lo que está prohibido es escribir un `<button>` **desnudo**, es decir, sin ninguna de las dos directivas de botón:
 
@@ -2427,7 +2432,7 @@ Esto ayuda al usuario a entender rápidamente qué va a ocurrir antes de hacer c
 
 ### Clase `.btn` con Estilos Base
 
-La clase `.btn` define los estilos base y actúa como un **reset CSS obligatorio para todos los botones**, sin importar su variante o tipo (`primary`, `outline`, `ghost`, etc.).
+La clase `.btn` define los estilos base y actúa como un reset CSS para todos los botones, sin importar su variante o tipo (`primary`, `outline`, `ghost`, etc.).
 
 Esta clase **siempre debe utilizarse**, ya que establece la estructura común del componente y garantiza consistencia en toda la UI.
 
@@ -2576,7 +2581,7 @@ Algunos botones usan colores claros en el texto o borde, por lo que deben coloca
 
 ### Botones con Icono
 
-Es obligatorio que, cuando el botón contenga únicamente un icono (sin texto), se utilicen las clases `btn` y `btn-icon-only`.
+Cuando el botón contenga únicamente un icono (sin texto), se utilicen las clases `btn` y `btn-icon-only`.
 
 ![solo-icono](./docs/readme-md/img/button/solo-icono.png)
 
@@ -3053,7 +3058,7 @@ Toda respuesta que pasa por `HttpClient` termina envuelta en el contrato `ApiRes
 ## Reglas de `src\shared\http-client`
 1. **PROHIBIDO** escribir logica de negocio/dominio en cualquier archivo de `src\shared\http-client`: todo su codigo tiene que ser agnostico al negocio, es decir, limitarse a responsabilidades transversales de HTTP (interceptores, normalizacion del contrato `ApiResponse<T>`, manejo global de errores, loader, logs) y funcionar igual en cualquier proyecto sin conocer las features que lo consumen.
 
-## Reglas OBLIGATORIAS para Consumir API
+## Reglas para Consumir API
 1. **PROHIBIDO** usar cualquier otro metodo para consumir APIs que no sea HttpClient como fetch o axios directo
 
 2. **PROHIBIDO** usar `try/catch` y sus equivalentes de Angular/RxJS: `catchError()` de RxJS, el callback `error` de `subscribe({ next, error })`, `.catch()` de Promises con `firstValueFrom()`. Esto **NO** es un bug, es una desición de arquitectura de software, intencional para estandarizar respuesta de APIs.
@@ -3084,13 +3089,13 @@ Toda respuesta que pasa por `HttpClient` termina envuelta en el contrato `ApiRes
    }
    ```
 
-6. **OBLIGATORIO** desestructurar las keys del contrato `ApiResponse<T>` (`success`, `status`, `message`, `data`) al consumir la respuesta. Esta **PROHIBIDO** acceder directamente a las keys sin desestructurar: `response.success`, `response.status`, `response.message` y `response.data`.
+6. Desestructurar las keys del contrato `ApiResponse<T>` (`success`, `status`, `message`, `data`) al consumir la respuesta. Esta **PROHIBIDO** acceder directamente a las keys sin desestructurar: `response.success`, `response.status`, `response.message` y `response.data`.
 
-7. **OBLIGATORIO** usar early return pattern al validar la key `success` de las peticiones HTTP: validar primero el caso fallido y salir de inmediato con `if (!success) return;`, para que la logica principal quede en el nivel raiz de la funcion, sin anidacion.
+7. Usar early return pattern al validar la key `success` de las peticiones HTTP: validar primero el caso fallido y salir de inmediato con `if (!success) return;`, para que la logica principal quede en el nivel raiz de la funcion, sin anidacion.
 
-8. **OBLIGATORIO** importar los environment SIEMPRE desde el archivo base `@/environments/environment`. Esta **PROHIBIDO** importar directamente un archivo de entorno especifico (`environment.localhost`, `environment.test`, `environment.prod`): el build de Angular (`fileReplacements` segun el script de `package.json`) es quien reemplaza el archivo base por el del entorno que corresponda; importar uno especifico quema el entorno y rompe ese reemplazo.
+8. Importar los environment desde el archivo base `@/environments/environment`. Esta **PROHIBIDO** importar directamente un archivo de entorno especifico (`environment.localhost`, `environment.test`, `environment.prod`): el build de Angular (`fileReplacements` segun el script de `package.json`) es quien reemplaza el archivo base por el del entorno que corresponda; importar uno especifico quema el entorno y rompe ese reemplazo.
 
-9. **OBLIGATORIO** construir la URL de toda peticion HTTP concatenando `environment.api` + el endpoint. `environment.api` es la URL base de la API segun el entorno de ejecucion (por ejemplo `'http://localhost:3000/api/v1/'`), asi el mismo codigo funciona en localhost, pruebas y produccion sin modificar nada. Esta **PROHIBIDO** quemar (hardcodear) la URL base en la peticion.
+9. Construir la URL de toda peticion HTTP concatenando `environment.api` + el endpoint. `environment.api` es la URL base de la API segun el entorno de ejecucion (por ejemplo `'http://localhost:3000/api/v1/'`), asi el mismo codigo funciona en localhost, pruebas y produccion sin modificar nada. Esta **PROHIBIDO** quemar (hardcodear) la URL base en la peticion.
 
 10. **PROHIBIDO** usar `async/await` con `lastValueFrom()` de RxJS: la unica forma permitida de convertir el Observable de `HttpClient` en Promise es `firstValueFrom()`. Razon: `firstValueFrom()` resuelve apenas llega la PRIMERA emision, mientras que `lastValueFrom()` solo resuelve cuando el Observable se COMPLETA; aplicado a un stream que nunca se completa, la Promise queda colgada para siempre y el `await` bloquea ese flujo indefinidamente. En una peticion HTTP ambos se comportan igual (HttpClient emite un unico valor y completa), por eso se estandariza `firstValueFrom()` como unico patron.
 
