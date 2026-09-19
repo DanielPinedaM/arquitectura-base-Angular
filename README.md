@@ -1429,7 +1429,7 @@ module.exports = {
 };
 ```
 
-**Ejemplo Correcto - Configurar Tailwind 4 con archivo `.css`**
+**Correcto - Configurar Tailwind 4 con archivo `.css`**
 
 ```CSS
 @theme {
@@ -1481,7 +1481,7 @@ Por defecto, el orden de las capas de Tailwind 4 es el siguiente. En este ejempl
 ### Tema oscuro
 Para aplicar estilos del tema oscuro, usar siempre la variante `dark:` de Tailwind directamente en el HTML.
 
-**Ejemplo Correcto:**
+**Correcto:**
 
 ```html
 <div class="bg-white dark:bg-gray-900">
@@ -1505,7 +1505,7 @@ No escribas estilos del tema oscuro en archivos CSS.
 
 La única excepción son las variables de color del tema de Spartan ng. Estas se definen en CSS, una vez para el tema claro y otra para el oscuro, y se exponen a Tailwind con `@theme inline`
 
-**Ejemplo Correcto:**
+**Correcto:**
 
 ```css
 @theme inline {
@@ -1589,7 +1589,7 @@ Con CSS Nesting se anidan dentro del selector al que pertenecen:
 
 En ambos casos está prohibido repetir el selector en una regla aparte o en un bloque `@media` aparte.
 
-**Ejemplo correcto**
+**Correcto:**
 
 ```CSS
 div.parent {
@@ -1635,7 +1635,7 @@ Esta regla aplica a Tailwind y a CSS en las siguientes propiedades de tamaño:
 
 Para medidas relativas al viewport, usa `dvh` y `dvw`. No uses `vh` ni `vw`, tampoco en valores arbitrarios como `h-[100vh]`.
 
-**Ejemplo Correcto:**
+**Correcto:**
 
 ```html
 <div class="h-dvh w-dvw">
@@ -1676,7 +1676,7 @@ No uses hexadecimal, `rgb()`, `rgba()`, `hsl()`, `hsla()` ni nombres de color co
 
 Las clases de la paleta predeterminada de Tailwind, como `bg-red-500`, están permitidas.
 
-**Ejemplo Correcto:**
+**Correcto:**
 
 ```css
 @theme {
@@ -1763,8 +1763,43 @@ Tailwind y CSS se escriben mobile first
 ```html
 <!-- my-component.component.html -->
 
-<!-- base: móvil; md: desde 768px; lg: desde 1024px -->
-<div class="p-4 text-sm md:p-6 md:text-base lg:p-8"></div>
+<div class="p-2 xsm:p-3 sm:p-4 md:p-5 lg:p-6 xl:p-7 2xl:p-8 3xl:p-10"></div>
+```
+
+```css
+/* archivo global de CSS */
+
+h1 {
+  padding: 0.5rem;
+
+  @media (width >= 480px) {
+    padding: 0.75rem;
+  }
+
+  @media (width >= 640px) {
+    padding: 1rem;
+  }
+
+  @media (width >= 768px) {
+    padding: 1.25rem;
+  }
+
+  @media (width >= 1024px) {
+    padding: 1.5rem;
+  }
+
+  @media (width >= 1280px) {
+    padding: 1.75rem;
+  }
+
+  @media (width >= 1536px) {
+    padding: 2rem;
+  }
+
+  @media (width >= 1920px) {
+    padding: 2.5rem;
+  }
+}
 ```
 
 ### Sintaxis de Rango
@@ -1772,7 +1807,7 @@ Escribir las media queries con la sintaxis de rango (operadores de comparación)
 
 La sintaxis de rango también se escribe como se especifica en el titulo [Mobile First](#Mobile-First): se parte del estilo base de móvil y se amplía hacia arriba con `width >=`. Por lo tanto, dentro de la sintaxis de rango también está **PROHIBIDO** `width <=` (desktop first) y acotar entre dos anchos (`768px <= width <= 1023px`).
 
-| Sintaxis antigua (prohibida)                        | Sintaxis de rango (obligatoria)     | ¿Mobile first? |
+| Sintaxis Legacy (prohibida)                         | Sintaxis de rango (obligatoria)     | ¿Mobile first? |
 | --------------------------------------------------- | ----------------------------------- | -------------- |
 | `@media (min-width: 768px)`                         | `@media (width >= 768px)`           | Sí             |
 | `@media (max-width: 767px)`                         | `@media (width <= 767px)`           | No, prohibido  |
@@ -1991,7 +2026,7 @@ Lo que está prohibido es escribir un `<button>` **desnudo**, es decir, sin ning
 <button hlmDialogTrigger>Abrir</button>
 ```
 
-**Ejemplo Correcto:**
+**Correcto:**
 ```html
 <button appBtn theme="primary" variant="background" (click)="save()">Guardar</button>
 <button appBtn hlmDialogTrigger theme="primary" variant="background">Abrir</button>
@@ -2013,7 +2048,7 @@ Sus selectores exigen la etiqueta `<button>`, así que esta convivencia es la ú
 | `hlmAlertDialogTrigger`                   | `button[hlmAlertDialogTrigger], button[hlmAlertDialogTriggerFor]` |
 | `hlmDropdownMenuTrigger`                  | `[hlmDropdownMenuTrigger]` (acepta cualquier elemento)            |
 
-**Ejemplo completo — `hlm-dialog` consumido desde la aplicación:**
+**Ejemplo Completo — `hlm-dialog` consumido desde la aplicación:**
 
 ```html
 <hlm-dialog>
