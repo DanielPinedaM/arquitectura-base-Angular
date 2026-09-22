@@ -1,7 +1,7 @@
 import {
   assignPasswordSchema,
   IAssignPasswordForm,
-} from '@/app/features/auth/assign-password/assign-password.schema';
+} from '@/app/features/auth/asignar-nueva-clave/assign-password.schema';
 import { environment } from '@/environments/environment';
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
 import CryptoService from '@/shared/services/Crypto.service';

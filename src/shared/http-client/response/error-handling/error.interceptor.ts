@@ -75,16 +75,16 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
        *
        *   import { environment } from '@/environments/environment';
        *
-       *   async getBots(): Promise<void> {
+       *   async getTasks(): Promise<void> {
        *     const { success, data } = await firstValueFrom(
-       *       this.http.get<ApiResponse<Bot[]>>(`${environment.api}bots`),
+       *       this.http.get<ApiResponse<Task[]>>(`${environment.api}tasks`),
        *     );
        *
        *     // success === false -> el interceptor ya notifico el error globalmente
        *     if (!success) return;
        *
        *     // success === true -> usar data con seguridad
-       *     this.bots.set(data);
+       *     this.tasks.set(data);
        *   } */
       return of(
         new HttpResponse({

@@ -1,4 +1,4 @@
-import { ILoginForm, loginSchema } from '@/app/features/auth/login/login.schema';
+import { ILoginForm, loginSchema } from '@/app/features/auth/iniciar-sesion/login.schema';
 import { environment } from '@/environments/environment';
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
 import CryptoService from '@/shared/services/Crypto.service';
@@ -141,6 +141,6 @@ export class LoginComponent implements OnInit {
     } */
 
     this.setSessionStorage(data);
-    this.router.navigate(['/bots']);
+    this.router.navigate(['/tareas']);
   }
 }

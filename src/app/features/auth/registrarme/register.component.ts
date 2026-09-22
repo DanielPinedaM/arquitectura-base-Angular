@@ -1,4 +1,4 @@
-import { IRegisterForm, registerSchema } from '@/app/features/auth/register/register.schema';
+import { IRegisterForm, registerSchema } from '@/app/features/auth/registrarme/register.schema';
 import { environment } from '@/environments/environment';
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
 import CryptoService from '@/shared/services/Crypto.service';

@@ -21,26 +21,26 @@ export const routes: Routes = [
       {
         path: 'iniciar-sesion',
         loadComponent: () =>
-          import('@/app/features/auth/login/login.component').then((c) => c.LoginComponent),
+          import('@/app/features/auth/iniciar-sesion/login.component').then((c) => c.LoginComponent),
       },
       {
         path: 'recuperar-clave',
         loadComponent: () =>
-          import('@/app/features/auth/recover-password/recover-password.component').then(
+          import('@/app/features/auth/recuperar-clave/recover-password.component').then(
             (c) => c.RecoverPasswordComponent,
           ),
       },
       {
         path: 'asignar-nueva-clave/:id',
         loadComponent: () =>
-          import('@/app/features/auth/assign-password/assign-password.component').then(
+          import('@/app/features/auth/asignar-nueva-clave/assign-password.component').then(
             (c) => c.AssignPasswordComponent,
           ),
       },
       {
         path: 'registrarme',
         loadComponent: () =>
-          import('@/app/features/auth/register/register.component').then(
+          import('@/app/features/auth/registrarme/register.component').then(
             (c) => c.RegisterComponent,
           ),
       },
@@ -61,9 +61,9 @@ export const routes: Routes = [
 
     children: [
       {
-        path: 'bots',
+        path: 'tareas',
         loadComponent: () =>
-          import('@/app/features/bots/bots.component').then((c) => c.BotsComponent),
+          import('@/app/features/tareas/tasks.component').then((c) => c.TasksComponent),
       },
     ],
   },

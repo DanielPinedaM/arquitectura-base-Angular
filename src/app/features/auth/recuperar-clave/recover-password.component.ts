@@ -1,7 +1,7 @@
 import {
   IRecoverPasswordForm,
   recoverPasswordSchema,
-} from '@/app/features/auth/recover-password/recover-password.schema';
+} from '@/app/features/auth/recuperar-clave/recover-password.schema';
 import { environment } from '@/environments/environment';
 import { ApiResponse } from '@/shared/http-client/data-types/interfaces/http-client.interface';
 import CryptoService from '@/shared/services/Crypto.service';
