@@ -919,10 +919,15 @@ src/
 │   │
 │   └── features/ → Contiene todas las rutas y componentes después de iniciar sesión
 │       ├── auth/ → Rutas de autenticación
-│       │   ├── assign-password/ → Recuperar y cambiar la contraseña
-│       │   ├── login/ → Iniciar sesión
-│       │   ├── recover-password/ → Enviar correo para recuperar contraseña
-│       │   ├── register/ → Formulario de registro de nuevo usuario
+│       │   ├── asignar-nueva-clave/ → Recuperar y cambiar la contraseña
+│       │   ├── iniciar-sesion/ → Iniciar sesión
+│       │   ├── recuperar-clave/ → Enviar correo para recuperar contraseña
+│       │   ├── registrarme/ → Formulario de registro de nuevo usuario
+│       │   │
+│       │   ├── design/ → maquetación utilizada únicamente por auth
+│       │   │   └── layouts/
+│       │   │       └── main-auth/ → contenedor principal de las páginas de autenticación
+│       │   │
 │       │   └── data-types/ → tipos de datos, contratos, constantes y definiciones utilizados exclusivamente por auth
 │       │       ├── constants/
 │       │       └── interfaces/
