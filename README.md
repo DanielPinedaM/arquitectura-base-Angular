@@ -927,22 +927,22 @@ src/
 │       │       ├── constants/
 │       │       └── interfaces/
 │       │
-│       └── bots/ → Feature independiente que define la ruta `/bots`.
-│           ├── bots.component.html
-│           ├── bots.component.ts
+│       └── tareas/ → Feature independiente que define la ruta `/tareas`.
+│           ├── tasks.component.html
+│           ├── tasks.component.ts
 │           │
-│           ├── data-types/ → tipos de datos, contratos, constantes y definiciones utilizados exclusivamente por la feature bots. Pueden representar conceptos de negocio específicos de la feature, por lo que no deben utilizarse desde otras features
+│           ├── data-types/ → tipos de datos, contratos, constantes y definiciones utilizados exclusivamente por la feature tareas. Pueden representar conceptos de negocio específicos de la feature, por lo que no deben utilizarse desde otras features
 │           │   ├── constants/
 │           │   ├── interfaces/
 │           │   ├── enums/
 │           │   └── types/
 │           │
-│           ├── components/ → componentes reutilizables internos de la feature bots. Pueden contener lógica, dependencias y acceso a servicios de esta feature. Su alcance está limitado a bots y no deben utilizarse desde otras features
+│           ├── components/ → componentes reutilizables internos de la feature tareas. Pueden contener lógica, dependencias y acceso a servicios de esta feature. Su alcance está limitado a tareas y no deben utilizarse desde otras features
 │           │
-│           ├── ui/ → componentes visuales reutilizables utilizados únicamente por la feature bots. Están enfocados en la presentación de la interfaz y deben mantenerse desacoplados de la lógica de negocio
+│           ├── ui/ → componentes visuales reutilizables utilizados únicamente por la feature tareas. Están enfocados en la presentación de la interfaz y deben mantenerse desacoplados de la lógica de negocio
 │           │
-│           └── services/ → servicios, lógica de negocio y gestión de estado utilizados únicamente por la feature bots. Pueden depender de modelos, reglas de negocio y casos de uso específicos de la feature. Su alcance está limitado a bots y no deben utilizarse desde otras features.
-│               └── stores/ → estados compartidos por los componentes de la feature bots. Su alcance está limitado a esta feature y no debe utilizarse para compartir estado con otras features ni para estado global de toda la aplicación
+│           └── services/ → servicios, lógica de negocio y gestión de estado utilizados únicamente por la feature tareas. Pueden depender de modelos, reglas de negocio y casos de uso específicos de la feature. Su alcance está limitado a tareas y no deben utilizarse desde otras features.
+│               └── stores/ → estados compartidos por los componentes de la feature tareas. Su alcance está limitado a esta feature y no debe utilizarse para compartir estado con otras features ni para estado global de toda la aplicación
 │
 ├── core/ → INCOMPLETO - me falta definir esta carpeta
 │
@@ -1087,7 +1087,7 @@ src/
 ## Sufijos en Nombres de Archivos
 [Angular moderno eliminó la necesidad de usar sufijos](https://angular.dev/cli/new#options) como `.component`, `.service`, `.directive`, `.pipe`, etc. porque el decorador de Angular (`@Component`, `@Injectable`, etc.) ya indica qué hace el archivo.
 
-### Convención Usada en Este Proyecto
+**Regla:**
 Aunque Angular moderno ya no obliga a usar sufijos, en este proyecto **sí** se usan, porque hacen explícito el tipo de cada archivo en su nombre, lo que evita ambigüedades y mantiene la consistencia al recorrer carpetas y leer imports en un proyecto grande.
 
 ### ¿Dónde Están Definidos los Sufijos?
@@ -1107,9 +1107,65 @@ En `angular.json`, en la key `schematics` del proyecto `front`, que está dentro
 
 Cada entrada de `@schematics/angular` dentro de esa key define el sufijo con el que el Angular CLI genera ese tipo de archivo.
 
-## Feature Architecture
+## Idioma de Código, Archivos y Carpetas
+Todo el código fuente se escribe en inglés: métodos, servicios, nombres de archivos y carpetas, etc., excepto [Qué va en español](#qué-va-en-español).
 
-Este proyecto utiliza **Feature Architecture** sobre Angular
+### Qué va en español
+1. Los comentarios.
+
+2. Los `value` de la key `path` definidos en `src/app/app.routes.ts`.
+
+3. Las carpetas dentro de `src/app/features/<feature>` que representen una ruta de navegación y estén asociadas a una configuración de ruta (`Route`) en `src/app/app.routes.ts`.
+
+**Explicación**
+Toda carpeta dentro de `<feature>` que represente una ruta de navegación, y que esté asociada a una entrada del arreglo `routes: Routes` en `src/app/app.routes.ts`, debe nombrarse en español.
+
+**Ejemplo**
+
+```typescript
+// src/app/app.routes.ts
+
+export const routes: Routes = [
+  {
+    path: '',
+    loadComponent: () =>
+      import('@/app/features/auth/design/layouts/main-auth/main-auth.component').then(
+        (c) => c.MainAuthComponent,
+      ),
+    children: [
+      {
+        path: 'iniciar-sesion', // value de path en español
+        loadComponent: () =>
+          import('@/app/features/auth/login/login.component').then((c) => c.LoginComponent),
+      },
+    ],
+  },
+];
+```
+
+Los `value` de `path` son segmentos de la URL de navegación, por lo que:
+
+1. Las carpetas dentro de `src/app/features/<feature>` que representan rutas se nombran en español.
+
+2. Cada una está asociada a su respectivo `path` dentro del arreglo `routes: Routes` en `src/app/app.routes.ts`.
+
+3. Los `value` de `path` también van en español.
+
+El resto del código dentro de esa carpeta (archivos `.ts`, clases, componentes standalone, métodos, variables, etc.) se mantiene en inglés:
+
+```txt
+src/app/
+└── features/
+    └── tareas/
+        ├── components/
+        ├── services/
+        │   └── helpers/
+        ├── tasks.component.html
+        └── tasks.component.ts
+```
+
+## Feature Architecture
+Este proyecto utiliza Feature Architecture sobre Angular
 
 La regla principal es:
 
@@ -1125,13 +1181,6 @@ La reutilización no convierte automáticamente un archivo en código compartido
 
 > [!WARNING]
 > # ***INCOMPLETO - verificar manualmente otra vez todo este readme md, para pasar readme md de next a angular***
-
-
-
-
-
-
-
 
 ## Diferencia entre `src/app/features` y `src/shared`
 
@@ -1266,47 +1315,53 @@ La ubicación depende del alcance de reutilización:
 
 La decisión de ubicar un archivo en `features` o `shared` depende de su conocimiento del dominio y alcance de reutilización, no de si es un `ui` o un `layout`.
 
+# Navegación
+
 ## Enrutado
+El unico archivo de enrutado es `src/app/app.routes.ts`, NO crees otro archivo para enrutado. El enrutado modular esta prohibido.
+
 El nombre de las carpetas dentro de `src/app` tiene que coincidir exactamente con las rutas definidas en `src/app/app.routes.ts`
 
-Esto permite ubicar los componentes que corresponden a cada URL
+Esto permite:
+* Ubicar los componentes que corresponden a cada URL
 
-Además,
+* Tener un unico archivo fuente de la verdad que define las rutas
 
-**Correcto:**
+**Ejemplo:**
 
 ```txt
 src/app/
-├── features/
-│     └── bots/
-│         └── bots.component.html
-│         └── bots.component.ts
+└── features/
+    └── tareas/
+        ├── components/
+        ├── services/
+        │   └── helpers/
+        ├── tasks.component.html
+        └── tasks.component.ts
 ```
 
 ```ts
-/* src/app/app.routes.ts */
+// src/app/app.routes.ts
+
 import { Routes } from "@angular/router";
 import { AuthGuard } from "@/shared/guards/auth.guard";
-
-// #region - contenedor principal de paginas despues de loguearse
-import { MainWrapperComponent } from '@/shared/design/layouts/main-wrapper/main-wrapper.component';
-// #endregion
-
-import { BotsComponent } from "@/app/features/bots/bots.component";
 
 export const routes: Routes = [
   {
     path: "",
-    component: MainWrapperComponent,
+    loadComponent: () =>
+      import('@/shared/design/layouts/main-wrapper/main-wrapper.component').then(
+        (c) => c.MainWrapperComponent,
+      ),
 
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
 
     children: [
       {
-        // /bots
-        path: "bots",
-        component: BotsComponent,
+        path: 'tareas',
+        loadComponent: () =>
+          import('@/app/features/tareas/tasks.component').then((c) => c.TasksComponent),
       },
     ],
   },
@@ -1315,42 +1370,39 @@ export const routes: Routes = [
 
 En este ejemplo:
 
-- La URL `/bots` coincide con la estructura `src/app/features/bots`
+* La URL `/tareas` coincide con la ruta de la carpeta `src/app/features/tareas`
 
-- `BotsComponent` es hijo de `MainWrapperComponent`
+* `TasksComponent` es hijo de `MainWrapperComponent`
 
-- `AuthGuard` protege automáticamente todas las rutas hijas gracias a `canActivateChild`
+* `AuthGuard` protege todas las rutas hijas debido a `canActivateChild`
 
 ## Protección de Rutas
-
 Todas las páginas protegidas de la aplicación deben ser `children` de `MainWrapperComponent`.
 
 Los `children` de `MainWrapperComponent` son las rutas protegidas despues de que el usuario se loguea.
 
 ```ts
-/* src/app/app.routes.ts */
+// src/app/app.routes.ts
+
 import { Routes } from "@angular/router";
 import { AuthGuard } from "@/shared/guards/auth.guard";
 
-// #region - contenedor principal de paginas despues de loguearse
-import { MainWrapperComponent } from '@/shared/design/layouts/main-wrapper/main-wrapper.component';
-// #endregion
-
-import { BotsComponent } from "@/app/features/bots/bots.component";
-
 export const routes: Routes = [
   {
-    path: "",
-    component: MainWrapperComponent,
+    path: '',
+    loadComponent: () =>
+      import('@/shared/design/layouts/main-wrapper/main-wrapper.component').then(
+        (c) => c.MainWrapperComponent,
+      ),
 
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
 
     children: [
       {
-        // /bots
-        path: "bots",
-        component: BotsComponent,
+        path: 'tareas',
+        loadComponent: () =>
+          import('@/app/features/tareas/tasks.component').then((c) => c.TasksComponent),
       },
     ],
   },
@@ -3163,7 +3215,151 @@ Además, `GatewayApiService` maneja:
 * validaciones de seguridad (guards)
 ```
 
-# Evitar Prop Drilling y Usar Data Down, Events Up
+# Buenas Practicas
+
+## Tipado en TypeScript
+
+### Strict Type Checking
+Usar strict type checking
+
+**Incorrecto:**
+
+```jsonc
+// tsconfig.json
+{
+  "compilerOptions": {
+    "strict": false
+  }
+}
+```
+
+**Correcto:**
+
+```jsonc
+// tsconfig.json
+{
+  "compilerOptions": {
+    "strict": true,
+    "strictTemplates": true,
+    "strictStandalone": true
+  }
+}
+```
+
+### Inferencia de Tipos
+Preferir la inferencia de tipos cuando el tipo sea obvio
+
+**Incorrecto:**
+
+```ts
+// el tipo es obvio, anotarlo es ruido
+const total: number = 10;
+const isActive: boolean = true;
+const tags: string[] = ['angular', 'signals'];
+```
+
+**Correcto:**
+
+```ts
+const total = 10;
+const isActive = true;
+const tags = ['angular', 'signals'];
+```
+
+### `unknown` en Lugar de `any`
+Prohibido el tipo `any`; usa `unknown` cuando el tipo sea incierto.
+
+**Incorrecto:**
+
+```ts
+function parseTitle(value: any): string {
+  // any desactiva el chequeo de tipos: esto compila y falla en runtime
+  return value.toUpperCase();
+}
+```
+
+**Correcto:**
+
+```ts
+function parseTitle(value: unknown): string {
+  // unknown obliga a comprobar el tipo antes de usarlo
+  if (typeof value === 'string') return value;
+
+  return '';
+}
+```
+
+### `interface` para Tipos de Objeto
+Preferir `interface` para tipos de objeto (`Task`) y para el tipo de los elementos en arrays de objetos (`Task[]`).
+
+**Incorrecto:**
+
+```ts
+// un objeto no se modela con type
+type Task = {
+  id: number;
+  title: string;
+  completed: boolean;
+};
+
+// ni con el objeto escrito en línea
+const tasks: { id: number; title: string; completed: boolean }[] = [];
+```
+
+**Correcto:**
+
+```ts
+interface Task {
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+const tasks: Task[] = [];
+```
+
+### `Record<Clave, Valor>` para Claves Dinámicas
+Usar `Record<Clave, Valor>` para objetos con claves dinámicas.
+
+**Incorrecto:**
+
+```ts
+interface TasksById {
+  [key: number]: Task;
+}
+```
+
+**Correcto:**
+
+```ts
+const tasksById: Record<number, Task> = {};
+const labels: Record<string, string> = { pending: 'Pendiente', done: 'Hecha' };
+```
+
+### `type` para Primitivos, Literales y Uniones
+Usar `type` para tipos primitivos, literales y uniones.
+
+**Incorrecto:**
+
+```ts
+// una union no se modela con interface
+interface TaskStatus {
+  value: 'pending' | 'in-progress' | 'done';
+}
+```
+
+**Correcto:**
+
+```ts
+type TaskStatus = 'pending' | 'in-progress' | 'done';
+type TaskFilter = TaskStatus | 'all';
+
+interface TaskStatus {
+  value: TaskStatus;
+}
+```
+
+## Evitar Prop Drilling y Usar Data Down, Events Up
 
 **Regla:**
 PROHIBIDO el prop drilling. Toda comunicación entre componentes usa **data down, events up**.
@@ -3179,14 +3375,14 @@ Aplicar SIEMPRE que se diseñe, cree, divida, modifique o refactorice un compone
 
 Un `input()` que el hijo directo sí consume NO es prop drilling. Lo prohibido es el componente de paso.
 
-## Alternativas, en Este Orden
+### Alternativas, en Este Orden
 1. **Composición, reestructurar el árbol de componentes:** eliminar o reubicar el componente intermedio para que el que produce el dato y el que lo consume queden padre/hijo directos. No usa ninguna API extra, cambia la forma del árbol. Es la opción por defecto.
 
 2. **Content projection con `ng-content`:** cuando el componente intermedio debe existir, que proyecte el contenido en lugar de reenviar `input()`/`output()`. Así el padre queda conectado directamente con el componente que consume el dato.
 
 3. **`@Service()` singleton con signals:** solo si lo anterior no aplica. El estado vive en el service, y cada componente lo inyecta con `inject()` donde lo necesita. PROHIBIDO usar RxJS como contenedor de estado
 
-## Checklist Antes de Escribir el Componente
+### Checklist Antes de Escribir el Componente
 ```txt
 - [ ] 1. Por cada input()/output() nuevo: verificar que el componente que lo declara consume el valor.
 - [ ] 2. Si solo lo reenvía o lo re-emite, es prop drilling: no escribirlo.
@@ -3194,17 +3390,17 @@ Un `input()` que el hijo directo sí consume NO es prop drilling. Lo prohibido e
 - [ ] 4. Confirmar que el hijo no muta el input(): notifica con output() y el padre decide.
 ```
 
-## Prohibiciones
+### Prohibiciones
 * Declarar un `input()` cuyo único uso sea pasarlo a otro componente en el template.
 
 * Declarar un `output()` cuyo único uso sea re-emitir el `output()` de un hijo.
 
 * Mutar dentro del hijo el valor recibido por `input()`.
 
-## Al Refactorizar
+### Al Refactorizar
 Antes de modificar un componente, recorrer la cadena de `input()`/`output()` de arriba abajo y listar los que atraviesan componentes intermedios. Cada uno es una violación y debe eliminarse aplicando las alternativas.
 
-# Rutas Absolutas en `import` e Imágenes
+## Rutas Absolutas en `import` e Imágenes
 La regla es la misma para `import` e imágenes: siempre usar ruta absoluta. Está prohibido usar rutas relativas.
 
 Para los `import`, usar los alias definidos en `paths` de `tsconfig.json`.
