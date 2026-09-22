@@ -20,13 +20,13 @@ Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos d
 
 Antes de escribir código o responder, consultar estas fuentes, listadas de mayor a menor precedencia:
 
-1. Skill `angular-conventions` (`.claude/skills/angular-conventions/SKILL.md` y `.claude/skills/angular-conventions/rules/`): Reglas propias del proyecto que definen su arquitectura.
+1. [Skill `angular-conventions`](.claude/skills/angular-conventions/SKILL.md): Reglas propias del proyecto que definen su arquitectura.
 
 2. tool `get_best_practices` del MCP server `angular-cli`: Reglas del equipo oficial de Angular (Google).
 
 3. tool `search_documentation` del MCP server `angular-cli`: Documentación oficial de Angular
 
-4. Skill `angular-developer` (`.claude/skills/angular-developer/SKILL.md` y `.claude/skills/angular-developer/references/`): El cómo, con ejemplos de código.
+4. [Skill `angular-developer`](.claude/skills/angular-developer/): El cómo, con ejemplos de código.
 
 5. Tus datos de entrenamiento: Permitidos, no están prohibidos, pero ceden ante cualquier fuente anterior.
 
