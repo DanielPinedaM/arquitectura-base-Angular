@@ -3222,30 +3222,6 @@ Además, `GatewayApiService` maneja:
 ### Strict Type Checking
 Usar strict type checking
 
-**Incorrecto:**
-
-```jsonc
-// tsconfig.json
-{
-  "compilerOptions": {
-    "strict": false
-  }
-}
-```
-
-**Correcto:**
-
-```jsonc
-// tsconfig.json
-{
-  "compilerOptions": {
-    "strict": true,
-    "strictTemplates": true,
-    "strictStandalone": true
-  }
-}
-```
-
 ### Inferencia de Tipos
 Preferir la inferencia de tipos cuando el tipo sea obvio
 
