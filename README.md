@@ -1536,6 +1536,7 @@ Este proyecto usa Tailwind 4. Está **PROHIBIDO** el uso de patrones legacy de T
 ```js
 /* tailwind.config.js */
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{html,ts}",
