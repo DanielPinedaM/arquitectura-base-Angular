@@ -19,7 +19,7 @@
 # 🅰️ Stack Frontend del Proyecto
 A continuación se resumen las principales tecnologías del proyecto y el motivo por el que se utilizan. No se incluyen todas las dependencias.
 
-* Node.js 24.18.0
+* Node.js 24.21.0
 
 * [**Angular 22:**](https://cursos.devtalles.com/courses/angular-moderno) _Framework opinionado_, excelente para proyectos grandes, aplicaciones complejas y formularios complejos. Desde la versión 17 hasta la 22 ha incorporado cambios importantes, como los _Signals_ (_reactividad_) y las nuevas _directivas de control_ de flujo _`@for`_, _`@if`_, _`@switch`_, _`@case`_.
 
@@ -148,10 +148,10 @@ Para que `fnm` automáticamente al entrar a la carpeta del proyecto seleccione l
 
 1. Abrir Git Bash.
 
-2. Instalar Node.js 24.18.0:
+2. Instalar Node.js 24.21.0:
 
 ```console
-fnm install 24.18.0
+fnm install 24.21.0
 ```
 
 3. Copiar completo el siguiente comando y ejecutarlo:
@@ -177,10 +177,10 @@ fnm current
 node -v
 ```
 
-6. Debería mostrarte `v24.18.0` automáticamente, sin que hayas escrito manualmente
+6. Debería mostrarte `v24.21.0` automáticamente, sin que hayas escrito manualmente
 
 ```console
-fnm use 24.18.0
+fnm use 24.21.0
 ```
 
 ## ⌨️ Autocompletado, Formatear Código y Linter
@@ -241,7 +241,7 @@ Usar `fnm`. Está prohibido usar alternativas como:
 * nvm
 * volta
 
-Este proyecto usa Node.js 24.18.0
+Este proyecto usa Node.js 24.21.0
 
 # 🏷️ Alias
 Para todos los comandos de `pnpm` usar el alias `pn`
