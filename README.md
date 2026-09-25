@@ -740,7 +740,7 @@ your data model and the UI with Angular Signals
 
 La cita corresponde a [este link de la documentación oficial de Angular](https://angular.dev/essentials/signal-forms)
 
-# Ejemplos de Prompts de ¿Como Usar IA en Este Proyecto?
+**Mas ejemplos de `angular-cli` MCP:**
 
 **Iniciar tutorial paso a paso:**
 ```txt
