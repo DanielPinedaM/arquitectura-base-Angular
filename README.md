@@ -768,13 +768,14 @@ Tambien puedes crear skills que le expliquen a la IA como ejecutar los comandos 
 > # ⚠️ Advertencia
 >
 > Usar esta skill con ciudado, es muy buena, pero
+>
 > Si intentas solucionar un bug con esta skill sin entender el código, es probable que introduzcas nuevos bugs.
 
 Mira [este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿que es `playwright-cli`?
 
 Sirve para que la IA desde la terminal pueda controlar el navegador: navegar por páginas (rutas), hacer clics y llenar formularios sin hacerlo manualmente.
 
-`playwright` es un CLI, lo que signifca que sirve para ejecutar comandos. Existe un [playwright MCP](https://github.com/microsoft/playwright-mcp) pero la razon de porque no se usa es porque gasta mas tokens, por lo tanto la forma de usarlo es usando la skill `browser-agent`.
+`playwright` es un CLI, lo que significa que sirve para ejecutar comandos. Existe un [playwright MCP](https://github.com/microsoft/playwright-mcp) pero la razon de porque no se usa es porque gasta mas tokens, por lo tanto la forma correcta de usarlo es usando la skill `browser-agent`.
 
 Para que la IA controle el navegador hay dos skills que son **DIFERENTES**:
 
