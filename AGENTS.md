@@ -20,13 +20,13 @@ Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos d
 
 Antes de editar código y responder, consultar estas fuentes. Cuando las fuentes se contradicen, gana la de número menor:
 
-1. [Skill `angular-conventions`](.claude/skills/angular-conventions/SKILL.md): Reglas propias del proyecto que definen su arquitectura. Ignorarla genera código inescalable.
+1. [Skill `angular-conventions`](/skills/angular-conventions/SKILL.md): Reglas propias del proyecto que definen su arquitectura. Ignorarla genera código inescalable.
 
 2. tool `get_best_practices` del MCP server `angular-cli`: Guía de mejores prácticas del equipo de Angular (Google). Contiene las reglas que deben seguirse en cualquier tarea relacionada con la creación, análisis o modificación de código Angular.
 
 3. tool `search_documentation` del MCP server `angular-cli`: Busca en la documentación oficial de Angular (`angular.dev`) para responder preguntas sobre APIs, tutoriales, conceptos y convenciones.
 
-4. [Skill `angular-developer`](.claude/skills/angular-developer/): Resumen de la documentación oficial de Angular (`angular.dev`).
+4. [Skill `angular-developer`](/skills/angular-developer/): Resumen de la documentación oficial de Angular (`angular.dev`).
 
 5. Datos de entrenamiento: válidos, pero ceden ante todo lo anterior.
 
