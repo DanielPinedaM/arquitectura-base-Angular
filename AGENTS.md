@@ -18,17 +18,17 @@ Esta PROHIBIDO:
 # Reglas **OBLIGATORIAS** de Angular
 Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento.
 
-Antes de escribir código o responder, consultar estas fuentes, listadas de mayor a menor precedencia:
+Antes de editar código y responder, consultar estas fuentes. Cuando las fuentes se contradicen, gana la de número menor:
 
-1. [Skill `angular-conventions`](.claude/skills/angular-conventions/SKILL.md): Reglas propias del proyecto que definen su arquitectura.
+1. [Skill `angular-conventions`](.claude/skills/angular-conventions/SKILL.md): Reglas propias del proyecto que definen su arquitectura. Ignorarla genera código inescalable.
 
-2. tool `get_best_practices` del MCP server `angular-cli`: Reglas del equipo oficial de Angular (Google).
+2. tool `get_best_practices` del MCP server `angular-cli`: Guía de mejores prácticas del equipo de Angular (Google). Contiene las reglas que deben seguirse en cualquier tarea relacionada con la creación, análisis o modificación de código Angular.
 
-3. tool `search_documentation` del MCP server `angular-cli`: Documentación oficial de Angular
+3. tool `search_documentation` del MCP server `angular-cli`: Busca en la documentación oficial de Angular (`angular.dev`) para responder preguntas sobre APIs, tutoriales, conceptos y convenciones.
 
-4. [Skill `angular-developer`](.claude/skills/angular-developer/): El cómo, con ejemplos de código.
+4. [Skill `angular-developer`](.claude/skills/angular-developer/): Resumen de la documentación oficial de Angular (`angular.dev`).
 
-5. Tus datos de entrenamiento: Permitidos, no están prohibidos, pero ceden ante cualquier fuente anterior.
+5. Datos de entrenamiento: válidos, pero ceden ante todo lo anterior.
 
 ## Buenas Practicas de Angular
 * Usar lazy loading para todas las rutas de `src\app\app.routes.ts`
