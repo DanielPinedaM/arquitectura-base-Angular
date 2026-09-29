@@ -605,7 +605,7 @@ Hay dos alcances:
 | Global  | Disponible para la persona que la instala en **todos sus proyectos** | ❌ **No**                                      |
 | Project | Disponible **solo en el proyecto actual** donde se instala           | ✅ **Sí**                                      |
 
-4. Mover `.agents\skills\angular-developer` a `.claude\skills\angular-developer`
+4. Verificar que la skill se guarde en `.agents\skills\angular-developer`
 
 5. Eliminar `skills-lock.json`
 
@@ -614,7 +614,7 @@ Hay dos alcances:
 
 2. Descargar el repositorio
 
-3. Mover la skill a `.claude\skills\NOMBRE-DE-LA-SKILL\SKILL.md`
+3. Mover la skill a `.agents\skills\NOMBRE-DE-LA-SKILL\SKILL.md`
 
 ### Ver Skills Instaladas
 Para ver la lista de skills ejecutar el comando `/skills` dentro de Claude Code
@@ -626,7 +626,7 @@ Trabajar bajo el principio:
 
 > 1 commit = 1 feature
 
-El skill `.claude\skills\git-commit\SKILL.md` te permite realizar commits.
+El skill `.agents\skills\git-commit\SKILL.md` te permite realizar commits.
 
 ***Ejemplos de prompt:***
 
