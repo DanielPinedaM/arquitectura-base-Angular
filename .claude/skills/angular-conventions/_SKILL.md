@@ -1708,7 +1708,7 @@ Por defecto, `.btn` tiene `background-color: transparent`, por lo que **no repre
 
 `btn btn-link` define los estilos para los enlaces para `<a>` y `<button>`
 
-![enlaces](./docs/readme-md/img/button/enlaces.png)
+![enlaces](./referencias/buttons-image/enlaces.png)
 
 ```html
 <a class="btn btn-link" routerLink="/home">
@@ -1746,7 +1746,7 @@ En sistemas de diseño modernos, los botones se clasifican según su nivel de im
 | Link          | navegación / enlaces                                           |
 | Dark          | variante de alto contraste para acciones neutras o de soporte  |
 
-![variantes-con-color-de-fondo](./docs/readme-md/img/button/variantes-con-color-de-fondo.png)
+![variantes-con-color-de-fondo](./referencias/buttons-image/variantes-con-color-de-fondo.png)
 
 ```html
 <button class="btn btn-primary btn-background">Primary</button>
@@ -1771,7 +1771,7 @@ El comportamiento visual depende del estado de interacción:
 
 Algunos botones usan colores claros en el texto o borde, por lo que deben colocarse sobre fondos oscuros para mantener un buen contraste y asegurar que sean claramente visibles.
 
-![borde-con-texto](./docs/readme-md/img/button/borde-con-texto.png)
+![borde-con-texto](./referencias/buttons-image/borde-con-texto.png)
 
 ```html
 <button class="btn btn-primary btn-outline">Primary</button>
@@ -1788,7 +1788,7 @@ Algunos botones usan colores claros en el texto o borde, por lo que deben coloca
 
 `btn-shadow` agrega una sombra a cualquier variante de botón, sin importar su estilo (fondo, borde o ghost).
 
-![botones-con-sombra](./docs/readme-md/img/button/botones-con-sombra.png)
+![botones-con-sombra](./referencias/buttons-image/botones-con-sombra.png)
 
 ```html
 <!-- sombra + fondo + texto -->
@@ -1837,7 +1837,7 @@ Algunos botones usan colores claros en el texto o borde, por lo que deben coloca
 
 Cuando el botón contenga únicamente un icono (sin texto), se utilicen las clases `btn` y `btn-icon-only`.
 
-![solo-icono](./docs/readme-md/img/button/solo-icono.png)
+![solo-icono](./referencias/buttons-image/solo-icono.png)
 
 ```HTML
 <!-- bordes redondeados -->
@@ -1867,7 +1867,7 @@ Cuando el botón contenga únicamente un icono (sin texto), se utilicen las clas
 
 ### Botones con Icono + Fondo
 
-![icono-fondo](./docs/readme-md/img/button/icono-fondo.png)
+![icono-fondo](./referencias/buttons-image/icono-fondo.png)
 
 ```html
 <button class="btn btn-primary btn-background btn-icon-only">
@@ -1905,7 +1905,7 @@ Cuando el botón contenga únicamente un icono (sin texto), se utilicen las clas
 
 ### Botones con Borde + Icono
 
-![icono-borde](./docs/readme-md/img/button/icono-borde.png)
+![icono-borde](./referencias/buttons-image/icono-borde.png)
 
 ```html
 <button class="btn btn-primary btn-outline btn-icon-only">
@@ -1943,7 +1943,7 @@ Cuando el botón contenga únicamente un icono (sin texto), se utilicen las clas
 
 ### Botones con Icono + Fondo + Texto
 
-![icono-fondo-texto](./docs/readme-md/img/button/icono-fondo-texto.png)
+![icono-fondo-texto](./referencias/buttons-image/icono-fondo-texto.png)
 
 ```html
 <button class="btn btn-primary btn-background">
@@ -1996,7 +1996,7 @@ Cuando el botón contenga únicamente un icono (sin texto), se utilicen las clas
 | Rectangular    | width ≠ height          | Esquinas totalmente redondeadas (forma alargada)  |
 | Cuadrado       | width = height          | Círculo perfecto (no óvalo)                       |
 
-![botones-redondos](./docs/readme-md/img/button/botones-redondos.png)
+![botones-redondos](./referencias/buttons-image/botones-redondos.png)
 
 ```HTML
 <button class="btn btn-primary btn-background btn-rounded-full">Primary</button>
@@ -2034,11 +2034,11 @@ Cuando el botón contenga únicamente un icono (sin texto), se utilicen las clas
 
 ***NO hover***
 
-![botones-sin-fondo-ni-borde](./docs/readme-md/img/button/botones-sin-fondo-ni-borde.png)
+![botones-sin-fondo-ni-borde](./referencias/buttons-image/botones-sin-fondo-ni-borde.png)
 
 ***hover***
 
-![botones-sin-fondo-ni-borde-hover](./docs/readme-md/img/button/botones-sin-fondo-ni-borde-hover.png)
+![botones-sin-fondo-ni-borde-hover](./referencias/buttons-image/botones-sin-fondo-ni-borde-hover.png)
 
 ```HTML
 <button class="btn btn-primary btn-ghost">Primary</button>
@@ -2059,7 +2059,7 @@ Agregar el atributo booleano de HTML `disabled` a la etiqueta `<button>` hace qu
 
 El estilo de boton desactivado se aplica a cualquier tipo de boton.
 
-![boton-desactivado](./docs/readme-md/img/button/boton-desactivado.png)
+![boton-desactivado](./referencias/buttons-image/boton-desactivado.png)
 
 ```HTML
 <button disabled class="btn btn-primary btn-background">Primary</button>
@@ -2114,7 +2114,7 @@ Esto significa que no es necesario declararlo explícitamente: si no se especifi
 }
 ```
 
-![tamanos](./docs/readme-md/img/button/tamanos.png)
+![tamanos](./referencias/buttons-image/tamanos.png)
 
 ```HTML
 <button class="btn btn-primary btn-background btn-xs">
@@ -2174,7 +2174,7 @@ En CSS un elemento en bloque es aquel que ocupa todo el ancho disponible de su c
 
 Funciona para cualquier variante de botón, sin importar su estilo (fondo, borde o ghost).
 
-![boton-responsive](./docs/readme-md/img/button/boton-responsive.png)
+![boton-responsive](./referencias/buttons-image/boton-responsive.png)
 
 ```HTML
 <!-- solo texto -->
@@ -2221,7 +2221,7 @@ Cambiar la ubicación del icono y texto en el HTML, sin usar Sass ni Tailwind.
 
 *icono a la izquierda - texto a la derecha*
 
-![icono-izquierda-texto-derecha](./docs/readme-md/img/button/icono-izquierda-texto-derecha.png)
+![icono-izquierda-texto-derecha](./referencias/buttons-image/icono-izquierda-texto-derecha.png)
 
 ```HTML
 <button class="btn btn-primary btn-background">
@@ -2232,7 +2232,7 @@ Cambiar la ubicación del icono y texto en el HTML, sin usar Sass ni Tailwind.
 
 *icono a la derecha - texto a la izquierda*
 
-![icono-derecha-texto-izquierda](./docs/readme-md/img/button/icono-derecha-texto-izquierda.png)
+![icono-derecha-texto-izquierda](./referencias/buttons-image/icono-derecha-texto-izquierda.png)
 
 ```HTML
 <button class="btn btn-primary btn-background">
