@@ -57,7 +57,6 @@ Antes de editar código y responder, consultar estas fuentes. Cuando las fuentes
 
 * **Servicios singleton:** usar `@Service()` en vez de `@Injectable({providedIn: 'root'})`. `@Service()` es el equivalente moderno y conciso, ya provee la instancia como singleton en root por defecto, sin configuración extra. Reservar `@Injectable` solo para casos avanzados (constructor injection, useClass/useValue/useFactory, scopes distintos a root).
 
-
 ## Formularios
 * Usar signal forms importado desde `@angular/forms/signals` junto con los componentes UI de formularios de Spartan NG ubicados en `src\shared\design\ui\spartan-ng\form`
 
