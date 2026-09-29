@@ -87,18 +87,3 @@ Antes de editar código y responder, consultar estas fuentes. Cuando las fuentes
   * `resource()`
 
 * **Estado global con signals:** Todo estado global o compartido entre componentes debe manejarse con la API de signals de Angular, expuesto desde un servicio singleton `@Service()`. PROHIBIDO usar BehaviorSubject, ReplaySubject, Subject u otros stores basados en RxJS para mantener estado. RxJS queda reservado únicamente para flujos asíncronos de eventos (HTTP, websockets, streams), nunca como contenedor de estado.
-
-# Resumen de la Skill `angular-conventions`
-
-## Tipado en TypeScript
-* Usar strict type checking
-
-* Preferir la inferencia de tipos cuando el tipo sea obvio
-
-* Prohibido el tipo `any`; usa `unknown` cuando el tipo sea incierto.
-
-* Preferir `interface` para tipos de objeto (`Task`) y para el tipo de los elementos en arrays de objetos (`Task[]`).
-
-* Usar `Record<Clave, Valor>` para objetos con claves dinámicas.
-
-* Usar `type` para tipos primitivos, literales y uniones.
