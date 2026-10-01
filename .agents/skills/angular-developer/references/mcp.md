@@ -1,30 +1,30 @@
 # Angular CLI MCP Server
 
-The Angular CLI includes a Model Context Protocol (MCP) server that enables AI assistants (like Cursor, Gemini CLI, JetBrains AI, etc.) to interact directly with the Angular CLI. It provides tools for project analysis, guided migrations, and running builds/tests.
+Angular CLI incluye un servidor Model Context Protocol (MCP) que permite a los asistentes de IA (como Cursor, Gemini CLI, JetBrains AI, etc.) interactuar directamente con Angular CLI. Proporciona tools para el análisis de proyectos, migraciones guiadas y la ejecución de builds/tests.
 
-## Available Tools (Default)
+## Tools disponibles (por defecto)
 
-When the MCP server is enabled, AI agents have access to the following tools:
+Cuando el MCP server está habilitado, los agentes de IA tienen acceso a las siguientes tools:
 
-| Name                        | Description                                                                                               |
-| :-------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| `ai_tutor`                  | Launches an interactive AI-powered Angular tutor.                                                         |
-| `devserver.start`           | Asynchronously starts a dev server (`ng serve`). Returns immediately.                                     |
-| `devserver.stop`            | Stops the dev server.                                                                                     |
-| `devserver.wait_for_build`  | Returns the logs of the most recent build in a running dev server.                                        |
-| `get_best_practices`        | Retrieves the Angular Best Practices Guide (crucial for standalone components, typed forms, etc.).        |
-| `list_projects`             | Lists all applications and libraries in the workspace by reading `angular.json`.                          |
-| `onpush_zoneless_migration` | Analyzes code and provides a plan to migrate it to `OnPush` change detection (prerequisite for zoneless). |
-| `run_target`                | Executes a configured target.                                                                             |
-| `search_documentation`      | Searches the official documentation at `https://angular.dev`.                                             |
+| Nombre                      | Descripción                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| `ai_tutor`                  | Inicia un tutor interactivo de Angular impulsado por IA.                                                               |
+| `devserver.start`           | Inicia de forma asíncrona un dev server (`ng serve`). Retorna inmediatamente.                                          |
+| `devserver.stop`            | Detiene el dev server.                                                                                                 |
+| `devserver.wait_for_build`  | Devuelve los logs del build más reciente en un dev server en ejecución.                                                |
+| `get_best_practices`        | Obtiene la Guía de Buenas Prácticas de Angular (crucial para standalone components, typed forms, etc.).                |
+| `list_projects`             | Lista todas las aplicaciones y librerías del workspace leyendo `angular.json`.                                         |
+| `onpush_zoneless_migration` | Analiza el código y proporciona un plan para migrarlo a la change detection `OnPush` (requisito previo para zoneless). |
+| `run_target`                | Ejecuta un target configurado.                                                                                         |
+| `search_documentation`      | Busca en la documentación oficial en `https://angular.dev`.                                                            |
 
-## Configuration
+## Configuración
 
-To use the MCP server, you configure your host environment (IDE or CLI) to run `npx @angular/cli mcp`.
+Para usar el MCP server, configura tu entorno host (IDE o CLI) para que ejecute `npx @angular/cli mcp`.
 
 ### Antigravity IDE
 
-Create a file named `.antigravity/mcp.json` in your project's root:
+Crea un archivo llamado `.antigravity/mcp.json` en la raíz de tu proyecto:
 
 ```json
 {
@@ -39,7 +39,7 @@ Create a file named `.antigravity/mcp.json` in your project's root:
 
 ### Gemini CLI
 
-Create `.gemini/settings.json` in the project root:
+Crea `.gemini/settings.json` en la raíz del proyecto:
 
 ```json
 {
@@ -54,7 +54,7 @@ Create `.gemini/settings.json` in the project root:
 
 ### Cursor
 
-Create `.cursor/mcp.json` in the project root (or globally at `~/.cursor/mcp.json`):
+Crea `.cursor/mcp.json` en la raíz del proyecto (o de forma global en `~/.cursor/mcp.json`):
 
 ```json
 {
@@ -69,7 +69,7 @@ Create `.cursor/mcp.json` in the project root (or globally at `~/.cursor/mcp.jso
 
 ### VS Code
 
-Create `.vscode/mcp.json`:
+Crea `.vscode/mcp.json`:
 
 ```json
 {
@@ -82,14 +82,14 @@ Create `.vscode/mcp.json`:
 }
 ```
 
-## Command Options
+## Opciones del comando
 
-You can pass arguments to the MCP server in the `args` array of your configuration:
+Puedes pasar argumentos al MCP server en el array `args` de tu configuración:
 
-- `--read-only`: Only registers tools that do not modify the project.
-- `--local-only`: Only registers tools that do not require an internet connection.
+- `--read-only`: Solo registra tools que no modifican el proyecto.
+- `--local-only`: Solo registra tools que no requieren conexión a internet.
 
-Example for read-only mode:
+Ejemplo para el modo de solo lectura:
 
 ```json
 "args": ["-y", "@angular/cli", "mcp", "--read-only"]

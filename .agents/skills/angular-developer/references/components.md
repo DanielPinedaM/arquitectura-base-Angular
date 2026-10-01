@@ -1,10 +1,10 @@
-# Components
+# Componentes
 
-Angular components are the fundamental building blocks of an application. Each component consists of a TypeScript class with behaviors, an HTML template, and a CSS selector.
+Los componentes de Angular son los bloques de construcción fundamentales de una aplicación. Cada componente consta de una clase TypeScript con comportamientos, un template HTML y un selector CSS.
 
-## Component Definition
+## Definición de un componente
 
-Use the `@Component` decorator to define a component's metadata.
+Usa el decorador `@Component` para definir la metadata de un componente.
 
 ```ts
 @Component({
@@ -26,18 +26,18 @@ export class Profile {
 }
 ```
 
-## Metadata Options
+## Opciones de metadata
 
-- `selector`: The CSS selector that identifies this component in templates.
-- `template`: Inline HTML template (preferred for small templates).
-- `templateUrl`: Path to an external HTML file.
-- `styles`: Inline CSS styles.
-- `styleUrl` / `styleUrls`: Path(s) to external CSS file(s).
-- `imports`: Lists the components, directives, or pipes used in this component's template.
+- `selector`: El selector CSS que identifica a este componente en los templates.
+- `template`: Template HTML inline (preferido para templates pequeños).
+- `templateUrl`: Ruta a un archivo HTML externo.
+- `styles`: Estilos CSS inline.
+- `styleUrl` / `styleUrls`: Ruta(s) a archivo(s) CSS externo(s).
+- `imports`: Lista los componentes, directivas o pipes usados en el template de este componente.
 
-## Using Components
+## Uso de componentes
 
-To use a component, add it to the `imports` array of the consuming component and use its selector in the template.
+Para usar un componente, agrégalo al array `imports` del componente que lo consume y usa su selector en el template.
 
 ```ts
 @Component({
@@ -48,31 +48,31 @@ To use a component, add it to the `imports` array of the consuming component and
 export class App {}
 ```
 
-### Self-Closing Tags
+### Etiquetas de autocierre
 
-Angular supports self-closing tags for custom components.
+Angular soporta etiquetas de autocierre para componentes personalizados.
 
-**Rule:** Always use self-closing tags when a component does not contain projected content or child nodes:
+**Regla:** Usa siempre etiquetas de autocierre cuando un componente no contenga contenido proyectado ni nodos hijos:
 
 ```html
-<!-- Preferred: concise and modern -->
+<!-- Preferido: conciso y moderno -->
 <app-profile />
 <app-user-card [user]="currentUser()" />
 <router-outlet />
 
-<!-- Avoid: redundant closing tags for empty elements -->
+<!-- Evitar: etiquetas de cierre redundantes para elementos vacíos -->
 <app-profile></app-profile>
 <app-user-card [user]="currentUser()"></app-user-card>
 <router-outlet></router-outlet>
 ```
 
-## Template Control Flow
+## Control flow del template
 
-Angular uses built-in blocks for conditional rendering and loops.
+Angular usa bloques integrados para el renderizado condicional y los bucles.
 
-### Conditional Rendering (`@if`)
+### Renderizado condicional (`@if`)
 
-Use `@if` to conditionally show content. You can include `@else if` and `@else` blocks.
+Usa `@if` para mostrar contenido de forma condicional. Puedes incluir bloques `@else if` y `@else`.
 
 ```html
 @if (user.isAdmin) {
@@ -84,7 +84,7 @@ Use `@if` to conditionally show content. You can include `@else if` and `@else` 
 }
 ```
 
-**Result aliasing**: Save the result of the expression for reuse.
+**Alias del resultado**: Guarda el resultado de la expresión para reutilizarlo.
 
 ```html
 @if (user.settings(); as settings) {
@@ -92,9 +92,9 @@ Use `@if` to conditionally show content. You can include `@else if` and `@else` 
 }
 ```
 
-### Loops (`@for`)
+### Bucles (`@for`)
 
-The `@for` block iterates over collections. The `track` expression is **required** for performance and DOM reuse.
+El bloque `@for` itera sobre colecciones. La expresión `track` es **obligatoria** para el rendimiento y la reutilización del DOM.
 
 ```html
 <ul>
@@ -106,11 +106,11 @@ The `@for` block iterates over collections. The `track` expression is **required
 </ul>
 ```
 
-**Implicit Variables**: `$index`, `$count`, `$first`, `$last`, `$even`, `$odd`.
+**Variables implícitas**: `$index`, `$count`, `$first`, `$last`, `$even`, `$odd`.
 
-### Switching Content (`@switch`)
+### Alternar contenido (`@switch`)
 
-The `@switch` block renders content based on a value. It uses strict equality (`===`) and has **no fallthrough**.
+El bloque `@switch` renderiza contenido según un valor. Usa igualdad estricta (`===`) y **no tiene fallthrough**.
 
 ```html
 @switch (status()) { @case ('loading') { <app-spinner /> } @case ('error') { <app-error-msg /> }
@@ -119,17 +119,17 @@ The `@switch` block renders content based on a value. It uses strict equality (`
 } }
 ```
 
-**Exhaustive Type Checking**: Use `@default never;` to ensure all cases of a union type are handled.
+**Verificación exhaustiva de tipos**: Usa `@default never;` para asegurar que se manejen todos los casos de un union type.
 
 ```html
-@switch (state) { @case ('on') { ... } @case ('off') { ... } @default never; // Errors if a new
-state like 'standby' is added }
+@switch (state) { @case ('on') { ... } @case ('off') { ... } @default never; // Da error si se agrega un nuevo
+estado como 'standby' }
 ```
 
-## Core Concepts
+## Conceptos principales
 
-- **Host Element**: The DOM element that matches the component's selector.
-- **View**: The DOM rendered by the component's template inside the host element.
-- **Standalone**: By default, components are standalone (since Angular 19, `standalone: true` is default). For older versions, `standalone: true` must be explicit or the component must be part of an `NgModule`.
-- **Component Tree**: Angular applications are structured as a tree of components, where each component can host child components.
-- **Component Naming**: Do not add suffixes the `Component` suffix for Component classes (e.g., AppComponent) unless the project has been configured to use that naming configuration.
+- **Host Element**: El elemento del DOM que coincide con el selector del componente.
+- **View**: El DOM renderizado por el template del componente dentro del host element.
+- **Standalone**: Por defecto, los componentes son standalone (desde Angular 19, `standalone: true` es el valor por defecto). Para versiones anteriores, `standalone: true` debe ser explícito o el componente debe formar parte de un `NgModule`.
+- **Árbol de componentes**: Las aplicaciones de Angular se estructuran como un árbol de componentes, donde cada componente puede alojar componentes hijos.
+- **Nomenclatura de componentes**: No agregues sufijos el sufijo `Component` para las clases de componentes (p. ej., AppComponent) a menos que el proyecto haya sido configurado para usar esa configuración de nomenclatura.

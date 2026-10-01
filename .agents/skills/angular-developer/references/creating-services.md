@@ -1,16 +1,16 @@
-# Creating and Using Services
+# Creación y uso de servicios
 
-Services in Angular are reusable pieces of code that handle data fetching, business logic, or state management that multiple components or other services need to access.
+Los servicios en Angular son piezas de código reutilizables que manejan la obtención de datos, la lógica de negocio o la gestión del estado a las que múltiples componentes u otros servicios necesitan acceder.
 
-## Creating a Service
+## Crear un servicio
 
-You can generate a service using the Angular CLI:
+Puedes generar un servicio usando Angular CLI:
 
 ```bash
 ng generate service my-data
 ```
 
-Or you can manually create a TypeScript class and decorate it with `@Service()`. For reactive state management, store data in a private `signal()` and expose it publicly via `.asReadonly()`:
+O puedes crear manualmente una clase TypeScript y decorarla con `@Service()`. Para la gestión reactiva del estado, almacena los datos en un `signal()` privado y exponlo públicamente mediante `.asReadonly()`:
 
 ```ts
 import {Service, signal} from '@angular/core';
@@ -19,7 +19,7 @@ import {Service, signal} from '@angular/core';
 export class BasicDataStore {
   private readonly dataSignal = signal<string[]>([]);
 
-  // Expose state as a read-only signal to prevent direct external mutation
+  // Expone el estado como un signal de solo lectura para evitar la mutación externa directa
   readonly data = this.dataSignal.asReadonly();
 
   addData(item: string): void {
@@ -28,23 +28,23 @@ export class BasicDataStore {
 }
 ```
 
-### The `@Service` decorator
+### El decorador `@Service`
 
-Using `@Service` is the recommended approach for most services. It tells Angular to:
+Usar `@Service` es el enfoque recomendado para la mayoría de los servicios. Le indica a Angular que:
 
-- **Create a single instance (singleton)** for the entire application.
-- **Make it available everywhere** automatically, without needing to list it in any `providers` array.
-- **Enable tree-shaking**, meaning the service is only included in the final JavaScript bundle if it is actually injected somewhere.
+- **Cree una única instancia (singleton)** para toda la aplicación.
+- **La haga disponible en todas partes** automáticamente, sin necesidad de listarla en ningún array `providers`.
+- **Habilite el tree-shaking**, lo que significa que el servicio solo se incluye en el bundle final de JavaScript si realmente se inyecta en algún lugar.
 
-#### The `autoProvided` option
+#### La opción `autoProvided`
 
-If you don't want to create a singleton of your service, you can set `@Service({autoProvided: false})` and declare the service in a `providers` array.
+Si no quieres crear un singleton de tu servicio, puedes establecer `@Service({autoProvided: false})` y declarar el servicio en un array `providers`.
 
-## Injecting a Service
+## Inyectar un servicio
 
-Once a service is created, you can inject it into components, directives, or other services using the `inject()` function.
+Una vez creado un servicio, puedes inyectarlo en componentes, directivas u otros servicios usando la función `inject()`.
 
-### Injecting into a Component
+### Inyectar en un componente
 
 ```ts
 import {Component, inject} from '@angular/core';
@@ -60,14 +60,14 @@ import {BasicDataStore} from './basic-data-store.service';
   `,
 })
 export class Example {
-  // Inject the service as a class field
+  // Inyecta el servicio como un campo de clase
   readonly dataStore = inject(BasicDataStore);
 }
 ```
 
-### Injecting into Another Service
+### Inyectar en otro servicio
 
-Services can inject other services in the exact same way. Use `computed()` to derive values from injected services reactively:
+Los servicios pueden inyectar otros servicios exactamente de la misma manera. Usa `computed()` para derivar valores de los servicios inyectados de forma reactiva:
 
 ```ts
 import {Service, computed, inject, signal} from '@angular/core';
@@ -75,19 +75,19 @@ import {AdvancedDataStore} from './advanced-data-store.service';
 
 @Service()
 export class CombinedDataStore {
-  // Injecting another service
+  // Inyectando otro servicio
   private readonly advancedDataStore = inject(AdvancedDataStore);
   private readonly dataSignal = signal<string[]>([]);
 
-  // Combine reactive state from this service and the injected service
+  // Combina el estado reactivo de este servicio y del servicio inyectado
   readonly allData = computed(() => [...this.dataSignal(), ...this.advancedDataStore.data()]);
 }
 ```
 
-## Advanced Service Patterns
+## Patrones avanzados de servicios
 
-While `@Service` covers most scenarios, you may sometimes need:
+Aunque `@Service` cubre la mayoría de los escenarios, a veces puedes necesitar:
 
-- **Component-specific instances**: If a component needs its own isolated instance of a service, provide it directly in the component's `@Component({ providers: [MyService] })` array and set the `autoProvided: false` option: `@Service({autoProvided: false})`
-- **Factory providers**: For dynamic creation.
-- **Value providers**: For injecting configuration objects.
+- **Instancias específicas de un componente**: Si un componente necesita su propia instancia aislada de un servicio, provéela directamente en el array `@Component({ providers: [MyService] })` del componente y establece la opción `autoProvided: false`: `@Service({autoProvided: false})`
+- **Factory providers**: Para la creación dinámica.
+- **Value providers**: Para inyectar objetos de configuración.

@@ -1,32 +1,32 @@
-# Environment configuration
+# Configuración de entornos
 
-## Configuration strategies
+## Estrategias de configuración
 
-Angular supports two main configuration strategies:
+Angular soporta dos estrategias principales de configuración:
 
-- **Build-time configuration** using environment files
-- **Runtime configuration** by loading values at application startup
+- **Configuración en tiempo de build** usando archivos de environment
+- **Configuración en runtime** cargando valores al iniciar la aplicación
 
-Choose the approach based on your deployment requirements.
+Elige el enfoque según tus requisitos de deployment.
 
 ---
 
-## Build-time configuration
+## Configuración en tiempo de build
 
-Environment files define configuration values that are replaced at build time.
+Los archivos de environment definen valores de configuración que se reemplazan en tiempo de build.
 
-> **Security note:** Environment files are bundled into the client-side application.
-> They are visible to anyone who can load the page.
-> Never store sensitive information like API keys, secrets, or credentials in environment files.
-> These values can be easily accessed by users.
+> **Nota de seguridad:** Los archivos de environment se empaquetan dentro de la aplicación del lado del cliente.
+> Son visibles para cualquiera que pueda cargar la página.
+> Nunca almacenes información sensible como API keys, secretos o credenciales en los archivos de environment.
+> Los usuarios pueden acceder fácilmente a estos valores.
 
-Generate environment files using the CLI:
+Genera los archivos de environment usando el CLI:
 
 ```bash
 ng generate environments
 ```
 
-This creates environment-specific files such as:
+Esto crea archivos específicos de cada entorno, como:
 
 ```ts
 // environment.ts
@@ -42,7 +42,7 @@ export const environment = {
 };
 ```
 
-Import the environment where needed:
+Importa el environment donde se necesite:
 
 ```ts
 import {environment} from '../environments/environment';
@@ -50,24 +50,24 @@ import {environment} from '../environments/environment';
 const apiUrl = environment.apiUrl;
 ```
 
-The Angular CLI replaces the appropriate file based on the build configuration.
+Angular CLI reemplaza el archivo apropiado según la configuración de build.
 
-If you need a development-mode check, use `isDevMode()` from `@angular/core` instead of relying on a manually maintained `production` flag.
+Si necesitas verificar el modo de desarrollo, usa `isDevMode()` de `@angular/core` en lugar de depender de un flag `production` mantenido manualmente.
 
-> Changes to environment files require rebuilding the application.
+> Los cambios en los archivos de environment requieren volver a hacer build de la aplicación.
 
 ---
 
-## Runtime configuration (advanced)
+## Configuración en runtime (avanzado)
 
-In some scenarios, applications need to load configuration at runtime instead of build time.
+En algunos escenarios, las aplicaciones necesitan cargar la configuración en runtime en lugar de en tiempo de build.
 
-This allows the same build artifact to be deployed across multiple environments without rebuilding.
+Esto permite que el mismo artefacto de build se despliegue en múltiples entornos sin volver a hacer build.
 
-A common approach is to load a JSON configuration file from the `assets` folder during application
-initialization.
+Un enfoque común es cargar un archivo de configuración JSON desde la carpeta `assets` durante la
+inicialización de la aplicación.
 
-### Example
+### Ejemplo
 
 ```json
 // src/assets/config.json
@@ -76,7 +76,7 @@ initialization.
 }
 ```
 
-Load the configuration before the application starts:
+Carga la configuración antes de que la aplicación inicie:
 
 ```ts
 import {Service, inject} from '@angular/core';
@@ -107,7 +107,7 @@ export class AppConfigService {
 }
 ```
 
-Register the loader during application bootstrap:
+Registra el loader durante el bootstrap de la aplicación:
 
 ```ts
 import {provideAppInitializer, inject} from '@angular/core';
@@ -118,20 +118,20 @@ provideAppInitializer(() => {
 });
 ```
 
-This ensures configuration is available before the application renders.
+Esto asegura que la configuración esté disponible antes de que la aplicación se renderice.
 
-> Runtime configuration is an advanced pattern and is not required for most applications.
+> La configuración en runtime es un patrón avanzado y no es necesaria para la mayoría de las aplicaciones.
 
 ---
 
-## Choosing a strategy
+## Elegir una estrategia
 
-| Criteria               | Build-time | Runtime      |
-| ---------------------- | ---------- | ------------ |
-| Change without rebuild | No         | Yes          |
-| Startup performance    | Faster     | Slight delay |
-| Complexity             | Low        | Moderate     |
-| Deployment flexibility | Limited    | High         |
+| Criterio                         | Tiempo de build | Runtime        |
+| -------------------------------- | --------------- | -------------- |
+| Cambiar sin volver a hacer build | No              | Sí             |
+| Rendimiento al iniciar           | Más rápido      | Ligero retraso |
+| Complejidad                      | Baja            | Moderada       |
+| Flexibilidad de deployment       | Limitada        | Alta           |
 
-Use build-time configuration for most applications, and runtime configuration when you need to
-deploy the same build across multiple environments.
+Usa la configuración en tiempo de build para la mayoría de las aplicaciones, y la configuración en runtime cuando necesites
+desplegar el mismo build en múltiples entornos.

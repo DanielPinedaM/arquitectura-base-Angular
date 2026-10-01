@@ -1,14 +1,14 @@
-# Testing with the RouterTestingHarness
+# Testing con RouterTestingHarness
 
-When testing components that involve routing, it is crucial **not to mock the Router or related services**. Instead, use the `RouterTestingHarness`, which provides a robust and reliable way to test routing logic in an environment that closely mirrors a real application.
+Al testear componentes que involucran routing, es crucial **no hacer mock del Router ni de los servicios relacionados**. En su lugar, usa `RouterTestingHarness`, que proporciona una forma robusta y confiable de testear la lógica de routing en un entorno que refleja fielmente una aplicación real.
 
-Using the harness ensures you are testing the actual router configuration, guards, and resolvers, leading to more meaningful tests.
+Usar el harness asegura que estás testeando la configuración real del router, los guards y los resolvers, lo que da lugar a tests más significativos.
 
-## Setting Up for Router Testing
+## Configuración para el testing del router
 
-The `RouterTestingHarness` is the primary tool for testing routing scenarios. You also need to provide your test routes using the `provideRouter` function in your `TestBed` configuration.
+`RouterTestingHarness` es la herramienta principal para testear escenarios de routing. También necesitas proveer tus rutas de test usando la función `provideRouter` en tu configuración de `TestBed`.
 
-### Example Setup
+### Ejemplo de configuración
 
 ```ts
 import {TestBed} from '@angular/core/testing';
@@ -21,10 +21,10 @@ describe('Dashboard Component Routing', () => {
   let harness: RouterTestingHarness;
 
   beforeEach(async () => {
-    // 1. Configure TestBed with test routes
+    // 1. Configura TestBed con las rutas de test
     TestBed.configureTestingModule({
       providers: [
-        // Use provideRouter with your test-specific routes
+        // Usa provideRouter con tus rutas específicas para el test
         provideRouter([
           {path: '', component: Dashboard},
           {path: 'heroes/:id', component: HeroDetail},
@@ -32,57 +32,57 @@ describe('Dashboard Component Routing', () => {
       ],
     });
 
-    // 2. Create the RouterTestingHarness
+    // 2. Crea el RouterTestingHarness
     harness = await RouterTestingHarness.create();
   });
 });
 ```
 
-### Key Concepts
+### Conceptos clave
 
-1.  **`provideRouter([...])`**: Provide a test-specific routing configuration. This should include the routes necessary for the component-under-test to function correctly.
-2.  **`RouterTestingHarness.create(initialUrl?)`**: Asynchronously creates the harness and optionally performs an initial navigation.
+1.  **`provideRouter([...])`**: Provee una configuración de routing específica para el test. Debe incluir las rutas necesarias para que el componente bajo test funcione correctamente.
+2.  **`RouterTestingHarness.create(initialUrl?)`**: Crea el harness de forma asíncrona y, opcionalmente, realiza una navegación inicial.
 
-## Writing Router Tests
+## Escribir tests del router
 
-Once the harness is created, you can use it to drive navigation and make assertions on the state of the router and the activated components.
+Una vez creado el harness, puedes usarlo para dirigir la navegación y hacer aserciones sobre el estado del router y de los componentes activados.
 
-### Example: Testing Navigation
+### Ejemplo: Testing de la navegación
 
 ```ts
 it('should navigate to a hero detail when a hero is selected', async () => {
-  // 1. Navigate to the initial component and get its instance
+  // 1. Navega al componente inicial y obtén su instancia
   const dashboard = await harness.navigateByUrl('/', Dashboard);
 
-  // Suppose the dashboard has a method to select a hero
+  // Supongamos que el dashboard tiene un método para seleccionar un hero
   const heroToSelect = {id: 42, name: 'Test Hero'};
   dashboard.selectHero(heroToSelect);
 
-  // Wait for stability after the action that triggers navigation
+  // Espera la estabilidad después de la acción que dispara la navegación
   await harness.fixture.whenStable();
 
-  // 2. Assert on the URL
+  // 2. Haz aserciones sobre la URL
   const router = TestBed.inject(Router);
   expect(router.url).toEqual('/heroes/42');
 
-  // 3. Get the activated component after navigation
+  // 3. Obtén el componente activado después de la navegación
   const heroDetail = harness.routeDebugElement?.componentInstance as HeroDetail;
 
-  // 4. Assert on the state of the new component
+  // 4. Haz aserciones sobre el estado del nuevo componente
   expect(heroDetail.hero.name).toBe('Test Hero');
 });
 
 it('should get the activated component directly', async () => {
-  // Navigate and get the component instance in one step
+  // Navega y obtén la instancia del componente en un solo paso
   const dashboardInstance = await harness.navigateByUrl('/', Dashboard);
 
   expect(dashboardInstance).toBeInstanceOf(Dashboard);
 });
 ```
 
-### Best Practices
+### Buenas prácticas
 
-- **Navigate with the Harness:** Always use `harness.navigateByUrl()` to simulate navigation. This method returns a promise that resolves with the instance of the activated component.
-- **Access the Router State:** Inject `Router` from `TestBed` to inspect the live router state.
-- **Get Activated Components:** Use the component returned by `navigateByUrl(url, ComponentType)`. After application-driven navigation, read `harness.routeDebugElement?.componentInstance`.
-- **Wait for Stability:** After performing an action that causes navigation, always `await harness.fixture.whenStable()` to ensure the routing is complete before making assertions.
+- **Navega con el harness:** Usa siempre `harness.navigateByUrl()` para simular la navegación. Este método devuelve una promise que se resuelve con la instancia del componente activado.
+- **Accede al estado del router:** Inyecta `Router` desde `TestBed` para inspeccionar el estado actual del router.
+- **Obtén los componentes activados:** Usa el componente devuelto por `navigateByUrl(url, ComponentType)`. Después de una navegación iniciada por la aplicación, lee `harness.routeDebugElement?.componentInstance`.
+- **Espera la estabilidad:** Después de realizar una acción que provoque una navegación, haz siempre `await harness.fixture.whenStable()` para asegurar que el routing se haya completado antes de hacer aserciones.

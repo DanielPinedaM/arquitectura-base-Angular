@@ -1,10 +1,10 @@
 # Inputs
 
-Inputs allow data to flow from a parent component to a child component. Angular recommends using the signal-based `input` API for modern applications.
+Los inputs permiten que los datos fluyan de un componente padre a un componente hijo. Angular recomienda usar la API de `input` basada en signals para aplicaciones modernas.
 
-## Signal-based Inputs
+## Inputs basados en signals
 
-Declare inputs using the `input()` function. This returns an `InputSignal`.
+Declara los inputs usando la función `input()`. Esta devuelve un `InputSignal`.
 
 ```ts
 import {Component, input, computed} from '@angular/core';
@@ -14,46 +14,46 @@ import {Component, input, computed} from '@angular/core';
   template: `<p>{{ label() }} ({{ age() }})</p>`,
 })
 export class User {
-  // Optional input with default value
+  // Input opcional con valor por defecto
   readonly name = input('Guest');
 
-  // Required input
+  // Input requerido
   readonly age = input.required<number>();
 
-  // Inputs are reactive signals
+  // Los inputs son signals reactivos
   protected readonly label = computed(() => `Name: ${this.name()}`);
 }
 ```
 
-### Usage in Template
+### Uso en el template
 
 ```html
 <app-user [name]="userName" [age]="25" />
 ```
 
-## Configuration Options
+## Opciones de configuración
 
-The `input` function accepts a config object:
+La función `input` acepta un objeto de configuración:
 
-- **Alias**: Change the property name used in templates.
-- **Transform**: Modify the value before it reaches the component.
+- **Alias**: Cambia el nombre de la propiedad usado en los templates.
+- **Transform**: Modifica el valor antes de que llegue al componente.
 
 ```ts
 import { input, booleanAttribute } from '@angular/core';
 
 @Component({...})
 export class CustomButton {
-  // Alias example
+  // Ejemplo de alias
   readonly label = input('', { alias: 'btnLabel' });
 
-  // Transform example using built-in helper
+  // Ejemplo de transform usando un helper integrado
   readonly disabled = input(false, { transform: booleanAttribute });
 }
 ```
 
-## Model Inputs (Two-Way Binding)
+## Model Inputs (two-way binding)
 
-Use `model()` to create an input that supports two-way data binding.
+Usa `model()` para crear un input que soporte two-way data binding.
 
 ```ts
 @Component({
@@ -69,19 +69,19 @@ export class CustomCounter {
 }
 ```
 
-### Usage
+### Uso
 
 ```html
-<!-- Two-way binding with a signal -->
+<!-- Two-way binding con un signal -->
 <custom-counter [(value)]="mySignal" />
 
-<!-- Two-way binding with a plain property -->
+<!-- Two-way binding con una propiedad simple -->
 <custom-counter [(value)]="myProperty" />
 ```
 
-## Decorator-based Inputs (@Input)
+## Inputs basados en decoradores (@Input)
 
-The legacy API remains supported but is not recommended for new code.
+La API legacy sigue siendo soportada, pero no se recomienda para código nuevo.
 
 ```ts
 import { Component, Input } from '@angular/core';
@@ -93,9 +93,9 @@ export class Legacy {
 }
 ```
 
-## Best Practices
+## Buenas prácticas
 
-- **Prefer Signals**: Use `input()` instead of `@Input()` for better reactivity and type safety.
-- **Required Inputs**: Use `input.required()` for mandatory data to get build-time errors.
-- **Pure Transforms**: Ensure input transform functions are pure and statically analyzable.
-- **Avoid Collisions**: Do not use input names that collide with standard DOM properties (e.g., `id`, `title`).
+- **Prefiere signals**: Usa `input()` en lugar de `@Input()` para una mejor reactividad y seguridad de tipos.
+- **Inputs requeridos**: Usa `input.required()` para datos obligatorios y así obtener errores en tiempo de build.
+- **Transforms puros**: Asegúrate de que las funciones transform de los inputs sean puras y analizables estáticamente.
+- **Evita colisiones**: No uses nombres de inputs que colisionen con propiedades estándar del DOM (p. ej., `id`, `title`).

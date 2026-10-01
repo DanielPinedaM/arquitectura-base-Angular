@@ -1,30 +1,30 @@
-# Automatic Migrations & Code Modernization
+# Migraciones automáticas y modernización del código
 
-When tasked with refactoring or modernizing an existing codebase, always prefer using the official automated schematics available in `@angular/core` over manual text replacement.
+Cuando se te asigne la tarea de refactorizar o modernizar un codebase existente, prefiere siempre usar los schematics automatizados oficiales disponibles en `@angular/core` en lugar del reemplazo manual de texto.
 
-## Discovering Migrations
+## Descubrir migraciones
 
-To view all available schematics for the installed version of the core framework, run:
+Para ver todos los schematics disponibles para la versión instalada del framework principal, ejecuta:
 `ng generate @angular/core: --help`
 
-## Common Migration Schematics
+## Schematics de migración comunes
 
-Use the following commands to apply specific syntax updates. You can scope these commands to a specific project or directory using the `--project <name>` or `--path <dir>` flags.
+Usa los siguientes comandos para aplicar actualizaciones de sintaxis específicas. Puedes limitar el alcance de estos comandos a un proyecto o directorio específico usando los flags `--project <name>` o `--path <dir>`.
 
-| Feature to Modernize      | Command to Execute                                          |
-| :------------------------ | :---------------------------------------------------------- |
-| **Built-in Control Flow** | `ng generate @angular/core:control-flow`                    |
-| **Signal-based Inputs**   | `ng generate @angular/core:signal-input-migration`          |
-| **Signal Queries**        | `ng generate @angular/core:signal-queries-migration`        |
-| **Functional Outputs**    | `ng generate @angular/core:output-migration`                |
-| **`inject()` Function**   | `ng generate @angular/core:inject`                          |
-| **Self-Closing Tags**     | `ng generate @angular/core:self-closing-tag`                |
-| **Standalone**            | `ng generate @angular/core:standalone` (See workflow below) |
+| Funcionalidad a modernizar    | Comando a ejecutar                                                     |
+| :---------------------------- | :--------------------------------------------------------------------- |
+| **Control flow integrado**    | `ng generate @angular/core:control-flow`                               |
+| **Inputs basados en signals** | `ng generate @angular/core:signal-input-migration`                     |
+| **Signal Queries**            | `ng generate @angular/core:signal-queries-migration`                   |
+| **Outputs funcionales**       | `ng generate @angular/core:output-migration`                           |
+| **Función `inject()`**        | `ng generate @angular/core:inject`                                     |
+| **Etiquetas de autocierre**   | `ng generate @angular/core:self-closing-tag`                           |
+| **Standalone**                | `ng generate @angular/core:standalone` (ver el flujo de trabajo abajo) |
 
-## Specialized Workflow: Migrating to Standalone
+## Flujo de trabajo especializado: migrar a standalone
 
-The Standalone migration is an interactive, multi-step refactoring. You **MUST** perform this in three discrete stages, verifying that the application builds and runs correctly after each stage completes:
+La migración a standalone es una refactorización interactiva de múltiples pasos. **DEBES** realizarla en tres etapas discretas, verificando que la aplicación compile y se ejecute correctamente después de que termine cada etapa:
 
-1. **Phase 1**: Run `ng generate @angular/core:standalone` and select the option to **Convert all components, directives and pipes to standalone**.
-2. **Phase 2**: Verify the build with `ng build`. Run the command again and select **Remove unnecessary NgModule classes**.
-3. **Phase 3**: Verify the build with `ng build`. Run the final pass and select **Bootstrap the application using standalone APIs**.
+1. **Fase 1**: Ejecuta `ng generate @angular/core:standalone` y selecciona la opción **Convert all components, directives and pipes to standalone**.
+2. **Fase 2**: Verifica el build con `ng build`. Ejecuta el comando de nuevo y selecciona **Remove unnecessary NgModule classes**.
+3. **Fase 3**: Verifica el build con `ng build`. Ejecuta la pasada final y selecciona **Bootstrap the application using standalone APIs**.

@@ -1,39 +1,39 @@
-# Show Routes with Outlets
+# Mostrar rutas con outlets
 
-The `RouterOutlet` directive is a placeholder where Angular renders the component for the current URL.
+La directiva `RouterOutlet` es un placeholder donde Angular renderiza el componente correspondiente a la URL actual.
 
-## Basic Usage
+## Uso básico
 
-Include `<router-outlet />` in your template. Angular inserts the routed component as a sibling immediately following the outlet.
+Incluye `<router-outlet />` en tu template. Angular inserta el componente de la ruta como un hermano inmediatamente después del outlet.
 
 ```html
 <app-header /> <router-outlet />
-<!-- Route content appears here -->
+<!-- El contenido de la ruta aparece aquí -->
 <app-footer />
 ```
 
-## Nested Outlets
+## Outlets anidados
 
-Child routes require their own `<router-outlet />` within the parent component's template.
+Las rutas hijas requieren su propio `<router-outlet />` dentro del template del componente padre.
 
 ```ts
-// Parent component template
+// Template del componente padre
 <h1>Settings</h1>
-<router-outlet /> <!-- Child components like Profile or Security render here -->
+<router-outlet /> <!-- Los componentes hijos como Profile o Security se renderizan aquí -->
 ```
 
-## Named Outlets (Secondary Routes)
+## Outlets con nombre (rutas secundarias)
 
-Pages can have multiple outlets. Assign a `name` to an outlet to target it specifically. The default name is `'primary'`.
+Las páginas pueden tener múltiples outlets. Asigna un `name` a un outlet para apuntar a él específicamente. El nombre por defecto es `'primary'`.
 
 ```html
 <router-outlet />
-<!-- Primary -->
+<!-- Primario -->
 <router-outlet name="sidebar" />
-<!-- Secondary -->
+<!-- Secundario -->
 ```
 
-Define the `outlet` in the route config:
+Define el `outlet` en la configuración de la ruta:
 
 ```ts
 {
@@ -43,26 +43,26 @@ Define the `outlet` in the route config:
 }
 ```
 
-## Outlet Lifecycle Events
+## Eventos del ciclo de vida del outlet
 
-`RouterOutlet` emits events when components are changed:
+`RouterOutlet` emite eventos cuando los componentes cambian:
 
-- `activate`: New component instantiated.
-- `deactivate`: Component destroyed.
-- `attach` / `detach`: Used with `RouteReuseStrategy`.
+- `activate`: Se instanció un nuevo componente.
+- `deactivate`: Se destruyó un componente.
+- `attach` / `detach`: Se usan con `RouteReuseStrategy`.
 
 ```html
 <router-outlet (activate)="onActivate($event)" />
 ```
 
-## Passing Data via `routerOutletData`
+## Pasar datos mediante `routerOutletData`
 
-You can pass contextual data to the routed component using the `routerOutletData` input. The component accesses this via the `ROUTER_OUTLET_DATA` injection token as a signal.
+Puedes pasar datos contextuales al componente de la ruta usando el input `routerOutletData`. El componente accede a ellos mediante el injection token `ROUTER_OUTLET_DATA` como un signal.
 
 ```ts
-// In Parent
+// En el padre
 <router-outlet [routerOutletData]="{ theme: 'dark' }" />
 
-// In Routed Component
+// En el componente de la ruta
 outletData = inject(ROUTER_OUTLET_DATA) as Signal<{ theme: string }>;
 ```

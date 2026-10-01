@@ -1,10 +1,10 @@
 # Pipes
 
-Pipes transform data declaratively inside Angular templates using the `|` operator.
+Los pipes transforman datos de forma declarativa dentro de los templates de Angular usando el operador `|`.
 
-## Using pipes in templates
+## Uso de pipes en templates
 
-Import the pipe class and add it to the component's `imports` array.
+Importa la clase del pipe y agrégala al array `imports` del componente.
 
 ```ts
 import {Component} from '@angular/core';
@@ -24,13 +24,13 @@ export class Invoice {
 }
 ```
 
-## Using pipe logic outside templates
+## Uso de la lógica de un pipe fuera de los templates
 
-**Do NOT inject pipe classes into services or other classes.** Pipes are template operators, not injectable services. Injecting them causes DI errors in standalone contexts and creates unnecessary coupling.
+**NO inyectes clases de pipes en servicios u otras clases.** Los pipes son operadores de template, no servicios inyectables. Inyectarlos provoca errores de DI en contextos standalone y crea un acoplamiento innecesario.
 
-### Custom pipes — extract the transformation function
+### Pipes personalizados — extrae la función de transformación
 
-Extract the logic into a plain function. The pipe delegates to it; services import the function directly.
+Extrae la lógica a una función simple. El pipe delega en ella; los servicios importan la función directamente.
 
 ```ts
 // kebab-case.ts
@@ -53,7 +53,7 @@ export class KebabCasePipe implements PipeTransform {
 ```
 
 ```ts
-// formatter.service.ts — import the function, NOT the pipe
+// formatter.service.ts — importa la función, NO el pipe
 import {Service} from '@angular/core';
 import {toKebabCase} from './kebab-case';
 
@@ -65,21 +65,21 @@ export class FormatterService {
 }
 ```
 
-### Built-in locale-aware pipes — use standalone formatting functions
+### Pipes integrados sensibles al locale — usa funciones de formato standalone
 
-`@angular/common` exports a standalone function for each locale-aware built-in pipe:
+`@angular/common` exporta una función standalone por cada pipe integrado sensible al locale:
 
-| Pipe           | Standalone function |
-| -------------- | ------------------- |
-| `DatePipe`     | `formatDate`        |
-| `CurrencyPipe` | `formatCurrency`    |
-| `DecimalPipe`  | `formatNumber`      |
-| `PercentPipe`  | `formatPercent`     |
+| Pipe           | Función standalone |
+| -------------- | ------------------ |
+| `DatePipe`     | `formatDate`       |
+| `CurrencyPipe` | `formatCurrency`   |
+| `DecimalPipe`  | `formatNumber`     |
+| `PercentPipe`  | `formatPercent`    |
 
-Inject `LOCALE_ID` to get the current locale and pass it to the function.
+Inyecta `LOCALE_ID` para obtener el locale actual y pásalo a la función.
 
 ```ts
-// CORRECT — use formatNumber instead of injecting DecimalPipe
+// CORRECTO — usa formatNumber en lugar de inyectar DecimalPipe
 import {Service, LOCALE_ID, inject} from '@angular/core';
 import {formatNumber} from '@angular/common';
 
@@ -94,26 +94,26 @@ export class PriceService {
 ```
 
 ```ts
-// WRONG — do not inject pipe classes
+// INCORRECTO — no inyectes clases de pipes
 import {Service, inject} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 
 @Service()
 export class PriceService {
-  // ❌ DecimalPipe is not designed to be injected
+  // ❌ DecimalPipe no está diseñado para ser inyectado
   private pipe = inject(DecimalPipe);
 }
 ```
 
-## Creating custom pipes
+## Crear pipes personalizados
 
-Use the Angular CLI to generate a pipe:
+Usa Angular CLI para generar un pipe:
 
 ```bash
 ng generate pipe path/to/my-pipe
 ```
 
-A pipe needs a `@Pipe` decorator with a `name` and a `transform` method implementing `PipeTransform`.
+Un pipe necesita un decorador `@Pipe` con un `name` y un método `transform` que implemente `PipeTransform`.
 
 ```ts
 import {Pipe, PipeTransform} from '@angular/core';
@@ -126,12 +126,12 @@ export class TruncatePipe implements PipeTransform {
 }
 ```
 
-- **`name`**: camelCase. Do not use hyphens.
-- **Class name**: PascalCase version of `name` with `Pipe` appended (e.g., `TruncatePipe`).
+- **`name`**: camelCase. No uses guiones.
+- **Nombre de la clase**: Versión en PascalCase de `name` con `Pipe` agregado al final (p. ej., `TruncatePipe`).
 
-## Impure pipes
+## Pipes impuros
 
-Mark a pipe `pure: false` only when you need to detect mutations inside arrays or objects. Impure pipes run on every change-detection cycle and can hurt performance.
+Marca un pipe con `pure: false` solo cuando necesites detectar mutaciones dentro de arrays u objetos. Los pipes impuros se ejecutan en cada ciclo de change detection y pueden afectar el rendimiento.
 
 ```ts
 @Pipe({name: 'filterItems', pure: false})
@@ -142,4 +142,4 @@ export class FilterItemsPipe implements PipeTransform {
 }
 ```
 
-IMPORTANT: Avoid impure pipes unless absolutely necessary.
+IMPORTANTE: Evita los pipes impuros a menos que sean absolutamente necesarios.

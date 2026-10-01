@@ -1,10 +1,10 @@
 # Data Resolvers
 
-Data resolvers fetch data before a route activates, ensuring components have the necessary data upon rendering.
+Los data resolvers obtienen datos antes de que una ruta se active, asegurando que los componentes tengan los datos necesarios al renderizarse.
 
-## Creating a Resolver
+## Crear un resolver
 
-Implement the `ResolveFn` type.
+Implementa el tipo `ResolveFn`.
 
 ```ts
 export const userResolver: ResolveFn<User> = (route, state) => {
@@ -14,9 +14,9 @@ export const userResolver: ResolveFn<User> = (route, state) => {
 };
 ```
 
-## Configuring the Route
+## Configurar la ruta
 
-Add the resolver under the `resolve` key.
+Agrega el resolver bajo la clave `resolve`.
 
 ```ts
 {
@@ -28,9 +28,9 @@ Add the resolver under the `resolve` key.
 }
 ```
 
-## Accessing Resolved Data
+## Acceder a los datos resueltos
 
-### 1. Via `ActivatedRoute` (Traditional)
+### 1. Mediante `ActivatedRoute` (tradicional)
 
 ```ts
 private readonly route = inject(ActivatedRoute);
@@ -38,9 +38,9 @@ protected readonly data = toSignal(this.route.data);
 protected readonly user = computed(() => this.data().user);
 ```
 
-### 2. Via Component Inputs (Modern)
+### 2. Mediante inputs del componente (moderno)
 
-Enable `withComponentInputBinding()` in `provideRouter` to pass resolved data directly to `@Input` or `input()`.
+Habilita `withComponentInputBinding()` en `provideRouter` para pasar los datos resueltos directamente a `@Input` o `input()`.
 
 ```ts
 // app.config.ts
@@ -50,12 +50,12 @@ provideRouter(routes, withComponentInputBinding());
 user = input.required<User>();
 ```
 
-## Error Handling
+## Manejo de errores
 
-Navigation is blocked if a resolver fails.
+La navegación se bloquea si un resolver falla.
 
-- Use `withNavigationErrorHandler` for global handling.
-- Use `catchError` within the resolver to return a `RedirectCommand` or fallback data.
+- Usa `withNavigationErrorHandler` para el manejo global.
+- Usa `catchError` dentro del resolver para devolver un `RedirectCommand` o datos de respaldo.
 
 ```ts
 return userService
@@ -63,7 +63,7 @@ return userService
   .pipe(catchError(() => of(new RedirectCommand(router.parseUrl('/error')))));
 ```
 
-## Best Practices
+## Buenas prácticas
 
-- **Keep it lightweight**: Fetch only critical data.
-- **Provide feedback**: Listen to router events to show a global loading bar during navigation, as the UI stays on the old page until the resolver finishes.
+- **Mantenlo ligero**: Obtén solo los datos críticos.
+- **Proporciona retroalimentación**: Escucha los eventos del router para mostrar una barra de carga global durante la navegación, ya que la UI permanece en la página anterior hasta que el resolver termina.

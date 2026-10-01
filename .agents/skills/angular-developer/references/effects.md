@@ -1,23 +1,23 @@
-# Side Effects with `effect` and `afterRenderEffect`
+# Efectos secundarios con `effect` y `afterRenderEffect`
 
-In Angular, an **effect** is an operation that runs whenever one or more signal values it tracks change.
+En Angular, un **effect** es una operación que se ejecuta cada vez que cambian uno o más valores de signals que rastrea.
 
-## When to use `effect`
+## Cuándo usar `effect`
 
-Effects are intended for syncing signal state to imperative, non-signal APIs.
+Los effects están pensados para sincronizar el estado de los signals con APIs imperativas que no usan signals.
 
-**Valid Use Cases:**
+**Casos de uso válidos:**
 
-- Logging analytics.
-- Syncing state to `localStorage` or `sessionStorage`.
-- Performing custom rendering to a `<canvas>` or 3rd-party charting library.
+- Registro (logging) de analíticas.
+- Sincronizar el estado con `localStorage` o `sessionStorage`.
+- Realizar un renderizado personalizado en un `<canvas>` o en una librería de gráficos de terceros.
 
-**CRITICAL RULE: DO NOT use effects to propagate state.**
-If you find yourself using `.set()` or `.update()` on a signal _inside_ an effect to keep two signals in sync, you are making a mistake. This causes `ExpressionChangedAfterItHasBeenChecked` errors and infinite loops. **Always use `computed()` or `linkedSignal()` for state derivation.**
+**REGLA CRÍTICA: NO uses effects para propagar estado.**
+Si te encuentras usando `.set()` o `.update()` sobre un signal _dentro_ de un effect para mantener dos signals sincronizados, estás cometiendo un error. Esto provoca errores `ExpressionChangedAfterItHasBeenChecked` y bucles infinitos. **Usa siempre `computed()` o `linkedSignal()` para la derivación de estado.**
 
-## Basic Usage
+## Uso básico
 
-Effects execute asynchronously during the change detection process. They always run at least once.
+Los effects se ejecutan de forma asíncrona durante el proceso de change detection. Siempre se ejecutan al menos una vez.
 
 ```ts
 import { Component, signal, effect } from '@angular/core';
@@ -27,28 +27,28 @@ export class Example {
   protected readonly count = signal(0);
 
   constructor() {
-    // Effect must be created in an injection context (e.g., a constructor)
+    // El effect debe crearse en un injection context (p. ej., un constructor)
     effect((onCleanup) => {
       console.log(`Count changed to ${this.count()}`);
 
       const timer = setTimeout(() => console.log('Timer finished'), 1000);
 
-      // Cleanup function runs before the next execution, or when destroyed
+      // La función de cleanup se ejecuta antes de la siguiente ejecución, o al destruirse
       onCleanup(() => clearTimeout(timer));
     });
   }
 }
 ```
 
-## DOM Manipulation with `afterRenderEffect`
+## Manipulación del DOM con `afterRenderEffect`
 
-Standard `effect` runs _before_ Angular updates the DOM. If you need to manually inspect or modify the DOM based on a signal change (e.g., integrating a 3rd party UI library), use `afterRenderEffect`.
+El `effect` estándar se ejecuta _antes_ de que Angular actualice el DOM. Si necesitas inspeccionar o modificar manualmente el DOM en función de un cambio de un signal (p. ej., al integrar una librería de UI de terceros), usa `afterRenderEffect`.
 
-`afterRenderEffect` runs after Angular has finished rendering the DOM.
+`afterRenderEffect` se ejecuta después de que Angular ha terminado de renderizar el DOM.
 
-### Render Phases
+### Fases de renderizado
 
-To prevent reflows (forced layout thrashing), `afterRenderEffect` forces you to divide your DOM reads and writes into specific phases.
+Para evitar reflows (layout thrashing forzado), `afterRenderEffect` te obliga a dividir tus lecturas y escrituras del DOM en fases específicas.
 
 ```ts
 import { Component, afterRenderEffect, viewChild, ElementRef } from '@angular/core';
@@ -59,13 +59,13 @@ export class Chart {
 
   constructor() {
     afterRenderEffect({
-      // 1. Read from the DOM
+      // 1. Lee del DOM
       earlyRead: () => {
         return this.canvas().nativeElement.getBoundingClientRect().width;
       },
-      // 2. Write to the DOM (receives the previous phase result as a Signal)
+      // 2. Escribe en el DOM (recibe el resultado de la fase anterior como un Signal)
       write: (width) => {
-        // NEVER read from the DOM in the write phase.
+        // NUNCA leas del DOM en la fase de escritura.
         setupChart(this.canvas().nativeElement, width());
       }
     });
@@ -73,11 +73,11 @@ export class Chart {
 }
 ```
 
-**Available Phases (executed in this order):**
+**Fases disponibles (ejecutadas en este orden):**
 
 1. `earlyRead`
-2. `write` (Never read here)
-3. `mixedReadWrite` (Avoid if possible)
-4. `read` (Never write here)
+2. `write` (nunca leas aquí)
+3. `mixedReadWrite` (evítala si es posible)
+4. `read` (nunca escribas aquí)
 
-_Note: `afterRenderEffect` only runs on the client, never during Server-Side Rendering (SSR)._
+_Nota: `afterRenderEffect` solo se ejecuta en el cliente, nunca durante el Server-Side Rendering (SSR)._

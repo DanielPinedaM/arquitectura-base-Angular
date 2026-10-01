@@ -1,11 +1,11 @@
-# End-to-End (E2E) Testing
+# Testing End-to-End (E2E)
 
 > [!IMPORTANT]
-> Only use the setup guidelines in this file if there is no existing E2E testing framework configured in the workspace, or if the user has explicitly requested to change or set up E2E testing.
+> Usa los lineamientos de configuración de este archivo solo si no hay un framework de testing E2E existente configurado en el workspace, o si el usuario ha solicitado explícitamente cambiar o configurar el testing E2E.
 
-## Setting Up and Running E2E Tests
+## Configuración y ejecución de tests E2E
 
-Add supported E2E frameworks to the project using `ng add`:
+Agrega al proyecto los frameworks E2E soportados usando `ng add`:
 
 - **Playwright:**
   ```shell
@@ -28,12 +28,12 @@ Add supported E2E frameworks to the project using `ng add`:
   ng add @puppeteer/ng-schematics
   ```
 
-Run E2E tests:
+Ejecuta los tests E2E:
 
 ```shell
 ng e2e [project] [options]
 ```
 
-## Custom & Enterprise Testing Tools
+## Herramientas de testing personalizadas y empresariales
 
-For custom enterprise runners (e.g., Katalon Studio, TestCafe, Selenium), define execution commands in `package.json` scripts.
+Para runners empresariales personalizados (p. ej., Katalon Studio, TestCafe, Selenium), define los comandos de ejecución en los scripts de `package.json`.

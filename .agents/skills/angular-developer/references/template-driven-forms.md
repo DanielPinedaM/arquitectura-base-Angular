@@ -1,18 +1,18 @@
 # Template-Driven Forms
 
-Template-driven forms use two-way data binding (`[(ngModel)]`) to update the data model in the component as changes are made in the template and vice versa. They are ideal for simple forms and use directives in the HTML template to manage form state and validation.
+Los template-driven forms usan two-way data binding (`[(ngModel)]`) para actualizar el modelo de datos en el componente a medida que se realizan cambios en el template, y viceversa. Son ideales para formularios simples y usan directivas en el template HTML para gestionar el estado y la validación del formulario.
 
-## Core Directives
+## Directivas principales
 
-Template-driven forms rely on the `FormsModule` which provides these key directives:
+Los template-driven forms dependen de `FormsModule`, que proporciona estas directivas clave:
 
-- `NgModel`: Reconciles value changes in the form element with the data model (`[(ngModel)]`).
-- `NgForm`: Automatically creates a top-level `FormGroup` bound to the `<form>` tag.
-- `NgModelGroup`: Creates a nested `FormGroup` bound to a DOM element.
+- `NgModel`: Reconcilia los cambios de valor del elemento del formulario con el modelo de datos (`[(ngModel)]`).
+- `NgForm`: Crea automáticamente un `FormGroup` de nivel superior vinculado a la etiqueta `<form>`.
+- `NgModelGroup`: Crea un `FormGroup` anidado vinculado a un elemento del DOM.
 
-## Setup
+## Configuración
 
-First, import `FormsModule` into your component or module.
+Primero, importa `FormsModule` en tu componente o módulo.
 
 ```ts
 import {Component} from '@angular/core';
@@ -32,21 +32,21 @@ export class UserForm {
 }
 ```
 
-## Building the Form Template
+## Construcción del template del formulario
 
-### Two-Way Binding with `[(ngModel)]`
+### Two-way binding con `[(ngModel)]`
 
-Use `[(ngModel)]` on input elements. **Every element using `[(ngModel)]` MUST have a `name` attribute.** Angular uses the `name` attribute to register the control with the parent `NgForm`.
+Usa `[(ngModel)]` en los elementos input. **Todo elemento que use `[(ngModel)]` DEBE tener un atributo `name`.** Angular usa el atributo `name` para registrar el control en el `NgForm` padre.
 
 ```html
 <form #userForm="ngForm" (ngSubmit)="onSubmit()">
-  <!-- Basic Input -->
+  <!-- Input básico -->
   <div>
     <label for="name">Name:</label>
     <input type="text" id="name" required [(ngModel)]="user.name" name="name" #nameCtrl="ngModel" />
   </div>
 
-  <!-- Select Box -->
+  <!-- Select box -->
   <div>
     <label for="role">Role:</label>
     <select id="role" [(ngModel)]="user.role" name="role">
@@ -55,42 +55,42 @@ Use `[(ngModel)]` on input elements. **Every element using `[(ngModel)]` MUST ha
     </select>
   </div>
 
-  <!-- Submit Button (disabled if form is invalid) -->
+  <!-- Botón de envío (deshabilitado si el formulario es inválido) -->
   <button type="submit" [disabled]="!userForm.form.valid">Submit</button>
 </form>
 ```
 
-## Form and Control State
+## Estado del formulario y de los controles
 
-Angular automatically applies CSS classes to controls and forms based on their state:
+Angular aplica automáticamente clases CSS a los controles y formularios según su estado:
 
-| State          | Class if True                     | Class if False |
-| :------------- | :-------------------------------- | :------------- |
-| Visited        | `ng-touched`                      | `ng-untouched` |
-| Value Changed  | `ng-dirty`                        | `ng-pristine`  |
-| Value is Valid | `ng-valid`                        | `ng-invalid`   |
-| Form Submitted | `ng-submitted` (on `<form>` only) | -              |
+| Estado             | Clase si es verdadero             | Clase si es falso |
+| :----------------- | :-------------------------------- | :---------------- |
+| Visitado           | `ng-touched`                      | `ng-untouched`    |
+| Valor modificado   | `ng-dirty`                        | `ng-pristine`     |
+| El valor es válido | `ng-valid`                        | `ng-invalid`      |
+| Formulario enviado | `ng-submitted` (solo en `<form>`) | -                 |
 
-You can use these classes to provide visual feedback in your CSS:
+Puedes usar estas clases para proporcionar retroalimentación visual en tu CSS:
 
 ```css
 .ng-valid[required],
 .ng-valid.required {
-  border-left: 5px solid #42a948; /* green */
+  border-left: 5px solid #42a948; /* verde */
 }
 .ng-invalid:not(form) {
-  border-left: 5px solid #a94442; /* red */
+  border-left: 5px solid #a94442; /* rojo */
 }
 ```
 
-## Validation and Error Messages
+## Validación y mensajes de error
 
-To display error messages conditionally, export the `ngModel` directive to a template reference variable (e.g., `#nameCtrl="ngModel"`).
+Para mostrar mensajes de error de forma condicional, exporta la directiva `ngModel` a una template reference variable (p. ej., `#nameCtrl="ngModel"`).
 
 ```html
 <input type="text" id="name" required [(ngModel)]="user.name" name="name" #nameCtrl="ngModel" />
 
-<!-- Show error only if the control is invalid AND (touched OR dirty) -->
+<!-- Muestra el error solo si el control es inválido Y (touched O dirty) -->
 @if (nameCtrl.invalid && (nameCtrl.dirty || nameCtrl.touched)) {
 <div class="alert alert-danger">
   @if (nameCtrl.errors?.['required']) {
@@ -100,14 +100,14 @@ To display error messages conditionally, export the `ngModel` directive to a tem
 }
 ```
 
-## Submitting the Form
+## Envío del formulario
 
-1. Use the `(ngSubmit)` event on the `<form>` element.
-2. Bind the submit button's disabled state to the overall form validity using the `NgForm` template reference variable (e.g., `[disabled]="!userForm.form.valid"`).
+1. Usa el evento `(ngSubmit)` en el elemento `<form>`.
+2. Haz binding del estado deshabilitado del botón de envío a la validez general del formulario usando la template reference variable de `NgForm` (p. ej., `[disabled]="!userForm.form.valid"`).
 
-## Resetting the Form
+## Restablecer el formulario
 
-To programmatically reset the form to its pristine state (clearing values and validation flags), use the `reset()` method on the `NgForm` instance.
+Para restablecer de forma programática el formulario a su estado pristine (limpiando los valores y los flags de validación), usa el método `reset()` en la instancia de `NgForm`.
 
 ```html
 <button type="button" (click)="userForm.reset()">Reset</button>

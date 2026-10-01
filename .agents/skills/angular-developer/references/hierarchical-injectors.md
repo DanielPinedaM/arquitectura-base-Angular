@@ -1,43 +1,43 @@
 # Hierarchical Injectors
 
-Angular's dependency injection system is hierarchical, meaning services can be scoped to different levels of the application.
+El sistema de inyección de dependencias de Angular es jerárquico, lo que significa que el alcance de los servicios puede limitarse a diferentes niveles de la aplicación.
 
-## Types of Injector Hierarchies
+## Tipos de jerarquías de injectors
 
-1. **`EnvironmentInjector` Hierarchy**: Configured via `@Service()`, `@Injectable({ providedIn: 'root' })` or `ApplicationConfig.providers` during bootstrap. These are global singletons.
-2. **`ElementInjector` Hierarchy**: Created implicitly at each DOM element. Configured via the `providers` or `viewProviders` array in `@Component()` or `@Directive()`.
+1. **Jerarquía de `EnvironmentInjector`**: Se configura mediante `@Service()`, `@Injectable({ providedIn: 'root' })` o `ApplicationConfig.providers` durante el bootstrap. Son singletons globales.
+2. **Jerarquía de `ElementInjector`**: Se crea implícitamente en cada elemento del DOM. Se configura mediante el array `providers` o `viewProviders` en `@Component()` o `@Directive()`.
 
-## Resolution Rules
+## Reglas de resolución
 
-When a dependency is requested, Angular resolves it in two phases:
+Cuando se solicita una dependencia, Angular la resuelve en dos fases:
 
-1. It searches up the **`ElementInjector`** tree, starting from the requesting component/directive up to the root element.
-2. If not found, it searches the **`EnvironmentInjector`** tree, starting from the closest environment injector up to the root.
-3. If still not found, it throws an error (unless marked optional).
+1. Busca hacia arriba en el árbol de **`ElementInjector`**, empezando desde el componente/directiva que la solicita hasta el elemento raíz.
+2. Si no la encuentra, busca en el árbol de **`EnvironmentInjector`**, empezando desde el environment injector más cercano hasta la raíz.
+3. Si aún no la encuentra, lanza un error (a menos que esté marcada como opcional).
 
-## Resolution Modifiers
+## Modificadores de resolución
 
-You can alter how Angular searches for a dependency using the options object in `inject()`:
+Puedes alterar cómo Angular busca una dependencia usando el objeto de opciones en `inject()`:
 
-- **`optional`**: If the dependency isn't found, return `null` instead of throwing an error.
-- **`self`**: Only check the current `ElementInjector`. Do not look up the parent tree.
-- **`skipSelf`**: Start searching in the parent `ElementInjector`, skipping the current element.
-- **`host`**: Stop searching when reaching the host component's view boundary.
+- **`optional`**: Si no se encuentra la dependencia, devuelve `null` en lugar de lanzar un error.
+- **`self`**: Solo verifica el `ElementInjector` actual. No busca hacia arriba en el árbol padre.
+- **`skipSelf`**: Empieza a buscar en el `ElementInjector` padre, omitiendo el elemento actual.
+- **`host`**: Deja de buscar al alcanzar el límite de la vista del componente host.
 
 ```ts
 @Component({...})
 export class Example {
-  // Returns null if not found instead of crashing
+  // Devuelve null si no se encuentra, en lugar de fallar
   optionalService = inject(MyService, { optional: true });
 
-  // Skips this component's providers, looks at parent
+  // Omite los providers de este componente, busca en el padre
   parentService = inject(ParentService, { skipSelf: true });
 }
 ```
 
 ## `providers` vs `viewProviders`
 
-When providing a service at the component level:
+Al proveer un servicio a nivel de componente:
 
-- **`providers`**: The service is available to the component, its view (template), and any **projected content** (`<ng-content>`).
-- **`viewProviders`**: The service is available to the component and its view, but **NOT** to projected content. Use this to isolate services from content passed in by consumers.
+- **`providers`**: El servicio está disponible para el componente, su vista (template) y cualquier **contenido proyectado** (`<ng-content>`).
+- **`viewProviders`**: El servicio está disponible para el componente y su vista, pero **NO** para el contenido proyectado. Úsalo para aislar servicios del contenido que pasan los consumidores.

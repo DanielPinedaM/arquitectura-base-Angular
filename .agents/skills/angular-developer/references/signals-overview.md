@@ -1,44 +1,44 @@
-# Angular Signals Overview
+# Visión general de Angular Signals
 
-Signals are the foundation of reactivity in modern Angular applications. A **signal** is a wrapper around a value that notifies interested consumers when that value changes.
+Los signals son la base de la reactividad en las aplicaciones modernas de Angular. Un **signal** es un wrapper alrededor de un valor que notifica a los consumidores interesados cuando ese valor cambia.
 
-## Writable Signals (`signal`)
+## Writable signals (`signal`)
 
-Use `signal()` to create state that can be directly updated.
+Usa `signal()` para crear estado que puede actualizarse directamente.
 
 ```ts
 import {signal} from '@angular/core';
 
-// Create a writable signal
+// Crea un writable signal
 const count = signal(0);
 
-// Read the value (always requires calling the getter function)
+// Lee el valor (siempre requiere llamar a la función getter)
 console.log(count());
 
-// Update the value directly
+// Actualiza el valor directamente
 count.set(3);
 
-// Update based on the previous value
+// Actualiza en función del valor anterior
 count.update((value) => value + 1);
 ```
 
-### Exposing as Readonly
+### Exponer como readonly
 
-When exposing state from a service, it is a best practice to expose a readonly version to prevent external mutation.
+Al exponer estado desde un servicio, es una buena práctica exponer una versión readonly para evitar la mutación externa.
 
 ```ts
 private readonly _count = signal(0);
-// Consumers can read this, but cannot call .set() or .update()
+// Los consumidores pueden leer esto, pero no pueden llamar a .set() ni a .update()
 readonly count = this._count.asReadonly();
 ```
 
-## Computed Signals (`computed`)
+## Computed signals (`computed`)
 
-Use `computed()` to create read-only signals that derive their value from other signals.
+Usa `computed()` para crear signals de solo lectura que derivan su valor de otros signals.
 
-- **Lazily Evaluated**: The derivation function doesn't run until the computed signal is read.
-- **Memoized**: The result is cached. It only recalculates when one of the signals it depends on changes.
-- **Dynamic Dependencies**: Only the signals _actually read_ during the derivation are tracked.
+- **Evaluación lazy**: La función de derivación no se ejecuta hasta que se lee el computed signal.
+- **Memoizado**: El resultado se almacena en caché. Solo se recalcula cuando cambia alguno de los signals de los que depende.
+- **Dependencias dinámicas**: Solo se rastrean los signals que _realmente se leen_ durante la derivación.
 
 ```ts
 import {signal, computed} from '@angular/core';
@@ -46,46 +46,46 @@ import {signal, computed} from '@angular/core';
 const count = signal(0);
 const doubleCount = computed(() => count() * 2);
 
-// doubleCount automatically updates when count changes.
+// doubleCount se actualiza automáticamente cuando count cambia.
 ```
 
-## Reactive Contexts
+## Contextos reactivos
 
-A **reactive context** is a runtime state where Angular monitors signal reads to establish a dependency.
+Un **contexto reactivo** es un estado en runtime en el que Angular monitorea las lecturas de signals para establecer una dependencia.
 
-Angular automatically enters a reactive context when evaluating:
+Angular entra automáticamente en un contexto reactivo al evaluar:
 
 - `computed` signals
-- `effect` callbacks
-- `linkedSignal` computations
-- Component templates
+- Callbacks de `effect`
+- Cómputos de `linkedSignal`
+- Templates de componentes
 
-### Untracked Reads (`untracked`)
+### Lecturas sin rastreo (`untracked`)
 
-If you need to read a signal inside a reactive context _without_ creating a dependency (so that the context doesn't re-run when the signal changes), use `untracked()`.
+Si necesitas leer un signal dentro de un contexto reactivo _sin_ crear una dependencia (para que el contexto no se vuelva a ejecutar cuando el signal cambie), usa `untracked()`.
 
 ```ts
 import {effect, untracked} from '@angular/core';
 
 effect(() => {
-  // This effect only runs when currentUser changes.
-  // It does NOT run when counter changes, even though counter is read here.
+  // Este effect solo se ejecuta cuando currentUser cambia.
+  // NO se ejecuta cuando counter cambia, aunque counter se lea aquí.
   console.log(`User: ${currentUser()}, Count: ${untracked(counter)}`);
 });
 ```
 
-### Async Operations in Reactive Contexts
+### Operaciones asíncronas en contextos reactivos
 
-The reactive context is only active for **synchronous** code. Signal reads after an `await` will not be tracked. **Always read signals before asynchronous boundaries.**
+El contexto reactivo solo está activo para el código **síncrono**. Las lecturas de signals después de un `await` no serán rastreadas. **Lee siempre los signals antes de los límites asíncronos.**
 
 ```ts
-// ❌ INCORRECT: theme() is not tracked because it is read after await
+// ❌ INCORRECTO: theme() no se rastrea porque se lee después del await
 effect(async () => {
   const data = await fetchUserData();
   console.log(theme());
 });
 
-// ✅ CORRECT: Read the signal before the await
+// ✅ CORRECTO: Lee el signal antes del await
 effect(async () => {
   const currentTheme = theme();
   const data = await fetchUserData();

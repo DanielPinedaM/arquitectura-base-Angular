@@ -1,143 +1,143 @@
 ---
 name: angular-developer
-description: Generates Angular code and provides architectural guidance. Trigger when creating projects, components, services, or HTTP communication, or for best practices on reactivity (signals, linkedSignal, resource, httpResource), forms, dependency injection, routing, SSR, accessibility (ARIA), animations, styling (component styles), testing, naming conventions, or CLI tooling.
+description: Genera código Angular y proporciona orientación arquitectónica. Se activa al crear proyectos, componentes, servicios o comunicación HTTP, o para buenas prácticas sobre reactividad (signals, linkedSignal, resource, httpResource), formularios, inyección de dependencias, routing, SSR, accesibilidad (ARIA), animaciones, estilos (estilos de componentes), testing, convenciones de nomenclatura o herramientas del CLI.
 license: MIT
 metadata:
   author: Copyright 2026 Google LLC
   version: '1.0'
 ---
 
-# Angular Developer Guidelines
+# Lineamientos para desarrolladores de Angular
 
-1. Always analyze the project's Angular version before providing guidance, as best practices and available features can vary significantly between versions. If creating a new project with Angular CLI, do not specify a version unless prompted by the user.
+1. Analiza siempre la versión de Angular del proyecto antes de dar orientación, ya que las buenas prácticas y las funcionalidades disponibles pueden variar significativamente entre versiones. Si creas un nuevo proyecto con Angular CLI, no especifiques una versión a menos que el usuario lo solicite.
 
-2. When generating code, follow Angular's style guide and best practices for maintainability and performance. Use the Angular CLI for scaffolding components, services, directives, pipes, and routes to ensure consistency.
+2. Al generar código, sigue la guía de estilo y las buenas prácticas de Angular para la mantenibilidad y el rendimiento. Usa Angular CLI para hacer scaffolding de componentes, servicios, directivas, pipes y rutas para asegurar la consistencia.
 
-3. Once you finish generating code, run `ng build` to ensure there are no build errors. If there are errors, analyze the error messages and fix them before proceeding. Do not skip this step, as it is critical for ensuring the generated code is correct and functional.
+3. Una vez que termines de generar código, ejecuta `ng build` para asegurar que no haya errores de build. Si hay errores, analiza los mensajes de error y corrígelos antes de continuar. No omitas este paso, ya que es crítico para asegurar que el código generado sea correcto y funcional.
 
-## Creating New Projects
+## Creación de nuevos proyectos
 
-If no guidelines are provided by the user, here are some default rules to follow when creating a new Angular project:
+Si el usuario no proporciona lineamientos, estas son algunas reglas por defecto a seguir al crear un nuevo proyecto de Angular:
 
-1. Use the latest stable version of Angular unless the user specifies otherwise.
-2. Use Signal Forms for form management in new projects (stable in Angular v22 and newer) [Find out more](references/signal-forms.md).
+1. Usa la última versión estable de Angular a menos que el usuario especifique lo contrario.
+2. Usa Signal Forms para la gestión de formularios en proyectos nuevos (estable en Angular v22 y versiones posteriores) [Más información](references/signal-forms.md).
 
-**Execution Rules for `ng new`:**
-When asked to create a new Angular project, you must determine the correct execution command by following these strict steps:
+**Reglas de ejecución para `ng new`:**
+Cuando se te pida crear un nuevo proyecto de Angular, debes determinar el comando de ejecución correcto siguiendo estos pasos estrictos:
 
-**Step 1: Check for an explicit user version.**
+**Paso 1: Verifica si el usuario indicó una versión explícita.**
 
-- **IF** the user requests a specific version (e.g., Angular 15), bypass local installations and strictly use `npx`.
-- **Command:** `npx @angular/cli@<requested_version> new <project-name>`
+- **SI** el usuario solicita una versión específica (p. ej., Angular 15), omite las instalaciones locales y usa estrictamente `npx`.
+- **Comando:** `npx @angular/cli@<requested_version> new <project-name>`
 
-**Step 2: Check for an existing Angular installation.**
+**Paso 2: Verifica si existe una instalación de Angular.**
 
-- **IF** no specific version is requested, run `ng version` in the terminal to check if the Angular CLI is already installed on the system.
-- **IF** the command succeeds and returns an installed version, use the local/global installation directly.
-- **Command:** `ng new <project-name>`
+- **SI** no se solicita una versión específica, ejecuta `ng version` en la terminal para verificar si Angular CLI ya está instalado en el sistema.
+- **SI** el comando se ejecuta correctamente y devuelve una versión instalada, usa directamente la instalación local/global.
+- **Comando:** `ng new <project-name>`
 
-**Step 3: Fallback to Latest.**
+**Paso 3: Recurre a la última versión.**
 
-- **IF** no specific version is requested AND the `ng version` command fails (indicating no Angular installation exists), you must use `npx` to fetch the latest version.
-- **Command:** `npx @angular/cli@latest new <project-name>`
+- **SI** no se solicita una versión específica Y el comando `ng version` falla (lo que indica que no existe una instalación de Angular), debes usar `npx` para obtener la última versión.
+- **Comando:** `npx @angular/cli@latest new <project-name>`
 
-## Components
+## Componentes
 
-When working with Angular components, consult the following references based on the task:
+Al trabajar con componentes de Angular, consulta las siguientes referencias según la tarea:
 
-- **Fundamentals**: Anatomy, metadata, core concepts, self-closing tags, and template control flow (@if, @for, @switch). Read [components.md](references/components.md)
-- **Inputs**: Signal-based inputs, transforms, and model inputs. Read [inputs.md](references/inputs.md)
-- **Outputs**: Signal-based outputs and custom event best practices. Read [outputs.md](references/outputs.md)
-- **Host Elements**: Host bindings and attribute injection. Read [host-elements.md](references/host-elements.md)
-- **Naming Conventions**: Modern Angular v20+ naming style ("Intent over Role") for files, components, services, directives, pipes, and models. Read [naming-conventions.md](references/naming-conventions.md)
+- **Fundamentos**: Anatomía, metadata, conceptos principales, etiquetas de autocierre y control flow del template (@if, @for, @switch). Lee [components.md](references/components.md)
+- **Inputs**: Inputs basados en signals, transforms y model inputs. Lee [inputs.md](references/inputs.md)
+- **Outputs**: Outputs basados en signals y buenas prácticas para eventos personalizados. Lee [outputs.md](references/outputs.md)
+- **Host Elements**: Host bindings e inyección de atributos. Lee [host-elements.md](references/host-elements.md)
+- **Convenciones de nomenclatura**: Estilo de nomenclatura moderno de Angular v20+ ("Intent over Role") para archivos, componentes, servicios, directivas, pipes y modelos. Lee [naming-conventions.md](references/naming-conventions.md)
 
-If you require deeper documentation not found in the references above, read the documentation at `https://angular.dev/guide/components`.
+Si necesitas documentación más profunda que no se encuentre en las referencias anteriores, lee la documentación en `https://angular.dev/guide/components`.
 
-## Reactivity and Data Management
+## Reactividad y gestión de datos
 
-When managing state and data reactivity, use Angular Signals and consult the following references:
+Al gestionar el estado y la reactividad de los datos, usa Angular Signals y consulta las siguientes referencias:
 
-- **Signals Overview**: Core signal concepts (`signal`, `computed`), reactive contexts, and `untracked`. Read [signals-overview.md](references/signals-overview.md)
-- **Dependent State (`linkedSignal`)**: Creating writable state linked to source signals. Read [linked-signal.md](references/linked-signal.md)
-- **Async Reactivity (`resource`)**: Fetching asynchronous data directly into signal state. Read [resource.md](references/resource.md)
-- **Side Effects (`effect`)**: Logging, third-party DOM manipulation (`afterRenderEffect`), and when NOT to use effects. Read [effects.md](references/effects.md)
+- **Visión general de signals**: Conceptos principales de signals (`signal`, `computed`), contextos reactivos y `untracked`. Lee [signals-overview.md](references/signals-overview.md)
+- **Estado dependiente (`linkedSignal`)**: Creación de estado escribible vinculado a signals de origen. Lee [linked-signal.md](references/linked-signal.md)
+- **Reactividad asíncrona (`resource`)**: Obtención de datos asíncronos directamente en el estado de un signal. Lee [resource.md](references/resource.md)
+- **Efectos secundarios (`effect`)**: Logging, manipulación del DOM de terceros (`afterRenderEffect`) y cuándo NO usar effects. Lee [effects.md](references/effects.md)
 
-## HTTP Communication
+## Comunicación HTTP
 
-When communicating with backend services, use Angular HTTP APIs and consult the following reference:
+Al comunicarte con servicios de backend, usa las APIs HTTP de Angular y consulta la siguiente referencia:
 
-- **HTTP Client and Resources**: `provideHttpClient`, `HttpClient`, interceptors, and `httpResource`. Read [http-client.md](references/http-client.md)
+- **HTTP Client y Resources**: `provideHttpClient`, `HttpClient`, interceptors y `httpResource`. Lee [http-client.md](references/http-client.md)
 
-## Forms
+## Formularios
 
-In most cases for new apps, **prefer signal forms**. When making a forms decision, analyze the project and consider the following guidelines:
+En la mayoría de los casos, para aplicaciones nuevas, **prefiere signal forms**. Al tomar una decisión sobre formularios, analiza el proyecto y considera los siguientes lineamientos:
 
-- If the application is using v22 or newer and this is a new form, **prefer Signal Forms**.
-- For older applications or when working with existing forms, use the appropriate form type that matches the applications current form strategy.
+- Si la aplicación usa v22 o una versión posterior y se trata de un formulario nuevo, **prefiere Signal Forms**.
+- Para aplicaciones más antiguas o al trabajar con formularios existentes, usa el tipo de formulario adecuado que coincida con la estrategia de formularios actual de la aplicación.
 
-- **Signal Forms**: Use signals for form state management. Read [signal-forms.md](references/signal-forms.md)
-- **Template-driven forms**: Use for simple forms. Read [template-driven-forms.md](references/template-driven-forms.md)
-- **Reactive forms**: Use for complex forms. Read [reactive-forms.md](references/reactive-forms.md)
+- **Signal Forms**: Usa signals para la gestión del estado del formulario. Lee [signal-forms.md](references/signal-forms.md)
+- **Template-driven forms**: Úsalos para formularios simples. Lee [template-driven-forms.md](references/template-driven-forms.md)
+- **Reactive forms**: Úsalos para formularios complejos. Lee [reactive-forms.md](references/reactive-forms.md)
 
-## Dependency Injection
+## Inyección de dependencias
 
-When implementing dependency injection in Angular, follow these guidelines:
+Al implementar la inyección de dependencias en Angular, sigue estos lineamientos:
 
-- **Fundamentals**: Overview of Dependency Injection, services, and the `inject()` function. Read [di-fundamentals.md](references/di-fundamentals.md)
-- **Creating and Using Services**: Creating services, the `providedIn: 'root'` option, and injecting into components or other services. Read [creating-services.md](references/creating-services.md)
-- **Defining Dependency Providers**: Automatic vs manual provision, `InjectionToken`, `useClass`, `useValue`, `useFactory`, and scopes. Read [defining-providers.md](references/defining-providers.md)
-- **Injection Context**: Where `inject()` is allowed, `runInInjectionContext`, and `assertInInjectionContext`. Read [injection-context.md](references/injection-context.md)
-- **Hierarchical Injectors**: The `EnvironmentInjector` vs `ElementInjector`, resolution rules, modifiers (`optional`, `skipSelf`), and `providers` vs `viewProviders`. Read [hierarchical-injectors.md](references/hierarchical-injectors.md)
+- **Fundamentos**: Visión general de la inyección de dependencias, los servicios y la función `inject()`. Lee [di-fundamentals.md](references/di-fundamentals.md)
+- **Creación y uso de servicios**: Creación de servicios, la opción `providedIn: 'root'` e inyección en componentes u otros servicios. Lee [creating-services.md](references/creating-services.md)
+- **Definición de dependency providers**: Provisión automática vs manual, `InjectionToken`, `useClass`, `useValue`, `useFactory` y scopes. Lee [defining-providers.md](references/defining-providers.md)
+- **Injection Context**: Dónde se permite `inject()`, `runInInjectionContext` y `assertInInjectionContext`. Lee [injection-context.md](references/injection-context.md)
+- **Hierarchical Injectors**: `EnvironmentInjector` vs `ElementInjector`, reglas de resolución, modificadores (`optional`, `skipSelf`) y `providers` vs `viewProviders`. Lee [hierarchical-injectors.md](references/hierarchical-injectors.md)
 
 ## Pipes
 
-When formatting values in templates, creating custom pipes, or reusing pipe-like logic in TypeScript, consult the following reference. Prefer pipes in templates; outside templates, avoid injecting pipe classes just to call `transform()`.
+Al formatear valores en templates, crear pipes personalizados o reutilizar lógica similar a la de un pipe en TypeScript, consulta la siguiente referencia. Prefiere pipes en los templates; fuera de los templates, evita inyectar clases de pipes solo para llamar a `transform()`.
 
-- **Pipes**: Built-in pipe imports, custom pipe naming and implementation, pure vs impure pipes, and TypeScript reuse patterns using standalone formatting functions or extracted plain functions. Read [pipes.md](references/pipes.md)
+- **Pipes**: Imports de pipes integrados, nomenclatura e implementación de pipes personalizados, pipes puros vs impuros y patrones de reutilización en TypeScript usando funciones de formato standalone o funciones simples extraídas. Lee [pipes.md](references/pipes.md)
 
 ## Angular Aria
 
-When building accessible custom components for any of the following patterns: Accordion, Listbox, Combobox, Menu, Tabs, Toolbar, Tree, Grid, consult the following reference:
+Al construir componentes personalizados accesibles para cualquiera de los siguientes patrones: Accordion, Listbox, Combobox, Menu, Tabs, Toolbar, Tree, Grid, consulta la siguiente referencia:
 
-- **Angular Aria Components**: Building headless, accessible components (Accordion, Listbox, Combobox, Menu, Tabs, Toolbar, Tree, Grid) and styling ARIA attributes. Read [angular-aria.md](references/angular-aria.md)
+- **Componentes de Angular Aria**: Construcción de componentes headless y accesibles (Accordion, Listbox, Combobox, Menu, Tabs, Toolbar, Tree, Grid) y estilos de atributos ARIA. Lee [angular-aria.md](references/angular-aria.md)
 
 ## Routing
 
-When implementing navigation in Angular, consult the following references:
+Al implementar la navegación en Angular, consulta las siguientes referencias:
 
-- **Define Routes**: URL paths, static vs dynamic segments, wildcards, and redirects. Read [define-routes.md](references/define-routes.md)
-- **Route Loading Strategies**: Eager vs lazy loading, and context-aware loading. Read [loading-strategies.md](references/loading-strategies.md)
-- **Show Routes with Outlets**: Using `<router-outlet>`, nested outlets, and named outlets. Read [show-routes-with-outlets.md](references/show-routes-with-outlets.md)
-- **Navigate to Routes**: Declarative navigation with `RouterLink` and programmatic navigation with `Router`. Read [navigate-to-routes.md](references/navigate-to-routes.md)
-- **Control Route Access with Guards**: Implementing `CanActivate`, `CanMatch`, and other guards for security. Read [route-guards.md](references/route-guards.md)
-- **Data Resolvers**: Pre-fetching data before route activation with `ResolveFn`. Read [data-resolvers.md](references/data-resolvers.md)
-- **Router Lifecycle and Events**: Chronological order of navigation events and debugging. Read [router-lifecycle.md](references/router-lifecycle.md)
-- **Rendering Strategies**: CSR, SSG (Prerendering), and SSR with hydration. Read [rendering-strategies.md](references/rendering-strategies.md)
-- **Route Transition Animations**: Enabling and customizing the View Transitions API. Read [route-animations.md](references/route-animations.md)
+- **Definir rutas**: Paths de URL, segmentos estáticos vs dinámicos, wildcards y redirecciones. Lee [define-routes.md](references/define-routes.md)
+- **Estrategias de carga de rutas**: Eager loading vs lazy loading, y carga según el contexto. Lee [loading-strategies.md](references/loading-strategies.md)
+- **Mostrar rutas con outlets**: Uso de `<router-outlet>`, outlets anidados y outlets con nombre. Lee [show-routes-with-outlets.md](references/show-routes-with-outlets.md)
+- **Navegar a rutas**: Navegación declarativa con `RouterLink` y navegación programática con `Router`. Lee [navigate-to-routes.md](references/navigate-to-routes.md)
+- **Controlar el acceso a rutas con guards**: Implementación de `CanActivate`, `CanMatch` y otros guards para la seguridad. Lee [route-guards.md](references/route-guards.md)
+- **Data Resolvers**: Obtención anticipada de datos antes de la activación de la ruta con `ResolveFn`. Lee [data-resolvers.md](references/data-resolvers.md)
+- **Ciclo de vida y eventos del router**: Orden cronológico de los eventos de navegación y depuración. Lee [router-lifecycle.md](references/router-lifecycle.md)
+- **Estrategias de renderizado**: CSR, SSG (Prerendering) y SSR con hydration. Lee [rendering-strategies.md](references/rendering-strategies.md)
+- **Animaciones de transición entre rutas**: Habilitar y personalizar la View Transitions API. Lee [route-animations.md](references/route-animations.md)
 
-If you require deeper documentation or more context, visit the [official Angular Routing guide](https://angular.dev/guide/routing).
+Si necesitas documentación más profunda o más contexto, visita la [guía oficial de Angular Routing](https://angular.dev/guide/routing).
 
-## Styling and Animations
+## Estilos y animaciones
 
-When implementing styling and animations in Angular, consult the following references:
+Al implementar estilos y animaciones en Angular, consulta las siguientes referencias:
 
-- **Angular Animations**: Using native CSS (recommended) or the legacy DSL for dynamic effects. Read [angular-animations.md](references/angular-animations.md)
-- **Styling components**: Best practices for component styles and encapsulation. Read [component-styling.md](references/component-styling.md)
+- **Animaciones de Angular**: Uso de CSS nativo (recomendado) o del DSL legacy para efectos dinámicos. Lee [angular-animations.md](references/angular-animations.md)
+- **Estilos de componentes**: Buenas prácticas para estilos de componentes y encapsulación. Lee [component-styling.md](references/component-styling.md)
 
 ## Testing
 
-When writing or updating tests, consult the following references based on the task:
+Al escribir o actualizar tests, consulta las siguientes referencias según la tarea:
 
-- **Fundamentals**: Best practices for unit testing (Vitest), async patterns, and `TestBed`. Read [testing-fundamentals.md](references/testing-fundamentals.md)
-- **Component Harnesses**: Standard patterns for robust component interaction. Read [component-harnesses.md](references/component-harnesses.md)
-- **Router Testing**: Using `RouterTestingHarness` for reliable navigation tests. Read [router-testing.md](references/router-testing.md)
-- **End-to-End (E2E) Testing**: Setting up and running E2E tests. Read [e2e-testing.md](references/e2e-testing.md)
+- **Fundamentos**: Buenas prácticas para unit testing (Vitest), patrones asíncronos y `TestBed`. Lee [testing-fundamentals.md](references/testing-fundamentals.md)
+- **Component Harnesses**: Patrones estándar para una interacción robusta con componentes. Lee [component-harnesses.md](references/component-harnesses.md)
+- **Testing del router**: Uso de `RouterTestingHarness` para tests de navegación confiables. Lee [router-testing.md](references/router-testing.md)
+- **Testing End-to-End (E2E)**: Configuración y ejecución de tests E2E. Lee [e2e-testing.md](references/e2e-testing.md)
 
-## Tooling
+## Herramientas
 
-When working with Angular tooling, consult the following references:
+Al trabajar con las herramientas de Angular, consulta las siguientes referencias:
 
-- **Angular CLI**: Creating applications, generating code (components, routes, services), serving, and building. Read [cli.md](references/cli.md)
-- **Code Modernization**: Automatically refactoring to modern standards using migrations. Read [migrations.md](references/migrations.md)
-- **Angular MCP Server**: Available tools, configuration, and experimental features. Read [mcp.md](references/mcp.md)
-- **Environment Configuration**: Strategies for build-time and runtime configuration. Read [environment-configuration.md](references/environment-configuration.md)
+- **Angular CLI**: Creación de aplicaciones, generación de código (componentes, rutas, servicios), serving y build. Lee [cli.md](references/cli.md)
+- **Modernización del código**: Refactorización automática hacia estándares modernos usando migraciones. Lee [migrations.md](references/migrations.md)
+- **Angular MCP Server**: Tools disponibles, configuración y funcionalidades experimentales. Lee [mcp.md](references/mcp.md)
+- **Configuración de entornos**: Estrategias para la configuración en tiempo de build y en runtime. Lee [environment-configuration.md](references/environment-configuration.md)

@@ -1,21 +1,21 @@
-# Component Styling
+# Estilos de componentes
 
-Angular components can define styles that apply specifically to their template, enabling encapsulation and modularity.
+Los componentes de Angular pueden definir estilos que se aplican específicamente a su template, lo que permite la encapsulación y la modularidad.
 
-## Defining Styles
+## Definir estilos
 
-Styles can be defined inline or in separate files.
+Los estilos pueden definirse inline o en archivos separados.
 
 ```ts
 @Component({
   selector: 'app-photo',
-  // Inline styles
+  // Estilos inline
   styles: `
     img {
       border-radius: 50%;
     }
   `,
-  // OR external file
+  // O archivo externo
   styleUrl: 'photo.component.css',
 })
 export class Photo {}
@@ -23,16 +23,16 @@ export class Photo {}
 
 ## View Encapsulation
 
-Every component has a view encapsulation setting that determines how styles are scoped.
+Cada componente tiene una configuración de view encapsulation que determina cómo se delimita el alcance de los estilos.
 
-| Mode                            | Behavior                                                                                      |
-| :------------------------------ | :-------------------------------------------------------------------------------------------- |
-| `Emulated` (Default)            | Scopes styles to the component using unique HTML attributes. Global styles can still leak in. |
-| `ShadowDom`                     | Uses the browser's native Shadow DOM API to isolate styles completely.                        |
-| `None`                          | Disables encapsulation. Component styles become global.                                       |
-| `ExperimentalIsolatedShadowDom` | Strictly guarantees that only the component's styles apply.                                   |
+| Modo                            | Comportamiento                                                                                                          |
+| :------------------------------ | :---------------------------------------------------------------------------------------------------------------------- |
+| `Emulated` (por defecto)        | Limita el alcance de los estilos al componente usando atributos HTML únicos. Los estilos globales aún pueden filtrarse. |
+| `ShadowDom`                     | Usa la API nativa de Shadow DOM del navegador para aislar los estilos por completo.                                     |
+| `None`                          | Deshabilita la encapsulación. Los estilos del componente se vuelven globales.                                           |
+| `ExperimentalIsolatedShadowDom` | Garantiza estrictamente que solo se apliquen los estilos del componente.                                                |
 
-### Usage
+### Uso
 
 ```ts
 import { ViewEncapsulation } from '@angular/core';
@@ -44,11 +44,11 @@ import { ViewEncapsulation } from '@angular/core';
 export class GlobalStyled {}
 ```
 
-## Special Selectors
+## Selectores especiales
 
 ### `:host`
 
-Targets the component's host element (the element matching the component's selector).
+Apunta al host element del componente (el elemento que coincide con el selector del componente).
 
 ```css
 :host {
@@ -59,10 +59,10 @@ Targets the component's host element (the element matching the component's selec
 
 ### `:host-context()`
 
-Targets the host element based on some condition in its ancestry.
+Apunta al host element según alguna condición en sus ancestros.
 
 ```css
-/* Apply styles if any ancestor has the 'theme-dark' class */
+/* Aplica estilos si algún ancestro tiene la clase 'theme-dark' */
 :host-context(.theme-dark) {
   background-color: #333;
 }
@@ -70,12 +70,12 @@ Targets the host element based on some condition in its ancestry.
 
 ### `::ng-deep`
 
-Disables view encapsulation for a specific rule, allowing it to "leak" into child components.
-**Note: The Angular team strongly discourages the use of `::ng-deep`.** It is supported only for backwards compatibility.
+Deshabilita la view encapsulation para una regla específica, permitiendo que se "filtre" hacia los componentes hijos.
+**Nota: El equipo de Angular desaconseja enfáticamente el uso de `::ng-deep`.** Solo se soporta por compatibilidad con versiones anteriores.
 
-## Styles in Templates
+## Estilos en templates
 
-You can use `<style>` elements directly in a component's template. View encapsulation rules still apply.
+Puedes usar elementos `<style>` directamente en el template de un componente. Las reglas de view encapsulation siguen aplicándose.
 
 ```html
 <style>
@@ -86,6 +86,6 @@ You can use `<style>` elements directly in a component's template. View encapsul
 <div class="dynamic-class">Hello</div>
 ```
 
-## External Styles
+## Estilos externos
 
-Using `<link>` or `@import` in CSS is treated as external styles. **External styles are not affected by emulated view encapsulation.**
+Usar `<link>` o `@import` en CSS se trata como estilos externos. **Los estilos externos no se ven afectados por la view encapsulation emulada.**

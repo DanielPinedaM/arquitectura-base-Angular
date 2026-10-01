@@ -1,10 +1,10 @@
-# HTTP communication with `HttpClient` and `httpResource`
+# Comunicación HTTP con `HttpClient` y `httpResource`
 
-Use Angular's HTTP APIs for backend communication so requests participate in dependency injection, interceptors, transfer cache, and security features.
+Usa las APIs HTTP de Angular para la comunicación con el backend, de modo que las peticiones participen en la inyección de dependencias, los interceptors, el transfer cache y las funcionalidades de seguridad.
 
-## Setup
+## Configuración
 
-In Angular v21 and later, `HttpClient` is available for injection by default. Add `provideHttpClient(...)` only when an app needs to configure HTTP features for a specific injector:
+En Angular v21 y versiones posteriores, `HttpClient` está disponible para inyección por defecto. Agrega `provideHttpClient(...)` solo cuando una aplicación necesite configurar funcionalidades HTTP para un injector específico:
 
 ```ts
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
@@ -14,16 +14,16 @@ export const appConfig = {
 };
 ```
 
-- `HttpClient` uses the fetch backend by default.
-- Use `withXhr()` only when upload progress events are required. Do not use `withXhr()` for server-side rendering.
-- Use `provideHttpClient(...)` for feature configuration such as interceptors, XSRF options, XHR, or parent-request delegation.
-- Calling `provideHttpClient()` with no features is not required for basic HTTP requests, but it configures the default HTTP feature set for that injector, including Angular's XSRF interceptor.
-- Prefer `provideHttpClient(...)` over `HttpClientModule` for feature configuration, especially with multiple injectors.
-- Use `withRequestsMadeViaParent()` when a child injector should add interceptors while still delegating to the parent HTTP chain.
+- `HttpClient` usa el backend fetch por defecto.
+- Usa `withXhr()` solo cuando se requieran eventos de progreso de subida. No uses `withXhr()` para el server-side rendering.
+- Usa `provideHttpClient(...)` para la configuración de funcionalidades como interceptors, opciones de XSRF, XHR o delegación de peticiones al padre.
+- Llamar a `provideHttpClient()` sin funcionalidades no es necesario para peticiones HTTP básicas, pero configura el conjunto de funcionalidades HTTP por defecto para ese injector, incluido el interceptor XSRF de Angular.
+- Prefiere `provideHttpClient(...)` sobre `HttpClientModule` para la configuración de funcionalidades, especialmente con múltiples injectors.
+- Usa `withRequestsMadeViaParent()` cuando un injector hijo deba agregar interceptors y, al mismo tiempo, seguir delegando a la cadena HTTP del padre.
 
 ## `HttpClient`
 
-Encapsulate backend calls in injectable services, not components:
+Encapsula las llamadas al backend en servicios inyectables, no en componentes:
 
 ```ts
 import {HttpClient} from '@angular/common/http';
@@ -39,20 +39,20 @@ export class UserService {
 }
 ```
 
-Important rules:
+Reglas importantes:
 
-- `HttpClient` requests are cold `Observable`s. No request is sent until the `Observable` is subscribed to. Multiple subscriptions send multiple backend requests.
-- Subscribe to mutation requests (`post`, `put`, `patch`, `delete`) so they execute.
-- The generic type parameter is a type assertion only. Validate unknown backend data at runtime when the shape is not trusted.
-- Use literal values for `responseType` and `observe`; if options are extracted, write values like `responseType: 'text' as const`.
-- `HttpHeaders` and `HttpParams` are immutable; use the returned instance from `.set()` or `.append()`.
-- Fetch options such as `timeout`, `cache`, `priority`, `mode`, `redirect`, `credentials`, `keepalive`, `referrer`, `referrerPolicy`, and `integrity` are supported where the backend supports them. `withCredentials: true` overrides `credentials`.
-- Handle failures through `HttpErrorResponse`. Network and timeout failures use status `0`; backend failures use the server status code.
-- Prefer the `async` pipe or `toSignal` for component reads so subscriptions are cleaned up.
+- Las peticiones de `HttpClient` son `Observable`s fríos. No se envía ninguna petición hasta que alguien se suscribe al `Observable`. Múltiples suscripciones envían múltiples peticiones al backend.
+- Suscríbete a las peticiones de mutación (`post`, `put`, `patch`, `delete`) para que se ejecuten.
+- El parámetro de tipo genérico es solo una aserción de tipo. Valida en runtime los datos desconocidos del backend cuando no se confía en su estructura.
+- Usa valores literales para `responseType` y `observe`; si las opciones se extraen, escribe valores como `responseType: 'text' as const`.
+- `HttpHeaders` y `HttpParams` son inmutables; usa la instancia devuelta por `.set()` o `.append()`.
+- Las opciones de fetch como `timeout`, `cache`, `priority`, `mode`, `redirect`, `credentials`, `keepalive`, `referrer`, `referrerPolicy` e `integrity` se soportan donde el backend las soporte. `withCredentials: true` sobrescribe `credentials`.
+- Maneja los fallos mediante `HttpErrorResponse`. Los fallos de red y de timeout usan el status `0`; los fallos del backend usan el código de status del servidor.
+- Prefiere el pipe `async` o `toSignal` para las lecturas en componentes, de modo que las suscripciones se limpien.
 
 ## Interceptors
 
-Prefer functional interceptors configured with `withInterceptors`.
+Prefiere interceptors funcionales configurados con `withInterceptors`.
 
 ```ts
 import {
@@ -71,22 +71,22 @@ export const appConfig = {
 };
 ```
 
-- Interceptors run in the order listed.
-- Request and response objects are mostly immutable; clone before changing them.
-- Request and response bodies are not deeply immutable. Avoid in-place body mutation because retries can run the same interceptor again.
-- Use `inject()` inside functional interceptors for services.
-- Use `HttpContextToken` for per-request metadata that interceptors need but the backend should not receive.
-- Use DI-based interceptors only for existing code, and enable them with `withInterceptorsFromDi()`.
+- Los interceptors se ejecutan en el orden en que se listan.
+- Los objetos de petición y de respuesta son mayormente inmutables; clónalos antes de modificarlos.
+- Los bodies de las peticiones y respuestas no son profundamente inmutables. Evita mutar el body in-place porque los reintentos pueden ejecutar el mismo interceptor de nuevo.
+- Usa `inject()` dentro de los interceptors funcionales para los servicios.
+- Usa `HttpContextToken` para metadata por petición que los interceptors necesitan pero que el backend no debe recibir.
+- Usa interceptors basados en DI solo para código existente, y habilítalos con `withInterceptorsFromDi()`.
 
-## Security
+## Seguridad
 
-- `HttpClient` strips the XSSI prefix from JSON responses when present.
-- `provideHttpClient()` configures XSRF protection by default for mutating relative and same-origin requests. It reads the `XSRF-TOKEN` cookie and sends the `X-XSRF-TOKEN` header.
-- The backend must set the XSRF cookie and verify the header. Customize names with `withXsrfConfiguration(...)`; disable only deliberately with `withNoXsrfProtection()`.
+- `HttpClient` elimina el prefijo XSSI de las respuestas JSON cuando está presente.
+- `provideHttpClient()` configura la protección XSRF por defecto para las peticiones de mutación relativas y del mismo origen. Lee la cookie `XSRF-TOKEN` y envía el header `X-XSRF-TOKEN`.
+- El backend debe establecer la cookie XSRF y verificar el header. Personaliza los nombres con `withXsrfConfiguration(...)`; deshabilítala solo de forma deliberada con `withNoXsrfProtection()`.
 
 ## `httpResource`
 
-Use `httpResource` to create an asynchronous derivation that fetches data over HTTP and exposes the result as reactive signals.
+Usa `httpResource` para crear una derivación asíncrona que obtiene datos por HTTP y expone el resultado como signals reactivos.
 
 ```ts
 import {httpResource} from '@angular/common/http';
@@ -98,11 +98,11 @@ export class UserProfile {
 }
 ```
 
-- `httpResource` is eager. It sends a request when its reactive request computation runs, not when an `Observable` is subscribed.
-- When a dependency changes, it cancels the pending request and sends the next one.
-- Return `undefined` from the request function to skip a backend request.
-- Prefer `httpResource` for reads. Use `HttpClient` directly for mutations such as `POST`, `PUT`, `PATCH`, and `DELETE`.
-- Guard `value()` reads with `hasValue()`; reading `value()` while the resource is in an error state throws.
-- Use `httpResource.text`, `httpResource.blob`, or `httpResource.arrayBuffer` for non-JSON responses.
-- Use the `parse` option to validate or transform responses with a runtime schema.
-- Read `headers()`, `statusCode()`, and `progress()` when response metadata or download progress is needed. Set `reportProgress: true` for progress events.
+- `httpResource` es eager. Envía una petición cuando se ejecuta su cómputo reactivo de la petición, no cuando alguien se suscribe a un `Observable`.
+- Cuando una dependencia cambia, cancela la petición pendiente y envía la siguiente.
+- Devuelve `undefined` desde la función de la petición para omitir una petición al backend.
+- Prefiere `httpResource` para las lecturas. Usa `HttpClient` directamente para mutaciones como `POST`, `PUT`, `PATCH` y `DELETE`.
+- Protege las lecturas de `value()` con `hasValue()`; leer `value()` mientras el resource está en estado de error lanza una excepción.
+- Usa `httpResource.text`, `httpResource.blob` o `httpResource.arrayBuffer` para respuestas que no son JSON.
+- Usa la opción `parse` para validar o transformar las respuestas con un schema en runtime.
+- Lee `headers()`, `statusCode()` y `progress()` cuando se necesite la metadata de la respuesta o el progreso de descarga. Establece `reportProgress: true` para los eventos de progreso.

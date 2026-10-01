@@ -1,17 +1,17 @@
 # Route Guards
 
-Route guards control whether a user can navigate to or leave a route.
+Los route guards controlan si un usuario puede navegar hacia una ruta o salir de ella.
 
-## Types of Guards
+## Tipos de guards
 
-- **`CanActivate`**: Can the user access this route? (e.g., Auth check).
-- **`CanActivateChild`**: Can the user access children of this route?
-- **`CanDeactivate`**: Can the user leave this route? (e.g., Unsaved changes).
-- **`CanMatch`**: Should this route even be considered for matching? (e.g., Feature flags). If it returns `false`, the router continues checking other routes.
+- **`CanActivate`**: ¿Puede el usuario acceder a esta ruta? (p. ej., verificación de autenticación).
+- **`CanActivateChild`**: ¿Puede el usuario acceder a las hijas de esta ruta?
+- **`CanDeactivate`**: ¿Puede el usuario salir de esta ruta? (p. ej., cambios sin guardar).
+- **`CanMatch`**: ¿Debería siquiera considerarse esta ruta para la coincidencia? (p. ej., feature flags). Si devuelve `false`, el router sigue verificando otras rutas.
 
-## Creating a Guard
+## Crear un guard
 
-Guards are typically functional since Angular 15.
+Los guards son típicamente funcionales desde Angular 15.
 
 ```ts
 export const authGuard: CanActivateFn = (route, state) => {
@@ -22,14 +22,14 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  // Redirect to login
+  // Redirige al login
   return router.parseUrl('/login');
 };
 ```
 
-## Applying Guards
+## Aplicar guards
 
-Add them to the route configuration as an array. They execute in order.
+Agrégalos a la configuración de la ruta como un array. Se ejecutan en orden.
 
 ```ts
 {
@@ -41,12 +41,12 @@ Add them to the route configuration as an array. They execute in order.
 }
 ```
 
-## Return Values
+## Valores de retorno
 
-- `boolean`: `true` to allow, `false` to block.
-- `UrlTree` or `RedirectCommand`: Redirect to a different route.
-- `Observable` or `Promise`: Resolves to the above types.
+- `boolean`: `true` para permitir, `false` para bloquear.
+- `UrlTree` o `RedirectCommand`: Redirige a una ruta diferente.
+- `Observable` o `Promise`: Se resuelve en los tipos anteriores.
 
-## Security Note
+## Nota de seguridad
 
-**Client-side guards are NOT a substitute for server-side security.** Always verify permissions on the server.
+**Los guards del lado del cliente NO sustituyen a la seguridad del lado del servidor.** Verifica siempre los permisos en el servidor.

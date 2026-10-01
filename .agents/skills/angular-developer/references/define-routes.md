@@ -1,10 +1,10 @@
-# Define Routes
+# Definir rutas
 
-Routes are objects that define which component should render for a specific URL path.
+Las rutas son objetos que definen qué componente debe renderizarse para un path de URL específico.
 
-## Basic Configuration
+## Configuración básica
 
-Define routes in a `Routes` array and provide them using `provideRouter` in your `appConfig`.
+Define las rutas en un array `Routes` y provéelas usando `provideRouter` en tu `appConfig`.
 
 ```ts
 // app.routes.ts
@@ -19,28 +19,28 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-## URL Paths
+## Paths de URL
 
-- **Static**: Matches an exact string (e.g., `'admin'`).
-- **Route Parameters**: Dynamic segments prefixed with a colon (e.g., `'user/:id'`).
-- **Wildcard**: Matches any URL using `**`. Useful for "Not Found" pages. **Always place at the end of the array.**
+- **Estáticos**: Coinciden con un string exacto (p. ej., `'admin'`).
+- **Parámetros de ruta**: Segmentos dinámicos con el prefijo de dos puntos (p. ej., `'user/:id'`).
+- **Wildcard**: Coincide con cualquier URL usando `**`. Útil para páginas de "Not Found". **Colócalo siempre al final del array.**
 
-## Matching Strategy
+## Estrategia de coincidencia
 
-Angular uses a **first-match wins** strategy. Specific routes must come before less specific ones.
+Angular usa una estrategia de **gana la primera coincidencia**. Las rutas específicas deben ir antes que las menos específicas.
 
-## Redirects
+## Redirecciones
 
-Use `redirectTo` to point one path to another.
+Usa `redirectTo` para apuntar un path hacia otro.
 
 ```ts
 { path: 'articles', redirectTo: '/blog' },
 { path: 'blog', component: Blog },
 ```
 
-### Conditional Redirects
+### Redirecciones condicionales
 
-Pass a function to `redirectTo` to apply logic when redirecting.
+Pasa una función a `redirectTo` para aplicar lógica al redirigir.
 
 ```ts
 {
@@ -56,22 +56,22 @@ Pass a function to `redirectTo` to apply logic when redirecting.
 },
 ```
 
-## Page Titles
+## Títulos de página
 
-Associate titles with routes for accessibility. Titles can be static or dynamic (via `ResolveFn` or a custom `TitleStrategy`).
+Asocia títulos a las rutas para la accesibilidad. Los títulos pueden ser estáticos o dinámicos (mediante `ResolveFn` o un `TitleStrategy` personalizado).
 
 ```ts
 { path: 'home', component: Home, title: 'Home Page' }
 ```
 
-## Route Data and Providers
+## Datos y providers de ruta
 
-- **Static Data**: Attach metadata using the `data` property.
-- **Route Providers**: Scope dependencies to a specific route and its children using the `providers` array.
+- **Datos estáticos**: Adjunta metadata usando la propiedad `data`.
+- **Providers de ruta**: Limita el alcance de las dependencias a una ruta específica y a sus hijas usando el array `providers`.
 
-## Nested (Child) Routes
+## Rutas anidadas (hijas)
 
-Define sub-views using the `children` property. Parent components must include a `<router-outlet />`.
+Define sub-vistas usando la propiedad `children`. Los componentes padre deben incluir un `<router-outlet />`.
 
 ```ts
 {

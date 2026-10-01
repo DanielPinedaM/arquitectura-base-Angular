@@ -1,16 +1,16 @@
-# Component Host Elements
+# Host Elements de componentes
 
-The **host element** is the DOM element that matches a component's selector. The component's template renders inside this element.
+El **host element** es el elemento del DOM que coincide con el selector de un componente. El template del componente se renderiza dentro de este elemento.
 
-## Binding to the Host Element
+## Binding al host element
 
-Use the `host` property in the `@Component` decorator to bind properties, attributes, styles, and events to the host element. This is the **preferred approach** over legacy decorators.
+Usa la propiedad `host` en el decorador `@Component` para hacer binding de propiedades, atributos, estilos y eventos al host element. Este es el **enfoque preferido** sobre los decoradores legacy.
 
 ```ts
 @Component({
   selector: 'custom-slider',
   host: {
-    'role': 'slider', // Static attribute
+    'role': 'slider', // Atributo estático
     '[attr.aria-valuenow]': 'value', // Attribute binding
     '[class.active]': 'isActive()', // Class binding
     '[style.color]': 'color()', // Style binding
@@ -30,9 +30,9 @@ export class CustomSlider {
 }
 ```
 
-## Legacy Decorators
+## Decoradores legacy
 
-`@HostBinding` and `@HostListener` are supported for backwards compatibility but should be avoided in new code.
+`@HostBinding` y `@HostListener` se soportan por compatibilidad con versiones anteriores, pero deben evitarse en código nuevo.
 
 ```ts
 export class CustomSlider {
@@ -48,17 +48,17 @@ export class CustomSlider {
 }
 ```
 
-## Binding Collisions
+## Colisiones de bindings
 
-If both the component (host binding) and the consumer (template binding) bind to the same property:
+Si tanto el componente (host binding) como el consumidor (template binding) hacen binding a la misma propiedad:
 
-1. **Static vs Static**: The instance (consumer) binding wins.
-2. **Static vs Dynamic**: The dynamic binding wins.
-3. **Dynamic vs Dynamic**: The component's host binding wins.
+1. **Estático vs estático**: Gana el binding de la instancia (consumidor).
+2. **Estático vs dinámico**: Gana el binding dinámico.
+3. **Dinámico vs dinámico**: Gana el host binding del componente.
 
-## Injecting Host Attributes
+## Inyección de atributos del host
 
-Use `HostAttributeToken` with the `inject` function to read static attributes from the host element at construction time.
+Usa `HostAttributeToken` con la función `inject` para leer atributos estáticos del host element en el momento de la construcción.
 
 ```ts
 import {Component, HostAttributeToken, inject} from '@angular/core';
@@ -68,12 +68,12 @@ import {Component, HostAttributeToken, inject} from '@angular/core';
   template: `<ng-content />`,
 })
 export class AppButton {
-  // Throws error if 'type' is missing unless injected with { optional: true }
+  // Lanza un error si falta 'type', a menos que se inyecte con { optional: true }
   type = inject(new HostAttributeToken('type'));
 }
 ```
 
-Usage:
+Uso:
 
 ```html
 <app-btn type="primary">Click Me</app-btn>

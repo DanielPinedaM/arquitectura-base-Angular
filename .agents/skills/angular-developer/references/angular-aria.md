@@ -1,33 +1,33 @@
 # Angular Aria
 
-Angular Aria (`@angular/aria`) is a collection of headless, accessible directives that implement common WAI-ARIA patterns. These directives handle keyboard interactions, ARIA attributes, focus management, and screen reader support.
+Angular Aria (`@angular/aria`) es una colección de directivas headless y accesibles que implementan patrones comunes de WAI-ARIA. Estas directivas manejan las interacciones con el teclado, los atributos ARIA, la gestión del foco y el soporte para lectores de pantalla.
 
-**As an AI Agent, your role is to provide the HTML structure and CSS styling**, while the directives handle the complex accessibility logic.
+**Como agente de IA, tu rol es proporcionar la estructura HTML y los estilos CSS**, mientras que las directivas manejan la lógica compleja de accesibilidad.
 
-## Styling Headless Components
+## Estilos de componentes headless
 
-Because Angular Aria components are headless, they do not come with default styles. You **must** use CSS to style different states based on the ARIA attributes or structural classes the directives automatically apply.
+Como los componentes de Angular Aria son headless, no incluyen estilos por defecto. **Debes** usar CSS para dar estilo a los diferentes estados según los atributos ARIA o las clases estructurales que las directivas aplican automáticamente.
 
-Common ARIA attributes to target in CSS:
+Atributos ARIA comunes a los que apuntar en CSS:
 
 - `[aria-expanded="true"]` / `[aria-expanded="false"]`
 - `[aria-selected="true"]`
 - `[aria-disabled="true"]`
-- `[aria-current="page"]` (for navigation)
+- `[aria-current="page"]` (para la navegación)
 
 ---
 
-**CRITICAL**: Before using this package, confirm that `@angular/aria` is installed. If necessary, install it using the package manager configured for the project.
+**CRÍTICO**: Antes de usar este paquete, confirma que `@angular/aria` esté instalado. Si es necesario, instálalo usando el gestor de paquetes configurado para el proyecto.
 
 ## 1. Accordion
 
-Organizes related content into expandable/collapsible sections.
+Organiza el contenido relacionado en secciones expandibles/colapsables.
 
-**Usage:** The Accordion is a layout component designed to organize content into logical groups that users can expand one at a time to reduce scrolling on content-heavy pages. Use it for FAQs, long forms, or progressive disclosure of information, but avoid it for primary navigation or scenarios where users must view multiple sections of content simultaneously.
+**Uso:** El Accordion es un componente de layout diseñado para organizar el contenido en grupos lógicos que los usuarios pueden expandir de uno en uno para reducir el scroll en páginas con mucho contenido. Úsalo para FAQs, formularios largos o la revelación progresiva de información, pero evítalo para la navegación principal o en escenarios donde los usuarios deban ver múltiples secciones de contenido simultáneamente.
 
 **Imports:** `import { AccordionContent, AccordionGroup, AccordionPanel, AccordionTrigger } from '@angular/aria/accordion';`
 
-**Directives:** `ngAccordionGroup`, `ngAccordionTrigger`, `ngAccordionPanel`, `ngAccordionContent` (for lazy loading).
+**Directivas:** `ngAccordionGroup`, `ngAccordionTrigger`, `ngAccordionPanel`, `ngAccordionContent` (para lazy loading).
 
 ```ts
 @Component({
@@ -57,15 +57,15 @@ export class App {
 </div>
 ```
 
-**Styling Strategy:**
-Target the `[aria-expanded]` attribute on the trigger to rotate icons, and style the panel visibility.
+**Estrategia de estilos:**
+Apunta al atributo `[aria-expanded]` del trigger para rotar los íconos, y da estilo a la visibilidad del panel.
 
 ```css
 .accordion-header[aria-expanded='true'] .icon {
   transform: rotate(180deg);
 }
 
-/* The panel directive handles DOM removal, but you can style the transition */
+/* La directiva del panel maneja la eliminación del DOM, pero puedes darle estilo a la transición */
 .accordion-panel {
   padding: 1rem;
   border-top: 1px solid #ccc;
@@ -76,13 +76,13 @@ Target the `[aria-expanded]` attribute on the trigger to rotate icons, and style
 
 ## 2. Listbox
 
-A foundational directive for displaying a list of options. Used for visible selection lists (not dropdowns).
+Una directiva fundamental para mostrar una lista de opciones. Se usa para listas de selección visibles (no dropdowns).
 
-**Usage:** Visible selectable lists (single or multi-select).
+**Uso:** Listas seleccionables visibles (selección única o múltiple).
 
 **Imports:** `import {Listbox, Option} from '@angular/aria/listbox';`
 
-**Directives:** `ngListbox`, `ngOption`.
+**Directivas:** `ngListbox`, `ngOption`.
 
 ```ts
 @Component({
@@ -97,15 +97,15 @@ export class App {
 ```
 
 ```html
-<!-- horizontal or vertical orientation -->
+<!-- orientación horizontal o vertical -->
 <ul ngListbox [(value)]="selectedItems" orientation="horizontal" [multi]="true">
   <li ngOption value="apple" class="option">Apple</li>
   <li ngOption value="banana" class="option">Banana</li>
 </ul>
 ```
 
-**Styling Strategy:**
-Target `[aria-selected="true"]` for selected state and `:focus-visible` or `[data-active]` for the focused item (Angular Aria uses roving tabindex or activedescendant).
+**Estrategia de estilos:**
+Apunta a `[aria-selected="true"]` para el estado seleccionado y a `:focus-visible` o `[data-active]` para el elemento con foco (Angular Aria usa roving tabindex o activedescendant).
 
 ```css
 .option {
@@ -116,7 +116,7 @@ Target `[aria-selected="true"]` for selected state and `:focus-visible` or `[dat
   background: #e0f7fa;
   font-weight: bold;
 }
-/* Focus state managed by aria */
+/* Estado de foco gestionado por aria */
 .option:focus-visible {
   outline: 2px solid blue;
 }
@@ -124,13 +124,13 @@ Target `[aria-selected="true"]` for selected state and `:focus-visible` or `[dat
 
 ---
 
-## 3. Combobox, Select, and Multiselect
+## 3. Combobox, Select y Multiselect
 
-These patterns combine the `ngCombobox` directive (applied directly to the trigger/combobox element) with a popup containing an `ngListbox` widget.
+Estos patrones combinan la directiva `ngCombobox` (aplicada directamente al elemento trigger/combobox) con un popup que contiene un widget `ngListbox`.
 
-- **Combobox (Autocomplete)**: Applied to an `<input ngCombobox>` element. Ideal when typing filters the list.
-- **Select**: Applied to a focusable wrapper like a `<div ngCombobox>` or `<button ngCombobox>` element. Users select from a list of options.
-- **Multiselect**: A Combobox or Select paired with a multi-select `ngListbox`.
+- **Combobox (Autocomplete)**: Se aplica a un elemento `<input ngCombobox>`. Ideal cuando escribir filtra la lista.
+- **Select**: Se aplica a un wrapper que puede recibir el foco, como un elemento `<div ngCombobox>` o `<button ngCombobox>`. Los usuarios seleccionan de una lista de opciones.
+- **Multiselect**: Un Combobox o Select combinado con un `ngListbox` de selección múltiple.
 
 **Imports:**
 
@@ -139,10 +139,10 @@ import {Combobox, ComboboxPopup, ComboboxWidget} from '@angular/aria/combobox';
 import {Listbox, Option} from '@angular/aria/listbox';
 ```
 
-**Directives:** `ngCombobox`, `ngComboboxPopup`, `ngComboboxWidget`, `ngListbox`, `ngOption`.
+**Directivas:** `ngCombobox`, `ngComboboxPopup`, `ngComboboxWidget`, `ngListbox`, `ngOption`.
 
 ```html
-<!-- Example 1: Standard Autocomplete -->
+<!-- Ejemplo 1: Autocomplete estándar -->
 <div>
   <input
     ngCombobox
@@ -168,7 +168,7 @@ import {Listbox, Option} from '@angular/aria/listbox';
   </ng-template>
 </div>
 
-<!-- Example 2: Select Component (Applied directly to a div trigger) -->
+<!-- Ejemplo 2: Componente Select (aplicado directamente a un trigger div) -->
 <div ngCombobox #select="ngCombobox" [(expanded)]="selectExpanded" class="select-trigger">
   <span class="select-text">{{ selectedValue() ?? 'Choose an option' }}</span>
   <span class="icon">▼</span>
@@ -191,8 +191,8 @@ import {Listbox, Option} from '@angular/aria/listbox';
 </ng-template>
 ```
 
-**Styling Strategy:**
-Style the popup container to look like a dropdown floating above content (often paired with CDK Overlay).
+**Estrategia de estilos:**
+Da estilo al contenedor del popup para que se vea como un dropdown flotando sobre el contenido (a menudo combinado con CDK Overlay).
 
 ```css
 .select-trigger {
@@ -212,18 +212,18 @@ Style the popup container to look like a dropdown floating above content (often 
 
 ---
 
-## 4. Menu and Menubar
+## 4. Menu y Menubar
 
-For actions, commands, and context menus (not for form selection).
+Para acciones, comandos y menús contextuales (no para la selección en formularios).
 
-**Usage:** The Menubar is a high-level navigation pattern designed for building desktop-style application command bars (e.g., File, Edit, View) that stay persistent across an interface. It is best utilized for organizing complex commands into logical top-level categories with full horizontal keyboard support, but it should be avoided for simple standalone action lists or mobile-first layouts where horizontal space is constrained.
+**Uso:** El Menubar es un patrón de navegación de alto nivel diseñado para construir barras de comandos de aplicación al estilo de escritorio (p. ej., File, Edit, View) que permanecen persistentes a lo largo de una interfaz. Se aprovecha mejor para organizar comandos complejos en categorías lógicas de nivel superior con soporte completo de teclado horizontal, pero debe evitarse para listas de acciones simples e independientes o para layouts mobile-first donde el espacio horizontal es limitado.
 
 **Imports:** `import {MenuBar, Menu, MenuContent, MenuItem, MenuTrigger} from '@angular/aria/menu';`
 
-**Directives:** `ngMenuBar`, `ngMenu`, `ngMenuItem`, `ngMenuTrigger`, `ngMenuContent`.
+**Directivas:** `ngMenuBar`, `ngMenu`, `ngMenuItem`, `ngMenuTrigger`, `ngMenuContent`.
 
 ```html
-<!-- Menubar Example -->
+<!-- Ejemplo de Menubar -->
 <div ngMenuBar class="menubar">
   <div ngMenuItem value="file" [submenu]="fileMenu" class="menubar-item">File</div>
   <div ngMenuItem value="edit" [submenu]="editMenu" class="menubar-item">Edit</div>
@@ -244,8 +244,8 @@ For actions, commands, and context menus (not for form selection).
 </div>
 ```
 
-**Styling Strategy:**
-Use flexbox for the menubar. Hide/show submenus based on the trigger's state.
+**Estrategia de estilos:**
+Usa flexbox para el menubar. Oculta/muestra los submenús según el estado del trigger.
 
 ```css
 .menubar {
@@ -269,13 +269,13 @@ Use flexbox for the menubar. Hide/show submenus based on the trigger's state.
 
 ## 5. Tabs
 
-Layered content sections where only one panel is visible.
+Secciones de contenido superpuestas donde solo un panel es visible.
 
-**Usage:** The Tabs component is used to organize related content into distinct, navigable sections, allowing users to switch between categories or views without leaving the page. It is ideal for settings panels, multi-topic documentation, or dashboards, but should be avoided for sequential workflows (steppers) or when navigation involves more than 7–8 sections.
+**Uso:** El componente Tabs se usa para organizar contenido relacionado en secciones distintas y navegables, permitiendo a los usuarios cambiar entre categorías o vistas sin salir de la página. Es ideal para paneles de configuración, documentación de múltiples temas o dashboards, pero debe evitarse para flujos de trabajo secuenciales (steppers) o cuando la navegación involucra más de 7–8 secciones.
 
 **Imports:** `import {Tab, Tabs, TabList, TabPanel, TabContent} from '@angular/aria/tabs';`
 
-**Directives:** `ngTabs`, `ngTabList`, `ngTab`, `ngTabPanel`, `ngTabContent`.
+**Directivas:** `ngTabs`, `ngTabList`, `ngTab`, `ngTabPanel`, `ngTabContent`.
 
 ```html
 <div ngTabs>
@@ -293,8 +293,8 @@ Layered content sections where only one panel is visible.
 </div>
 ```
 
-**Styling Strategy:**
-Target `[aria-selected="true"]` on the tab buttons.
+**Estrategia de estilos:**
+Apunta a `[aria-selected="true"]` en los botones de las pestañas.
 
 ```css
 .tab-list {
@@ -321,13 +321,13 @@ Target `[aria-selected="true"]` on the tab buttons.
 
 ## 6. Toolbar
 
-Groups related controls (like text formatting).
+Agrupa controles relacionados (como el formato de texto).
 
-**Usage:** The Toolbar is an organizational component designed to group frequently accessed, related controls into a single logical container. It is best used to enhance keyboard efficiency (via arrow-key navigation) and visual structure for workflows requiring repeated actions, such as text formatting or media controls.
+**Uso:** El Toolbar es un componente organizacional diseñado para agrupar controles relacionados y de acceso frecuente en un único contenedor lógico. Se usa mejor para mejorar la eficiencia del teclado (mediante la navegación con las teclas de flecha) y la estructura visual en flujos de trabajo que requieren acciones repetidas, como el formato de texto o los controles multimedia.
 
 **Imports:** `import {Toolbar, ToolbarWidget, ToolbarWidgetGroup} from '@angular/aria/toolbar';`
 
-**Directives:** `ngToolbar`, `ngToolbarWidget`, `ngToolbarWidgetGroup`.
+**Directivas:** `ngToolbar`, `ngToolbarWidget`, `ngToolbarWidgetGroup`.
 
 ```html
 <div ngToolbar class="toolbar">
@@ -354,8 +354,8 @@ Groups related controls (like text formatting).
 </div>
 ```
 
-**Styling Strategy:**
-Target `[aria-pressed="true"]` (for toggle buttons) or `[aria-checked="true"]` (for radio groups) within the toolbar.
+**Estrategia de estilos:**
+Apunta a `[aria-pressed="true"]` (para los toggle buttons) o a `[aria-checked="true"]` (para los radio groups) dentro del toolbar.
 
 ```css
 .toolbar {
@@ -378,13 +378,13 @@ Target `[aria-pressed="true"]` (for toggle buttons) or `[aria-checked="true"]` (
 
 ## 7. Tree
 
-Displays hierarchical data (file systems, nested nav).
+Muestra datos jerárquicos (sistemas de archivos, navegación anidada).
 
-**Usage:** The Tree component is designed for navigating and displaying deeply nested, hierarchical data structures like file systems, organization charts, or complex site architectures. It should be used specifically for multi-level relationships where users need to expand or collapse branches, but it should be avoided for flat lists, data tables, or simple selection menus.
+**Uso:** El componente Tree está diseñado para navegar y mostrar estructuras de datos jerárquicas y profundamente anidadas, como sistemas de archivos, organigramas o arquitecturas de sitios complejas. Debe usarse específicamente para relaciones de múltiples niveles donde los usuarios necesitan expandir o colapsar ramas, pero debe evitarse para listas planas, tablas de datos o menús de selección simples.
 
 **Imports:** `import {Tree, TreeItem, TreeItemGroup} from '@angular/aria/tree';`
 
-**Directives:** `ngTree`, `ngTreeItem`, `ngTreeItemGroup`.
+**Directivas:** `ngTree`, `ngTreeItem`, `ngTreeItemGroup`.
 
 ```html
 <ul ngTree #tree="ngTree" [(value)]="selectedValues" class="tree">
@@ -400,8 +400,8 @@ Displays hierarchical data (file systems, nested nav).
 </ul>
 ```
 
-**Styling Strategy:**
-Target `[aria-expanded]` to show/hide children or rotate chevron icons. Use `padding-left` on nested groups to show hierarchy.
+**Estrategia de estilos:**
+Apunta a `[aria-expanded]` para mostrar/ocultar los hijos o rotar los íconos chevron. Usa `padding-left` en los grupos anidados para mostrar la jerarquía.
 
 ```css
 .tree,
@@ -421,10 +421,10 @@ li[aria-expanded='true'] > .tree-label::before {
 
 ## 8. Grid
 
-A two-dimensional interactive collection of cells enabling navigation via arrow keys.
+Una colección interactiva bidimensional de celdas que permite la navegación mediante las teclas de flecha.
 
-**Usage:** Data tables, calendars, spreadsheets, and layout patterns for interactive elements.
-**Directives:** `ngGrid`, `ngGridRow`, `ngGridCell`, `ngGridCellWidget`.
+**Uso:** Tablas de datos, calendarios, hojas de cálculo y patrones de layout para elementos interactivos.
+**Directivas:** `ngGrid`, `ngGridRow`, `ngGridCell`, `ngGridCellWidget`.
 
 ```html
 <table ngGrid [multi]="true" [enableSelection]="true" class="grid-table">
@@ -441,8 +441,8 @@ A two-dimensional interactive collection of cells enabling navigation via arrow 
 </table>
 ```
 
-**Styling Strategy:**
-Target `[aria-selected="true"]` for selected cells and `:focus-visible` for the active cell (roving tabindex) or `[aria-activedescendant]` on the container.
+**Estrategia de estilos:**
+Apunta a `[aria-selected="true"]` para las celdas seleccionadas y a `:focus-visible` para la celda activa (roving tabindex) o a `[aria-activedescendant]` en el contenedor.
 
 ```css
 .grid-table {
@@ -455,16 +455,16 @@ Target `[aria-selected="true"]` for selected cells and `:focus-visible` for the 
 [ngGridCell][aria-selected='true'] {
   background: #e3f2fd;
 }
-/* Focus state managed by roving tabindex */
+/* Estado de foco gestionado por roving tabindex */
 [ngGridCell]:focus-visible {
   outline: 2px solid #2196f3;
   outline-offset: -2px;
 }
 ```
 
-## 9. Testing with Component Harnesses
+## 9. Testing con Component Harnesses
 
-Angular Aria provides standard Component Harnesses (based on `@angular/cdk/testing`) to make unit testing clean, robust, and decoupled from DOM structural details.
+Angular Aria proporciona Component Harnesses estándar (basados en `@angular/cdk/testing`) para que el unit testing sea limpio, robusto y desacoplado de los detalles estructurales del DOM.
 
 **Imports:**
 
@@ -475,7 +475,7 @@ import {AccordionGroupHarness, AccordionHarness} from '@angular/aria/accordion/t
 import {ListboxHarness, ListboxOptionHarness} from '@angular/aria/listbox/testing';
 ```
 
-### Example: Testing an Accordion with Harnesses
+### Ejemplo: Testing de un Accordion con harnesses
 
 ```ts
 describe('MyAccordionComponent', () => {
@@ -489,12 +489,12 @@ describe('MyAccordionComponent', () => {
   });
 
   it('should expand accordion on toggle', async () => {
-    // Get the harness by its trigger title
+    // Obtén el harness por el título de su trigger
     const accordion = await loader.getHarness(AccordionHarness.with({title: 'Section 1'}));
 
     expect(await accordion.isExpanded()).toBeFalse();
 
-    // Expand the accordion
+    // Expande el accordion
     await accordion.expand();
 
     expect(await accordion.isExpanded()).toBeTrue();
@@ -502,11 +502,11 @@ describe('MyAccordionComponent', () => {
 });
 ```
 
-## 10. Integration with Signal Forms
+## 10. Integración con Signal Forms
 
-Because Angular Aria directives leverage Angular's modern `model()` signals for managing interactive values, they integrate **out-of-the-box** with Angular's new Signal Forms (`@angular/forms/signals`).
+Como las directivas de Angular Aria aprovechan los signals modernos `model()` de Angular para gestionar los valores interactivos, se integran **de forma inmediata** con los nuevos Signal Forms de Angular (`@angular/forms/signals`).
 
-The `[formField]` directive automatically detects directives like `ngCombobox` or `ngListbox` as custom form controls because they expose a `value` model.
+La directiva `[formField]` detecta automáticamente directivas como `ngCombobox` o `ngListbox` como controles de formulario personalizados porque exponen un model `value`.
 
 **Imports:**
 
@@ -516,9 +516,9 @@ import {Combobox, ComboboxPopup, ComboboxWidget} from '@angular/aria/combobox';
 import {Listbox, Option} from '@angular/aria/listbox';
 ```
 
-### Example 1: Autocomplete Combobox inside a Form
+### Ejemplo 1: Combobox de autocompletado dentro de un formulario
 
-Given a form model defined in your component:
+Dado un modelo de formulario definido en tu componente:
 
 ```ts
 protected readonly citySignal = signal({name: '', city: ''});
@@ -527,7 +527,7 @@ protected readonly myForm = form(this.citySignal, schema(f => {
 }));
 ```
 
-You bind it directly using `[formField]`:
+Haces binding directamente usando `[formField]`:
 
 ```html
 <div>
@@ -557,9 +557,9 @@ You bind it directly using `[formField]`:
 </div>
 ```
 
-### Example 2: Select Component inside a Form
+### Ejemplo 2: Componente Select dentro de un formulario
 
-Apply `ngCombobox` directly to a focusable `div` trigger and bind to `[formField]`:
+Aplica `ngCombobox` directamente a un trigger `div` que pueda recibir el foco y haz binding a `[formField]`:
 
 ```html
 <div>
@@ -594,9 +594,9 @@ Apply `ngCombobox` directly to a focusable `div` trigger and bind to `[formField
 </div>
 ```
 
-### Example 3: Standalone Listbox (Multi-select) inside a Form
+### Ejemplo 3: Listbox standalone (selección múltiple) dentro de un formulario
 
-You can bind a multi-selectable Listbox directly to a form array:
+Puedes hacer binding de un Listbox de selección múltiple directamente a un array del formulario:
 
 ```html
 <ul ngListbox [formField]="myForm.interests" [multi]="true" class="interest-list">
@@ -606,8 +606,8 @@ You can bind a multi-selectable Listbox directly to a form array:
 </ul>
 ```
 
-## General Rules for Agents
+## Reglas generales para agentes
 
-1. **Never use native HTML elements like `<select>`** when asked to implement these specific Aria patterns. Use the `ng*` directives.
-2. **Handle CSS manually**: Remember that `Angular Aria` does NOT provide styles. You must write the CSS, targeting the native ARIA attributes (`aria-expanded`, `aria-selected`, etc.) that the directives automatically toggle.
-3. **Lazy Loading**: Always use the provided structural directives (`ngAccordionContent`, `ngTabContent`, `ngMenuContent`, `ngComboboxPopup`, `ngTreeItemGroup`) inside `ng-template` for heavy content panels or nested groups to ensure they are lazily rendered.
+1. **Nunca uses elementos HTML nativos como `<select>`** cuando se te pida implementar estos patrones específicos de Aria. Usa las directivas `ng*`.
+2. **Maneja el CSS manualmente**: Recuerda que `Angular Aria` NO proporciona estilos. Debes escribir el CSS apuntando a los atributos ARIA nativos (`aria-expanded`, `aria-selected`, etc.) que las directivas alternan automáticamente.
+3. **Lazy loading**: Usa siempre las directivas estructurales proporcionadas (`ngAccordionContent`, `ngTabContent`, `ngMenuContent`, `ngComboboxPopup`, `ngTreeItemGroup`) dentro de `ng-template` para los paneles de contenido pesado o los grupos anidados, para asegurar que se rendericen de forma lazy.
