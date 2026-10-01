@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es-ES">
   <head>
     <meta charset="utf-8" />
@@ -6,6 +6,32 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script>
+      /**
+       * Aplica el tema antes de que Angular cargue, para evitar un parpadeo del tema claro.
+       *
+       * El tema lo elige el usuario, no el sistema operativo: activa el tema oscuro solo si
+       * el usuario lo guardó en una visita anterior, agregando la clase `dark` al elemento
+       * html y guardando `dark` en el localStorage. En cualquier otro caso usa el tema claro
+       * por defecto: quita la clase `dark` y guarda `light`.
+       */
+      try {
+        if (localStorage.theme === 'dark') {
+          if (document && document.documentElement) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+          }
+        } else {
+          if (document && document.documentElement) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+          }
+        }
+      } catch {
+        // si el navegador bloquea el localStorage, se mantiene el tema claro por defecto
+      }
+    </script>
   </head>
 
   <body>
