@@ -8,6 +8,11 @@ Arquitectura base agnóstica a las features para iniciar un nuevo proyecto en An
 * Manejador de paquetes: pnpm
 * Archivo de bloqueo: pnpm-lock.yaml
 
+# Ante Cualquier Error o Ambigüedad
+Si encuentras un error, inconsistencia, duda o ambigüedad, detente y pregúntame antes de modificar código. No asumas ni deduzcas implementaciones.
+
+**Razón**: una suposición incorrecta genera código que después hay que revisar y deshacer; preguntar cuesta menos que corregir una implementación equivocada.
+
 # Compatibilidad con zone.js
 Esta PROHIBIDO:
 * Eliminar zone.js del build en `angular.json`
