@@ -1,0 +1,11 @@
+<header class="flex justify-end p-2">
+  <button
+    type="button"
+    class="btn btn-link btn-icon-only"
+    aria-label="Cambiar entre tema claro y oscuro"
+    (click)="themeService.toggleDarkMode()"
+  >
+    <span class="material-symbols-outlined dark:hidden"> dark_mode </span>
+    <span class="material-symbols-outlined hidden dark:inline"> light_mode </span>
+  </button>
+</header>
