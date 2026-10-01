@@ -1,12 +1,8 @@
-<div class="flex h-dvh overflow-hidden">
-  <app-main-menu class="shrink-0 block w-auto h-full" />
+<div class="flex flex-col h-dvh overflow-hidden">
+  <app-header class="flex-none" />
 
-  <div class="flex flex-col gap-y-1 flex-1 w-full h-full">
-    <app-header class="flex-none" />
-
-    <!-- overflow-scroll cdkScrollable es necesario para q funcione scroll en pagina web -->
-    <main class="w-full flex-1 p-4 overflow-scroll" cdkScrollable>
-      <router-outlet />
-    </main>
-  </div>
+  <!-- overflow-scroll cdkScrollable es necesario para q funcione scroll en pagina web -->
+  <main class="w-full flex-1 p-4 overflow-scroll" cdkScrollable>
+    <router-outlet />
+  </main>
 </div>

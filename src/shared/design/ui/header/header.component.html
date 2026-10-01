@@ -1,11 +1,77 @@
-<header class="flex justify-end p-2">
-  <button
-    type="button"
-    class="btn btn-link btn-icon-only"
-    aria-label="Cambiar entre tema claro y oscuro"
-    (click)="themeService.toggleDarkMode()"
-  >
-    <span class="material-symbols-outlined dark:hidden"> dark_mode </span>
-    <span class="material-symbols-outlined hidden dark:inline"> light_mode </span>
-  </button>
+<header class="flex h-14 items-center gap-2 px-6">
+  @if (!isPublicRoute()) {
+    <button
+      type="button"
+      class="btn btn-link"
+      aria-label="Abrir y cerrar el menú"
+      [attr.aria-expanded]="isMenuOpen()"
+      (click)="toggleMenu()"
+    >
+      <span class="flex items-center gap-2.5">
+        <span class="relative size-4">
+          <span
+            class="absolute left-0 block h-0.5 w-4 bg-current transition-all duration-200"
+            [class]="isMenuOpen() ? 'top-[0.4rem] -rotate-45' : 'top-1'"
+          ></span>
+          <span
+            class="absolute left-0 block h-0.5 w-4 bg-current transition-all duration-200"
+            [class]="isMenuOpen() ? 'top-[0.4rem] rotate-45' : 'top-2.5'"
+          ></span>
+        </span>
+        <span>Menú</span>
+      </span>
+    </button>
+  }
+
+  <div class="ml-auto flex items-center gap-2">
+    <button
+      type="button"
+      class="btn btn-link btn-icon-only"
+      aria-label="Cambiar entre tema claro y oscuro"
+      (click)="themeService.toggleDarkMode()"
+    >
+      <!-- tema claro -->
+      <span class="material-symbols-outlined dark:hidden"> dark_mode </span>
+      <!-- tema oscuro -->
+      <span class="material-symbols-outlined hidden dark:inline"> light_mode </span>
+    </button>
+
+    <!-- solo se puede cerrar sesión después de iniciar sesión -->
+    @if (!isPublicRoute()) {
+      <button
+        type="button"
+        class="btn btn-link btn-icon-only"
+        aria-label="Cerrar sesión"
+        (click)="onClickLogOut()"
+      >
+        <span class="material-symbols-outlined"> logout </span>
+      </button>
+    }
+  </div>
+
+  @if (!isPublicRoute()) {
+    <nav
+      [attr.inert]="isMenuOpen() ? null : ''"
+      class="fixed inset-x-0 top-14 bottom-0 z-50 flex flex-col gap-12 overflow-y-auto bg-white/90 px-6 py-6 text-black backdrop-blur dark:bg-neutral-950/90 dark:text-white transition-all duration-200 ease-out"
+      [class]="
+        isMenuOpen()
+          ? 'visible translate-y-0 opacity-100'
+          : 'invisible pointer-events-none -translate-y-2 opacity-0'
+      "
+    >
+      <section class="flex flex-col gap-4">
+        <p class="text-sm font-medium text-neutral-500 dark:text-neutral-400">Menú</p>
+
+        <ul class="flex flex-col gap-3">
+          @for (item of url(); track item.id) {
+            <li>
+              <a [routerLink]="item.url" (click)="hideMenu()" class="text-2xl font-medium">
+                {{ item.text }}
+              </a>
+            </li>
+          }
+        </ul>
+      </section>
+    </nav>
+  }
 </header>
