@@ -4,7 +4,7 @@
 
 /**
  * Orden de capas explícito: determina la prioridad en cascada (de menor a mayor) */
-@layer TailwindBaseTheme, TailwindCustomTheme, TailwindPreflight, spartanNgTheme, TailwindUtilities;
+@layer TailwindBaseTheme, TailwindCustomTheme, TailwindPreflight, spartanNgTheme, MaterialSymbolsIcons, TailwindUtilities;
 
 /**
  * custom properties por defecto de Tailwind (--color-*, --spacing-*, --font-*, --breakpoint-*, etc) */
@@ -23,6 +23,14 @@
 /**
  * custom properties con colores de componentes de spartan ng */
 @import './spartan-ng/theme.css' layer(spartanNgTheme);
+
+/**
+ * Material Symbols Icons
+ * https://fonts.google.com/icons
+ * https://www.npmjs.com/package/material-symbols
+ * Va en una capa anterior a TailwindUtilities: sin capa, `.material-symbols-outlined { display: inline-block }`
+ * le gana a las utilidades de Tailwind (hidden, dark:hidden, text-xl, etc.) */
+@import 'material-symbols/index.css' layer(MaterialSymbolsIcons);
 
 /**
  * Estilos base de spartan ng
