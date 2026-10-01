@@ -1,0 +1,19 @@
+@if (!isPublicRoute()) {
+  <menu
+    [attr.inert]="isMenuOpen() ? null : ''"
+    class="fixed inset-x-0 top-14 bottom-0 z-50 flex flex-col gap-3 overflow-y-auto bg-white/90 px-6 py-6 text-black backdrop-blur dark:bg-neutral-950/90 dark:text-white transition-all duration-200 ease-out"
+    [class]="
+      isMenuOpen()
+        ? 'visible translate-y-0 opacity-100'
+        : 'invisible pointer-events-none -translate-y-2 opacity-0'
+    "
+  >
+    @for (item of url(); track item.id) {
+      <li>
+        <a [routerLink]="item.url" (click)="hideMenu()" class="text-2xl font-medium">
+          {{ item.text }}
+        </a>
+      </li>
+    }
+  </menu>
+}
