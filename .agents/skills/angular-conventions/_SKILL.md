@@ -795,6 +795,8 @@ Por defecto, el orden de las capas de Tailwind 4 es el siguiente. En este ejempl
 ### Tema Oscuro
 Todo componente que renderice interfaz (`ui`, `components`, `layouts` y páginas) debe verse bien y ser legible en tema claro y tema oscuro. El usuario puede cambiar de tema en cualquier momento, y un componente pensado para un solo tema queda con contraste ilegible.
 
+El tema claro y oscuro se gestiona con el servicio `Theme.service.ts`. El script de `src/index.html` aplica el tema guardado antes de que Angular cargue, y después el servicio agrega o quita la clase `dark` del elemento `<html>`. La variante `dark:` de Tailwind reacciona a esa clase.
+
 Para aplicar estilos del tema oscuro, usar siempre la variante `dark:` de Tailwind directamente en el HTML.
 
 **Correcto:**
@@ -804,6 +806,65 @@ Para aplicar estilos del tema oscuro, usar siempre la variante `dark:` de Tailwi
   <!-- ... -->
 </div>
 ```
+
+Está prohibido leer el tema actual con la signal `theme()` de `ThemeService` para elegir estilos. La clase `dark` del `<html>` ya resuelve el tema para toda la aplicación: leer la signal repite esa lógica en cada componente y obliga a inyectar `ThemeService` en componentes que solo necesitan estilos. La variante `dark:` no tiene estos problemas porque la resuelve CSS.
+
+**Incorrecto:**
+
+```ts
+// my-component.component.ts
+import { Component, inject } from '@angular/core';
+import { ThemeService } from '@/shared/services/Theme.service';
+
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+})
+export class MyComponent {
+  protected readonly themeService = inject(ThemeService);
+}
+```
+
+```html
+<!-- my-component.component.html -->
+<div [class]="themeService.theme() === 'dark' ? 'bg-black' : 'bg-blue-500'">
+  My component
+</div>
+```
+
+**Correcto:**
+
+```ts
+// my-component.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+})
+export class MyComponent {}
+```
+
+```html
+<!-- my-component.component.html -->
+<div class="bg-blue-500 dark:bg-black">
+  My component
+</div>
+```
+
+Para mostrar contenido distinto según el tema, como un icono o una imagen, renderiza las dos versiones y oculta con `dark:` la que no corresponde.
+
+**Correcto:**
+
+```html
+<span class="material-symbols-outlined dark:hidden"> dark_mode </span>
+<span class="material-symbols-outlined hidden dark:inline"> light_mode </span>
+
+<img ngSrc="light.png" alt="Logo" width="400" height="400" class="dark:hidden" />
+<img ngSrc="dark.png" alt="Logo" width="400" height="400" class="hidden dark:block" />
+```
+
+Reserva `ThemeService` para lo que CSS no puede resolver: la UI que cambia el tema con `toggleDarkMode()` y las librerías de terceros que reciben el tema como parámetro. Si esa UI también necesita mostrar qué tema está activo, como un texto "Tema actual: Oscuro" o un atributo `aria-pressed`, léelo con la signal `theme()`.
 
 No escribas estilos del tema oscuro en archivos CSS.
 
