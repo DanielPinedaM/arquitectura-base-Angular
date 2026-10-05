@@ -34,17 +34,13 @@ Para decidir qué archivo leer, usa la columna **¿Cuándo leerlo?**: abre el ar
 
 ## Tabla de Contenido
 
-### Creación de nuevos proyectos
-
-Carpeta: [referencias/creacion-de-nuevos-proyectos/](referencias/creacion-de-nuevos-proyectos/)
+### [Creación de nuevos proyectos](referencias/creacion-de-nuevos-proyectos/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
 | [Creación de nuevos proyectos](referencias/creacion-de-nuevos-proyectos/creacion-de-nuevos-proyectos.md) | Al crear un proyecto nuevo de Angular con `ng new`: reglas por defecto cuando el usuario no da lineamientos (última versión estable, Signal Forms) y cómo elegir el comando según la versión pedida (`npx @angular/cli@<requested_version> new`, `ng new` si `ng version` funciona, o `npx @angular/cli@latest new`). |
 
-### Componentes
-
-Carpeta: [referencias/componentes/](referencias/componentes/)
+### [Componentes](referencias/componentes/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
@@ -56,9 +52,7 @@ Carpeta: [referencias/componentes/](referencias/componentes/)
 
 Si necesitas documentación más profunda que no se encuentre en las referencias anteriores, lee la documentación en `https://angular.dev/guide/components`.
 
-### Reactividad y gestión de datos
-
-Carpeta: [referencias/reactividad-y-gestion-de-datos/](referencias/reactividad-y-gestion-de-datos/)
+### [Reactividad y gestión de datos](referencias/reactividad-y-gestion-de-datos/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
@@ -67,22 +61,18 @@ Carpeta: [referencias/reactividad-y-gestion-de-datos/](referencias/reactividad-y
 | [Reactividad asíncrona con `resource`](referencias/reactividad-y-gestion-de-datos/resource.md) | Al obtener datos asíncronos que dependen de signals y exponerlos como signals con `resource()` (`params`, `loader` con `abortSignal`, `reload()`, `value()`, `hasValue()`, `isLoading()`, `error()`, `status()`, actualización optimista con `value.set()`) sin usar `HttpClient`; con `HttpClient` se prefiere `httpResource`. |
 | [Efectos secundarios con `effect` y `afterRenderEffect`](referencias/reactividad-y-gestion-de-datos/effects.md) | Al sincronizar signals con APIs imperativas (logging de analytics, `localStorage`, dibujar en un `<canvas>` o en una librería de gráficos), al manipular el DOM después del render con `afterRenderEffect` y sus fases (`earlyRead`, `write`, `read`), o cuando ves `.set()` dentro de un `effect()` para mantener dos signals sincronizados (un anti-pattern que provoca `ExpressionChangedAfterItHasBeenChecked`). |
 
-### Comunicación HTTP
-
-Carpeta: [referencias/comunicacion-http/](referencias/comunicacion-http/)
+### [Comunicación HTTP](referencias/comunicacion-http/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
 | [Comunicación HTTP con `HttpClient` y `httpResource`](referencias/comunicacion-http/http-client.md) | Al comunicarte con un backend desde Angular: configurar `provideHttpClient` con `withInterceptors`, encapsular las llamadas de `HttpClient` en servicios (Observables fríos, `HttpErrorResponse`, `HttpHeaders` y `HttpParams`), escribir interceptors funcionales, configurar la protección XSRF o leer datos con `httpResource` (`hasValue()`, `parse`, `httpResource.text` y `httpResource.blob`). |
 
-### Formularios
+### [Formularios](referencias/formularios/)
 
 En la mayoría de los casos, para aplicaciones nuevas, **prefiere signal forms**. Al tomar una decisión sobre formularios, analiza el proyecto y considera las siguientes reglas:
 
 - Si la aplicación usa v22 o una versión posterior y se trata de un formulario nuevo, **prefiere Signal Forms**.
 - Para aplicaciones más antiguas o al trabajar con formularios existentes, usa el tipo de formulario adecuado que coincida con la estrategia de formularios actual de la aplicación.
-
-Carpeta: [referencias/formularios/](referencias/formularios/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
@@ -90,9 +80,7 @@ Carpeta: [referencias/formularios/](referencias/formularios/)
 | [Template-Driven Forms](referencias/formularios/template-driven-forms.md) | Al trabajar con un formulario existente basado en `FormsModule` y `[(ngModel)]` (con `name` obligatorio, `#userForm="ngForm"`, `NgModelGroup`, `(ngSubmit)`, las clases `ng-touched`, `ng-dirty` y `ng-valid`, y `reset()`), o cuando la estrategia de formularios de la app es template-driven para formularios simples. |
 | [Reactive Forms](referencias/formularios/reactive-forms.md) | Al trabajar con un formulario existente basado en `ReactiveFormsModule` (`FormControl`, `FormGroup`, `FormArray`, `FormBuilder` o `NonNullableFormBuilder`, `[formGroup]`, `formControlName`, `formArrayName`, `patchValue()`, `setValue()`, el observable `events`, `markAllAsTouched()`), o cuando la estrategia de formularios de la app es reactive forms para formularios complejos. |
 
-### Inyección de dependencias
-
-Carpeta: [referencias/inyeccion-de-dependencias/](referencias/inyeccion-de-dependencias/)
+### [Inyección de dependencias](referencias/inyeccion-de-dependencias/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
@@ -102,29 +90,23 @@ Carpeta: [referencias/inyeccion-de-dependencias/](referencias/inyeccion-de-depen
 | [Injection Context](referencias/inyeccion-de-dependencias/injection-context.md) | Cuando `inject()` lanza un error por usarse fuera de un injection context (por ejemplo, dentro de un método o de un callback), cuando necesitas inyectar dependencias de forma dinámica con `runInInjectionContext` y un `EnvironmentInjector`, o al escribir funciones utilitarias que usan `inject()` y deben validar el contexto con `assertInInjectionContext`. |
 | [Hierarchical Injectors](referencias/inyeccion-de-dependencias/hierarchical-injectors.md) | Al entender o depurar cómo Angular resuelve una dependencia (`EnvironmentInjector` frente a `ElementInjector`), al usar modificadores de `inject()` (`optional`, `self`, `skipSelf`, `host`) o al decidir entre `providers` y `viewProviders` para aislar un servicio del contenido proyectado. |
 
-### Pipes
+### [Pipes](referencias/pipes/)
 
 Al formatear valores en templates, crear pipes personalizados o reutilizar lógica similar a la de un pipe en TypeScript, consulta la siguiente referencia. Prefiere pipes en los templates; fuera de los templates, evita inyectar clases de pipes solo para llamar a `transform()`.
-
-Carpeta: [referencias/pipes/](referencias/pipes/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
 | [Pipes](referencias/pipes/pipes.md) | Al formatear valores en templates con pipes integrados (`DatePipe`, `CurrencyPipe`, `DecimalPipe`, `PercentPipe`), al crear un pipe personalizado (`@Pipe`, `PipeTransform`, nombre en camelCase, `pure: false`) o cuando necesitas la lógica de un pipe en TypeScript sin inyectar la clase del pipe (`formatDate`, `formatCurrency` o `formatNumber` con `LOCALE_ID`, o una función extraída). |
 
-### Angular Aria
-
-Carpeta: [referencias/angular-aria/](referencias/angular-aria/)
+### [Angular Aria](referencias/angular-aria/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
 | [Angular Aria](referencias/angular-aria/angular-aria.md) | Al construir componentes personalizados accesibles (headless) de tipo Accordion, Listbox, Combobox, Select o Multiselect, Menu o Menubar, Tabs, Toolbar, Tree o Grid con `@angular/aria` (directivas `ngAccordionGroup`, `ngListbox`, `ngCombobox`, `ngMenu`, `ngTabs`, `ngToolbar`, `ngTree`, `ngGrid`), al darles estilo con CSS sobre los atributos ARIA (`aria-expanded`, `aria-selected`), al testearlos con sus harnesses o al integrarlos con Signal Forms mediante `[formField]`. |
 
-### Routing
+### [Routing](referencias/routing/)
 
 Si necesitas documentación más profunda o más contexto, visita la [guía oficial de Angular Routing](https://angular.dev/guide/routing).
-
-Carpeta: [referencias/routing/](referencias/routing/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
@@ -138,18 +120,14 @@ Carpeta: [referencias/routing/](referencias/routing/)
 | [Estrategias de renderizado](referencias/routing/estrategias-de-renderizado.md) | Al elegir cómo se renderiza la app o cada ruta según el SEO y la interactividad: Client-Side Rendering (CSR), Static Site Generation o prerendering (SSG) y Server-Side Rendering (SSR), junto con la hydration (full, incremental con `@defer` y event replay). |
 | [Animaciones de transición entre rutas](referencias/routing/animaciones-de-rutas.md) | Al agregar animaciones de transición entre rutas con la View Transitions API: `withViewTransitions()` en `provideRouter`, personalización en el CSS global con `::view-transition-old()` y `::view-transition-new()`, `view-transition-name` y `onViewTransitionCreated` para omitir transiciones. |
 
-### Estilos y animaciones
-
-Carpeta: [referencias/estilos-y-animaciones/](referencias/estilos-y-animaciones/)
+### [Estilos y animaciones](referencias/estilos-y-animaciones/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
 | [Animaciones de Angular](referencias/estilos-y-animaciones/animaciones-de-angular.md) | Al animar en Angular elementos que entran o salen del DOM o que cambian de estado (primero revisa la versión en `package.json`): `animate.enter` y `animate.leave` con CSS nativo (v20.2+), los eventos `(animate.leave)` con `animationComplete()` para librerías como GSAP, transiciones con clases, altura automática con CSS grid, o el DSL legacy de `@angular/animations` (`trigger`, `state`, `transition`, `provideAnimationsAsync`) en proyectos antiguos. |
 | [Estilos de componentes](referencias/estilos-y-animaciones/estilos-de-componentes.md) | Al definir los estilos de un componente (`styles`, `styleUrl`), elegir la view encapsulation (`Emulated`, `ShadowDom`, `None`), dar estilo al elemento host con `:host` o `:host-context()`, decidir si usar `::ng-deep` (desaconsejado) o entender cómo afectan los estilos externos (`<link>`, `@import`). |
 
-### Testing
-
-Carpeta: [referencias/testing/](referencias/testing/)
+### [Testing](referencias/testing/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
@@ -158,9 +136,7 @@ Carpeta: [referencias/testing/](referencias/testing/)
 | [Testing con RouterTestingHarness](referencias/testing/router-testing.md) | Al testear componentes que navegan o dependen del routing (rutas, guards, resolvers) sin hacer mock del `Router`: usa `RouterTestingHarness.create()` con `provideRouter` en `TestBed`, navega con `harness.navigateByUrl()`, lee el componente activado con `harness.routeDebugElement` y espera con `harness.fixture.whenStable()`. |
 | [Testing End-to-End (E2E)](referencias/testing/e2e-testing.md) | Al configurar o ejecutar tests end-to-end (E2E) cuando el workspace todavía no tiene un framework E2E o el usuario pide cambiarlo: agrega Playwright, Cypress, Nightwatch, WebdriverIO o Puppeteer con `ng add` y ejecútalos con `ng e2e`. |
 
-### Herramientas
-
-Carpeta: [referencias/herramientas/](referencias/herramientas/)
+### [Herramientas](referencias/herramientas/)
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
