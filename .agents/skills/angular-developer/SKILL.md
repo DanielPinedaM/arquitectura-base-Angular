@@ -50,7 +50,7 @@ Para decidir qué archivo leer, usa la columna **¿Cuándo leerlo?**: abre el ar
 | [Host Elements de componentes](referencias/componentes/host-elements.md) | Al hacer binding de atributos, clases, estilos, propiedades o eventos sobre el elemento host de un componente (propiedad `host` del decorador `@Component`), al reemplazar `@HostBinding` o `@HostListener`, al resolver colisiones de bindings o al leer atributos estáticos del host con `inject(new HostAttributeToken(...))`. |
 | [Convenciones de nomenclatura de Angular (guía de estilo de Angular v20+)](referencias/componentes/convenciones-de-nomenclatura.md) | Antes de crear, nombrar o renombrar archivos y clases de componentes, servicios, directivas, pipes o modelos (con o sin sufijos como `.component.ts`, `.service.ts`, `Component` o `Service`), o al organizar las carpetas `core/`, `features/` y `shared/`: convenciones de nomenclatura de Angular v20+ («Intent over Role»), que primero respetan el estilo que ya usa el proyecto. |
 
-Si necesitas documentación más profunda que no se encuentre en las referencias anteriores, lee la documentación en `https://angular.dev/guide/components`.
+Si necesitas documentación más profunda que no se encuentre en las referencias anteriores, busca sobre componentes en la [documentación oficial de Angular](https://angular.dev/guide/components) con la tool `search_documentation` del MCP server `angular-cli`.
 
 ### [Reactividad y gestión de datos](referencias/reactividad-y-gestion-de-datos/)
 
@@ -106,7 +106,7 @@ Al formatear valores en templates, crear pipes personalizados o reutilizar lógi
 
 ### [Routing](referencias/routing/)
 
-Si necesitas documentación más profunda o más contexto, visita la [guía oficial de Angular Routing](https://angular.dev/guide/routing).
+Si necesitas documentación más profunda o más contexto, busca sobre routing en la [documentación oficial de Angular](https://angular.dev/guide/routing) con la tool `search_documentation` del MCP server `angular-cli`.
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
