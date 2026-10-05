@@ -30,7 +30,7 @@ Cuando las fuentes se contradicen, gana la de número menor en la columna **Prio
 | 1 | [Skill `angular-conventions`](.agents/skills/angular-conventions/SKILL.md) | Reglas propias del proyecto | Antes de crear, mover, modificar o revisar código, y al responder cómo se hace algo en este proyecto. |
 | 2 | tool `get_best_practices` del MCP server `angular-cli` | Reglas de terceros: buenas prácticas de Angular (Google) | Una vez, al inicio de la sesión: cuando el usuario envíe el primer mensaje. |
 | 3 | tool `search_documentation` del MCP server `angular-cli` | [Documentación oficial completa de Angular](https://angular.dev) | Solo si en `angular-developer` el tema no existe o le falta información. |
-| 4 | [Skill `angular-developer`](.agents/skills/angular-developer/SKILL.md) | Resumen de la documentación oficial (`angular.dev`) | Al responder sobre APIs de Angular, al usar una API que aún no esté en el código (aunque creas conocerla) y ante errores de build. Consúltala antes que `search_documentation`: al ser un resumen, es más rápida. |
+| 4 | [Skill `angular-developer`](.agents/skills/angular-developer/SKILL.md) | Resumen de la [documentación oficial de Angular](https://angular.dev) | Al responder sobre APIs de Angular, al usar una API que aún no esté en el código (aunque creas conocerla) y ante errores de build. Consúltala antes que `search_documentation`: al ser un resumen, es más rápida. |
 | 5 | Datos de entrenamiento | Tu conocimiento previo | Puedes usarlo, pero las fuentes anteriores tienen prioridad: este proyecto usa Angular 22, cuyos breaking changes pueden haberlo dejado desactualizado. Que esté desactualizado no significa que esté mal; solo que puede no aplicar a esta versión. |
 
 ## Preguntar
