@@ -1,7 +1,7 @@
 # Testing End-to-End (E2E)
 
 > [!IMPORTANT]
-> Usa los lineamientos de configuración de este archivo solo si no hay un framework de testing E2E existente configurado en el workspace, o si el usuario ha solicitado explícitamente cambiar o configurar el testing E2E.
+> Usa las reglas de configuración de este archivo solo si no hay un framework de testing E2E existente configurado en el workspace, o si el usuario ha solicitado explícitamente cambiar o configurar el testing E2E.
 
 ## Configuración y ejecución de tests E2E
 

@@ -1,13 +1,9 @@
 ---
 name: angular-developer
 description: Genera código Angular y proporciona orientación arquitectónica. Se activa al crear proyectos, componentes, servicios o comunicación HTTP, o para buenas prácticas sobre reactividad (signals, linkedSignal, resource, httpResource), formularios, inyección de dependencias, routing, SSR, accesibilidad (ARIA), animaciones, estilos (estilos de componentes), testing, convenciones de nomenclatura o herramientas del CLI.
-license: MIT
-metadata:
-  author: Copyright 2026 Google LLC
-  version: '1.0'
 ---
 
-# Lineamientos para desarrolladores de Angular
+# Reglas para desarrolladores de Angular
 
 ## Resumen
 
@@ -15,12 +11,12 @@ Genera código Angular y proporciona orientación arquitectónica y buenas prác
 
 ## ¿Cuándo aplicar la skill?
 
-Consulta estos lineamientos cuando:
+Consulta estas reglas cuando:
 
 - Crees proyectos, componentes, servicios o comunicación HTTP
 - Necesites buenas prácticas sobre reactividad (signals, linkedSignal, resource, httpResource), formularios, inyección de dependencias, routing, SSR, accesibilidad (ARIA), animaciones, estilos (estilos de componentes), testing, convenciones de nomenclatura o herramientas del CLI
 
-## Lineamientos generales
+## Reglas generales
 
 1. Analiza siempre la versión de Angular del proyecto antes de dar orientación, ya que las buenas prácticas y las funcionalidades disponibles pueden variar significativamente entre versiones. Si creas un nuevo proyecto con Angular CLI, no especifiques una versión a menos que el usuario lo solicite.
 
@@ -81,7 +77,7 @@ Carpeta: [referencias/comunicacion-http/](referencias/comunicacion-http/)
 
 ### Formularios
 
-En la mayoría de los casos, para aplicaciones nuevas, **prefiere signal forms**. Al tomar una decisión sobre formularios, analiza el proyecto y considera los siguientes lineamientos:
+En la mayoría de los casos, para aplicaciones nuevas, **prefiere signal forms**. Al tomar una decisión sobre formularios, analiza el proyecto y considera las siguientes reglas:
 
 - Si la aplicación usa v22 o una versión posterior y se trata de un formulario nuevo, **prefiere Signal Forms**.
 - Para aplicaciones más antiguas o al trabajar con formularios existentes, usa el tipo de formulario adecuado que coincida con la estrategia de formularios actual de la aplicación.
