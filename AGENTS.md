@@ -24,19 +24,17 @@ Esta PROHIBIDO:
 **Razon**: Existen librerías de terceros que dependen de Zone.js. Sin Zone.js, cualquier callback asíncrono de estas librerías no refrescará la vista automáticamente.
 
 # Reglas **OBLIGATORIAS** de Angular
-Este proyecto usa Angular 22. Sus breaking changes pueden diferir de tus datos de entrenamiento.
+Antes de editar código y responder, consulta solo las fuentes cuya columna **¿Cuándo leerlo?** coincida con la tarea, y aplica a la vez las reglas y la documentación consultadas.
 
-Antes de editar código y responder, consultar estas fuentes. Cuando las fuentes se contradicen, gana la de número menor:
+Cuando las fuentes se contradicen, gana la de número menor en la columna **Prioridad**:
 
-1. [Skill `angular-conventions`](.agents/skills/angular-conventions/SKILL.md): Reglas propias del proyecto que definen su arquitectura. Ignorarla genera código inescalable.
-
-2. tool `get_best_practices` del MCP server `angular-cli`: Guía de mejores prácticas del equipo de Angular (Google). Contiene las reglas que deben seguirse en cualquier tarea relacionada con la creación, análisis o modificación de código Angular.
-
-3. tool `search_documentation` del MCP server `angular-cli`: Busca en la documentación oficial de Angular (`angular.dev`) para responder preguntas sobre APIs, tutoriales, conceptos y convenciones.
-
-4. [Skill `angular-developer`](.agents/skills/angular-developer/): Resumen de la documentación oficial de Angular (`angular.dev`).
-
-5. Datos de entrenamiento: válidos, pero ceden ante todo lo anterior.
+| Prioridad | Fuente | ¿Qué es? | ¿Cuándo leerlo? |
+| --- | --- | --- | --- |
+| 1 | [Skill `angular-conventions`](.agents/skills/angular-conventions/SKILL.md) | Reglas propias del proyecto | Antes de crear, mover, modificar o revisar código, y al responder cómo se hace algo en este proyecto. |
+| 2 | tool `get_best_practices` del MCP server `angular-cli` | Reglas de terceros: buenas prácticas de Angular (Google) | Una vez, al inicio de la sesión: cuando el usuario envíe el primer mensaje. |
+| 3 | tool `search_documentation` del MCP server `angular-cli` | Documentación oficial completa (`angular.dev`) | Solo si en `angular-developer` el tema no existe o le falta información. |
+| 4 | [Skill `angular-developer`](.agents/skills/angular-developer/) | Resumen de la documentación oficial (`angular.dev`) | Al responder sobre APIs de Angular, al usar una API que aún no esté en el código (aunque creas conocerla) y ante errores de build. Consúltala antes que `search_documentation`: al ser un resumen, es más rápida. |
+| 5 | Datos de entrenamiento | Tu conocimiento previo | Puedes usarlo, pero las fuentes anteriores tienen prioridad: este proyecto usa Angular 22, cuyos breaking changes pueden haberlo dejado desactualizado. Que esté desactualizado no significa que esté mal; solo que puede no aplicar a esta versión. |
 
 ## Buenas Practicas de Angular
 * Usar lazy loading para todas las rutas de `src\app\app.routes.ts`
