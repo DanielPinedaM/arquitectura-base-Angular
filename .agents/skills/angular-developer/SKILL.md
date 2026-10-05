@@ -32,6 +32,9 @@ Lee **bajo demanda** los archivos `.md` ubicados en [`.agents/skills/angular-dev
 
 Para decidir qué archivo leer, usa la columna **¿Cuándo leerlo?**: abre el archivo cuando tu tarea coincida con la situación que describe.
 
+### MCP server `angular-cli`
+Si necesitas documentación más profunda que no se encuentre en esta skill, busca sobre cualquier tema [en la documentación oficial de Angular](https://angular.dev) con la tool `search_documentation` del MCP server `angular-cli`.
+
 ## Tabla de Contenido
 
 ### [Creación de nuevos proyectos](referencias/creacion-de-nuevos-proyectos/)
@@ -49,8 +52,6 @@ Para decidir qué archivo leer, usa la columna **¿Cuándo leerlo?**: abre el ar
 | [Outputs (eventos personalizados)](referencias/componentes/outputs.md) | Al emitir eventos personalizados desde un componente hijo hacia el padre: declarar outputs con `output()` (`OutputEmitterRef`, `emit()`), escucharlos con `(evento)` y `$event`, usar alias, suscribirse de forma programática en componentes dinámicos o migrar desde `@Output()` con `EventEmitter`; incluye la nomenclatura de los eventos (sin el prefijo `on`). |
 | [Host Elements de componentes](referencias/componentes/host-elements.md) | Al hacer binding de atributos, clases, estilos, propiedades o eventos sobre el elemento host de un componente (propiedad `host` del decorador `@Component`), al reemplazar `@HostBinding` o `@HostListener`, al resolver colisiones de bindings o al leer atributos estáticos del host con `inject(new HostAttributeToken(...))`. |
 | [Convenciones de nomenclatura de Angular (guía de estilo de Angular v20+)](referencias/componentes/convenciones-de-nomenclatura.md) | Antes de crear, nombrar o renombrar archivos y clases de componentes, servicios, directivas, pipes o modelos (con o sin sufijos como `.component.ts`, `.service.ts`, `Component` o `Service`), o al organizar las carpetas `core/`, `features/` y `shared/`: convenciones de nomenclatura de Angular v20+ («Intent over Role»), que primero respetan el estilo que ya usa el proyecto. |
-
-Si necesitas documentación más profunda que no se encuentre en las referencias anteriores, busca sobre componentes en la [documentación oficial de Angular](https://angular.dev/guide/components) con la tool `search_documentation` del MCP server `angular-cli`.
 
 ### [Reactividad y gestión de datos](referencias/reactividad-y-gestion-de-datos/)
 
@@ -105,8 +106,6 @@ Al formatear valores en templates, crear pipes personalizados o reutilizar lógi
 | [Angular Aria](referencias/angular-aria/angular-aria.md) | Al construir componentes personalizados accesibles (headless) de tipo Accordion, Listbox, Combobox, Select o Multiselect, Menu o Menubar, Tabs, Toolbar, Tree o Grid con `@angular/aria` (directivas `ngAccordionGroup`, `ngListbox`, `ngCombobox`, `ngMenu`, `ngTabs`, `ngToolbar`, `ngTree`, `ngGrid`), al darles estilo con CSS sobre los atributos ARIA (`aria-expanded`, `aria-selected`), al testearlos con sus harnesses o al integrarlos con Signal Forms mediante `[formField]`. |
 
 ### [Routing](referencias/routing/)
-
-Si necesitas documentación más profunda o más contexto, busca sobre routing en la [documentación oficial de Angular](https://angular.dev/guide/routing) con la tool `search_documentation` del MCP server `angular-cli`.
 
 | Título y ruta archivo | ¿Cuándo leerlo? |
 | --- | --- |
