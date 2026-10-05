@@ -64,6 +64,9 @@ Leer **bajo demanda** los archivos `.md` ubicados en `.agents/skills/angular-con
 
 **Razon**: Leer todos los archivos consume contexto y tokens innecesariamente.
 
+## 6. Referencias
+Al leer la skill encontrara subtitulos con una lista de enlaces de referencias. **NO** es necesario leer ni hacer fetch a estos enlaces; se incluyen únicamente como documentacion
+
 # Tabla de Contenido
 
 # INCOMPLETO - aqui me falta escribir la tabla de contenido con la estructura de archivos, carpetas y titulos de /rules - para tabla de contenido usar  enlace en línea con ruta relativa ejemplo [angular-animations.md](references/angular-animations.md)
@@ -688,8 +691,7 @@ Cuando el icono no este en Material Symbols Icons, entonces agregarlo dentro de 
 ## Uso de Tailwind con Angular
 El texto a continuación es una guia de los breaking changes mas importantes de Tailwind 4 que esta basado en la documentación oficial.
 
-**Enlaces de Referencia**
-**NO** es necesario leer estos enlaces; se incluyen únicamente como referencia:
+**Referencias:**
 * [Breaking changes de Tailwind 4](https://tailwindcss.com/blog/tailwindcss-v4)
 
 * [Tema oscuro en Tailwind](https://tailwindcss.com/docs/dark-mode)
@@ -1553,9 +1555,7 @@ Cada carpeta de componente tiene su barrel export en `index.ts`, que reexporta t
 
 ## Estilos Globales para Botones
 
-**Enlaces de Referencia**
-**NO** es necesario leer estos enlaces; se incluyen únicamente como referencia. Está guía de estilos para botones está basada en:
-
+**Referencias:**
 * [Botones de Bootstrap 5](https://getbootstrap.com/docs/5.3/components/buttons/)
 
 * [Tailwind 4 font-size](https://tailwindcss.com/docs/font-size)
