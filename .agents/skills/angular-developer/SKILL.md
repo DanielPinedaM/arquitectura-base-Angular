@@ -13,7 +13,7 @@ metadata:
 
 Genera código Angular y proporciona orientación arquitectónica y buenas prácticas de Angular.
 
-## Cuándo aplicar la skill
+## ¿Cuándo aplicar la skill?
 
 Consulta estos lineamientos cuando:
 
