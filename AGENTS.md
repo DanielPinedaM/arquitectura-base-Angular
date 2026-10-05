@@ -8,11 +8,6 @@ Arquitectura base agnóstica a las features para iniciar un nuevo proyecto en An
 * Manejador de paquetes: pnpm
 * Archivo de bloqueo: pnpm-lock.yaml
 
-# Ante Cualquier Error o Ambigüedad
-Si encuentras un error, inconsistencia, duda o ambigüedad, detente y pregúntame antes de modificar código. No asumas ni deduzcas implementaciones.
-
-**Razón**: una suposición incorrecta genera código que después hay que revisar y deshacer; preguntar cuesta menos que corregir una implementación equivocada.
-
 # Compatibilidad con zone.js
 Esta PROHIBIDO:
 * Eliminar zone.js del build en `angular.json`
@@ -24,6 +19,8 @@ Esta PROHIBIDO:
 **Razon**: Existen librerías de terceros que dependen de Zone.js. Sin Zone.js, cualquier callback asíncrono de estas librerías no refrescará la vista automáticamente.
 
 # Reglas **OBLIGATORIAS** de Angular
+
+## Fuentes de consulta
 Antes de editar código y responder, consulta solo las fuentes cuya columna **¿Cuándo leerlo?** coincida con la tarea, y aplica a la vez las reglas y la documentación consultadas.
 
 Cuando las fuentes se contradicen, gana la de número menor en la columna **Prioridad**:
@@ -35,6 +32,11 @@ Cuando las fuentes se contradicen, gana la de número menor en la columna **Prio
 | 3 | tool `search_documentation` del MCP server `angular-cli` | Documentación oficial completa (`angular.dev`) | Solo si en `angular-developer` el tema no existe o le falta información. |
 | 4 | [Skill `angular-developer`](.agents/skills/angular-developer/) | Resumen de la documentación oficial (`angular.dev`) | Al responder sobre APIs de Angular, al usar una API que aún no esté en el código (aunque creas conocerla) y ante errores de build. Consúltala antes que `search_documentation`: al ser un resumen, es más rápida. |
 | 5 | Datos de entrenamiento | Tu conocimiento previo | Puedes usarlo, pero las fuentes anteriores tienen prioridad: este proyecto usa Angular 22, cuyos breaking changes pueden haberlo dejado desactualizado. Que esté desactualizado no significa que esté mal; solo que puede no aplicar a esta versión. |
+
+## Preguntar
+Si detectas un error, una inconsistencia o una ambigüedad, o tienes alguna duda, detente y pregúntame antes de escribir o modificar código. No supongas cómo debe implementarse algo.
+
+**Razón:** preguntar cuesta menos que revisar y deshacer código basado en una suposición incorrecta.
 
 ## Buenas Practicas de Angular
 * Usar lazy loading para todas las rutas de `src\app\app.routes.ts`
