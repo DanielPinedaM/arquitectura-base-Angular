@@ -224,6 +224,7 @@ const value = this.userForm().value();
 const isValid = this.userForm().valid();
 const isInvalid = this.userForm().invalid();
 const errors = this.userForm().errors(); // Array de errores
+const error = this.userForm().getError('...'); // Un solo error, por su `kind`
 const isPending = this.userForm().pending(); // Validación asíncrona pendiente
 
 // Estado de interacción (Signals)
@@ -290,6 +291,8 @@ interface ValidationError {
   readonly message?: string;
 }
 ```
+
+`field().getError('...')` devuelve un único ValidationError según su `kind`.
 
 _NO_ devuelvas null desde los validators.
 Cuando no haya errores, devuelve undefined
