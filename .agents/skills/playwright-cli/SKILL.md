@@ -483,7 +483,7 @@ Recorre y clasifica su salida con el apartado [Cómo leer y clasificar la salida
 
 ## 9. Límites
 
-- No escribas tests de Jest, Vitest, Cypress ni Playwright Test. Si el usuario quiere cobertura permanente, dilo y pregunta; no lo hagas por iniciativa propia.
+- No escribas tests de Jest, Vitest, Cypress ni Playwright Test.
 - No refactorices, renombres ni "mejores" código que no forma parte de la corrección autorizada.
 - No alteres el proyecto original —configuración, funcionalidad, maquetación, dependencias ni variables de entorno— por iniciativa propia. Cámbialo solo si el usuario lo pidió explícitamente, o si preguntaste antes y autorizó ese cambio.
 - No inventes la causa del bug. Si tras la instrumentación no está claro, reporta lo que descartaste y lo que falta por descartar.
