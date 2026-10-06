@@ -791,7 +791,7 @@ Por defecto, Claude Code difiere las definiciones de las tools de un MCP usando 
 
 Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: el modelo ejecuta los comandos directamente en la terminal ([documentación oficial](https://code.claude.com/docs/en/costs#reduce-mcp-server-overhead)).
 
-## 🌐 `playwright-cli` y `browser-agent`
+## 🌐 `playwright-cli`
 
 > [!CAUTION]
 > # ⚠️ Advertencia
@@ -802,21 +802,15 @@ Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: 
 
 Mira [este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿que es `playwright-cli`?
 
-Sirve para que la IA desde la terminal pueda controlar el navegador: navegar por páginas (rutas), hacer clics y llenar formularios sin hacerlo manualmente.
+Sirve para que la IA desde la terminal pueda controlar el navegador: navegar por páginas (rutas), hacer clics, tomar capturas de pantalla y llenar formularios sin hacerlo manualmente.
 
-Para que la IA controle el navegador hay dos skills que son **DIFERENTES**:
-
-* **`playwright-cli`**: Lista y explicación de los comandos que permiten a la IA controlar el navegador.
-
-* **`browser-agent`** Esta skill llama a la skill `playwright-cli` y le explica a la IA como usar `playwright-cli` para automatizar un proceso o solucionar un bug.
-
-`browser-agent` se usa para lo siguiente:
+[Esta skill](.agents/skills/playwright-cli/SKILL.md) esta basada en [la skill oficial de Microsoft](https://github.com/microsoft/playwright-cli/tree/main/skills/playwright-cli). La diferencia es que esta skill tiene dos modos diferentes:
 
 | Pregunta ⬇️ / Modo ➡️                                                          | Modo AUTOMATIZAR                          | Modo DEPURAR                                 |
 |---------------------------------------------------------------------------------|-------------------------------------------|----------------------------------------------|
 | ¿Para qué sirve?                                                                | Ejecutar o automatizar un flujo de la app | Encontrar la causa de un bug                 |
-| ¿Escribe codigo de testing en Jest, Vitest, etc?                                | ❌ No                                     | ❌ No                                       |
 | Ejemplo de uso                                                                  | Llenar un formulario muchas veces         | La pagina web no es responsive, corrigela    |
+| ¿Escribe codigo de testing en Jest, Vitest, etc?                                | ❌ No                                     | ❌ No                                       |
 | Modifica código fuente                                                          | ❌ No                                     | ✅ Sí                                       |
 | Diagnostica (logs del server, `curl -i`/`-v`, cuerpo y headers de la respuesta) | ❌ No                                     | ✅ Sí                                       |
 | ¿Ejecuta ESLint?                                                                | ❌ No                                     | ✅ sí, pero solo si ESLint está configurado |
@@ -827,13 +821,13 @@ Para que la IA controle el navegador hay dos skills que son **DIFERENTES**:
 **SIEMPRE** que necesites controlar el navegador con la IA:
 1. Detener la ejecucion del proyecto
 
-2. Llamar la skill `browser-agent` y **NO** la skill `playwright-cli` **NI** [playwright MCP](https://github.com/microsoft/playwright-mcp)
+2. Llamar la skill `playwright-cli` y **NO** [playwright MCP](https://github.com/microsoft/playwright-mcp)
 
 3. Usar este prompt:
 
 ***Ejemplo de Prompt:***
 ```txt
-/browser-agent <<< Aqui describir de forma MUY DETALLADA
+/playwright-cli <<< Aqui describir de forma MUY DETALLADA
 la funcionalidad a testear o el proceso a automatizar,
 para mejorar el resultado es bueno decirle a Claude
 rutas especificas de donde estan los archivos, componentes, funciones, etc.
