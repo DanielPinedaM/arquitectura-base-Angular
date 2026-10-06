@@ -27,8 +27,8 @@ Cuando las fuentes se contradicen, gana la de número menor en la columna **Prio
 
 | Prioridad | Fuente | ¿Qué es? | ¿Cuándo leerlo? |
 | --- | --- | --- | --- |
-| 1 | [Skill `angular-conventions`](.agents/skills/angular-conventions/SKILL.md) | Reglas propias del proyecto | Antes de crear, mover, modificar o revisar código, y al responder cómo se hace algo en este proyecto. |
-| 2 | tool `get_best_practices` del MCP server `angular-cli` | Reglas de terceros de Google sobre buenas prácticas de Angular | Una vez, al inicio de la sesión: cuando el usuario envíe el primer mensaje. |
+| 1 | [Skill `angular-conventions`](.agents/skills/angular-conventions/SKILL.md) | Reglas propias del proyecto. | Al decidir dónde va un archivo o carpeta, cómo se nombra, qué librería o componente del proyecto usar y cómo se estiliza, y al responder cómo se hace algo en este proyecto. |
+| 2 | tool `get_best_practices` del MCP server `angular-cli` | Reglas de terceros de Google sobre buenas prácticas de Angular. | Al escribir o revisar el código TypeScript y las plantillas de componentes, servicios y directivas: tipado, signals, plantillas, inyección de dependencias y accesibilidad. |
 | 3 | tool `search_documentation` del MCP server `angular-cli` | [Documentación oficial completa de Angular](https://angular.dev) | Solo si en la skill `angular-developer` el tema no existe o le falta información. La documentación completa prevalece sobre un resumen. |
 | 4 | [Skill `angular-developer`](.agents/skills/angular-developer/SKILL.md) | Resumen de la [documentación oficial de Angular](https://angular.dev) | Al responder y usar APIs de Angular (aunque creas conocerla) y ante errores. Consúltala antes que `search_documentation`: al ser un resumen, se lee más rápido. |
 | 5 | Datos de entrenamiento | Tu conocimiento previo | Puedes usarlo, pero las fuentes anteriores tienen prioridad: este proyecto usa Angular 22, cuyos breaking changes pueden haberlo dejado desactualizado. Que esté desactualizado no significa que esté mal; solo que puede no aplicar a esta versión. |
