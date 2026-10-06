@@ -476,13 +476,15 @@ Consulta [referencias/adjuntos-en-pull-requests.md](referencias/adjuntos-en-pull
 
 ## Tareas específicas
 
-* [Ejecutar y depurar pruebas de Playwright](referencias/pruebas-de-playwright.md)
-* [Mocking de peticiones](referencias/mocking-de-peticiones.md)
-* [Ejecutar código de Playwright](referencias/ejecucion-de-codigo.md)
-* [Gestión de sesiones del navegador](referencias/gestion-de-sesiones.md)
-* [Estado de almacenamiento (cookies, localStorage)](referencias/estado-de-almacenamiento.md)
-* [Generación de pruebas (planificar / generar / reparar)](referencias/generacion-de-pruebas.md)
-* [Tracing](referencias/tracing.md)
-* [Grabación de video](referencias/grabacion-de-video.md)
-* [Adjuntar capturas de pantalla y videos a pull requests](referencias/adjuntos-en-pull-requests.md)
-* [Inspeccionar los atributos de un elemento](referencias/atributos-de-elementos.md)
+| Título y ruta archivo | ¿Cuándo leerlo? |
+| --- | --- |
+| [Ejecutar y depurar pruebas de Playwright](referencias/pruebas-de-playwright.md) | Antes de ejecutar pruebas de Playwright, para que no se abra el reporte HTML interactivo, y cuando una prueba falla y hay que depurarla con `--debug=cli` y `attach`. |
+| [Mocking de peticiones](referencias/mocking-de-peticiones.md) | Al simular, modificar o bloquear peticiones de red: respuestas de una API, códigos de error, headers, fallos de red, retrasos o respuestas según la petición, y cuando el backend no está disponible o un estado de error es difícil de reproducir. |
+| [Ejecutar código de Playwright](referencias/ejecucion-de-codigo.md) | Antes de escribir código para `run-code` (aunque conozcas la API de Playwright), porque se ejecuta en un contexto aislado sin `import` ni `require`, y cuando ningún comando CLI cubre la tarea: geolocalización, permisos, esperas, iframes, descargas, portapapeles o flujos de varios pasos. |
+| [Gestión de sesiones del navegador](referencias/gestion-de-sesiones.md) | Al usar varios navegadores aislados o en paralelo con `-s`, al conectarse a un navegador que ya está abierto, al abrir con perfil persistente, otro navegador o modo headed, y cuando un comando informa que el navegador no está abierto, cuando el navegador no responde o cuando quedan procesos zombie. |
+| [Estado de almacenamiento (cookies, localStorage)](referencias/estado-de-almacenamiento.md) | Al leer, escribir o limpiar cookies, localStorage, sessionStorage o IndexedDB, al reutilizar un inicio de sesión con `state-save` y `state-load` para no repetir el login, y antes de guardar archivos de estado con tokens, para no subirlos al repositorio. |
+| [Generación de pruebas (planificar / generar / reparar)](referencias/generacion-de-pruebas.md) | Al escribir pruebas de Playwright nuevas o planificar qué probar de una funcionalidad, al convertir las acciones de `playwright-cli` en archivos de prueba con aserciones, y al reparar pruebas que fallan tras un cambio en la aplicación. |
+| [Tracing](referencias/tracing.md) | Cuando una acción falla sin causa evidente y hace falta ver el DOM, la red y la consola en ese momento, al analizar una página lenta, al registrar un flujo como evidencia detallada y al elegir entre traza, video o captura de pantalla. |
+| [Grabación de video](referencias/grabacion-de-video.md) | Al grabar un video de un flujo como demo, recorrido o prueba de trabajo de un cambio visible para el usuario, y al anotarlo con cursor, resaltados, capítulos u overlays mediante un hero script. |
+| [Adjuntar capturas de pantalla y videos a pull requests](referencias/adjuntos-en-pull-requests.md) | Al crear, editar o comentar un pull request o un issue con `gh` cuando hay un cambio de UI, un antes/después o un bug que mostrar, y al configurar CI para adjuntar las capturas de pantalla y los videos de las pruebas que fallan. |
+| [Inspeccionar los atributos de un elemento](referencias/atributos-de-elementos.md) | Cuando el snapshot no muestra el `id`, las clases, los atributos `data-*` o `aria-*`, los estilos computados u otras propiedades del DOM de un elemento y hace falta leerlos. |
