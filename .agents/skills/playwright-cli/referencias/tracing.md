@@ -1,93 +1,93 @@
 # Tracing
 
-Capture detailed execution traces for debugging and analysis. Traces include DOM snapshots, screenshots, network activity, and console logs.
+Captura trazas de ejecución detalladas para depuración y análisis. Las trazas incluyen snapshots del DOM, capturas de pantalla, actividad de red y logs de la consola.
 
-## Basic Usage
+## Uso básico
 
 ```bash
-# Start trace recording
+# Iniciar la grabación de la traza
 pnpm exec playwright-cli tracing-start
 
-# Perform actions
+# Realizar acciones
 pnpm exec playwright-cli open https://example.com
 pnpm exec playwright-cli click e1
 pnpm exec playwright-cli fill e2 "test"
 
-# Stop trace recording
+# Detener la grabación de la traza
 pnpm exec playwright-cli tracing-stop
 ```
 
-## Trace Output Files
+## Archivos de salida de la traza
 
-When you start tracing, Playwright creates a `.playwright-cli/traces/` directory with several files:
+Cuando inicias el tracing, Playwright crea un directorio `.playwright-cli/traces/` con varios archivos:
 
 ### `trace-{timestamp}.trace`
 
-**Action log** - The main trace file containing:
-- Every action performed (clicks, fills, navigations)
-- DOM snapshots before and after each action
-- Screenshots at each step
-- Timing information
-- Console messages
-- Source locations
+**Log de acciones** - El archivo de traza principal que contiene:
+- Cada acción realizada (clicks, rellenados, navegaciones)
+- Snapshots del DOM antes y después de cada acción
+- Capturas de pantalla en cada paso
+- Información de tiempos
+- Mensajes de la consola
+- Ubicaciones en el código fuente
 
 ### `trace-{timestamp}.network`
 
-**Network log** - Complete network activity:
-- All HTTP requests and responses
-- Request headers and bodies
-- Response headers and bodies
-- Timing (DNS, connect, TLS, TTFB, download)
-- Resource sizes
-- Failed requests and errors
+**Log de red** - Actividad de red completa:
+- Todas las peticiones y respuestas HTTP
+- Headers y bodies de las peticiones
+- Headers y bodies de las respuestas
+- Tiempos (DNS, connect, TLS, TTFB, descarga)
+- Tamaños de los recursos
+- Peticiones fallidas y errores
 
 ### `resources/`
 
-**Resources directory** - Cached resources:
-- Images, fonts, stylesheets, scripts
-- Response bodies for replay
-- Assets needed to reconstruct page state
+**Directorio de recursos** - Recursos en caché:
+- Imágenes, fuentes, hojas de estilo, scripts
+- Bodies de las respuestas para reproducción
+- Assets necesarios para reconstruir el estado de la página
 
-## What Traces Capture
+## Qué capturan las trazas
 
-| Category | Details |
+| Categoría | Detalles |
 |----------|---------|
-| **Actions** | Clicks, fills, hovers, keyboard input, navigations |
-| **DOM** | Full DOM snapshot before/after each action |
-| **Screenshots** | Visual state at each step |
-| **Network** | All requests, responses, headers, bodies, timing |
-| **Console** | All console.log, warn, error messages |
-| **Timing** | Precise timing for each operation |
+| **Acciones** | Clicks, rellenados, hovers, entrada de teclado, navegaciones |
+| **DOM** | Snapshot completo del DOM antes/después de cada acción |
+| **Capturas de pantalla** | Estado visual en cada paso |
+| **Red** | Todas las peticiones, respuestas, headers, bodies, tiempos |
+| **Consola** | Todos los mensajes console.log, warn, error |
+| **Tiempos** | Tiempo preciso de cada operación |
 
-## Use Cases
+## Casos de uso
 
-### Debugging Failed Actions
+### Depurar acciones fallidas
 
 ```bash
 pnpm exec playwright-cli tracing-start
 pnpm exec playwright-cli open https://app.example.com
 
-# This click fails - why?
+# Este click falla - ¿por qué?
 pnpm exec playwright-cli click e5
 
 pnpm exec playwright-cli tracing-stop
-# Open trace to see DOM state when click was attempted
+# Abrir la traza para ver el estado del DOM cuando se intentó el click
 ```
 
-### Analyzing Performance
+### Analizar el rendimiento
 
 ```bash
 pnpm exec playwright-cli tracing-start
 pnpm exec playwright-cli open https://slow-site.com
 pnpm exec playwright-cli tracing-stop
 
-# View network waterfall to identify slow resources
+# Ver la cascada de red (waterfall) para identificar los recursos lentos
 ```
 
-### Capturing Evidence
+### Capturar evidencia
 
 ```bash
-# Record a complete user flow for documentation
+# Grabar un flujo de usuario completo para documentación
 pnpm exec playwright-cli tracing-start
 
 pnpm exec playwright-cli open https://app.example.com/checkout
@@ -97,43 +97,43 @@ pnpm exec playwright-cli fill e3 "123"
 pnpm exec playwright-cli click e4
 
 pnpm exec playwright-cli tracing-stop
-# Trace shows exact sequence of events
+# La traza muestra la secuencia exacta de eventos
 ```
 
-## Trace vs Video vs Screenshot
+## Traza vs Video vs Captura de pantalla
 
-| Feature | Trace | Video | Screenshot |
+| Característica | Traza | Video | Captura de pantalla |
 |---------|-------|-------|------------|
-| **Format** | .trace file | .webm video | .png/.jpeg image |
-| **DOM inspection** | Yes | No | No |
-| **Network details** | Yes | No | No |
-| **Step-by-step replay** | Yes | Continuous | Single frame |
-| **File size** | Medium | Large | Small |
-| **Best for** | Debugging | Demos | Quick capture |
+| **Formato** | archivo .trace | video .webm | imagen .png/.jpeg |
+| **Inspección del DOM** | Sí | No | No |
+| **Detalles de red** | Sí | No | No |
+| **Reproducción paso a paso** | Sí | Continua | Un solo fotograma |
+| **Tamaño del archivo** | Medio | Grande | Pequeño |
+| **Ideal para** | Depuración | Demos | Captura rápida |
 
-## Best Practices
+## Mejores prácticas
 
-### 1. Start Tracing Before the Problem
+### 1. Inicia el tracing antes del problema
 
 ```bash
-# Trace the entire flow, not just the failing step
+# Traza todo el flujo, no solo el paso que falla
 pnpm exec playwright-cli tracing-start
 pnpm exec playwright-cli open https://example.com
-# ... all steps leading to the issue ...
+# ... todos los pasos que llevan al problema ...
 pnpm exec playwright-cli tracing-stop
 ```
 
-### 2. Clean Up Old Traces
+### 2. Limpia las trazas antiguas
 
-Traces can consume significant disk space:
+Las trazas pueden consumir un espacio considerable en disco:
 
 ```bash
-# Remove traces older than 7 days
+# Eliminar las trazas con más de 7 días
 find .playwright-cli/traces -mtime +7 -delete
 ```
 
-## Limitations
+## Limitaciones
 
-- Traces add overhead to automation
-- Large traces can consume significant disk space
-- Some dynamic content may not replay perfectly
+- Las trazas agregan sobrecarga a la automatización
+- Las trazas grandes pueden consumir un espacio considerable en disco
+- Algo del contenido dinámico puede no reproducirse a la perfección

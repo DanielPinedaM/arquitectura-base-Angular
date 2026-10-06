@@ -1,34 +1,34 @@
-# Storage Management
+# Gestión del almacenamiento
 
-Manage cookies, localStorage, sessionStorage, and browser storage state.
+Gestiona las cookies, localStorage, sessionStorage y el estado de almacenamiento del navegador.
 
-## Storage State
+## Estado de almacenamiento
 
-Save and restore complete browser state including cookies and storage.
+Guarda y restaura el estado completo del navegador, incluidas las cookies y el almacenamiento.
 
-### Save Storage State
+### Guardar el estado de almacenamiento
 
 ```bash
-# Save to auto-generated filename (storage-state-{timestamp}.json)
+# Guardar con un nombre de archivo autogenerado (storage-state-{timestamp}.json)
 pnpm exec playwright-cli state-save
 
-# Save to specific filename
+# Guardar con un nombre de archivo específico
 pnpm exec playwright-cli state-save my-auth-state.json
 ```
 
-### Restore Storage State
+### Restaurar el estado de almacenamiento
 
 ```bash
-# Load storage state from file
+# Cargar el estado de almacenamiento desde un archivo
 pnpm exec playwright-cli state-load my-auth-state.json
 
-# Reload page to apply cookies
+# Recargar la página para aplicar las cookies
 pnpm exec playwright-cli open https://example.com
 ```
 
-### Storage State File Format
+### Formato del archivo de estado de almacenamiento
 
-The saved file contains:
+El archivo guardado contiene:
 
 ```json
 {
@@ -58,58 +58,58 @@ The saved file contains:
 
 ## Cookies
 
-### List All Cookies
+### Listar todas las cookies
 
 ```bash
 pnpm exec playwright-cli cookie-list
 ```
 
-### Filter Cookies by Domain
+### Filtrar las cookies por dominio
 
 ```bash
 pnpm exec playwright-cli cookie-list --domain=example.com
 ```
 
-### Filter Cookies by Path
+### Filtrar las cookies por ruta
 
 ```bash
 pnpm exec playwright-cli cookie-list --path=/api
 ```
 
-### Get Specific Cookie
+### Obtener una cookie específica
 
 ```bash
 pnpm exec playwright-cli cookie-get session_id
 ```
 
-### Set a Cookie
+### Establecer una cookie
 
 ```bash
-# Basic cookie
+# Cookie básica
 pnpm exec playwright-cli cookie-set session abc123
 
-# Cookie with options
+# Cookie con opciones
 pnpm exec playwright-cli cookie-set session abc123 --domain=example.com --path=/ --httpOnly --secure --sameSite=Lax
 
-# Cookie with expiration (Unix timestamp)
+# Cookie con expiración (timestamp Unix)
 pnpm exec playwright-cli cookie-set remember_me token123 --expires=1893456000
 ```
 
-### Delete a Cookie
+### Eliminar una cookie
 
 ```bash
 pnpm exec playwright-cli cookie-delete session_id
 ```
 
-### Clear All Cookies
+### Limpiar todas las cookies
 
 ```bash
 pnpm exec playwright-cli cookie-clear
 ```
 
-### Advanced: Multiple Cookies or Custom Options
+### Avanzado: varias cookies u opciones personalizadas
 
-For complex scenarios like adding multiple cookies at once, use `run-code`:
+Para escenarios complejos, como agregar varias cookies a la vez, usa `run-code`:
 
 ```bash
 pnpm exec playwright-cli run-code "async page => {
@@ -122,45 +122,45 @@ pnpm exec playwright-cli run-code "async page => {
 
 ## Local Storage
 
-### List All localStorage Items
+### Listar todos los elementos de localStorage
 
 ```bash
 pnpm exec playwright-cli localstorage-list
 ```
 
-### Get Single Value
+### Obtener un solo valor
 
 ```bash
 pnpm exec playwright-cli localstorage-get token
 ```
 
-### Set Value
+### Establecer un valor
 
 ```bash
 pnpm exec playwright-cli localstorage-set theme dark
 ```
 
-### Set JSON Value
+### Establecer un valor JSON
 
 ```bash
 pnpm exec playwright-cli localstorage-set user_settings '{"theme":"dark","language":"en"}'
 ```
 
-### Delete Single Item
+### Eliminar un solo elemento
 
 ```bash
 pnpm exec playwright-cli localstorage-delete token
 ```
 
-### Clear All localStorage
+### Limpiar todo localStorage
 
 ```bash
 pnpm exec playwright-cli localstorage-clear
 ```
 
-### Advanced: Multiple Operations
+### Avanzado: varias operaciones
 
-For complex scenarios like setting multiple values at once, use `run-code`:
+Para escenarios complejos, como establecer varios valores a la vez, usa `run-code`:
 
 ```bash
 pnpm exec playwright-cli run-code "async page => {
@@ -174,31 +174,31 @@ pnpm exec playwright-cli run-code "async page => {
 
 ## Session Storage
 
-### List All sessionStorage Items
+### Listar todos los elementos de sessionStorage
 
 ```bash
 pnpm exec playwright-cli sessionstorage-list
 ```
 
-### Get Single Value
+### Obtener un solo valor
 
 ```bash
 pnpm exec playwright-cli sessionstorage-get form_data
 ```
 
-### Set Value
+### Establecer un valor
 
 ```bash
 pnpm exec playwright-cli sessionstorage-set step 3
 ```
 
-### Delete Single Item
+### Eliminar un solo elemento
 
 ```bash
 pnpm exec playwright-cli sessionstorage-delete step
 ```
 
-### Clear sessionStorage
+### Limpiar sessionStorage
 
 ```bash
 pnpm exec playwright-cli sessionstorage-clear
@@ -206,7 +206,7 @@ pnpm exec playwright-cli sessionstorage-clear
 
 ## IndexedDB
 
-### List Databases
+### Listar las bases de datos
 
 ```bash
 pnpm exec playwright-cli run-code "async page => {
@@ -217,7 +217,7 @@ pnpm exec playwright-cli run-code "async page => {
 }"
 ```
 
-### Delete Database
+### Eliminar una base de datos
 
 ```bash
 pnpm exec playwright-cli run-code "async page => {
@@ -227,49 +227,49 @@ pnpm exec playwright-cli run-code "async page => {
 }"
 ```
 
-## Common Patterns
+## Patrones comunes
 
-### Authentication State Reuse
+### Reutilización del estado de autenticación
 
 ```bash
-# Step 1: Login and save state
+# Paso 1: iniciar sesión y guardar el estado
 pnpm exec playwright-cli open https://app.example.com/login
 pnpm exec playwright-cli snapshot
 pnpm exec playwright-cli fill e1 "user@example.com"
 pnpm exec playwright-cli fill e2 "password123"
 pnpm exec playwright-cli click e3
 
-# Save the authenticated state
+# Guardar el estado autenticado
 pnpm exec playwright-cli state-save auth.json
 
-# Step 2: Later, restore state and skip login
+# Paso 2: más tarde, restaurar el estado y omitir el inicio de sesión
 pnpm exec playwright-cli state-load auth.json
 pnpm exec playwright-cli open https://app.example.com/dashboard
-# Already logged in!
+# ¡Ya con la sesión iniciada!
 ```
 
-### Save and Restore Roundtrip
+### Ciclo de guardado y restauración
 
 ```bash
-# Set up authentication state
+# Configurar el estado de autenticación
 pnpm exec playwright-cli open https://example.com
 pnpm exec playwright-cli eval "() => { document.cookie = 'session=abc123'; localStorage.setItem('user', 'john'); }"
 
-# Save state to file
+# Guardar el estado en un archivo
 pnpm exec playwright-cli state-save my-session.json
 
-# ... later, in a new session ...
+# ... más tarde, en una sesión nueva ...
 
-# Restore state
+# Restaurar el estado
 pnpm exec playwright-cli state-load my-session.json
 pnpm exec playwright-cli open https://example.com
-# Cookies and localStorage are restored!
+# ¡Las cookies y localStorage se restauran!
 ```
 
-## Security Notes
+## Notas de seguridad
 
-- Never commit storage state files containing auth tokens
-- Add `*.auth-state.json` to `.gitignore`
-- Delete state files after automation completes
-- Use environment variables for sensitive data
-- By default, sessions run in-memory mode which is safer for sensitive operations
+- Nunca hagas commit de archivos de estado de almacenamiento que contengan tokens de autenticación
+- Agrega `*.auth-state.json` a `.gitignore`
+- Elimina los archivos de estado cuando termine la automatización
+- Usa variables de entorno para los datos sensibles
+- Por defecto, las sesiones se ejecutan en modo en memoria, que es más seguro para operaciones sensibles
