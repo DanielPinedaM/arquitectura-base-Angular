@@ -12,7 +12,7 @@ Esta skill tiene tres partes y cada una empieza en un título. La primera está 
 | Título y ruta archivo | ¿Qué define? | ¿Cuándo leerlo? |
 | --- | --- | --- |
 | [Depuración y automatización de frontend con `playwright-cli`](#depuración-y-automatización-de-frontend-con-playwright-cli) | Cómo usar los comandos para automatizar un proceso o solucionar un bug: el modo de ejecución (AUTOMATIZAR o DEPURAR), en qué orden, en qué momento, cuándo parar y qué está prohibido. Es el **criterio**, no el catálogo. | Siempre y primero: el modo se pregunta antes de ejecutar nada. |
-| [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md) | La lista y explicación de los comandos que permiten a la IA controlar el navegador — sintaxis, refs (`e15`), snapshots, sesiones. Es el **catálogo de comandos**: qué se puede teclear y con qué flags. | Antes de la primera invocación de la sesión, como indica la sección [3. Mecánica de playwright-cli](#3-mecánica-de-playwright-cli), y cada vez que necesites la sintaxis o las flags de un comando. |
+| [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md) | La lista y explicación de los comandos que permiten a la IA controlar el navegador — sintaxis, refs (`e15`), snapshots, sesiones. Es el **catálogo de comandos**: qué se puede teclear y con qué flags. | Antes de la primera invocación de la sesión, como indica la sección [2. Mecánica de playwright-cli](#2-mecánica-de-playwright-cli), y cada vez que necesites la sintaxis o las flags de un comando. |
 | [Tareas específicas](automatizacion-del-navegador.md#tareas-específicas) | El índice de las guías de `referencias/`: cada guía explica en detalle una tarea concreta que el catálogo solo resume o no cubre. | Cuando la tarea coincide con una fila de su tabla: la columna «¿Cuándo leerlo?» indica qué guía abrir. |
 
 La primera parte es el criterio y las otras dos son el catálogo. Son **DIFERENTES** y ninguna sustituye a la otra.
@@ -39,8 +39,8 @@ Hay exactamente dos modos y se comportan distinto:
 
 Los dos casos en que el modo DEPURAR escribe en el código fuente:
 
-1. **Instrumentación temporal** — `console.log` marcados con `// DBG-<id>`, y `throw` para forzar un `catch` cuando el fallo no se puede inducir desde la red. No cambia el comportamiento de la app, se aplica sin preguntar y **se borra en la misma respuesta** (sección [8.2 Borrar la instrumentación](#82-borrar-la-instrumentación)).
-2. **La corrección del bug** — solo la opción que el usuario autorizó al responder el `AskUserQuestion` de la sección [7.7 PARAR y preguntar — nunca corregir por tu cuenta](#77-parar-y-preguntar--nunca-corregir-por-tu-cuenta). Permanece en el repo.
+1. **Instrumentación temporal** — `console.log` marcados con `// DBG-<id>`, y `throw` para forzar un `catch` cuando el fallo no se puede inducir desde la red. No cambia el comportamiento de la app, se aplica sin preguntar y **se borra en la misma respuesta** (sección [7.2 Borrar la instrumentación](#72-borrar-la-instrumentación)).
+2. **La corrección del bug** — solo la opción que el usuario autorizó al responder el `AskUserQuestion` de la sección [6.7 PARAR y preguntar — nunca corregir por tu cuenta](#67-parar-y-preguntar--nunca-corregir-por-tu-cuenta). Permanece en el repo.
 
 Cualquier otra edición está prohibida, incluidos los bugs que encuentres de paso: repórtalos y sigue con el autorizado.
 
@@ -51,32 +51,9 @@ La pregunta lleva dos opciones, cada una con lo que ese modo implica de verdad �
 - **AUTOMATIZAR** — ejecuta el flujo de punta a punta y reporta el estado final. No toca el código ni diagnostica.
 - **DEPURAR** — reproduce el fallo, observa, instrumenta si hace falta, y **para** a preguntar antes de aplicar cualquier corrección.
 
-Las dos preguntas de entorno del paso 2 de la sección [4. Detectar el entorno (nunca asumirlo)](#4-detectar-el-entorno-nunca-asumirlo) son independientes de esta y llegan después.
+Las dos preguntas de entorno del paso 2 de la sección [3. Detectar el entorno (nunca asumirlo)](#3-detectar-el-entorno-nunca-asumirlo) son independientes de esta y llegan después.
 
-## 2. Ante ambigüedad, detente y pregunta — nunca asumas
-
-Se aplica **siempre, en los dos modos y en cualquier paso**, desde antes de arrancar nada hasta la limpieza final. Si —leyendo, editando o creando código, ejecutando el flujo o interpretando estas mismas reglas— aparece una ambigüedad, un error, una limitación, una contradicción, un solapamiento de ideas, un caso que las reglas no contemplan, un conflicto entre dos reglas o cualquier duda técnica que pueda cambiar el resultado, tienes **PROHIBIDO** resolverlo por tu cuenta y seguir adelante. Usa `AskUserQuestion`:
-
-1. **Para** en ese punto exacto. No generes ni edites nada más relacionado con esa duda hasta tener la respuesta.
-2. **Explica la duda:** en qué consiste, y por qué la información disponible no basta para resolverla.
-3. **Formúlala como pregunta explícita**, con:
-   - Dos o más opciones concretas, cada una con su consecuencia real (qué cambia, qué más podría romper).
-   - Una marcada como **recomendada**, con el motivo.
-   - Una opción abierta del tipo "Otra — la describo yo", para que el usuario proponga su propio enfoque si ninguna encaja.
-4. **Espera la respuesta** y aplica solo la opción elegida.
-
-Ninguna sección de este documento te autoriza a rellenar vacíos, inventar comportamiento, deducir requisitos ni tomar decisiones de diseño que no estén especificadas explícitamente.
-
-Los momentos en que preguntar ya está fijado por el procedimiento son casos particulares de esta regla, no la lista completa de cuándo aplicarla:
-
-1. **El modo** — sección [1. Elegir el modo — pregúntalo antes de ejecutar nada](#1-elegir-el-modo--pregúntalo-antes-de-ejecutar-nada).
-2. **El entorno de ejecución y el entorno del build** — sección [4. Detectar el entorno (nunca asumirlo)](#4-detectar-el-entorno-nunca-asumirlo), paso 2.
-3. **El usuario y la contraseña del login** — sección [5. Login — pide usuario y contraseña, nunca los inventes](#5-login--pide-usuario-y-contraseña-nunca-los-inventes), paso 1.
-4. **El diagnóstico antes de corregir** — sección [7.7 PARAR y preguntar — nunca corregir por tu cuenta](#77-parar-y-preguntar--nunca-corregir-por-tu-cuenta).
-5. **El fallo del linter** — sección [8.3 Ejecutar el linter](#83-ejecutar-el-linter).
-6. **El fallo del build** — sección [8.4 Ejecutar el build](#84-ejecutar-el-build).
-
-## 3. Mecánica de playwright-cli
+## 2. Mecánica de playwright-cli
 
 Antes de la primera invocación de esta sesión, en este orden:
 
@@ -95,15 +72,15 @@ Antes de la primera invocación de esta sesión, en este orden:
 **Ignora la sección [Instalación](automatizacion-del-navegador.md#instalación) del título [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md).** Es documentación de cómo instalarlo con `pnpm add -D @playwright/cli@latest`, y aquí ya está instalado. Reinstalarlo está **prohibido**: traería una versión distinta de la que fija `pnpm-lock.yaml`, con otros comandos y otras flags, y el diagnóstico dejaría de ser reproducible. Lo mismo vale para `pnpm dlx`, `npx` y `bunx`, que resuelven el paquete fuera del lockfile.
 
 - Si `--help` no imprime la lista de comandos → faltan las dependencias del proyecto: `pnpm install`, nunca `pnpm add` ni `npm install -g`. Júzgalo por la salida, no por el código de salida: en Windows `--help` imprime la ayuda correcta y aun así termina en `127` con un `Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)`; eso no es un fallo y no justifica reinstalar nada.
-- Si avisa de que hay una versión más nueva → **no actualices**: subir la versión es tocar las dependencias del proyecto, y la sección [9. Límites](#9-límites) lo prohíbe sin preguntar antes.
+- Si avisa de que hay una versión más nueva → **no actualices**: subir la versión es tocar las dependencias del proyecto, y la sección [8. Límites](#8-límites) lo prohíbe sin preguntar antes.
 
 ### Los comandos de esta parte son ejemplos, no una lista blanca
 
 Los que aparecen aquí —`open`, `snapshot`, `click`, `console`, `requests`, `request`, `eval`, `screenshot`, `route`, `close`— resuelven la mayoría de los casos, nada más. Si necesitas otro, **búscalo en el título [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md) o en `pnpm exec playwright-cli --help` y ejecútalo** sin pedir permiso: usar el comando adecuado siempre es mejor que forzar uno de estos ejemplos.
 
-Lo único que fija esta parte es **cuáles usar en cada momento**: qué mirar primero al depurar, en la sección [7.2 Observar desde fuera (antes de tocar el código)](#72-observar-desde-fuera-antes-de-tocar-el-código), y qué no aporta nada cuando solo te piden ejecutar un flujo, en la sección [6. Modo AUTOMATIZAR](#6-modo-automatizar).
+Lo único que fija esta parte es **cuáles usar en cada momento**: qué mirar primero al depurar, en la sección [6.2 Observar desde fuera (antes de tocar el código)](#62-observar-desde-fuera-antes-de-tocar-el-código), y qué no aporta nada cuando solo te piden ejecutar un flujo, en la sección [5. Modo AUTOMATIZAR](#5-modo-automatizar).
 
-## 4. Detectar el entorno (nunca asumirlo)
+## 3. Detectar el entorno (nunca asumirlo)
 
 El proyecto puede ser de cualquier framework. Deduce, no adivines:
 
@@ -129,14 +106,14 @@ curl -sS -o /dev/null -w "%{http_code}" http://localhost:<puerto>
 ```
 
 - **La conexión falla** → el puerto está libre. Sigue con el paso 2.
-- **Responde algo** → hay un proceso escuchando ahí. **Deténlo** con `netstat` y `taskkill` como en el paso 3 de la sección [8.1 Cerrar los procesos que abriste](#81-cerrar-los-procesos-que-abriste), repite el `curl` hasta que la conexión falle y sigue con el paso 2.
+- **Responde algo** → hay un proceso escuchando ahí. **Deténlo** con `netstat` y `taskkill` como en el paso 3 de la sección [7.1 Cerrar los procesos que abriste](#71-cerrar-los-procesos-que-abriste), repite el `curl` hasta que la conexión falle y sigue con el paso 2.
 
 **Que hubiera algo corriendo no te salta ningún paso**: del 2 al 5 se ejecutan completos. Ese proceso lo levantó otra sesión o el propio usuario, así que no sabes con qué entorno arrancó ni si su build corresponde al código actual, y todo lo que observes contra él es un diagnóstico falso.
 
 **2. Pregunta con `AskUserQuestion` qué entornos usar**, antes de empezar a ejecutar el modo AUTOMATIZAR o DEPURAR. Son **dos preguntas DIFERENTES**, cada una con sus opciones y su respuesta, y una no se deduce de la otra:
 
 1. **Qué entorno se ejecuta** — el dev server del paso 3.
-2. **A qué entorno se le hace el build** — la sección [8.4 Ejecutar el build](#84-ejecutar-el-build).
+2. **A qué entorno se le hace el build** — la sección [7.4 Ejecutar el build](#74-ejecutar-el-build).
 
 **No elijas los entornos por tu cuenta**, ni siquiera cuando uno parezca el obvio. Las opciones salen de los scripts del `package.json` —**no asumas que existe `dev` ni `start`, ni un `build` a secas**—, con el nombre exacto del script como etiqueta:
 
@@ -166,15 +143,15 @@ curl -sS --retry 60 --retry-delay 2 --retry-connrefused -o /dev/null http://loca
 pnpm exec playwright-cli open --headed http://localhost:<puerto>
 ```
 
-Después va el login de la sección [5. Login — pide usuario y contraseña, nunca los inventes](#5-login--pide-usuario-y-contraseña-nunca-los-inventes), y solo entonces el procedimiento del modo elegido.
+Después va el login de la sección [4. Login — pide usuario y contraseña, nunca los inventes](#4-login--pide-usuario-y-contraseña-nunca-los-inventes), y solo entonces el procedimiento del modo elegido.
 
-**7. Ciérralo todo antes de terminar la respuesta**, sin esperar a que el usuario lo pida: nada tuyo queda corriendo entre turnos. El procedimiento está en la sección [8.1 Cerrar los procesos que abriste](#81-cerrar-los-procesos-que-abriste) y es obligatorio.
+**7. Ciérralo todo antes de terminar la respuesta**, sin esperar a que el usuario lo pida: nada tuyo queda corriendo entre turnos. El procedimiento está en la sección [7.1 Cerrar los procesos que abriste](#71-cerrar-los-procesos-que-abriste) y es obligatorio.
 
 Si el usuario sigue con el mismo bug en el turno siguiente, vuelves a arrancarlo desde el paso 1 reutilizando el entorno que ya eligió: arrancar de nuevo cuesta segundos; un proceso huérfano ocupando el puerto cuesta un diagnóstico falso.
 
-## 5. Login — pide usuario y contraseña, nunca los inventes
+## 4. Login — pide usuario y contraseña, nunca los inventes
 
-Se ejecuta **siempre** y va justo aquí por dos motivos de orden: necesita el navegador ya abierto sobre la app —paso 6 de la sección [4. Detectar el entorno (nunca asumirlo)](#4-detectar-el-entorno-nunca-asumirlo)— y la sesión que deja abierta es la que necesitan las pantallas protegidas del modo que venga después.
+Se ejecuta **siempre** y va justo aquí por dos motivos de orden: necesita el navegador ya abierto sobre la app —paso 6 de la sección [3. Detectar el entorno (nunca asumirlo)](#3-detectar-el-entorno-nunca-asumirlo)— y la sesión que deja abierta es la que necesitan las pantallas protegidas del modo que venga después.
 
 Las credenciales se piden por dos razones:
 
@@ -185,7 +162,7 @@ Las credenciales se piden por dos razones:
 
 Usa los dos valores **tal cual los escribió**: sin recortar espacios, sin cambiar mayúsculas, sin completar dominios ni prefijos. Y no los propagues: la contraseña no va al reporte, ni a un `console.log`, ni a un `eval` que la imprima; cuando tengas que mencionarla, redáctala.
 
-Si el usuario elige cancelar, no lances el flujo: cierra navegador y dev server siguiendo la sección [8.1 Cerrar los procesos que abriste](#81-cerrar-los-procesos-que-abriste) y dilo.
+Si el usuario elige cancelar, no lances el flujo: cierra navegador y dev server siguiendo la sección [7.1 Cerrar los procesos que abriste](#71-cerrar-los-procesos-que-abriste) y dilo.
 
 **2. Haz el login por la interfaz**, como lo haría el usuario: no hay atajo, esa pantalla es parte de la app que se está probando. La ruta de la pantalla de login sale de la configuración de rutas del proyecto, no se asume; y los refs de los dos campos y del botón salen del `snapshot`, nunca de un selector inventado.
 
@@ -201,30 +178,30 @@ pnpm exec playwright-cli snapshot                          # confirma que entras
 
 **4. Cuando el login no es exitoso, repórtalo y para.** No lo es cuando, después de enviar el formulario, el `snapshot` sigue mostrando la pantalla de login, aparece un mensaje de error, o no aparece nada de la app autenticada. El reporte lleva evidencia, no interpretación: en qué ruta quedó el navegador, qué muestra el `snapshot` y qué mensaje de error apareció, con la contraseña redactada. Seguir el flujo sin sesión o falsificarla está **prohibido** (paso 3).
 
-Si el login era el flujo bajo investigación, el fallo ya está reproducido: continúa con la sección [7. Modo DEPURAR](#7-modo-depurar) —esto *es* el bug, no un obstáculo—. Si solo era el trámite previo para llegar a él, no puedes saber desde el navegador si falló lo que se escribió o falló la app, y las dos salidas llevan a sitios distintos: aplica la sección [2. Ante ambigüedad, detente y pregunta — nunca asumas](#2-ante-ambigüedad-detente-y-pregunta--nunca-asumas) y deja que el modo en que estés fije qué opciones entran en esa pregunta.
+Si el login era el flujo bajo investigación, el fallo ya está reproducido: continúa con la sección [6. Modo DEPURAR](#6-modo-depurar) —esto *es* el bug, no un obstáculo—. Si solo era el trámite previo para llegar a él, no puedes saber desde el navegador si falló lo que se escribió o falló la app, y las dos salidas llevan a sitios distintos: pregunta con `AskUserQuestion` y deja que el modo en que estés fije qué opciones entran en esa pregunta.
 
-## 6. Modo AUTOMATIZAR
+## 5. Modo AUTOMATIZAR
 
 Ejecutar el flujo, nada más. **No se diagnostica** (ver la tabla de la [sección 1](#1-elegir-el-modo--pregúntalo-antes-de-ejecutar-nada)): aquí solo añade ruido a un flujo que se pidió *ejecutar*, no auditar.
 
 1. Abre la app y toma un `snapshot` para obtener los refs.
 2. Ejecuta el flujo completo de punta a punta con los comandos de interacción. Re-snapshot después de cada navegación o cambio grande del DOM: los refs se invalidan.
 3. Reporta: pasos ejecutados y estado final, leído del último `snapshot`.
-4. Cierra navegador y dev server siguiendo la sección [8.1 Cerrar los procesos que abriste](#81-cerrar-los-procesos-que-abriste) antes de entregar el reporte.
+4. Cierra navegador y dev server siguiendo la sección [7.1 Cerrar los procesos que abriste](#71-cerrar-los-procesos-que-abriste) antes de entregar el reporte.
 
 Única excepción: que el usuario pida explícitamente una captura ("toma un screenshot de la pantalla de X"). Entonces el screenshot *es* el encargo, no diagnóstico: tómalo y sigue.
 
 Si el flujo se rompe, no lo investigues ni lo arregles por tu cuenta —eso ya es depurar—: reporta en qué paso se rompió y qué esperabas que pasara, y pregunta si quiere pasar a modo DEPURAR.
 
-## 7. Modo DEPURAR
+## 6. Modo DEPURAR
 
 El orden importa. Cada paso descarta hipótesis antes de tocar código.
 
-### 7.1 Reproducir
+### 6.1 Reproducir
 
 Ejecuta el flujo hasta el punto de fallo. Si no puedes reproducirlo, dilo y pide los pasos exactos en lugar de instrumentar a ciegas.
 
-### 7.2 Observar desde fuera (antes de tocar el código)
+### 6.2 Observar desde fuera (antes de tocar el código)
 
 La mayoría de los bugs se identifican aquí:
 
@@ -244,7 +221,7 @@ pnpm exec playwright-cli screenshot        # bugs visuales o de maquetación
 
 **Solo pasa a instrumentar el código si esto no basta.**
 
-### 7.3 Aislar frontend vs backend
+### 6.3 Aislar frontend vs backend
 
 Si el fallo involucra una API, repite la petición desde la terminal con `curl`, copiando el método, el cuerpo y los headers de auth exactos que te devolvieron `request <n>` y `request-body <n>`:
 
@@ -253,7 +230,7 @@ Si el fallo involucra una API, repite la petición desde la terminal con `curl`,
 
 Prueba los tres casos cuando apliquen: caso feliz, datos inválidos (400/422), y sin token de auth (401/403).
 
-### 7.4 Inspeccionar `node_modules` (opcional)
+### 6.4 Inspeccionar `node_modules` (opcional)
 
 Solo aporta cuando el bug apunta a una librería o dependencia; si el fallo está en el código del proyecto, sáltalo. Se lee para:
 
@@ -262,9 +239,9 @@ Solo aporta cuando el bug apunta a una librería o dependencia; si el fallo est�
 
 **Está prohibido leer `node_modules` por completo**: llena el contexto de la IA y consume muchos tokens. Lee solo las dependencias relacionadas con el bug.
 
-**Puedes leerlo, pero NO lo modifiques.** Es código de terceros que instala el gestor de paquetes: un cambio ahí no queda en el repo, no lo ve el resto del equipo y lo pisa el gestor en cuanto vuelva a resolver las dependencias. Si el diagnóstico apunta a una librería, eso se lleva a la pregunta de la sección [7.7 PARAR y preguntar — nunca corregir por tu cuenta](#77-parar-y-preguntar--nunca-corregir-por-tu-cuenta).
+**Puedes leerlo, pero NO lo modifiques.** Es código de terceros que instala el gestor de paquetes: un cambio ahí no queda en el repo, no lo ve el resto del equipo y lo pisa el gestor en cuanto vuelva a resolver las dependencias. Si el diagnóstico apunta a una librería, eso se lleva a la pregunta de la sección [6.7 PARAR y preguntar — nunca corregir por tu cuenta](#67-parar-y-preguntar--nunca-corregir-por-tu-cuenta).
 
-### 7.5 Instrumentar con console.log temporal
+### 6.5 Instrumentar con console.log temporal
 
 **Formato obligatorio:**
 
@@ -311,7 +288,7 @@ Instrumenta el **camino sospechoso**, no el archivo entero: un log de más entie
 
 Después de cada tanda de instrumentación: recarga, repite el flujo y lee `pnpm exec playwright-cli console`. Ajusta y repite: es un ciclo, no un volcado único.
 
-### 7.6 Forzar la rama de error
+### 6.6 Forzar la rama de error
 
 Para probar el `catch` y no solo el `try`, **prefiere forzar el fallo desde la red**, sin tocar el código:
 
@@ -325,21 +302,26 @@ El `--status` de error es obligatorio: sin él `route` responde **200** y el flu
 
 Modifica el código para forzar un `throw` **solo** cuando el fallo no se pueda inducir desde fuera, y solo en el `catch` del flujo bajo investigación, no en todos los del proyecto.
 
-### 7.7 PARAR y preguntar — nunca corregir por tu cuenta
+### 6.7 PARAR y preguntar — nunca corregir por tu cuenta
 
-Cuando tengas el diagnóstico, **detente**: no apliques la corrección. Usa `AskUserQuestion` como indica la sección [2. Ante ambigüedad, detente y pregunta — nunca asumas](#2-ante-ambigüedad-detente-y-pregunta--nunca-asumas): la explicación es la del bug —archivo, línea, causa raíz y la evidencia que lo demuestra (el log, el status HTTP, el error de consola)— y las opciones son **mínimo 2 soluciones**.
+Cuando tengas el diagnóstico, **detente**: no apliques la corrección. Usa `AskUserQuestion` con:
+
+- Una explicación del bug: archivo, línea, causa raíz y la evidencia que lo demuestra (el log, el status HTTP, el error de consola).
+- **Mínimo 2 opciones de solución**, cada una con su consecuencia real (alcance del cambio, qué más podría romper).
+- Una marcada como **recomendada**, con el motivo.
+- Una opción final del tipo "Otra — la describo yo", para que el usuario proponga su propio enfoque.
 
 Un diagnóstico sin evidencia no es un diagnóstico. Si no puedes señalar el log o la respuesta HTTP que lo prueba, sigue depurando en lugar de preguntar.
 
-### 7.8 Corregir y verificar
+### 6.8 Corregir y verificar
 
 Aplica solo la opción elegida. Después, vuelve a ejecutar el flujo completo con playwright-cli: interacción, `console error` limpio, `requests` con el status esperado, y screenshot final. Repite hasta que pase. Un "ya debería funcionar" sin ejecución no cuenta como verificación.
 
-## 8. Limpieza y verificación obligatorias
+## 7. Limpieza y verificación obligatorias
 
 Se hace **en la misma respuesta**, antes de devolverle el turno al usuario. No en la siguiente, no "cuando termine el bug".
 
-### 8.1 Cerrar los procesos que abriste
+### 7.1 Cerrar los procesos que abriste
 
 En este orden:
 
@@ -351,7 +333,7 @@ En este orden:
 
    Si abriste sesiones con nombre o varias ventanas, `pnpm exec playwright-cli close-all`.
 
-2. **El dev server:** `TaskStop` con el `task_id` del paso 3 de la sección [4. Detectar el entorno (nunca asumirlo)](#4-detectar-el-entorno-nunca-asumirlo).
+2. **El dev server:** `TaskStop` con el `task_id` del paso 3 de la sección [3. Detectar el entorno (nunca asumirlo)](#3-detectar-el-entorno-nunca-asumirlo).
 
 3. **Verifica que murió de verdad**, no que "debería" haber muerto:
 
@@ -370,7 +352,7 @@ En este orden:
 
 Esto aplica **siempre**: también si abandonas el diagnóstico, si el arranque falló a medias, si el usuario cambia de tema, o si te quedas esperando su respuesta a un `AskUserQuestion`. Un dev server huérfano ocupa el puerto, así que el siguiente arranque falla o —peor— te conectas sin darte cuenta a la instancia vieja y depuras contra un build que ya no corresponde al código.
 
-### 8.2 Borrar la instrumentación
+### 7.2 Borrar la instrumentación
 
 ```bash
 grep -rn "DBG-<id>" . --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=.claude
@@ -386,7 +368,7 @@ Revisa el diff completo: lo único que debe quedar es la corrección autorizada.
 
 Reporta al usuario que la limpieza está verificada. Instrumentación olvidada en el repo es un fallo de la tarea, no un detalle menor.
 
-### 8.3 Ejecutar el linter
+### 7.3 Ejecutar el linter
 
 Va **antes** del build a propósito: tarda segundos en vez de minutos, así que si algo está mal te enteras sin esperar a que compile el proyecto entero.
 
@@ -396,7 +378,7 @@ Ni el script ni la configuración se asumen, se deducen leyendo: busca en los sc
 pnpm run <script-de-lint>
 ```
 
-**Si no hay script de lint ni fichero de configuración, ignóralo y salta al paso siguiente**: no es un fallo. Menciónalo en el reporte en una línea, para que el usuario sepa que ese control no se ejecutó. Lo que **no** puedes hacer es instalar ESLint ni crear una configuración para poder correrlo: eso es cambiar dependencias del proyecto, prohibido por la sección [9. Límites](#9-límites).
+**Si no hay script de lint ni fichero de configuración, ignóralo y salta al paso siguiente**: no es un fallo. Menciónalo en el reporte en una línea, para que el usuario sepa que ese control no se ejecutó. Lo que **no** puedes hacer es instalar ESLint ni crear una configuración para poder correrlo: eso es cambiar dependencias del proyecto, prohibido por la sección [8. Límites](#8-límites).
 
 #### Cómo leer y clasificar la salida — aplica al linter y al build
 
@@ -411,7 +393,7 @@ pnpm run <script-de-lint>
 
 Si la salida es larga, no la resumas de memoria: vuelve a leerla y cita el mensaje exacto.
 
-Cuando el linter o el build fallen, aplica la sección [7.7 PARAR y preguntar — nunca corregir por tu cuenta](#77-parar-y-preguntar--nunca-corregir-por-tu-cuenta) tal cual está escrita ahí. Lo único que estos dos pasos añaden es qué llevar a esa pregunta, porque su salida mezcla dos tipos de error:
+Cuando el linter o el build fallen, aplica la sección [6.7 PARAR y preguntar — nunca corregir por tu cuenta](#67-parar-y-preguntar--nunca-corregir-por-tu-cuenta) tal cual está escrita ahí. Lo único que estos dos pasos añaden es qué llevar a esa pregunta, porque su salida mezcla dos tipos de error:
 
 1. Los que **NO** están relacionados con el bug buscado por el usuario.
 2. Los que **SÍ** están relacionados con el bug buscado por el usuario.
@@ -420,11 +402,11 @@ Sepáralos revisando el working directory, nunca suponiendo: `git stash` y vuelv
 
 Lleva los dos tipos a la pregunta, en listas separadas, cada error con el archivo, la línea y el mensaje exacto de la salida. **Si un tipo no tiene errores, dilo y no inventes ninguno**: "no hay errores ajenos al bug buscado" y "no hay errores relacionados con el bug buscado" son las respuestas que corresponden cuando esa lista está vacía.
 
-Los errores del tipo 1 son trabajo fuera de la corrección autorizada: no los toques salvo que el usuario elija arreglarlos en esa pregunta, ver la sección [9. Límites](#9-límites).
+Los errores del tipo 1 son trabajo fuera de la corrección autorizada: no los toques salvo que el usuario elija arreglarlos en esa pregunta, ver la sección [8. Límites](#8-límites).
 
-### 8.4 Ejecutar el build
+### 7.4 Ejecutar el build
 
-El último control: con la instrumentación borrada y el linter ya resuelto, comprueba que el proyecto compila. El script de build es el del entorno que el usuario ya eligió en el paso 2 de la sección [4. Detectar el entorno (nunca asumirlo)](#4-detectar-el-entorno-nunca-asumirlo): aquí no se vuelve a preguntar ni se elige otro.
+El último control: con la instrumentación borrada y el linter ya resuelto, comprueba que el proyecto compila. El script de build es el del entorno que el usuario ya eligió en el paso 2 de la sección [3. Detectar el entorno (nunca asumirlo)](#3-detectar-el-entorno-nunca-asumirlo): aquí no se vuelve a preguntar ni se elige otro.
 
 **1. Busca la carpeta del build que le corresponde a este framework** — la que contiene los archivos compilados. Cada framework escribe en la suya y con su propio nombre: identifica qué framework usa el proyecto por las dependencias del `package.json`, y saca la ruta de su fichero de configuración o de la que el propio build imprime al terminar. **Nunca borres una carpeta que no hayas confirmado que es la del build de ese framework.**
 
@@ -438,9 +420,9 @@ pnpm run <script-de-build>
 
 Recorre y clasifica su salida con el apartado [Cómo leer y clasificar la salida](#cómo-leer-y-clasificar-la-salida--aplica-al-linter-y-al-build). Un build puede terminar sin fallar y aun así estar avisando de algo que rompiste: el dev server es más permisivo que el build, así que hay errores de tipos, plantillas o imports que solo aparecen aquí.
 
-## 9. Límites
+## 8. Límites
 
-- No escribas código de testing de Karma/Jasmine, Vitest, Jest, Cypress ni de otro framework de testing. Playwright Test sí, también cuando lo deduzcas de la petición aunque el usuario no lo pida explícitamente: es la excepción a no deducir requisitos (sección [2. Ante ambigüedad, detente y pregunta — nunca asumas](#2-ante-ambigüedad-detente-y-pregunta--nunca-asumas)) y a no modificar código (tabla de la [sección 1](#1-elegir-el-modo--pregúntalo-antes-de-ejecutar-nada)).
+- No escribas código de testing de Karma/Jasmine, Vitest, Jest, Cypress ni de otro framework de testing. Playwright Test sí, también cuando lo deduzcas de la petición aunque el usuario no lo pida explícitamente: es la excepción a no modificar código (tabla de la [sección 1](#1-elegir-el-modo--pregúntalo-antes-de-ejecutar-nada)).
 - No refactorices, renombres ni "mejores" código que no forma parte de la corrección autorizada.
 - No alteres el proyecto original —configuración, funcionalidad, maquetación, dependencias ni variables de entorno— por iniciativa propia. Cámbialo solo si el usuario lo pidió explícitamente, o si preguntaste antes y autorizó ese cambio.
 - No inventes la causa del bug. Si tras la instrumentación no está claro, reporta lo que descartaste y lo que falta por descartar.
