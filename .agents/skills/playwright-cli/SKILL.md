@@ -72,7 +72,7 @@ Antes de la primera invocación de esta sesión, en este orden:
 **Ignora la sección [Instalación](automatizacion-del-navegador.md#instalación) del título [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md).** Es documentación de cómo instalarlo con `pnpm add -D @playwright/cli@latest`, y aquí ya está instalado. Reinstalarlo está **prohibido**: traería una versión distinta de la que fija `pnpm-lock.yaml`, con otros comandos y otras flags, y el diagnóstico dejaría de ser reproducible. Lo mismo vale para `pnpm dlx`, `npx` y `bunx`, que resuelven el paquete fuera del lockfile.
 
 - Si `--help` no imprime la lista de comandos → faltan las dependencias del proyecto: `pnpm install`, nunca `pnpm add` ni `npm install -g`. Júzgalo por la salida, no por el código de salida: en Windows `--help` imprime la ayuda correcta y aun así termina en `127` con un `Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)`; eso no es un fallo y no justifica reinstalar nada.
-- Si avisa de que hay una versión más nueva → **no actualices**: subir la versión es tocar las dependencias del proyecto, y la sección [8. Límites](#8-límites) lo prohíbe sin preguntar antes.
+- Si avisa de que hay una versión más nueva → **no actualices**: subir la versión es tocar las dependencias del proyecto, y la sección [8. Reglas](#8-reglas) lo prohíbe sin preguntar antes.
 
 ### Los comandos de esta parte son ejemplos, no una lista blanca
 
@@ -378,7 +378,7 @@ Ni el script ni la configuración se asumen, se deducen leyendo: busca en los sc
 pnpm run <script-de-lint>
 ```
 
-**Si no hay script de lint ni fichero de configuración, ignóralo y salta al paso siguiente**: no es un fallo. Menciónalo en el reporte en una línea, para que el usuario sepa que ese control no se ejecutó. Lo que **no** puedes hacer es instalar ESLint ni crear una configuración para poder correrlo: eso es cambiar dependencias del proyecto, prohibido por la sección [8. Límites](#8-límites).
+**Si no hay script de lint ni fichero de configuración, ignóralo y salta al paso siguiente**: no es un fallo. Menciónalo en el reporte en una línea, para que el usuario sepa que ese control no se ejecutó. Lo que **no** puedes hacer es instalar ESLint ni crear una configuración para poder correrlo: eso es cambiar dependencias del proyecto, prohibido por la sección [8. Reglas](#8-reglas).
 
 #### Cómo leer y clasificar la salida — aplica al linter y al build
 
@@ -402,7 +402,7 @@ Sepáralos revisando el working directory, nunca suponiendo: `git stash` y vuelv
 
 Lleva los dos tipos a la pregunta, en listas separadas, cada error con el archivo, la línea y el mensaje exacto de la salida. **Si un tipo no tiene errores, dilo y no inventes ninguno**: "no hay errores ajenos al bug buscado" y "no hay errores relacionados con el bug buscado" son las respuestas que corresponden cuando esa lista está vacía.
 
-Los errores del tipo 1 son trabajo fuera de la corrección autorizada: no los toques salvo que el usuario elija arreglarlos en esa pregunta, ver la sección [8. Límites](#8-límites).
+Los errores del tipo 1 son trabajo fuera de la corrección autorizada: no los toques salvo que el usuario elija arreglarlos en esa pregunta, ver la sección [8. Reglas](#8-reglas).
 
 ### 7.4 Ejecutar el build
 
@@ -420,7 +420,7 @@ pnpm run <script-de-build>
 
 Recorre y clasifica su salida con el apartado [Cómo leer y clasificar la salida](#cómo-leer-y-clasificar-la-salida--aplica-al-linter-y-al-build). Un build puede terminar sin fallar y aun así estar avisando de algo que rompiste: el dev server es más permisivo que el build, así que hay errores de tipos, plantillas o imports que solo aparecen aquí.
 
-## 8. Límites
+## 8. Reglas
 
 - No escribas código de testing de Karma/Jasmine, Vitest, Jest, Cypress ni de otro framework de testing. Playwright Test sí, también cuando lo deduzcas de la petición aunque el usuario no lo pida explícitamente: es la excepción a no modificar código (tabla de la [sección 1](#1-elegir-el-modo--pregúntalo-antes-de-ejecutar-nada)).
 - No refactorices, renombres ni "mejores" código que no forma parte de la corrección autorizada.
