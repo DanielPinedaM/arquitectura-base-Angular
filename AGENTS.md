@@ -48,22 +48,19 @@ Si detectas un error, una inconsistencia o una ambigüedad, o tienes alguna duda
 
 * NO establezcas explícitamente `changeDetection: ChangeDetectionStrategy.OnPush`. `OnPush` es el valor por defecto.
 
-## Usar Angular 22 Moderno, **NUNCA** Legacy
-* Usar `input()` y `output()` con signals importados desde `import { input, output } from '@angular/core'`. NO los decoradores `@Input()` ni `@Output()`
+## Usar Angular Moderno, **NUNCA** Legacy
+| Angular moderno | Angular legacy |
+| --- | --- |
+| `input()` y `output()` con signals, importados desde `import { input, output } from '@angular/core'` | Decoradores `@Input()` y `@Output()` |
+| `model()` para propiedades con two-way binding con la sintaxis `[(prop)]` | Combinar `input()` con `output()` |
+| Standalone components | `NgModules` y `app.module.ts` |
+| `@Component({})` sin `standalone: true`, porque ese es el valor por defecto | `@Component({standalone: true })` |
+| Function interceptors | Class-based interceptors |
+| **Control Flow Directives:** `@for`, `@if`, `@switch`, `@case`, `@default` | `*ngFor`, `*ngIf`, `ngSwitch` |
+| Inyección de dependencias con `inject()` | Constructor injection, salvo la excepción de `@Injectable` |
+| **Servicios singleton:** `@Service()`. Es el equivalente moderno y conciso, ya provee la instancia como singleton en root por defecto, sin configuración extra | `@Injectable({providedIn: 'root'})` |
 
-* Usar `model()` para propiedades con two-way binding con la sintaxis `[(prop)]`, en lugar de combinar `input()` con `output()`
-
-* Usar standalone components, no `NgModules`
-
-* No escribir `@Component({standalone: true })` porque ese es el valor por defecto.
-
-* Usar function interceptors (no class-based interceptors)
-
-* **Control Flow Directives:** `@for`, `@if`, `@switch`, `@case`, `@default` (no `*ngFor`, `*ngIf`, `ngSwitch`)
-
-* Inyección de dependencias con `inject()` (no constructor injection)
-
-* **Servicios singleton:** usar `@Service()` en vez de `@Injectable({providedIn: 'root'})`. `@Service()` es el equivalente moderno y conciso, ya provee la instancia como singleton en root por defecto, sin configuración extra. Reservar `@Injectable` solo para casos avanzados (constructor injection, useClass/useValue/useFactory, scopes distintos a root).
+**Excepción:** reservar `@Injectable` solo para casos avanzados (constructor injection, `useClass` / `useValue` / `useFactory`, scopes distintos a root).
 
 ## Formularios
 * Usar signal forms importado desde `@angular/forms/signals` junto con los componentes UI de formularios de Spartan NG ubicados en `src\shared\design\ui\spartan-ng\form`
