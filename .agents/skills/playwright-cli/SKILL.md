@@ -440,7 +440,7 @@ Recorre y clasifica su salida con el apartado [Cómo leer y clasificar la salida
 
 ## 9. Límites
 
-- No escribas tests de Jest, Vitest, Cypress ni Playwright Test.
+- No escribas código de testing de Karma/Jasmine, Vitest, Jest, Cypress ni de otro framework de testing. Playwright Test sí, también cuando lo deduzcas de la petición aunque el usuario no lo pida explícitamente: es la excepción a no deducir requisitos (sección [2. Ante ambigüedad, detente y pregunta — nunca asumas](#2-ante-ambigüedad-detente-y-pregunta--nunca-asumas)) y a no modificar código (tabla de la [sección 1](#1-elegir-el-modo--pregúntalo-antes-de-ejecutar-nada)).
 - No refactorices, renombres ni "mejores" código que no forma parte de la corrección autorizada.
 - No alteres el proyecto original —configuración, funcionalidad, maquetación, dependencias ni variables de entorno— por iniciativa propia. Cámbialo solo si el usuario lo pidió explícitamente, o si preguntaste antes y autorizó ese cambio.
 - No inventes la causa del bug. Si tras la instrumentación no está claro, reporta lo que descartaste y lo que falta por descartar.
