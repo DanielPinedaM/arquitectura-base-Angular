@@ -16,7 +16,7 @@ Cuando el MCP server está habilitado, los agentes de IA tienen acceso a las sig
 | `list_projects`             | Lista todas las aplicaciones y librerías del workspace leyendo `angular.json`.                                         |
 | `onpush_zoneless_migration` | Analiza el código y proporciona un plan para migrarlo a la change detection `OnPush` (requisito previo para zoneless). |
 | `run_target`                | Ejecuta un target configurado.                                                                                         |
-| `search_documentation`      | Busca en la documentación oficial en `https://angular.dev`.                                                            |
+| `search_documentation`      | Busca en la documentación oficial en `https://angular.dev/llms.txt`.                                                   |
 
 ## Configuración
 
