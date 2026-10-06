@@ -349,7 +349,7 @@ Reglas:
 
 ### 2.3 Generar varios escenarios
 
-Repite 2.2 sobre los escenarios objetivo de uno en uno, reiniciando el seed entre cada uno para que cada prueba parta de una página limpia. Asegúrate de que cada ejecución de prueba esté detenida antes de iniciar la siguiente.
+Repite [2.2](#22-generar-un-escenario) sobre los escenarios objetivo de uno en uno, reiniciando el seed entre cada uno para que cada prueba parta de una página limpia. Asegúrate de que cada ejecución de prueba esté detenida antes de iniciar la siguiente.
 
 ### 2.4 Ejecutar las pruebas generadas
 
@@ -359,7 +359,7 @@ Después de la generación, ejecuta las pruebas nuevas una vez:
 PLAYWRIGHT_HTML_OPEN=never pnpm exec playwright test tests/<group>/<scenario>.spec.ts
 ```
 
-Cualquier fallo pasa a la Sección 3.
+Cualquier fallo pasa a la [Sección 3](#3-reparar).
 
 ---
 
