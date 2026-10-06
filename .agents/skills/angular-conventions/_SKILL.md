@@ -69,7 +69,7 @@ Al leer la skill encontrara subtitulos con una lista de enlaces de referencias. 
 
 # Tabla de Contenido
 
-# INCOMPLETO - aqui me falta escribir la tabla de contenido con la estructura de archivos, carpetas y titulos de /rules - para tabla de contenido usar  enlace en línea con ruta relativa ejemplo [angular-animations.md](references/angular-animations.md)
+# INCOMPLETO - aqui me falta escribir la tabla de contenido con la estructura de archivos, carpetas y titulos de /rules - para tabla de contenido usar  enlace en línea con ruta relativa ejemplo [angular-animations.md](referencias/angular-animations.md)
 
 **esto es un ejemplo de como crear la tabla de contenido de la skill - NO representa la tabla de contenido real**
 

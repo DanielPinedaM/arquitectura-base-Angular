@@ -473,17 +473,17 @@ pnpm exec playwright-cli screenshot --filename=settings-after.png
 gh pr comment 123 --body "Settings page after the fix." --attach ./settings-after.png
 ```
 
-See [references/pr-attachments.md](references/pr-attachments.md) for alt text, inline references, size limits and attaching test artifacts from CI.
+See [referencias/pr-attachments.md](referencias/pr-attachments.md) for alt text, inline references, size limits and attaching test artifacts from CI.
 
 ## Specific tasks
 
-* **Running and Debugging Playwright tests** [references/playwright-tests.md](references/playwright-tests.md)
-* **Request mocking** [references/request-mocking.md](references/request-mocking.md)
-* **Running Playwright code** [references/running-code.md](references/running-code.md)
-* **Browser session management** [references/session-management.md](references/session-management.md)
-* **Storage state (cookies, localStorage)** [references/storage-state.md](references/storage-state.md)
-* **Test generation (plan / generate / heal)** [references/test-generation.md](references/test-generation.md)
-* **Tracing** [references/tracing.md](references/tracing.md)
-* **Video recording** [references/video-recording.md](references/video-recording.md)
-* **Attaching screenshots and videos to pull requests** [references/pr-attachments.md](references/pr-attachments.md)
-* **Inspecting element attributes** [references/element-attributes.md](references/element-attributes.md)
+* **Running and Debugging Playwright tests** [referencias/playwright-tests.md](referencias/playwright-tests.md)
+* **Request mocking** [referencias/request-mocking.md](referencias/request-mocking.md)
+* **Running Playwright code** [referencias/running-code.md](referencias/running-code.md)
+* **Browser session management** [referencias/session-management.md](referencias/session-management.md)
+* **Storage state (cookies, localStorage)** [referencias/storage-state.md](referencias/storage-state.md)
+* **Test generation (plan / generate / heal)** [referencias/test-generation.md](referencias/test-generation.md)
+* **Tracing** [referencias/tracing.md](referencias/tracing.md)
+* **Video recording** [referencias/video-recording.md](referencias/video-recording.md)
+* **Attaching screenshots and videos to pull requests** [referencias/pr-attachments.md](referencias/pr-attachments.md)
+* **Inspecting element attributes** [referencias/element-attributes.md](referencias/element-attributes.md)

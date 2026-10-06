@@ -76,7 +76,7 @@ Son casos particulares de esta regla, no la lista completa de cuándo aplicarla.
 
 Antes de la primera invocación de esta sesión, en este orden:
 
-1. **Consulta la skill oficial de Microsoft**, instalada en `.agents/skills/playwright-cli/SKILL.md` y `.agents/skills/playwright-cli/references/`. Ahí están los detalles de comandos, refs (`e15`), snapshots y sesiones.
+1. **Consulta la skill oficial de Microsoft**, instalada en `.agents/skills/playwright-cli/SKILL.md` y `.agents/skills/playwright-cli/referencias/`. Ahí están los detalles de comandos, refs (`e15`), snapshots y sesiones.
 
 2. **Ejecuta el `--help` del binario local**, siempre:
 
