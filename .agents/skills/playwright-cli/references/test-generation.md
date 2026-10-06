@@ -7,7 +7,7 @@ End-to-end workflow for authoring and maintaining Playwright tests with `playwri
 - **Generate** — turn a spec into Playwright test files. Update the spec if it's vague or stale.
 - **Heal** — diagnose failing tests, fix the code, reconcile the spec with reality.
 
-Plan / generate / heal lean on the same mechanic: run `npx playwright test --debug=cli` in the background, then `playwright-cli attach tw-XXXX` to drive the paused page interactively. See [playwright-tests.md](playwright-tests.md) for the debug/attach mechanics.
+Plan / generate / heal lean on the same mechanic: run `pnpm exec playwright test --debug=cli` in the background, then `pnpm exec playwright-cli attach tw-XXXX` to drive the paused page interactively. See [playwright-tests.md](playwright-tests.md) for the debug/attach mechanics.
 
 ---
 
@@ -17,22 +17,22 @@ Every action you perform with `playwright-cli` generates corresponding Playwrigh
 
 ```bash
 # Start a session
-playwright-cli open https://example.com/login
+pnpm exec playwright-cli open https://example.com/login
 
 # Take a snapshot to see elements
-playwright-cli snapshot
+pnpm exec playwright-cli snapshot
 # Output shows: e1 [textbox "Email"], e2 [textbox "Password"], e3 [button "Sign In"]
 
 # Fill form fields - generates code automatically
-playwright-cli fill e1 "user@example.com"
+pnpm exec playwright-cli fill e1 "user@example.com"
 # Ran Playwright code:
 # await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com');
 
-playwright-cli fill e2 "password123"
+pnpm exec playwright-cli fill e2 "password123"
 # Ran Playwright code:
 # await page.getByRole('textbox', { name: 'Password' }).fill('password123');
 
-playwright-cli click e3
+pnpm exec playwright-cli click e3
 # Ran Playwright code:
 # await page.getByRole('button', { name: 'Sign In' }).click();
 ```
@@ -45,7 +45,7 @@ Collect the generated code into a Playwright test:
 import { test, expect } from '@playwright/test';
 
 test('login flow', async ({ page }) => {
-  // Generated code from playwright-cli session:
+  // Generated code from pnpm exec playwright-cli session:
   await page.goto('https://example.com/login');
   await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com');
   await page.getByRole('textbox', { name: 'Password' }).fill('password123');
@@ -73,10 +73,10 @@ await page.locator('#submit-btn').click();
 Take snapshots to understand the page structure before recording actions:
 
 ```bash
-playwright-cli open https://example.com
-playwright-cli snapshot
+pnpm exec playwright-cli open https://example.com
+pnpm exec playwright-cli snapshot
 # Review the element structure
-playwright-cli click e5
+pnpm exec playwright-cli click e5
 ```
 
 ### Add assertions manually
@@ -89,7 +89,7 @@ Generated code captures actions but not assertions. Add expectations in your tes
 - `toBeChecked() / toBeUnchecked()` — checkbox state matches
 - `toMatchAriaSnapshot(snapshot)` — page (or locator) matches a partial accessibility snapshot
 
-Use `playwright-cli generate-locator <target>` to produce the locator expression for the assertion, and the snapshot/eval commands to capture the expected value.
+Use `pnpm exec playwright-cli generate-locator <target>` to produce the locator expression for the assertion, and the snapshot/eval commands to capture the expected value.
 
 When asserting text content, make sure that generated locator does not contain text from the element itself. `getByTestId()` or `getByLabel()` usually work well with asserting text. When locator is text-based, prefer `toBeVisible()` instead.
 
@@ -97,19 +97,19 @@ Snapshot to be matched does not have to contain all the information - only captu
 
 ```bash
 # Get a stable locator for an element ref to use in the assertion
-playwright-cli --raw generate-locator e5
+pnpm exec playwright-cli --raw generate-locator e5
 # getByRole('button', { name: 'Submit' })
 
 # Capture expected text content for toHaveText
-playwright-cli --raw eval "el => el.textContent" e5
+pnpm exec playwright-cli --raw eval "el => el.textContent" e5
 
 # Capture expected input value for toHaveValue/toBeEmpty
-playwright-cli --raw eval "el => el.value" e5
+pnpm exec playwright-cli --raw eval "el => el.value" e5
 
 # Capture expected aria snapshot for toMatchAriaSnapshot/toBeChecked
 # (whole page, or use a ref to scope to a region)
-playwright-cli --raw snapshot
-playwright-cli --raw snapshot e5
+pnpm exec playwright-cli --raw snapshot
+pnpm exec playwright-cli --raw snapshot e5
 ```
 
 ```typescript
@@ -150,13 +150,13 @@ Check the workspace has Playwright installed before anything else:
 ```bash
 # Either of these confirms a workspace:
 test -f playwright.config.ts || test -f playwright.config.js
-npx --no-install playwright --version
+pnpm exec playwright --version
 ```
 
 If there is no Playwright install, bootstrap one and let the user pick the defaults:
 
 ```bash
-npm init playwright@latest
+pnpm create playwright
 ```
 
 ### 1.2 Prerequisite: seed test
@@ -205,19 +205,19 @@ If no seed exists, create one that at least navigates to the app.
 Launch the app via the seed in the background and attach:
 
 ```bash
-PLAYWRIGHT_HTML_OPEN=never npx playwright test tests/seed.spec.ts --debug=cli
+PLAYWRIGHT_HTML_OPEN=never pnpm exec playwright test tests/seed.spec.ts --debug=cli
 # wait for "Debugging Instructions" and the session name tw-XXXX
-playwright-cli attach tw-XXXX
+pnpm exec playwright-cli attach tw-XXXX
 ```
 
 Resume so the seed runs, then probe the app:
 
 ```bash
-playwright-cli resume                   # resume so that seed test runs fully
-playwright-cli snapshot                 # inventory of interactive elements
-playwright-cli click e5                 # follow a flow
-playwright-cli eval "location.href"     # read URL / state
-playwright-cli show --annotate          # ask the user to point at something
+pnpm exec playwright-cli resume                   # resume so that seed test runs fully
+pnpm exec playwright-cli snapshot                 # inventory of interactive elements
+pnpm exec playwright-cli click e5                 # follow a flow
+pnpm exec playwright-cli eval "location.href"     # read URL / state
+pnpm exec playwright-cli show --annotate          # ask the user to point at something
 ```
 
 Map out:
@@ -293,8 +293,8 @@ Goal: take a spec file and produce Playwright test files. Optionally update the 
 For each target scenario, in sequence (never in parallel — scenarios share the seed session):
 
 ```bash
-PLAYWRIGHT_HTML_OPEN=never npx playwright test <seed-file> --debug=cli   # background
-playwright-cli attach tw-XXXX
+PLAYWRIGHT_HTML_OPEN=never pnpm exec playwright test <seed-file> --debug=cli   # background
+pnpm exec playwright-cli attach tw-XXXX
 # resume
 ```
 
@@ -305,10 +305,10 @@ Walk the scenario's `Steps:` one by one with `playwright-cli`, treating the spec
 Every action prints the equivalent Playwright TypeScript (see [How generation works](#0-how-generation-works)):
 
 ```bash
-playwright-cli snapshot                         # find refs
-playwright-cli fill e3 "John Doe"               # -> page.getByRole('textbox', {...}).fill(...)
-playwright-cli press Enter
-playwright-cli click e7
+pnpm exec playwright-cli snapshot                         # find refs
+pnpm exec playwright-cli fill e3 "John Doe"               # -> page.getByRole('textbox', {...}).fill(...)
+pnpm exec playwright-cli press Enter
+pnpm exec playwright-cli click e7
 ```
 
 For each `- expect:` bullet, add an explicit assertion. See [How generation works](#0-how-generation-works) for details.
@@ -356,7 +356,7 @@ Loop 2.2 over the targeted scenarios one at a time, restarting the seed between 
 After generation, run the new tests once:
 
 ```bash
-PLAYWRIGHT_HTML_OPEN=never npx playwright test tests/<group>/<scenario>.spec.ts
+PLAYWRIGHT_HTML_OPEN=never pnpm exec playwright test tests/<group>/<scenario>.spec.ts
 ```
 
 Any failure goes to Section 3.
@@ -370,7 +370,7 @@ Goal: fix failing tests, and update the spec if the app's intended behaviour cha
 ### 3.1 Find failing tests
 
 ```bash
-PLAYWRIGHT_HTML_OPEN=never npx playwright test
+PLAYWRIGHT_HTML_OPEN=never pnpm exec playwright test
 ```
 
 Record the list of failing `<file>:<line>` entries and process them one at a time. Do not attempt parallel fixes — shared state and the single CLI session make that fragile.
@@ -380,18 +380,18 @@ Record the list of failing `<file>:<line>` entries and process them one at a tim
 Run the single failing test in debug mode in the background, then attach:
 
 ```bash
-PLAYWRIGHT_HTML_OPEN=never npx playwright test tests/<group>/<scenario>.spec.ts:<line> --debug=cli
+PLAYWRIGHT_HTML_OPEN=never pnpm exec playwright test tests/<group>/<scenario>.spec.ts:<line> --debug=cli
 # wait for "Debugging Instructions" and the tw-XXXX session name
-playwright-cli attach tw-XXXX
+pnpm exec playwright-cli attach tw-XXXX
 ```
 
 The test is paused at the start. Step forward or run to until just before the failing action or assertion, then diagnose:
 
 ```bash
-playwright-cli snapshot                # did the element change / move / rename?
-playwright-cli console                 # app-side errors?
-playwright-cli requests                # failed request? wrong payload?
-playwright-cli show --annotate         # ask the user to point somewhere
+pnpm exec playwright-cli snapshot                # did the element change / move / rename?
+pnpm exec playwright-cli console                 # app-side errors?
+pnpm exec playwright-cli requests                # failed request? wrong payload?
+pnpm exec playwright-cli show --annotate         # ask the user to point somewhere
 ```
 
 Common causes: selector drift, new wrapper element, label/ARIA rename, timing (transition, async load), assertion text updated in the app, test data leaking between runs.
