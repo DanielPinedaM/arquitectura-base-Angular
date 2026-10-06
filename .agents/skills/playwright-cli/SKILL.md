@@ -476,13 +476,13 @@ Consulta [referencias/adjuntos-en-pull-requests.md](referencias/adjuntos-en-pull
 
 ## Tareas específicas
 
-* **Ejecutar y depurar pruebas de Playwright** [referencias/pruebas-de-playwright.md](referencias/pruebas-de-playwright.md)
-* **Mocking de peticiones** [referencias/mocking-de-peticiones.md](referencias/mocking-de-peticiones.md)
-* **Ejecutar código de Playwright** [referencias/ejecucion-de-codigo.md](referencias/ejecucion-de-codigo.md)
-* **Gestión de sesiones del navegador** [referencias/gestion-de-sesiones.md](referencias/gestion-de-sesiones.md)
-* **Estado de almacenamiento (cookies, localStorage)** [referencias/estado-de-almacenamiento.md](referencias/estado-de-almacenamiento.md)
-* **Generación de pruebas (planificar / generar / reparar)** [referencias/generacion-de-pruebas.md](referencias/generacion-de-pruebas.md)
-* **Tracing** [referencias/tracing.md](referencias/tracing.md)
-* **Grabación de video** [referencias/grabacion-de-video.md](referencias/grabacion-de-video.md)
-* **Adjuntar capturas de pantalla y videos a pull requests** [referencias/adjuntos-en-pull-requests.md](referencias/adjuntos-en-pull-requests.md)
-* **Inspeccionar los atributos de un elemento** [referencias/atributos-de-elementos.md](referencias/atributos-de-elementos.md)
+* [Ejecutar y depurar pruebas de Playwright](referencias/pruebas-de-playwright.md)
+* [Mocking de peticiones](referencias/mocking-de-peticiones.md)
+* [Ejecutar código de Playwright](referencias/ejecucion-de-codigo.md)
+* [Gestión de sesiones del navegador](referencias/gestion-de-sesiones.md)
+* [Estado de almacenamiento (cookies, localStorage)](referencias/estado-de-almacenamiento.md)
+* [Generación de pruebas (planificar / generar / reparar)](referencias/generacion-de-pruebas.md)
+* [Tracing](referencias/tracing.md)
+* [Grabación de video](referencias/grabacion-de-video.md)
+* [Adjuntar capturas de pantalla y videos a pull requests](referencias/adjuntos-en-pull-requests.md)
+* [Inspeccionar los atributos de un elemento](referencias/atributos-de-elementos.md)
