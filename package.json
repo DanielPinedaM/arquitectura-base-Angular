@@ -60,7 +60,7 @@
     "@angular/cli": "^22.0.3",
     "@angular/compiler-cli": "^22.0.2",
     "@eslint/js": "^10.0.1",
-    "@playwright/cli": "^0.1.18",
+    "@playwright/cli": "^0.1.22",
     "@spartan-ng/cli": "^1.0.4",
     "@types/crypto-js": "^4.2.2",
     "@types/file-saver": "^2.0.7",
