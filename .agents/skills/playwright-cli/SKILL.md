@@ -59,7 +59,7 @@ Antes de la primera invocación de esta sesión **consulta el catálogo de coman
 
 ### Los comandos de esta parte son ejemplos, no una lista blanca
 
-Los que aparecen aquí —`open`, `snapshot`, `click`, `console`, `requests`, `request`, `eval`, `screenshot`, `route`, `close`— resuelven la mayoría de los casos, nada más. Si necesitas otro, **búscalo en el título [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md) o en `pnpm exec playwright-cli --help` y ejecútalo** sin pedir permiso: usar el comando adecuado siempre es mejor que forzar uno de estos ejemplos.
+Los que aparecen aquí —`open`, `snapshot`, `click`, `console`, `requests`, `request`, `eval`, `screenshot`, `route`, `close`— resuelven la mayoría de los casos, nada más. Si necesitas otro, **búscalo en el título [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md) o en `pnpm exec playwright-cli --help` y ejecútalo**: usar el comando adecuado siempre es mejor que forzar uno de estos ejemplos.
 
 Lo único que fija esta parte es **cuáles usar en cada momento**: qué mirar primero al depurar, en la sección [6.2 Observar desde fuera (antes de tocar el código)](#62-observar-desde-fuera-antes-de-tocar-el-código), y qué no aporta nada cuando solo te piden ejecutar un flujo, en la sección [5. Modo AUTOMATIZAR](#5-modo-automatizar).
 
@@ -121,7 +121,7 @@ pnpm exec playwright-cli open --headed http://localhost:<puerto>
 
 Después va el login de la sección [4. Login — pide usuario y contraseña, nunca los inventes](#4-login--pide-usuario-y-contraseña-nunca-los-inventes), y solo entonces el procedimiento del modo elegido.
 
-**7. Ciérralo todo antes de terminar la respuesta**, sin esperar a que el usuario lo pida: nada tuyo queda corriendo entre turnos. El procedimiento está en la sección [7.1 Cerrar los procesos que abriste](#71-cerrar-los-procesos-que-abriste) y es obligatorio.
+**7. Ciérralo todo antes de terminar la respuesta**, sin esperar a que el usuario lo pida: nada tuyo queda corriendo entre turnos. El procedimiento está en la sección [7.1 Cerrar los procesos que abriste](#71-cerrar-los-procesos-que-abriste).
 
 Si el usuario sigue con el mismo bug en el turno siguiente, vuelves a arrancarlo desde el paso 1 reutilizando el entorno que ya eligió: arrancar de nuevo cuesta segundos; un proceso huérfano ocupando el puerto cuesta un diagnóstico falso.
 
