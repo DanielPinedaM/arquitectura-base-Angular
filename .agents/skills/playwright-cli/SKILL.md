@@ -13,7 +13,7 @@ Esta skill tiene tres partes y cada una empieza en un título. La primera está 
 | --- | --- | --- |
 | [Depuración y automatización de frontend con `playwright-cli`](#depuración-y-automatización-de-frontend-con-playwright-cli) | Cómo usar los comandos para automatizar un proceso o solucionar un bug: el modo de ejecución (AUTOMATIZAR o DEPURAR), en qué orden, en qué momento, cuándo parar y qué está prohibido. Es el **criterio**, no el catálogo. | Siempre y primero: el modo se pregunta antes de ejecutar nada. |
 | [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md) | La lista y explicación de los comandos que permiten a la IA controlar el navegador — sintaxis, refs (`e15`), snapshots, sesiones. Es el **catálogo de comandos**: qué se puede teclear y con qué flags. | Antes de la primera invocación de la sesión, como indica la sección [2. Mecánica de playwright-cli](#2-mecánica-de-playwright-cli), y cada vez que necesites la sintaxis o las flags de un comando. |
-| [Tareas específicas](automatizacion-del-navegador.md#tareas-específicas) | El índice de las guías de `referencias/`: cada guía explica en detalle una tarea concreta que el catálogo solo resume o no cubre. | Cuando la tarea coincide con una fila de su tabla: la columna «¿Cuándo leerlo?» indica qué guía abrir. |
+| [Tareas específicas](automatizacion-del-navegador.md#tareas-específicas) | El índice de las guías de [`referencias/`](referencias/): cada guía explica en detalle una tarea concreta que el catálogo solo resume o no cubre. | Cuando la tarea coincide con una fila de su tabla: la columna «¿Cuándo leerlo?» indica qué guía abrir. |
 
 La primera parte es el criterio y las otras dos son el catálogo. Son **DIFERENTES** y ninguna sustituye a la otra.
 
