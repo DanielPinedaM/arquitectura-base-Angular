@@ -97,7 +97,7 @@ curl -sS -o /dev/null -w "%{http_code}" http://localhost:<puerto>
 - **Entorno del build:** una opción por cada script que compile el proyecto. En la descripción, a qué entorno apunta.
 - **En las dos:** lo que implica cada script se deduce de lo que ejecuta y de la config del framework, nunca de su nombre; y la última opción es "Otra — la indico yo", para un script o unos flags que no estén en la lista.
 
-Pregunta también cuando en cualquiera de las dos solo haya un candidato: el usuario puede querer otro puerto u otra configuración. La única excepción es que ya te haya dicho en la conversación qué entorno quiere para esa pregunta concreta; entonces úsalo y dilo, sin volver a preguntar.
+Pregunta también cuando en cualquiera de las dos solo haya un candidato: el usuario puede querer otro puerto u otra configuración.
 
 **3. Arranca el script elegido en background** (`run_in_background: true`, nunca en foreground: el dev server no termina y bloquearía la sesión). **Anota el `task_id` que devuelve la llamada**: sin él no puedes cerrarlo en el paso 7.
 
