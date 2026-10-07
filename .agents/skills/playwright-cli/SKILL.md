@@ -55,24 +55,7 @@ Las dos preguntas de entorno del paso 2 de la sección [3. Detectar el entorno (
 
 ## 2. Mecánica de playwright-cli
 
-Antes de la primera invocación de esta sesión, en este orden:
-
-1. **Consulta el catálogo de comandos**, que viene de la skill oficial de Microsoft: el título [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md) y las guías de `referencias/` que lista [Tareas específicas](automatizacion-del-navegador.md#tareas-específicas).
-
-2. **Ejecuta el `--help` del binario local**, siempre:
-
-   ```bash
-   pnpm exec playwright-cli --help
-   ```
-
-### El binario ya está instalado — no lo instales
-
-`@playwright/cli` está declarado en las `devDependencies` del `package.json`, así que el binario ya existe en `node_modules/.bin/`. Por eso **todos** los comandos de este documento van con `pnpm exec` y nunca invocan `playwright-cli` a secas: es local del proyecto, no un comando global del `PATH`.
-
-**Ignora la sección [Instalación](automatizacion-del-navegador.md#instalación) del título [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md).** Es documentación de cómo instalarlo con `pnpm add -D @playwright/cli@latest`, y aquí ya está instalado. Reinstalarlo está **prohibido**: traería una versión distinta de la que fija `pnpm-lock.yaml`, con otros comandos y otras flags, y el diagnóstico dejaría de ser reproducible. Lo mismo vale para `pnpm dlx`, `npx` y `bunx`, que resuelven el paquete fuera del lockfile.
-
-- Si `--help` no imprime la lista de comandos → faltan las dependencias del proyecto: `pnpm install`, nunca `pnpm add` ni `npm install -g`. Júzgalo por la salida, no por el código de salida: en Windows `--help` imprime la ayuda correcta y aun así termina en `127` con un `Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)`; eso no es un fallo y no justifica reinstalar nada.
-- Si avisa de que hay una versión más nueva → **no actualices**: subir la versión es tocar las dependencias del proyecto, y la sección [8. Reglas](#8-reglas) lo prohíbe sin preguntar antes.
+Antes de la primera invocación de esta sesión **consulta el catálogo de comandos**, que viene de la skill oficial de Microsoft: el título [Automatización del navegador con playwright-cli](automatizacion-del-navegador.md) y las guías de `referencias/` que lista [Tareas específicas](automatizacion-del-navegador.md#tareas-específicas).
 
 ### Los comandos de esta parte son ejemplos, no una lista blanca
 
