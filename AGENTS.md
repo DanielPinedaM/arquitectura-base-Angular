@@ -59,13 +59,12 @@ Si detectas un error, una inconsistencia o una ambigüedad, o tienes alguna duda
 | **Control Flow Directives:** `@for`, `@if`, `@switch`, `@case`, `@default` | `*ngFor`, `*ngIf`, `ngSwitch` |
 | Inyección de dependencias con `inject()` | Constructor injection, salvo la excepción de `@Injectable` |
 | **Servicios singleton:** `@Service()`. Es el equivalente moderno y conciso, ya provee la instancia como singleton en root por defecto, sin configuración extra | `@Injectable({providedIn: 'root'})` |
+| Forms with signals | `ngModel` (Template-driven Forms), `FormGroup` (Reactive Forms), callback tipo `onChange`. |
 
 **Excepción:** reservar `@Injectable` solo para casos avanzados (constructor injection, `useClass` / `useValue` / `useFactory`, scopes distintos a root).
 
 ## Formularios
 * Usar signal forms importado desde `@angular/forms/signals` junto con los componentes UI de formularios de Spartan NG ubicados en `src\shared\design\ui\spartan-ng\form`
-
-* **PROHIBIDO** usar alternativas a signal forms: `ngModel` (Template-driven Forms), `FormGroup` (Reactive Forms), callback tipo `onChange`, etc.
 
 * Conectar el Zod schema con signal forms usando `import { validateStandardSchema } from '@angular/forms/signals'`, invocándolo dentro de la schema function, que es el callback que recibe `form()` como segundo argumento
 
