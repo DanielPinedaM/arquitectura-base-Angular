@@ -40,7 +40,7 @@ Hay exactamente dos modos y se comportan distinto:
 Los dos casos en que el modo DEPURAR escribe en el código fuente:
 
 1. **Instrumentación temporal** — `console.log` marcados con `// DBG-<id>`, y `throw` para forzar un `catch` cuando el fallo no se puede inducir desde la red. No cambia el comportamiento de la app, se aplica sin preguntar y **se borra en la misma respuesta** (sección [7.2 Borrar la instrumentación](#72-borrar-la-instrumentación)).
-2. **La corrección del bug** — solo la opción que el usuario autorizó al responder la pregunta de la sección [6.7 PARAR y preguntar — nunca corregir por tu cuenta](#67-parar-y-preguntar--nunca-corregir-por-tu-cuenta). Permanece en el repo.
+2. **La corrección del bug** — solo la opción que el usuario autorizó al responder la pregunta de la sección [6.7 PARAR y preguntar — nunca corregir por tu cuenta](#67-parar-y-preguntar--nunca-corregir-por-tu-cuenta). Permanece en el repositorio.
 
 Cualquier otra edición está prohibida, incluidos los bugs que encuentres de paso: repórtalos y sigue con el autorizado.
 
@@ -239,7 +239,7 @@ Solo aporta cuando el bug apunta a una librería o dependencia; si el fallo est�
 
 **Está prohibido leer `node_modules` por completo**: llena el contexto de la IA y consume muchos tokens. Lee solo las dependencias relacionadas con el bug.
 
-**Puedes leerlo, pero NO lo modifiques.** Es código de terceros que instala el gestor de paquetes: un cambio ahí no queda en el repo, no lo ve el resto del equipo y lo pisa el gestor en cuanto vuelva a resolver las dependencias. Si el diagnóstico apunta a una librería, eso se lleva a la pregunta de la sección [6.7 PARAR y preguntar — nunca corregir por tu cuenta](#67-parar-y-preguntar--nunca-corregir-por-tu-cuenta).
+**Puedes leerlo, pero NO lo modifiques.** Es código de terceros que instala el gestor de paquetes: un cambio ahí no queda en el repositorio, no lo ve el resto del equipo y lo pisa el gestor en cuanto vuelva a resolver las dependencias. Si el diagnóstico apunta a una librería, eso se lleva a la pregunta de la sección [6.7 PARAR y preguntar — nunca corregir por tu cuenta](#67-parar-y-preguntar--nunca-corregir-por-tu-cuenta).
 
 ### 6.5 Instrumentar con console.log temporal
 
@@ -255,7 +255,7 @@ Ejemplo real:
 console.log('[src/features/users/components/user-list/user-list.component.ts] [ngOnInit]:', this.users()); // DBG-a3f1
 ```
 
-`<id>` es un hash corto de 4 caracteres, el mismo para toda la sesión de depuración, para poder borrar todo después con un `grep`. Sin él, la instrumentación se queda en el repo.
+`<id>` es un hash corto de 4 caracteres, el mismo para toda la sesión de depuración, para poder borrar todo después con un `grep`. Sin él, la instrumentación se queda en el repositorio.
 
 Antes de instrumentar, ejecuta `git status`. Si el árbol está sucio, avisa al usuario: sin un diff limpio de referencia, no hay forma fiable de verificar la limpieza al final.
 
@@ -298,7 +298,7 @@ pnpm exec playwright-cli route "**<recurso>" --status=500 --body='{"error":"forz
 
 El `--status` de error es obligatorio: sin él `route` responde **200** y el flujo sigue por el camino feliz con un body raro, sin llegar nunca al `catch`.
 
-`route` no anula la petición: para simular una caída de red en lugar de una respuesta de error, usa `pnpm exec playwright-cli network-state-set offline` y restaura con `online`. Ambas cosas son reversibles, no dejan residuos en el repo y ejercitan el `catch` real.
+`route` no anula la petición: para simular una caída de red en lugar de una respuesta de error, usa `pnpm exec playwright-cli network-state-set offline` y restaura con `online`. Ambas cosas son reversibles, no dejan residuos en el repositorio y ejercitan el `catch` real.
 
 Modifica el código para forzar un `throw` **solo** cuando el fallo no se pueda inducir desde fuera, y solo en el `catch` del flujo bajo investigación, no en todos los del proyecto.
 
@@ -366,7 +366,7 @@ git diff
 
 Revisa el diff completo: lo único que debe quedar es la corrección autorizada. Si aparece cualquier `console.log` o cambio que no forma parte de ella, bórralo.
 
-Reporta al usuario que la limpieza está verificada. Instrumentación olvidada en el repo es un fallo de la tarea, no un detalle menor.
+Reporta al usuario que la limpieza está verificada. Instrumentación olvidada en el repositorio es un fallo de la tarea, no un detalle menor.
 
 ### 7.3 Ejecutar el linter
 
