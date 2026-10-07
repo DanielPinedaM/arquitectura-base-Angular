@@ -35,6 +35,8 @@ Para decidir qué archivo leer, usa la columna **¿Cuándo leerlo?**: abre el ar
 ### MCP server `angular-cli`
 Si necesitas documentación más profunda que no se encuentre en esta skill, busca sobre cualquier tema [en la documentación oficial de Angular](https://angular.dev/llms.txt) con la tool `search_documentation` del MCP server `angular-cli`.
 
+Cuando la skill `angular-developer` y las tools del MCP server `angular-cli` se contradicen, tiene mayor prioridad las tools del MCP server `angular-cli`
+
 ## Tabla de Contenido
 
 ### [Creación de nuevos proyectos](referencias/creacion-de-nuevos-proyectos/)
