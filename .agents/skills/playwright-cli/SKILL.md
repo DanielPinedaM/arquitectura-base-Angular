@@ -158,7 +158,7 @@ Si el login era el flujo bajo investigación, el fallo ya está reproducido: con
 
 ## 5. Modo AUTOMATIZAR
 
-Ejecutar el flujo, nada más. **No se diagnostica** (ver la tabla de la [sección 1](#1-elegir-el-modo--pregúntalo-antes-de-ejecutar-nada)): aquí solo añade ruido a un flujo que se pidió *ejecutar*, no auditar.
+Ejecutar el flujo, nada más. **No se diagnostica** (ver la [tabla de la sección 1](#1-elegir-el-modo--pregúntalo-antes-de-ejecutar-nada)): aquí solo añade ruido a un flujo que se pidió *ejecutar*, no auditar.
 
 1. Abre la app y toma un `snapshot` para obtener los refs.
 2. Ejecuta el flujo completo de punta a punta con los comandos de interacción. Re-snapshot después de cada navegación o cambio grande del DOM: los refs se invalidan.
@@ -398,7 +398,7 @@ Recorre y clasifica su salida con el apartado [Cómo leer y clasificar la salida
 
 ## 8. Reglas
 
-- No escribas código de testing de Karma/Jasmine, Vitest, Jest, Cypress ni de otro framework de testing. Playwright Test sí, también cuando lo deduzcas de la petición aunque el usuario no lo pida explícitamente: es la excepción a no modificar código (tabla de la [sección 1](#1-elegir-el-modo--pregúntalo-antes-de-ejecutar-nada)).
+- No escribas código de testing de Karma/Jasmine, Vitest, Jest, Cypress ni de otro framework de testing. [Playwright Test sí](referencias/generacion-de-pruebas.md), también cuando lo deduzcas de la petición aunque el usuario no lo pida explícitamente: es la excepción a no modificar código (tabla de la [sección 1](#1-elegir-el-modo--pregúntalo-antes-de-ejecutar-nada)).
 - No refactorices, renombres ni "mejores" código que no forma parte de la corrección autorizada.
 - No alteres el proyecto original —configuración, funcionalidad, maquetación, dependencias ni variables de entorno— por iniciativa propia. Cámbialo solo si el usuario lo pidió explícitamente, o si preguntaste antes y autorizó ese cambio.
 - No inventes la causa del bug. Si tras la instrumentación no está claro, reporta lo que descartaste y lo que falta por descartar.
