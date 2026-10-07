@@ -796,9 +796,7 @@ Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: 
 > [!CAUTION]
 > # ⚠️ Advertencia
 >
-> Usar esta skill con ciudado, es muy buena, pero
->
-> Si intentas solucionar un bug con esta skill sin entender el código, es probable que introduzcas nuevos bugs.
+> Usar esta skill con ciudado, es muy buena, pero si intentas solucionar un bug con esta skill sin entender el código, es probable que introduzcas nuevos bugs.
 
 Mira [este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿que es `playwright-cli`?
 
