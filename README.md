@@ -807,7 +807,7 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 
 * Navegar por páginas (rutas).
 
-* Hacer clics.
+* Hacer clicks.
 
 * Tomar capturas de pantalla.
 
