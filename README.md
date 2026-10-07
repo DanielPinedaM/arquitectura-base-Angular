@@ -803,6 +803,8 @@ Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: 
 Mira [este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿que es `playwright-cli`?
 
 Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de uso:
+* Solucionar bugs.
+
 * Navegar por páginas (rutas).
 
 * Hacer clics.
