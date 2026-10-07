@@ -798,7 +798,7 @@ Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: 
 >
 > Usar esta skill con ciudado, es muy buena, pero si intentas solucionar un bug con esta skill sin entender el código, es probable que introduzcas nuevos bugs.
 
-Mira [este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿que es `playwright-cli`?
+[Mira este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿que es y para que sirve `playwright-cli`?
 
 Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de uso:
 * Solucionar bugs.
