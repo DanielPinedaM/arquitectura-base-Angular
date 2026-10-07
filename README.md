@@ -817,17 +817,17 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 
 [Esta skill](.agents/skills/playwright-cli/SKILL.md) esta basada en [la skill oficial de Microsoft](https://github.com/microsoft/playwright-cli/blob/main/skills/playwright-cli/SKILL.md). La diferencia es que esta skill tiene dos modos diferentes:
 
-| Pregunta ⬇️ / Modo ➡️                                                          | Modo AUTOMATIZAR                          | Modo DEPURAR                                 |
-|---------------------------------------------------------------------------------|-------------------------------------------|----------------------------------------------|
-| ¿Para qué sirve?                                                                | Ejecutar o automatizar un flujo de la app | Encontrar la causa de un bug                 |
-| Ejemplo de uso                                                                  | Llenar un formulario muchas veces         | La pagina web no es responsive, corrigela    |
-| ¿Escribe codigo de testing en Jest, Vitest, etc?                                | ❌ No                                     | ❌ No                                       |
-| Modifica código fuente                                                          | ❌ No                                     | ✅ Sí                                       |
-| Diagnostica (logs del server, `curl -i`/`-v`, cuerpo y headers de la respuesta) | ❌ No                                     | ✅ Sí                                       |
-| ¿Ejecuta ESLint?                                                                | ❌ No                                     | ✅ sí, pero solo si ESLint está configurado |
-| ¿Genera el build de la aplicacion?                                              | ❌ No                                     | ✅ Sí                                       |
-| ¿Abre el navegador y usa comandos de `playwright-cli`?                          | ✅ Sí                                     | ✅ Sí                                       |
-| ¿Pide usuario y contraseña y hace login?                                        | ✅ Sí                                     | ✅ Sí                                       |
+| Pregunta ⬇️ / Modo ➡️                                                                  | Modo AUTOMATIZAR                          | Modo DEPURAR                                 |
+|-----------------------------------------------------------------------------------------|-------------------------------------------|----------------------------------------------|
+| ¿Para qué sirve?                                                                        | Ejecutar o automatizar un flujo de la app | Encontrar la causa de un bug                 |
+| Ejemplo de uso                                                                          | Llenar un formulario muchas veces         | La pagina web no es responsive, corrigela    |
+| ¿Escribe codigo de testing en Jest, Vitest, etc?                                        | ❌ No                                     | ❌ No                                       |
+| Modifica código fuente                                                                  | ❌ No                                     | ✅ Sí                                       |
+| Cuando el frontend hace peticiones HTTP, determina si el bug esta en frontend o backend | ❌ No                                     | ✅ Sí                                       |
+| ¿Ejecuta ESLint?                                                                        | ❌ No                                     | ✅ sí, pero solo si ESLint está configurado |
+| ¿Genera el build de la aplicacion?                                                      | ❌ No                                     | ✅ Sí                                       |
+| ¿Abre el navegador y usa comandos de `playwright-cli`?                                  | ✅ Sí                                     | ✅ Sí                                       |
+| ¿Pide usuario y contraseña y hace login?                                                | ✅ Sí                                     | ✅ Sí                                       |
 
 **SIEMPRE** que necesites controlar el navegador con la IA:
 1. Detener la ejecucion del proyecto
