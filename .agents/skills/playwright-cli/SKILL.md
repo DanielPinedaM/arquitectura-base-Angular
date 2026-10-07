@@ -213,7 +213,7 @@ Solo aporta cuando el bug apunta a una librería o dependencia; si el fallo est�
 - **Buscar los tipos de datos de la librería o dependencia relacionada con el bug**: la firma real de la función, la forma del objeto que devuelve, qué campos son opcionales. Son los de la versión instalada, la que el proyecto usa de verdad.
 - **Entender su funcionamiento**: leer su implementación cuando lo que hace no coincide con lo que esperabas.
 
-**Está prohibido leer `node_modules` por completo**: llena el contexto de la IA y consume muchos tokens. Lee solo las dependencias relacionadas con el bug.
+**Está prohibido leer `node_modules` por completo**: llena el contexto de la IA y consume muchos tokens innecesariamente. Lee solo las dependencias relacionadas con el bug.
 
 **Puedes leerlo, pero NO lo modifiques.** Es código de terceros que instala el gestor de paquetes: un cambio ahí no queda en el repositorio, no lo ve el resto del equipo y lo pisa el gestor en cuanto vuelva a resolver las dependencias. Si el diagnóstico apunta a una librería, eso se lleva a la pregunta de la sección [6.7 PARAR y preguntar — nunca corregir por tu cuenta](#67-parar-y-preguntar--nunca-corregir-por-tu-cuenta).
 
@@ -222,7 +222,7 @@ Solo aporta cuando el bug apunta a una librería o dependencia; si el fallo est�
 **Formato obligatorio:**
 
 ```js
-console.log('[ruta/relativa/desde/la/raiz/archivo.ext] [nombreFuncionOMetodo]:', valor); // DBG-<id>
+console.log('[ruta/relativa/desde/la/raiz/archivo.extension] [nombreFuncionOMetodo]:', valor); // DBG-<id>
 ```
 
 Ejemplo real:
@@ -280,7 +280,7 @@ Modifica el código para forzar un `throw` **solo** cuando el fallo no se pueda 
 
 ### 6.7 PARAR y preguntar — nunca corregir por tu cuenta
 
-Cuando tengas el diagnóstico, **detente**: no apliques la corrección, preguntar al usuario si autoriza la la correccion y mostrar:
+Cuando tengas el diagnóstico, **detente**: no apliques la corrección, preguntar al usuario si autoriza la correccion y mostrar:
 
 - Una explicación del bug: archivo, línea, causa raíz y la evidencia que lo demuestra (el log, el status HTTP, el error de consola).
 - **Mínimo 2 opciones de solución**, cada una con su consecuencia real (alcance del cambio, qué más podría romper).
