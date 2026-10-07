@@ -21,7 +21,7 @@ Consecuencia práctica: la primera parte **no repite** la mecánica de los coman
 
 # Depuración y automatización de frontend con `playwright-cli`
 
-Verifica el comportamiento contra la app corriendo en un navegador real, no contra suposiciones sobre el código. Leer el código dice qué *debería* pasar; ejecutar el flujo dice qué *pasa*.
+Verifica el comportamiento contra la app corriendo en un navegador real, no contra suposiciones sobre el código. Leer el código dice qué *debería* pasar; ejecutar el flujo dice qué *pasa* realmente.
 
 ## 1. Elegir el modo — pregúntalo antes de ejecutar nada
 
