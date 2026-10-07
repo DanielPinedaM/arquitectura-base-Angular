@@ -49,7 +49,7 @@ Cualquier otra edición está prohibida, incluidos los bugs que encuentres de pa
 La pregunta lleva dos opciones, cada una con lo que ese modo implica de verdad —si toca el código y si para a preguntar antes de corregir—:
 
 - **AUTOMATIZAR** — ejecuta el flujo de punta a punta y reporta el estado final. No toca el código ni diagnostica.
-- **DEPURAR** — reproduce el fallo, observa, instrumenta si hace falta, y **para** a preguntar antes de aplicar cualquier corrección.
+- **DEPURAR** — reproduce el fallo, observa, instrumenta si hace falta **para** a preguntar antes de aplicar cualquier corrección.
 
 Las dos preguntas de entorno del paso 2 de la sección [3. Detectar el entorno (nunca asumirlo)](#3-detectar-el-entorno-nunca-asumirlo) son independientes de esta y llegan después.
 
@@ -69,7 +69,7 @@ El proyecto puede ser de cualquier framework. Deduce, no adivines:
 
 **Gestor de paquetes** — Deducirlo de la configuracion del proyecto, cuando la respuesta sea dudosa entonces preguntar al usuario
 
-**Puerto del dev server** — lee los scripts del `package.json` y la config del framework (`angular.json`, `next.config.*`, `vite.config.*`, `nuxt.config.*`). Defaults habituales: Angular 4200, Next/Nuxt/CRA 3000, Vite 5173, Astro 4321.
+**Puerto del dev server** — lee los scripts del `package.json` y la configuracion del framework (`angular.json`, `next.config.*`, `vite.config.*`, `nuxt.config.*`). Defaults habituales: Angular 4200, Next/Nuxt/CRA 3000, Vite 5173, Astro 4321.
 
 ### Arrancar el dev server — lo arrancas tú, el entorno lo elige el usuario
 
@@ -95,7 +95,7 @@ curl -sS -o /dev/null -w "%{http_code}" http://localhost:<puerto>
 
 - **Entorno que se ejecuta:** una opción por cada script que levante la app. En la descripción, lo que implica de verdad: qué configuración pasa, puerto, y contra qué backend apunta si puedes deducirlo de los archivos de environment. El usuario elige un entorno, no un string.
 - **Entorno del build:** una opción por cada script que compile el proyecto. En la descripción, a qué entorno apunta.
-- **En las dos:** lo que implica cada script se deduce de lo que ejecuta y de la config del framework, nunca de su nombre; y la última opción es "Otra — la indico yo", para un script o unos flags que no estén en la lista.
+- **En las dos:** lo que implica cada script se deduce de lo que ejecuta y de la configuración del framework, nunca de su nombre; y la última opción es "Otra — la indico yo", para un script o unos flags que no estén en la lista.
 
 Pregunta también cuando en cualquiera de las dos solo haya un candidato: el usuario puede querer otro puerto u otra configuración.
 
