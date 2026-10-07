@@ -839,8 +839,8 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 ***Ejemplo de Prompt:***
 ```txt
 /playwright-cli <<< Aqui describir de forma MUY DETALLADA
-la funcionalidad a testear o el proceso a automatizar,
-para mejorar el resultado es bueno decirle a Claude
+la funcionalidad a testear, bug a solucionar o el proceso a automatizar,
+para mejorar el resultado es bueno decirle a la IA
 rutas especificas de donde estan los archivos, componentes, funciones, etc.
 que necesita para ejecutar el proceso >>>
 ```
