@@ -815,7 +815,7 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 
 * [Click aqui para ver mas ejemplos.](/.agents/skills/playwright-cli/automatizacion-del-navegador.md#tareas-específicas)
 
-[Esta skill](.agents/skills/playwright-cli/SKILL.md) esta basada en [la skill oficial de Microsoft](https://github.com/microsoft/playwright-cli/tree/main/skills/playwright-cli). La diferencia es que esta skill tiene dos modos diferentes:
+[Esta skill](.agents/skills/playwright-cli/SKILL.md) esta basada en [la skill oficial de Microsoft](https://github.com/microsoft/playwright-cli/blob/main/skills/playwright-cli/SKILL.md). La diferencia es que esta skill tiene dos modos diferentes:
 
 | Pregunta ⬇️ / Modo ➡️                                                          | Modo AUTOMATIZAR                          | Modo DEPURAR                                 |
 |---------------------------------------------------------------------------------|-------------------------------------------|----------------------------------------------|
@@ -832,7 +832,7 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 **SIEMPRE** que necesites controlar el navegador con la IA:
 1. Detener la ejecucion del proyecto
 
-2. Llamar la skill `playwright-cli` y **NO** [playwright MCP](https://github.com/microsoft/playwright-mcp)
+2. Llamar [la skill `playwright-cli`](.agents/skills/playwright-cli/SKILL.md) y **NO** [playwright MCP](https://github.com/microsoft/playwright-mcp)
 
 3. Usar este prompt:
 
