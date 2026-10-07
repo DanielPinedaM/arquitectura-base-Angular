@@ -67,14 +67,7 @@ Lo único que fija esta parte es **cuáles usar en cada momento**: qué mirar pr
 
 El proyecto puede ser de cualquier framework. Deduce, no adivines:
 
-**Gestor de paquetes** — el proyecto usa **pnpm**, sin alternativa: lo fijan `pnpm-lock.yaml` en la raíz, el campo `packageManager` del `package.json` y el `AGENTS.md` del repo. Son solo dos comandos:
-
-| Para | Comando |
-|---|---|
-| Ejecutar el binario de `playwright-cli` | `pnpm exec playwright-cli <comando>` |
-| Arrancar un script del `package.json` | `pnpm run <script>` |
-
-**Prohibido** `npm`, `yarn`, `bun`, `npx` y `bunx` en este repo: escribirían otro lockfile o resolverían versiones que `pnpm-lock.yaml` no fija. Lo único agnóstico de esta skill es el framework, no el gestor de paquetes.
+**Gestor de paquetes** — Deducirlo de la configuracion del proyecto, cuando la respuesta sea dudosa entonces preguntar al usuario
 
 **Puerto del dev server** — lee los scripts del `package.json` y la config del framework (`angular.json`, `next.config.*`, `vite.config.*`, `nuxt.config.*`). Defaults habituales: Angular 4200, Next/Nuxt/CRA 3000, Vite 5173, Astro 4321.
 
