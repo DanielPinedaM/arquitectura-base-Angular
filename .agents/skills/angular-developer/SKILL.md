@@ -33,7 +33,14 @@ Lee **bajo demanda** los archivos `.md` ubicados en [`.agents/skills/angular-dev
 Para decidir qué archivo leer, usa la columna **¿Cuándo leerlo?**: abre el archivo cuando tu tarea coincida con la situación que describe.
 
 ### MCP server `angular-cli`
-Si necesitas documentación más profunda que no se encuentre en esta skill, busca sobre cualquier tema [en la documentación oficial de Angular](https://angular.dev/llms.txt) con la tool `search_documentation` del MCP server `angular-cli`.
+Usar la tool `search_documentation` del MCP server `angular-cli` para buscar en la [documentación oficial de Angular](https://angular.dev/llms.txt) información sobre el tema relacionado con la tarea cuando:
+- El tema no está cubierto en esta skill.
+
+- El tema está cubierto, pero de forma incompleta o requiere información adicional.
+
+- Los archivos `.md` de la [tabla de contenido](#tabla-de-contenido) no contienen la información necesaria para resolver la tarea.
+
+- Lo consideres necesario según tu criterio.
 
 Cuando la skill `angular-developer` y las tools del MCP server `angular-cli` se contradicen, tiene mayor prioridad las tools del MCP server `angular-cli`
 
