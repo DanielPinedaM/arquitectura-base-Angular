@@ -802,7 +802,16 @@ Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: 
 
 Mira [este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿que es `playwright-cli`?
 
-Sirve para que la IA desde la terminal pueda controlar el navegador: navegar por páginas (rutas), hacer clics, tomar capturas de pantalla y llenar formularios sin hacerlo manualmente.
+Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de uso:
+* Navegar por páginas (rutas)
+
+* hacer clics
+
+* tomar capturas de pantalla
+
+* llenar formularios
+
+* [Click aqui para ver mas ejemplos](/.agents/skills/playwright-cli/automatizacion-del-navegador.md#tareas-específicas)
 
 [Esta skill](.agents/skills/playwright-cli/SKILL.md) esta basada en [la skill oficial de Microsoft](https://github.com/microsoft/playwright-cli/tree/main/skills/playwright-cli). La diferencia es que esta skill tiene dos modos diferentes:
 
