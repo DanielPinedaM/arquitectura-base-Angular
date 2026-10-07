@@ -45,7 +45,7 @@ Regla violada: <archivo#sección de la skill>
 Cita textual:  "<texto literal de la regla>"
 ```
 
-y pregunta con `AskUserQuestion`:
+y preguntar:
 
 ```txt
 ¿Desea corregirlo para que siga la arquitectura del proyecto?
@@ -57,7 +57,7 @@ NO  → dejarlo como está
 * NO: no modifiques ese código, ignora esa parte específica y continúa con la
   implementación solicitada.
 
-Si detectas varias infracciones en la misma pasada, agrúpalas en una sola llamada a `AskUserQuestion`, una pregunta por infracción.
+Si detectas varias infracciones en la misma pasada, agrúpalas en una sola llamada con pregunta por infracción.
 
 ## 5. ¿Como Leer la Skill?
 Leer **bajo demanda** los archivos `.md` ubicados en `.agents/skills/angular-conventions/referencias/`: usa la [Tabla de Contenido](#tabla-de-contenido) como referencia para inferir cuales archivos son necesarios para la tarea que estas resolviendo, y accede unicamente a esos archivos.

@@ -2,7 +2,7 @@
 name: playwright-cli
 description: 'Depura bugs y automatiza flujos de UI ejecutando la app real en el navegador con playwright-cli, de forma agnóstica al framework frontend. Úsala siempre que el usuario reporte un bug de interfaz, diga que algo "no funciona", "no carga", "no guarda", "da error" o "se ve mal", pida reproducir o diagnosticar un fallo, pida verificar visualmente un cambio de maquetación, o pida automatizar o ejecutar un flujo de la app (login, alta de registro, checkout, wizard). Es para depuración interactiva y automatización asistida por agente contra la app corriendo.'
 when_to_use: 'Frases típicas que la disparan - "hay un bug en X", "no me funciona el formulario", "revisa por qué falla", "reprodúcelo y dime qué pasa", "prueba el flujo completo de", "automatiza el proceso de", "toma un screenshot de", "mira la consola del navegador", "el botón no hace nada".'
-allowed-tools: Read, Edit, Write, Grep, Glob, Bash(pnpm exec playwright-cli *), Bash(pnpm exec playwright *), Bash(pnpm run *), Bash(pnpm install), Bash(curl *), Bash(grep *), Bash(netstat *), Bash(taskkill *), Bash(git status *), Bash(git diff *), Bash(git stash *), AskUserQuestion, TaskStop
+allowed-tools: Read, Edit, Write, Grep, Glob, Bash(pnpm exec playwright-cli *), Bash(pnpm exec playwright *), Bash(pnpm run *), Bash(pnpm install), Bash(curl *), Bash(grep *), Bash(netstat *), Bash(taskkill *), Bash(git status *), Bash(git diff *), Bash(git stash *), TaskStop
 ---
 
 # ¿Cómo leer la skill?
@@ -40,11 +40,11 @@ Hay exactamente dos modos y se comportan distinto:
 Los dos casos en que el modo DEPURAR escribe en el código fuente:
 
 1. **Instrumentación temporal** — `console.log` marcados con `// DBG-<id>`, y `throw` para forzar un `catch` cuando el fallo no se puede inducir desde la red. No cambia el comportamiento de la app, se aplica sin preguntar y **se borra en la misma respuesta** (sección [7.2 Borrar la instrumentación](#72-borrar-la-instrumentación)).
-2. **La corrección del bug** — solo la opción que el usuario autorizó al responder el `AskUserQuestion` de la sección [6.7 PARAR y preguntar — nunca corregir por tu cuenta](#67-parar-y-preguntar--nunca-corregir-por-tu-cuenta). Permanece en el repo.
+2. **La corrección del bug** — solo la opción que el usuario autorizó al responder la pregunta de la sección [6.7 PARAR y preguntar — nunca corregir por tu cuenta](#67-parar-y-preguntar--nunca-corregir-por-tu-cuenta). Permanece en el repo.
 
 Cualquier otra edición está prohibida, incluidos los bugs que encuentres de paso: repórtalos y sigue con el autorizado.
 
-**El modo lo elige el usuario, no tú.** Pregúntalo siempre con `AskUserQuestion`, aunque te lo haya dicho explícitamente ("automatiza el alta de usuario", "depura por qué falla el guardado"), y no lo deduzcas de la petición aunque uno de los dos parezca evidente: "prueba el login" puede ser ejecutar el flujo o averiguar por qué falla, y equivocarse cuesta una sesión entera de instrumentación que nadie pidió.
+**El modo lo elige el usuario, no tú.** Pregúntalo siempre, aunque te lo haya dicho explícitamente ("automatiza el alta de usuario", "depura por qué falla el guardado"), y no lo deduzcas de la petición aunque uno de los dos parezca evidente: "prueba el login" puede ser ejecutar el flujo o averiguar por qué falla, y equivocarse cuesta una sesión entera de instrumentación que nadie pidió.
 
 La pregunta lleva dos opciones, cada una con lo que ese modo implica de verdad —si toca el código y si para a preguntar antes de corregir—:
 
@@ -110,7 +110,7 @@ curl -sS -o /dev/null -w "%{http_code}" http://localhost:<puerto>
 
 **Que hubiera algo corriendo no te salta ningún paso**: del 2 al 5 se ejecutan completos. Ese proceso lo levantó otra sesión o el propio usuario, así que no sabes con qué entorno arrancó ni si su build corresponde al código actual, y todo lo que observes contra él es un diagnóstico falso.
 
-**2. Pregunta con `AskUserQuestion` qué entornos usar**, antes de empezar a ejecutar el modo AUTOMATIZAR o DEPURAR. Son **dos preguntas DIFERENTES**, cada una con sus opciones y su respuesta, y una no se deduce de la otra:
+**2. Pregunta  qué entornos usar**, antes de empezar a ejecutar el modo AUTOMATIZAR o DEPURAR. Son **dos preguntas DIFERENTES**, cada una con sus opciones y su respuesta, y una no se deduce de la otra:
 
 1. **Qué entorno se ejecuta** — el dev server del paso 3.
 2. **A qué entorno se le hace el build** — la sección [7.4 Ejecutar el build](#74-ejecutar-el-build).
@@ -158,7 +158,7 @@ Las credenciales se piden por dos razones:
 - **No puedes inventarlas.** Usuario y contraseña son dos strings que solo conoce el usuario. Está **PROHIBIDO** inventarlos o deducirlos del código, de un seed, de un archivo de environment, de los tests, de la documentación o del valor por defecto que traiga el formulario: un usuario que no existe falla igual que una contraseña equivocada, y a partir de ahí todo lo que observes es un diagnóstico falso.
 - **Sin login no hay sesión**, y el resto del flujo cuelga de ella: sin sesión, el guard de rutas te devuelve a la pantalla de login y no llegas a probar nada de lo que te pidieron.
 
-**1. Pídelas con `AskUserQuestion`** en dos preguntas: una para el usuario y otra para la contraseña. El valor real lo escribe el usuario en la opción abierta que la herramienta añade siempre; las dos opciones fijas que exige por pregunta no pueden ser credenciales adivinadas, así que usa las únicas que no inventan nada: **"La escribo yo"** y **"Cancelar — no ejecutar el flujo"**.
+**1. Hacer dos preguntas**: una para el usuario y otra para la contraseña. El valor real lo escribe el usuario en la opción abierta que la herramienta añade siempre; las dos opciones fijas que exige por pregunta no pueden ser credenciales adivinadas, así que usa las únicas que no inventan nada: **"La escribo yo"** y **"Cancelar — no ejecutar el flujo"**.
 
 Usa los dos valores **tal cual los escribió**: sin recortar espacios, sin cambiar mayúsculas, sin completar dominios ni prefijos. Y no los propagues: la contraseña no va al reporte, ni a un `console.log`, ni a un `eval` que la imprima; cuando tengas que mencionarla, redáctala.
 
@@ -178,7 +178,7 @@ pnpm exec playwright-cli snapshot                          # confirma que entras
 
 **4. Cuando el login no es exitoso, repórtalo y para.** No lo es cuando, después de enviar el formulario, el `snapshot` sigue mostrando la pantalla de login, aparece un mensaje de error, o no aparece nada de la app autenticada. El reporte lleva evidencia, no interpretación: en qué ruta quedó el navegador, qué muestra el `snapshot` y qué mensaje de error apareció, con la contraseña redactada. Seguir el flujo sin sesión o falsificarla está **prohibido** (paso 3).
 
-Si el login era el flujo bajo investigación, el fallo ya está reproducido: continúa con la sección [6. Modo DEPURAR](#6-modo-depurar) —esto *es* el bug, no un obstáculo—. Si solo era el trámite previo para llegar a él, no puedes saber desde el navegador si falló lo que se escribió o falló la app, y las dos salidas llevan a sitios distintos: pregunta con `AskUserQuestion` y deja que el modo en que estés fije qué opciones entran en esa pregunta.
+Si el login era el flujo bajo investigación, el fallo ya está reproducido: continúa con la sección [6. Modo DEPURAR](#6-modo-depurar) —esto *es* el bug, no un obstáculo—. Si solo era el trámite previo para llegar a él, no puedes saber desde el navegador si falló lo que se escribió o falló la app, y las dos salidas llevan a sitios distintos: pregunta y deja que el modo en que estés fije qué opciones entran en esa pregunta.
 
 ## 5. Modo AUTOMATIZAR
 
@@ -304,7 +304,7 @@ Modifica el código para forzar un `throw` **solo** cuando el fallo no se pueda 
 
 ### 6.7 PARAR y preguntar — nunca corregir por tu cuenta
 
-Cuando tengas el diagnóstico, **detente**: no apliques la corrección. Usa `AskUserQuestion` con:
+Cuando tengas el diagnóstico, **detente**: no apliques la corrección, preguntar al usuario si autoriza la la correccion y mostrar:
 
 - Una explicación del bug: archivo, línea, causa raíz y la evidencia que lo demuestra (el log, el status HTTP, el error de consola).
 - **Mínimo 2 opciones de solución**, cada una con su consecuencia real (alcance del cambio, qué más podría romper).
@@ -350,7 +350,7 @@ En este orden:
 
    Vuelve a lanzar el `curl` y no sigas hasta que la conexión falle.
 
-Esto aplica **siempre**: también si abandonas el diagnóstico, si el arranque falló a medias, si el usuario cambia de tema, o si te quedas esperando su respuesta a un `AskUserQuestion`. Un dev server huérfano ocupa el puerto, así que el siguiente arranque falla o —peor— te conectas sin darte cuenta a la instancia vieja y depuras contra un build que ya no corresponde al código.
+Esto aplica **siempre**: también si abandonas el diagnóstico, si el arranque falló a medias, si el usuario cambia de tema, o si te quedas esperando su respuesta a una pregunta. Un dev server huérfano ocupa el puerto, así que el siguiente arranque falla o —peor— te conectas sin darte cuenta a la instancia vieja y depuras contra un build que ya no corresponde al código.
 
 ### 7.2 Borrar la instrumentación
 
