@@ -809,6 +809,8 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 
 * Tomar capturas de pantalla.
 
+* Permite que la IA acceda al DOM.
+
 * Llenar formularios.
 
 * [Click aqui para ver mas ejemplos.](/.agents/skills/playwright-cli/automatizacion-del-navegador.md#tareas-específicas)
