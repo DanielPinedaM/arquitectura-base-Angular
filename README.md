@@ -796,16 +796,16 @@ Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: 
 > [!CAUTION]
 > # ⚠️ Advertencia
 >
-> Usar esta skill con ciudado, es muy buena, pero si intentas solucionar un bug con esta skill sin entender el código, es probable que introduzcas nuevos bugs.
+> Usar esta skill con cuidado, es muy buena, pero si intentas solucionar un bug con esta skill sin entender el código, es probable que introduzcas nuevos bugs.
 
-[Mira este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿que es y para que sirve `playwright-cli`?
+[Mira este video](https://youtu.be/OXZRQ3BwHxQ?si=gOguZh7KLQ3aWBlE) para que aprendas ¿qué es y para qué sirve `playwright-cli`?
 
 Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de uso:
 * Solucionar bugs.
 
 * Navegar por páginas (rutas).
 
-* Hacer clicks.
+* Hacer clics.
 
 * Tomar capturas de pantalla.
 
@@ -813,7 +813,7 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 
 * Llenar formularios.
 
-* [Click aqui para ver mas ejemplos.](/.agents/skills/playwright-cli/automatizacion-del-navegador.md#tareas-específicas)
+* [Click aquí para ver más ejemplos.](/.agents/skills/playwright-cli/automatizacion-del-navegador.md#tareas-específicas)
 
 [Esta skill](.agents/skills/playwright-cli/SKILL.md) esta basada en [la skill oficial de Microsoft](https://github.com/microsoft/playwright-cli/blob/main/skills/playwright-cli/SKILL.md). La diferencia es que esta skill tiene dos modos diferentes:
 
@@ -823,7 +823,7 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 | Ejemplo de uso                                                                          | Llenar un formulario muchas veces         | La pagina web no es responsive, corrigela    |
 | ¿Escribe codigo de testing en Jest, Vitest, etc?                                        | ❌ No                                     | ❌ No                                       |
 | Modifica código fuente                                                                  | ❌ No                                     | ✅ Sí                                       |
-| Cuando el frontend hace peticiones HTTP, determina si el bug esta en frontend o backend | ❌ No                                     | ✅ Sí                                       |
+| Cuando el frontend hace peticiones HTTP, determina si el bug está en frontend o backend | ❌ No                                     | ✅ Sí                                       |
 | ¿Ejecuta ESLint?                                                                        | ❌ No                                     | ✅ sí, pero solo si ESLint está configurado |
 | ¿Genera el build de la aplicacion?                                                      | ❌ No                                     | ✅ Sí                                       |
 | ¿Abre el navegador y usa comandos de `playwright-cli`?                                  | ✅ Sí                                     | ✅ Sí                                       |
