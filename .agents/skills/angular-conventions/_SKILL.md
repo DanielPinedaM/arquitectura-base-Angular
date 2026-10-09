@@ -2686,3 +2686,94 @@ import { MyComponent } from '@/app/features/my-feature/my-component/my-component
 // es incorrecto porque se escribe ../ en lugar de usar el alias @/
 import { MyComponent } from '../../features/my-feature/my-component/my-component.component';
 ```
+
+# No acumular código en `effect()`, `constructor` y hooks de ciclo de vida
+
+Dentro de un `effect()`, `constructor` y de los hooks de ciclo de vida (`ngOnInit`, `ngOnChanges`, `ngDoCheck`, `ngAfterContentInit`, `ngAfterViewInit`, `ngAfterViewChecked`, `ngOnDestroy`), llama a métodos. No metas un montón de código.
+
+Dividir el código en métodos: cada método cumple el principio de responsabilidad única, su nombre describe *qué* hace y no *cómo* (`saveFilterToStorage`, no `process`)
+
+**Razón:** así el `effect()` o el hook se lee como una lista de pasos: dice *cuándo* se ejecuta y *qué* hace sin leer cada detalle. Cada método se puede leer, probar y reutilizar por separado.
+
+**Correcto**
+
+```ts
+export class Productos implements OnInit, OnDestroy {
+  private readonly categoryService = inject(CategoryService);
+  protected readonly filter = signal('');
+
+  constructor() {
+    effect(() => {
+      const filter = this.filter();
+      this.saveFilterToStorage(filter);
+      this.logSearch(filter);
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadCategories();
+    this.setupKeyboardShortcuts();
+  }
+
+  ngOnDestroy(): void {
+    this.removeKeyboardShortcuts();
+  }
+
+  private saveFilterToStorage(filter: string): void {
+    // Código de una sola tarea
+  }
+
+  private logSearch(filter: string): void {
+    // Código de una sola tarea
+  }
+
+  private loadCategories(): void {
+    // Código de una sola tarea
+  }
+
+  private setupKeyboardShortcuts(): void {
+    // Código de una sola tarea
+  }
+
+  private removeKeyboardShortcuts(): void {
+    // Código de una sola tarea
+  }
+}
+```
+
+**Incorrecto**
+
+```ts
+export class Productos {
+  protected readonly filter = signal('');
+
+  constructor() {
+    effect(() => {
+      // 200 líneas de código
+    });
+  }
+
+  ngOnInit(): void {
+    // 200 líneas de código
+  }
+
+  ngOnDestroy(): void {
+    // 200 líneas de código
+  }
+}
+```
+
+# Reglas
+Un `effect()` se ejecuta al menos una vez y se vuelve a ejecutar cada vez que cambia un signal que se lee dentro de él.
+
+- Crear el `effect()` en un injection context, por ejemplo el `constructor`.
+
+- Usarlo solo para sincronizar signals con APIs imperativas: logging de analíticas, `localStorage` o `sessionStorage`, y renderizado en un `<canvas>` o en una librería de gráficos.
+
+- No usar `.set()` ni `.update()` dentro de un `effect()` para sincronizar signals; usar `computed()` o `linkedSignal()`.
+
+- Para leer un signal sin crear dependencia, usar `untracked()`.
+
+- Leer los signals antes de un `await`; las lecturas posteriores no se rastrean.
+
+- Para la limpieza, usar `onCleanup`; se ejecuta antes de la siguiente ejecución o al destruirse.
