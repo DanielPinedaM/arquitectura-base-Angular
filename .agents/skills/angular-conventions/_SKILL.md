@@ -2763,7 +2763,7 @@ export class Productos {
 }
 ```
 
-# Reglas
+## Reglas
 Un `effect()` se ejecuta al menos una vez y se vuelve a ejecutar cada vez que cambia un signal que se lee dentro de él.
 
 - Crear el `effect()` en un injection context, por ejemplo el `constructor`.
