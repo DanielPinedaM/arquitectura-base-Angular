@@ -202,7 +202,7 @@ pnpm -v
 
 Debe mostrar la version de `pnpm` instalada
 
-### Editor de Codigo
+### Editor de Codigo (IDE)
 [VS Code](https://code.visualstudio.com/) o cualquier editor basado en VS Code ([Antigravity IDE](https://antigravity.google/product/antigravity-ide), [Cursor](https://cursor.com/get-started), etc.)
 
 #### ⌨️ Autocompletado, Formatear Código y Linter
@@ -243,7 +243,7 @@ La configuración de autocompletado, formateo de código y linter ya está inclu
 * `.prettierrc`
 * `eslint.config.js`
 
-### Harness de IA desde la Terminal
+### Harness de IA Desde la Terminal
 Puedes instalar cualquier IA pero debes usarla desde la terminal, por ejemplo, puedes usar cualquier harness que este en la columna "[Terminal / Bash / CLI](#principales-ia-para-desarrollo-de-software)"
 
 > [!CAUTION]
