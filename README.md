@@ -183,7 +183,7 @@ git config user email
 
 ### [Node.js 24.21.0](https://nodejs.org/es/download)
 
-## [Instalar `pnpm`](https://pnpm.io/installation)
+### [Instalar `pnpm`](https://pnpm.io/installation)
 1. Abrir Git Bash
 
 2. Instalar:
@@ -251,7 +251,7 @@ Puedes instalar cualquier IA pero debes usarla desde la terminal, por ejemplo, p
 >
 > ****Ignorar esta sección ocasionará que la IA genere código que no respeta la arquitectura, estructura ni las convenciones del proyecto, produciendo código legacy, inconsistente, desordenado y con malas practicas****
 
-## Principales IA para Desarrollo de Software
+### Principales IA para Desarrollo de Software
 
 | Empresa ⬇️ / Plataforma ➡️ | Web                                                                                     | Desktop                                                               | Terminal / Bash / CLI                                              |
 | --------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------ |
@@ -261,7 +261,7 @@ Puedes instalar cualquier IA pero debes usarla desde la terminal, por ejemplo, p
 | Anomaly Innovations         | [`opencode web`](https://opencode.ai/docs/web/)                                         | [Open Code Desktop](https://youtu.be/_SVSv2Y59P0?si=LT2S0z10t1FBxlB6) | [Open Code CLI](https://youtu.be/2gO8WyctqMk?si=aNvHlf23tKfrN-Z3)  |
 | Cursor                      | [Cursor Web](https://cursor.com/agents)                                                 | [Cursor Desktop](https://youtu.be/XWsOQTqVl0w?si=0OVGRnYSCH46v2zf)    | [Cursor CLI](https://cursor.com/es/cli)                            |
 
-## ✏️ Edición de Código
+#### ✏️ Edición de Código
 Este proyecto esta configurado para usar _IAs de pago y desde la terminal_. **NO** sirve si usas IAs gratis o desde una pagina web, porque estan limitadas.
 
 **Razones:**
