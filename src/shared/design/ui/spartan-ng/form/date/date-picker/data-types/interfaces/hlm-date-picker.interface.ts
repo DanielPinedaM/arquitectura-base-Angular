@@ -37,7 +37,7 @@ export interface HlmDatePickerConfig<T> {
 	/**
 	 * Parsea un string ingresado por el usuario a una fecha.
 	 *
-	 * @param value el string crudo del input
+	 * @param value - el string crudo del input
 	 * @returns la fecha parseada, o `undefined` cuando el valor no puede parsearse
 	 */
 	parseDate: (value: string) => T | undefined;

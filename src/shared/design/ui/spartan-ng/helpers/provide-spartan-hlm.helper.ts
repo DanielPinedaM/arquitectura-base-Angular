@@ -9,7 +9,7 @@ import { type EnvironmentProviders, makeEnvironmentProviders } from '@angular/co
  * overlay de CDK (sheets, dialogs, tooltips, etc.) se rendericen por encima de elementos
  * `position: fixed` como `<hlm-toaster>`.
  *
- * @returns {EnvironmentProviders} Environment providers para agregar a la configuración de la aplicación.
+ * @returns Environment providers para agregar a la configuración de la aplicación.
  *
  * @example
  * ```ts

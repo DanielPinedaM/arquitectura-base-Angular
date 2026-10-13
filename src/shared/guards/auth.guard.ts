@@ -11,11 +11,10 @@ export const AuthGuard: CanActivateFn = async (route, state) => {
   const http = inject(HttpClient);
   const router = inject(Router);
 
-  /**
-   * 🚨 TODO: ⚠️
-   * - Reemplazar URL "reemplazar-por-endpoint-de-autenticacion" por el endpoint de backend encargado de validar la sesión.
-   * - Descomentar el código de validación ubicado más abajo para activar la protección de rutas.
-   * Actualmente se encuentra comentado únicamente para facilitar pruebas y permitir la navegación sin restricciones durante el desarrollo. */
+  // TODO: 🚨 ⚠️
+  // - Reemplazar URL "reemplazar-por-endpoint-de-autenticacion" por el endpoint de backend encargado de validar la sesión.
+  // - Descomentar el código de validación ubicado más abajo para activar la protección de rutas.
+  // Actualmente se encuentra comentado únicamente para facilitar pruebas y permitir la navegación sin restricciones durante el desarrollo.
   /* const { success, message, status } = await firstValueFrom(
     http.get<ApiResponse<unknown>>(`${environment.api}reemplazar-por-endpoint-de-autenticacion`),
   );

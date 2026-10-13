@@ -33,10 +33,8 @@ export class HlmDropdownMenuDirective {
 		);
 
 		this.setSideFromTransformOrigin();
-		/**
-		 * esto es un best effort, pero actualmente no parece funcionar
-		 * TODO: encontrar una manera de saber que el host está a punto de cerrarse. podría no ser posible con CDK
-		 */
+		// esto es un best effort, pero actualmente no parece funcionar
+		// TODO: encontrar una manera de saber que el host está a punto de cerrarse. podría no ser posible con CDK
 		this._host.closed.pipe(takeUntilDestroyed()).subscribe(() => this._state.set('closed'));
 	}
 
