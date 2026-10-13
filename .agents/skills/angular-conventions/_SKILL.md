@@ -2687,7 +2687,7 @@ import { MyComponent } from '@/app/features/my-feature/my-component/my-component
 import { MyComponent } from '../../features/my-feature/my-component/my-component.component';
 ```
 
-# No acumular código en `effect()`, `constructor` y hooks de ciclo de vida
+## No acumular código en `effect()`, `constructor` y hooks de ciclo de vida
 
 Dentro de un `effect()`, `constructor` y de los hooks de ciclo de vida (`ngOnInit`, `ngOnChanges`, `ngDoCheck`, `ngAfterContentInit`, `ngAfterViewInit`, `ngAfterViewChecked`, `ngOnDestroy`), llama a métodos. No metas un montón de código.
 
@@ -2763,7 +2763,7 @@ export class Productos {
 }
 ```
 
-## Reglas
+### Reglas
 Un `effect()` se ejecuta al menos una vez y se vuelve a ejecutar cada vez que cambia un signal que se lee dentro de él.
 
 - Crear el `effect()` en un injection context, por ejemplo el `constructor`.
