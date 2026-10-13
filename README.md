@@ -667,6 +667,8 @@ Enlace simbolico
 
 Esto sucede porque agents md y las carpetas agents skills son estándar en la IA 
 
+**NO** modifiques ni elimines las siguientes carpetas porque dañas la compatibilidad
+
 | Modelo / harness de IA | Carpeta donde lee las skills |
 | --- | --- |
 | GitHub Copilot CLI | `/.github/skills/` |
