@@ -116,6 +116,8 @@ Leer estas skills:
 Explica cada uno de los siguientes puntos con teoría y ejemplos, basándote en ambas skills. Si se contradicen, prevalece `angular-conventions` sobre `angular-developer`:
 - Estructura de archivos y carpetas (feature arquitecture)
 
+- Manejo de fechas: En este proyecto se usa Luxon y no new Date nativo de JavaScript
+
 - ¿Como maquetar componentes de UI?, ¿Como usar CSS global y Tailwind para componentes?
 
 - Botones:
@@ -132,14 +134,13 @@ Explica cada uno de los siguientes puntos con teoría y ejemplos, basándote en 
 
 - ¿Como definir y validar formularios?
 
+- Servicio singleton con `@Service()` y no @Injectable({providedIn: 'root'})
+
 - Explicar estados en Angular:
   - Como definir y actualizar estados con signals
   - Signal que depende de otro Signal
   - ¿Cuando usar `computed()`, `linkedSignal` y `effect()`?
-
-- Servicio singleton con `@Service()` y no @Injectable({providedIn: 'root'})
-
-- Manejo de fechas
+  - Estado global
 ```
 
 * Mira estos enlaces para que aprendas de IA enfocada en desarrollo de software:
