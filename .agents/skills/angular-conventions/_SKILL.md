@@ -2777,3 +2777,128 @@ Un `effect()` se ejecuta al menos una vez y se vuelve a ejecutar cada vez que ca
 - Leer los signals antes de un `await`; las lecturas posteriores no se rastrean.
 
 - Para la limpieza, usar `onCleanup`; se ejecuta antes de la siguiente ejecución o al destruirse.
+
+## Comentarios Semánticos
+Todo comentario debe ser semántico: declara su intención con una sintaxis estándar que el editor entiende, en lugar de texto libre. Se usan dos sintaxis:
+
+1. **TSDoc** para documentar `.ts` (clases, servicios, componentes, métodos, propiedades, interfaces, etc)
+
+2. **Etiquetas de Todo Tree** cuando el comentario marca trabajo pendiente, un error o código provisorio.
+
+Esta regla define **cómo** escribir un comentario, no **cuándo** agregarlo.
+
+## TSDoc, no JSDoc
+TSDoc no repite los tipos porque TypeScript ya los declara en el contrato (`interface` o `type`).
+
+**Incorrecto**
+JSDoc repite los tipos entre llaves (`{number}`), que se desincronizan cuando cambia la firma. .
+
+```ts
+// users.service.ts
+
+@Service()
+export class UsersService {
+  /**
+   * Busca un usuario por su id.
+   * @param {number} id id del usuario
+   * @returns {Promise<User>} el usuario
+   */
+  findOne(id: number): Promise<User> {
+    // ...
+  }
+}
+```
+
+Un comentario `//` sobre la propiedad no aparece al pasar el cursor en el editor de codigo.
+
+```ts
+// user.interface.ts
+
+export interface User {
+  // nombre del usuario
+  name: string;
+}
+```
+
+**Correcto**
+TSDoc sin tipos, con `@param nombre - descripción` y etiquetas estándar de TSDoc (`@returns`, `@remarks`, `@deprecated`, `@example`, `{@link}`).
+
+```ts
+// users.service.ts
+
+@Service()
+export class UsersService {
+  /**
+   * Busca un usuario por su id.
+   *
+   * @param id - Id del usuario.
+   * @returns El usuario. */
+  findOne(id: number): Promise<User> {
+    // ...
+  }
+}
+```
+
+```ts
+// user.interface.ts
+
+export interface User {
+  /** Nombre del usuario. */
+  name: string;
+}
+```
+
+### Etiquetas de Todo Tree
+Cuando aplique, el comentario empieza con una etiqueta de Todo Tree en mayúsculas seguida de `:` y la descripción. Todo Tree resalta la etiqueta en el editor y la lista en su panel, así el trabajo pendiente se encuentra sin buscar texto libre.
+
+| Etiqueta | ¿Qué indica? | Ejemplo |
+| --- | --- | --- |
+| `TODO` | Tarea pendiente general o mejora futura. | `// TODO: paginar la lista cuando el endpoint lo soporte` |
+| `FIXME` | Código roto o con errores que necesita corrección inmediata. | `// FIXME: el computed() no se recalcula al cambiar la moneda` |
+| `BUG` | Fallo detectado que debe resolverse. | `<!-- BUG: el botón no se deshabilita mientras se envía el formulario -->` |
+| `HACK` | Solución temporal, atajo o código "sucio" que debe reescribirse. | `// HACK: setTimeout para esperar el render del diálogo; reemplazar por afterNextRender()` |
+| `XXX` | Zona del código dudosa o que requiere atención. | `// XXX: este effect() escribe en localStorage en cada cambio del filtro` |
+
+**Incorrecto**
+Texto libre, etiqueta en minúscula o etiqueta inventada: Todo Tree no los detecta.
+
+```ts
+// product-list.component.ts
+
+// falta paginar la lista
+// todo: validar stock antes de agregar al carrito
+// NOTA: esto es temporal, arreglar después
+```
+
+```html
+<!-- product-list.component.html -->
+
+<!-- arreglar: el botón no se deshabilita mientras se envía el formulario -->
+```
+
+**Correcto**
+
+```ts
+// product-list.component.ts
+
+// TODO: paginar la lista cuando el endpoint lo soporte
+// FIXME: validar stock antes de agregar al carrito
+// HACK: setTimeout para esperar el render del diálogo; reemplazar por afterNextRender()
+```
+
+```html
+<!-- product-list.component.html -->
+
+<!-- BUG: el botón no se deshabilita mientras se envía el formulario -->
+```
+
+### Reglas
+* Usar solo las [etiquetas de la tabla](#etiquetas-de-todo-tree). Todo Tree distingue mayúsculas de minúsculas y por defecto no resalta etiquetas propias (`NOTA`, `PENDIENTE`, `OPTIMIZE`).
+
+* Un comentario que solo explica el código, sin trabajo pendiente, no lleva etiqueta de Todo Tree: aparecería en el panel como algo por resolver.
+
+* Escribir la etiqueta de Todo Tree en un comentario `//` aparte, fuera del bloque `/** */`: Todo Tree no la detecta dentro del TSDoc.
+
+* En las plantillas `.html` no aplica TSDoc; solo se usan las etiquetas de Todo Tree dentro de `<!-- -->`.
+
+* Las etiquetas de TSDoc y de Todo Tree se escriben en inglés, la descripción en español
