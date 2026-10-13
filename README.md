@@ -285,7 +285,7 @@ Son opcionales. Puedes ejecutar el proyecto sin ellas, pero te ayudarán a progr
 
 ## Herdr
 
-## [Instalar `fnm` (Opcional)](https://github.com/Schniz/fnm)
+# **[Instalar `fnm` (Opcional)](https://github.com/Schniz/fnm)**
 
 > [!NOTE]
 > Este paso **NO** es necesario
