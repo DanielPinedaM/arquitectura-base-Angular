@@ -293,9 +293,9 @@ Son opcionales. Puedes ejecutar el proyecto sin ellas, pero te ayudarán a progr
 No hagas este paso, la razon de porque existe:
 - Este paso de instalar fnm
 
-- El archivo `.nvmrc`
+- El archivo `.nvmrc` en este proyecto
 
-es por compatibilidad, [segun la focumentacion oficial de pnpm](https://pnpm.io/blog/whats-different-in-pnpm-12) a partir de pnpm 12, no es necesario instalar un gestor de versiones porque pnpm ya hace esto
+es por compatibilidad, [segun la documentacion oficial de pnpm](https://pnpm.io/blog/whats-different-in-pnpm-12) a partir de pnpm 12, no es necesario instalar un Administrador de Versiones para Node.js (fnm, nvm, volta, etc) porque pnpm permite cambiar de version de Node.js
 
 Para que `fnm` automáticamente al entrar a la carpeta del proyecto seleccione la versión correcta de Node.js que se especifica en el archivo `.nvmrc` que esta en la raiz del proyecto. Hacer esto:
 
@@ -360,12 +360,6 @@ Usar `pnpm`, `pnpm-lock.yaml` y `pnpm dlx <paquete>` version `>=11.0.0 <12.0.0`.
 | --------------------------------------------------------- | --------------------------------------- | ----------------------------------- |
 | Lockfile                                                  | `package-lock.json`                     | `yarn.lock`                         |
 | Ejecutar un paquete temporal (sin instalarlo globalmente) | `npx <paquete>`<br>`npm exec <paquete>` | `yarn dlx <paquete>` *(Yarn Berry)* |
-
-# 🟢 Administrador de Versiones para Node.js
-Usar `fnm`. Está prohibido usar alternativas como:
-
-* nvm
-* volta
 
 Este proyecto usa Node.js 24.21.0
 
