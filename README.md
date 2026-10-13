@@ -271,15 +271,14 @@ Este proyecto esta configurado para usar _IAs de pago y desde la terminal_. **NO
 **Razones:**
 * Si copias y pegas codigo desde plataforma web al proyecto, es probable que cometas errores
 
-Las IAs de pago y desde la terminal tienen mejoras respecto a otras plataformas:
+* Las IAs de pago y desde la terminal tienen mejoras respecto a otras plataformas (_harness engineering_):
+  * Mayor comprensión del proyecto y de la estructura completa del código (_contexto_ y _tokens_).
 
-* Mayor comprensión del proyecto y de la estructura completa del código (_contexto_ y _tokens_).
+  * Acceso al sistema operativo (archivos y carpetas) y capacidad para ejecutar comandos.
 
-* Acceso al sistema operativo (archivos y carpetas) y capacidad para ejecutar comandos.
+  * Capacidad para realizar cambios respetando la arquitectura del proyecto.
 
-* Capacidad para realizar cambios respetando la arquitectura del proyecto.
-
-* Uso de Skills y MCP para reducir las _alucinaciones_ de la IA, permitiéndole a la IA consultar documentación oficial actualizada y seguir buenas prácticas.
+  * Uso de Skills y MCP para reducir las _alucinaciones_ de la IA, permitiéndole a la IA consultar documentación oficial actualizada y seguir buenas prácticas.
 
 ## Instalaciones Recomendadas
 Son opcionales. Puedes ejecutar el proyecto sin ellas, pero te ayudarán a programar mejor.
