@@ -96,7 +96,7 @@ Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
 
 * 🎥 Puedes hacer clic en el nombre de cada tecnología para ver cursos y aprenderlas
 
-Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
+* Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
 
 1. [🔗 Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
 2. [🔗 Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
