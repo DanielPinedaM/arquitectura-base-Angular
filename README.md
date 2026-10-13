@@ -2,32 +2,21 @@
 
 ---
 
-> [!TIP]
-> # 🧠 Todo este proyecto usa Signals. Mira los siguientes videos 🔗 para aprender:
->
-> ## 1. [Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
-> ## 2. [Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
-> ## 3. [Rxjs VS Signals](https://youtu.be/lSzO2D3OCjY?si=Yr4nlZ2AanGWW0WN)
-> ## 4. [Forms with Signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
-> ## 5. [input y output con Signals `import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
-
-> [!TIP]
-> # 🎥 **Aprende**
->
-> Puedes hacer clic en el nombre de cada tecnología para ver cursos y aprenderlas
-
 # 🅰️ Stack Frontend del Proyecto
 A continuación se resumen las principales tecnologías del proyecto y el motivo por el que se utilizan. No se incluyen todas las dependencias.
 
-* Node.js 24.21.0
+## Node.js 24.21.0
 
-* [**Angular 22:**](https://cursos.devtalles.com/courses/angular-moderno) _Framework opinionado_, excelente para proyectos grandes, aplicaciones complejas y formularios complejos. Desde la versión 17 hasta la 22 ha incorporado cambios importantes, como los _Signals_ (_reactividad_) y las nuevas _directivas de control_ de flujo _`@for`_, _`@if`_, _`@switch`_, _`@case`_.
+## [Angular 22](https://cursos.devtalles.com/courses/angular-moderno)
+_Framework opinionado_, excelente para proyectos grandes, aplicaciones complejas y formularios complejos. Desde la versión 17 hasta la 22 ha incorporado cambios importantes, como los _Signals_ (_reactividad_) y las nuevas _directivas de control_ de flujo _`@for`_, _`@if`_, _`@switch`_, _`@case`_.
 
-* [**TypeScript 7:**](https://youtu.be/fUgxxhI_bvc?si=rRY7NTzsONRSwyNN) Agrega _tipado estático_ al lenguaje, permitiendo detectar errores durante el desarrollo y mejorar el _autocompletado_, la _refactorización_ y el _mantenimiento del código_. Además, permite tener el mismo lenguaje de programación en frontend y backend.
+## [TypeScript 7](https://youtu.be/fUgxxhI_bvc?si=rRY7NTzsONRSwyNN)
+Agrega _tipado estático_ al lenguaje, permitiendo detectar errores durante el desarrollo y mejorar el _autocompletado_, la _refactorización_ y el _mantenimiento del código_. Además, permite tener el mismo lenguaje de programación en frontend y backend.
 
-* [**Luxon 3:**](https://moment.github.io/luxon/) Corrige los errores de _`new Date()`_ de JavaScript y y tiene una API muy completa para manejo de fechas.
+## [Luxon 3](https://moment.github.io/luxon/)
+Corrige los errores de _`new Date()`_ de JavaScript y y tiene una API muy completa para manejo de fechas.
 
-* [**CSS:**](https://youtu.be/K3xmRF8ab1o?si=w1Ox_P5e2R934Xby)
+## [CSS](https://youtu.be/K3xmRF8ab1o?si=w1Ox_P5e2R934Xby)
 
 1. No es necesario usar Sass, porque CSS ya tiene de forma nativa:
   * [CSS anidado (CSS nesting)](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Nesting). Ejemplo:
@@ -58,9 +47,9 @@ Estas son 2 de las principales razones por las que se decide usar Sass y no CSS,
 
 2. [`@layer`](https://css-tricks.com/css-cascade-layers/) resuelve problemas de [_especificidad_](https://css-tricks.com/specifics-on-css-specificity/) y [_cascada_](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Handling_conflicts) al controlar el orden de prioridad entre las _capas_, reduciendo la necesidad de usar [`!important`](https://css-tricks.com/when-using-important-is-the-right-choice/)
 
-3. [Tailwind 4 no se puede configurar con Sass](https://tailwindcss.com/docs/compatibility)
+3. De forma oficial [Tailwind 4 no se puede configurar con Sass](https://tailwindcss.com/docs/compatibility), para hacerlo, hay que recurrir a hacks
 
-* [**Tailwind CSS 4:** ](https://youtu.be/R5EXap3vNDA?si=9TV4hucexfUBXgGk) Usa _clases utilitarias (utility classes)_, esto significa que si tienes conocimiento en CSS, cada clase de CSS tiene su equivalente en Tailwind. Ejemplo: En CSS se escribe
+* [Tailwind CSS 4](https://youtu.be/R5EXap3vNDA?si=9TV4hucexfUBXgGk) Usa _clases utilitarias (utility classes)_, esto significa que si tienes conocimiento en CSS, cada clase de CSS tiene su equivalente en Tailwind. Ejemplo: En CSS se escribe
 
 ```CSS
 div {
@@ -78,7 +67,7 @@ y en Tailwind se escribe
 
 En este proyecto se usa CSS para estilos globales y Tailwind para los estilos de cada componente
 
-* [**Spartan ng:**](https://spartan.ng/components)
+## [Spartan ng](https://spartan.ng/components)
 1. Tiene una lista de _componentes UI_ muy completa, con integración nativa con Tailwind
 
 2. Usar una librería de UI permite abstraer lógica; la librería ya se encarga de crear los componentes y de manejar los estados. Solo tiene que usar los componentes de UI.
@@ -89,7 +78,7 @@ En este proyecto se usa CSS para estilos globales y Tailwind para los estilos de
 
 5. Para modificar los estilos de Spartan ng no se requiere usar hacks de CSS como `::ng-deep` o `!important`
 
-* [**Zod 4:**](https://youtu.be/bUzGfrjg66M?si=PqQtfsXKDVA0HnuP)
+## [Zod 4](https://youtu.be/bUzGfrjg66M?si=PqQtfsXKDVA0HnuP)
 
 1. Permite utilizar la _misma sintaxis de código_ y reutilizar los mismos _esquemas de validación_ en frontend y backend de Node.js.
 
@@ -99,32 +88,92 @@ En frontend valida _formularios_ y _datos de entrada_, con integración con _Rea
 
 3. Se integra con TypeScript, ofrece validación de tipos en _tiempo de compilación_ y validación de datos en _tiempo de ejecución (runtime)_
 
-* [**Material Symbols Icons:**](https://fonts.google.com/icons) Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
-
-# ⚙️ Configurar lo Siguiente **UNA SOLA VEZ**
-
-## 🛠️ Antes de Empezar
-Para que la configuración funcione, debes tener instalado:
-* [VS Code](https://code.visualstudio.com/) o cualquier editor basado en VS Code ([Antigravity IDE](https://antigravity.google/product/antigravity-ide), [Cursor](https://cursor.com/get-started), Windsurf, etc.)
-
-* [Git Bash](https://youtu.be/niPExbK8lSw?si=tHx4IYZBdrUmW6ey)
-
-* [Node.js](https://nodejs.org/)
-
-* [Claude Code](https://youtu.be/Bf7hfpItrDk?si=5pW919OUbtSqJlyP)
-
-* [pnpm](https://pnpm.io/installation)
-
-* [fnm](https://github.com/Schniz/fnm)
+## [Material Symbols Icons](https://fonts.google.com/icons)
+Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
 
 > [!TIP]
-> # ⚡ **Empieza de inmediato**
->
-> 👍 Si quieres empezar a programar con IA sin perder tiempo configurando herramientas, utiliza **Claude Code**. Este proyecto ya incluye las configuraciones de **MCP**, **Skills** y [`AGENTS.md`](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks) listas para usar.
->
-> 👎 Si prefieres otra IA, deberás configurar manualmente sus funcionalidades equivalentes según la forma en que esa herramienta las implemente.
+> # 🧠 **Aprende**
 
-## Instalar `pnpm`
+* 🎥 Puedes hacer clic en el nombre de cada tecnología para ver cursos y aprenderlas
+
+* Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
+  1. [🔗 Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
+  2. [🔗 Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
+  3. [🔗 Rxjs VS Signals](https://youtu.be/lSzO2D3OCjY?si=Yr4nlZ2AanGWW0WN)
+  4. [🔗 Forms with Signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
+  5. [🔗 input y output con Signals `import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
+
+* Para entender la arquitectura del proyecto:
+  * Lee la [skill angular-conventions](.agents/skills/angular-conventions/SKILL.md)
+
+  * Si no entiendes algo de la skill, pregúntale a la IA en lugar de pedirle solo *"hazme X"*. Aunque la skill es larga, aprenderás la arquitectura del proyecto y buenas prácticas, y podrás detectar cuándo la IA alucina al revisar el código. Por ejemplo, este prompt resume la arquitectura de este proyecto:
+
+```console
+Leer estas skills:
+- `.agents/skills/angular-conventions/SKILL.md`
+- `.agents/skills/angular-developer/SKILL.md`
+
+Explica cada uno de los siguientes puntos con teoría y ejemplos, basándote en ambas skills. Si se contradicen, prevalece `angular-conventions` sobre `angular-developer`:
+- Estructura de archivos y carpetas (feature arquitecture)
+
+- ¿Como maquetar componentes de UI?, ¿Como usar CSS global y Tailwind para componentes?
+
+- Botones:
+  - ¿Como escribir un boton?
+  - ¿Es correcto usar <button> de HTML nativo en los componentes?
+  - Tipos de botones: Boton con solo texto, solo icono, icono y texto
+
+- Consumo de API
+  - ¿Como consumir una API?
+  - ¿Es correcto escribir try catch al llamar a una API?
+  - ¿Como validar cuando peticion HTTP es exitosa y erronea?
+
+- ¿Como crear una nueva ruta?
+
+- ¿Como definir y validar formularios?
+
+- Explicar estados en Angular:
+  - Como definir y actualizar estados con signals
+  - Signal que depende de otro Signal
+  - ¿Cuando usar `computed()`, `linkedSignal` y `effect()`?
+
+- Servicio singleton con `@Service()` y no @Injectable({providedIn: 'root'})
+
+- Manejo de fechas
+```
+
+* Mira estos enlaces para que aprendas de IA enfocada en desarrollo de software:
+  1. [🔗 Benchmark de IA](https://artificialanalysis.ai/)
+
+  2. [🔗 Categorización de los tipos de IA: Modelos, Harnesses y Orquestadores](https://youtu.be/_HxDbdItVcs?si=VB6SHcZB1enB2Qvl)
+
+  3. [🔗 Mejores Modelos de IA](https://youtu.be/EPz00z1ACPc?si=Dkw3zECIk1d84YxX)
+
+  4. [🔗 Mejores Harnesses de IA](https://youtu.be/Fzn9uWRRDXM?si=NJJmsOYuzTXl_aad)
+
+  5. [🔗 Mejores Orquestadores de IA](https://youtu.be/rANNn5fIVmg?si=RxFAUjPUEYzXJpbq)
+
+  6. [🔗 Desarrollo de software con IA: MCP, CLI, RAG](https://youtu.be/sn1o1Hr1pJs)
+
+# ⬇️ Instalaciones
+
+## Instalaciones Necesarias
+Esto es obligatorio, sin esto no puedes ejecutar el proyecto
+
+### [Git Bash](https://youtu.be/niPExbK8lSw?si=tHx4IYZBdrUmW6ey)
+Despues de instalar Git Bash ejecutar lo siguiente:
+
+Descargar repositorio
+
+git clone
+
+git config user name
+
+git config user email
+
+### [Node.js 24.21.0](https://nodejs.org/es/download)
+
+## [Instalar `pnpm`](https://pnpm.io/installation)
 1. Abrir Git Bash
 
 2. Instalar:
@@ -143,7 +192,98 @@ pnpm -v
 
 Debe mostrar la version de `pnpm` instalada
 
-## `fnm`
+### Editor de Codigo
+[VS Code](https://code.visualstudio.com/) o cualquier editor basado en VS Code ([Antigravity IDE](https://antigravity.google/product/antigravity-ide), [Cursor](https://cursor.com/get-started), etc.)
+
+#### ⌨️ Autocompletado, Formatear Código y Linter
+Usar VS Code o cualquier editor basado en VS Code para instalar las siguientes extensiones:
+
+* [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+
+* [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+
+* [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
+
+* [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+
+* [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+* [Console Ninja](https://marketplace.visualstudio.com/items?itemName=WallabyJs.console-ninja)
+
+* [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template)
+
+* [Angular Snippets (Version 18)](https://marketplace.visualstudio.com/items?itemName=johnpapa.Angular2)
+
+* [Path Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
+
+* [Auto Import](https://marketplace.visualstudio.com/items?itemName=steoates.autoimport)
+
+* [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
+
+* [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
+
+* [HTML CSS Support](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css)
+
+No es necesario buscar cada extensión manualmente en el marketplace de VS Code porque el archivo `.vscode/extensions.json` ya está configurado con esas extensiones como recomendadas. Al abrir el proyecto, VS Code mostrará una notificación sugiriendo instalarlas; también puede instalarlas desde la pestaña **Extensions** filtrando por `@recommended`.
+
+La configuración de autocompletado, formateo de código y linter ya está incluida en los siguientes archivos. No es necesario realizar modificaciones adicionales:
+
+* `.vscode/`
+* `.editorconfig`
+* `.prettierrc`
+* `eslint.config.js`
+
+### Harness de IA desde la Terminal
+[Claude Code](https://youtu.be/Bf7hfpItrDk?si=5pW919OUbtSqJlyP) 
+
+> [!CAUTION]
+> # ⚠️ **IMPORTANTE** 🚨
+>
+> ****Ignorar esta sección ocasionará que la IA genere código que no respeta la arquitectura, estructura ni las convenciones del proyecto, produciendo código legacy, inconsistente, desordenado y con malas practicas****
+
+## Principales IA para Desarrollo de Software
+
+| Empresa ⬇️ / Plataforma ➡️ | Web                                                                                     | Desktop                                                               | Terminal / Bash / CLI                                              |
+| --------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Anthropic                   | [Claude Web](https://claude.ai/)                                                        | [Claude Desktop](https://youtu.be/DYwZy7VNKws?si=cXTPumpZ3Jr9rNn9)    | [Claude Code](https://youtu.be/Bf7hfpItrDk?si=wjUIcIgtDX_Loyey)    |
+| Open AI                     | [Chat GPT](https://chatgpt.com/)                                                        | [GPT Codex Desktop](https://youtu.be/bgx8ownl3O4?si=TzbOntfYIBVN1PGU) | [Codex CLI](https://youtu.be/Ub-K1n4YYsg?si=EoIXGCzEa4ZxyRqA)      |
+| Google                      | [Google AI Studio](https://aistudio.google.com/) / [Gemini](https://gemini.google.com/) | [Antigravity 2.0](https://antigravity.google/product/antigravity-2)   | [Antigravity CLI](https://youtu.be/bdEqIchP4x4?si=gRf6iLggXuzy_cq) |
+| Anomaly Innovations         | [`opencode web`](https://opencode.ai/docs/web/)                                         | [Open Code Desktop](https://youtu.be/_SVSv2Y59P0?si=LT2S0z10t1FBxlB6) | [Open Code CLI](https://youtu.be/2gO8WyctqMk?si=aNvHlf23tKfrN-Z3)  |
+| Cursor                      | [Cursor Web](https://cursor.com/agents)                                                 | [Cursor Desktop](https://youtu.be/XWsOQTqVl0w?si=0OVGRnYSCH46v2zf)    | [Cursor CLI](https://cursor.com/es/cli)                            |
+
+## ✏️ Edición de Código
+Este proyecto esta configurado para usar _IAs de pago y desde la terminal_. **NO** sirve si usas IAs gratis o desde una pagina web, porque estan limitadas.
+
+**Razones:**
+* Si copias y pegas codigo desde plataforma web al proyecto, es probable que cometas errores
+
+Las IAs de pago y desde la terminal tienen mejoras respecto a otras plataformas:
+
+* Mayor comprensión del proyecto y de la estructura completa del código (_contexto_ y _tokens_).
+
+* Acceso al sistema operativo (archivos y carpetas) y capacidad para ejecutar comandos.
+
+* Capacidad para realizar cambios respetando la arquitectura del proyecto.
+
+* Uso de Skills y MCP para reducir las _alucinaciones_ de la IA, permitiéndole a la IA consultar documentación oficial actualizada y seguir buenas prácticas.
+
+## Instalaciones Recomendadas
+Son opcionales. Puedes ejecutar el proyecto sin ellas, pero te ayudarán a programar mejor.
+
+## Herdr
+
+## [Instalar `fnm` (Opcional)](https://github.com/Schniz/fnm)
+
+> [!NOTE]
+> Este paso **NO** es necesario
+
+No hagas este paso, la razon de porque existe:
+- Este paso de instalar fnm
+
+- El archivo `.nvmrc`
+
+es por compatibilidad, [segun la focumentacion oficial de pnpm](https://pnpm.io/blog/whats-different-in-pnpm-12) a partir de pnpm 12, no es necesario instalar un gestor de versiones porque pnpm ya hace esto
+
 Para que `fnm` automáticamente al entrar a la carpeta del proyecto seleccione la versión correcta de Node.js que se especifica en el archivo `.nvmrc` que esta en la raiz del proyecto. Hacer esto:
 
 1. Abrir Git Bash.
@@ -183,43 +323,20 @@ node -v
 fnm use 24.21.0
 ```
 
-## ⌨️ Autocompletado, Formatear Código y Linter
-Usar VS Code o cualquier editor basado en VS Code (Antigravity, Cursor, Windsurf, etc.) para instalar las siguientes extensiones:
 
-* [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
 
-* [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 
-* [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
 
-* [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 
-* [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-* [Console Ninja](https://marketplace.visualstudio.com/items?itemName=WallabyJs.console-ninja)
 
-* [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template)
 
-* [Angular Snippets (Version 18)](https://marketplace.visualstudio.com/items?itemName=johnpapa.Angular2)
 
-* [Path Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
 
-* [Auto Import](https://marketplace.visualstudio.com/items?itemName=steoates.autoimport)
 
-* [Auto Close Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
 
-* [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
 
-* [HTML CSS Support](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css)
 
-No es necesario buscar cada extensión manualmente en el marketplace: el archivo `.vscode/extensions.json` ya está configurado con esas extensiones como recomendadas. Al abrir el proyecto, el editor mostrará una notificación sugiriendo instalarlas; también puede instalarlas desde la pestaña **Extensions** filtrando por `@recommended`.
-
-La configuración de autocompletado, formateo de código y linter ya está incluida en los siguientes archivos. No es necesario realizar modificaciones adicionales:
-
-* `.vscode/`
-* `.editorconfig`
-* `.prettierrc`
-* `eslint.config.js`
 
 # ⚙️ Entorno de Ejecución
 Usar Node.js, prohibido usar alternativas como:
@@ -384,68 +501,201 @@ debugger;
 
 5. Automaticamente el navegador abre la pestaña "Fuentes" ("Sources") de las devtools donde puede ver el código a depurar que contiene `debugger;`
 
-# Arquitectura del Proyecto
-
-> [!TIP]
-> # 🧠 **Aprende antes de pedir cambios**
->
-> No te limites a pedirle a la IA *"hazme X"* sin entender cómo funciona la arquitectura del proyecto.
->
-> Hazle preguntas a la IA sobre:
->
-> 1. [`AGENTS.md`](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks)
-> 2. `.agents/skills/***`
-> 3. Los **"🔗 Enlaces"**
->
-> Hasta comprender cómo funciona el proyecto.
->
-> Aunque es un texto largo, aprenderás la arquitectura, buenas prácticas y a detectar revisando el código, cuando la IA alucina
-
 # [🔗 Enlace - HTTP Cats - Explicación de los Status HTTP](https://http.cat/)
 
 # 🤖 Uso de IA
 
-> [!CAUTION]
-> # ⚠️ **IMPORTANTE** 🚨
+# Definiciones
+
+## Modelo de IA
+
+## Harness de IA
+
+## Skill
+Es un archivo Markdown llamado `SKILL.md` que contiene instrucciones para enseñarle a la IA cómo ejecutar un proceso, o para darle conocimiento sobre un tema. La IA carga ese contenido directamente en su contexto antes de responder.
+
+### 🔗 Enlaces con Respositorios de Skills
+* [Skills escritas por el equipo oficial de Angular (Google)](https://github.com/angular/skills)
+
+* [Web de Vercel con múltiples repositorios de Skills sobre distintos temas](https://www.skills.sh/)
+
+* [Skills para UI / Maquetación](https://www.ui-skills.com/)
+
+* [Skills de Anthropic AI](https://github.com/anthropics/skills/tree/main/skills)
+
+* [Skills de Open AI](https://github.com/openai/plugins)
+
+### ¿Como Configurar Skills?
+Para aprender como crear una nueva skill [mira este video](https://youtu.be/oZTXrgHRi-k ), **SIEMPRE** agregar las skills en la carpeta `.agents\skills\NOMBRE-DE-LA-SKILL\SKILL.md`, **NUNCA** en otra carpeta (`.claude`, `.codex`, etc), esto sin importar que harness y modelo de IA uses (Claude Code, Codex, etc)
+
+> [!NOTE]
 >
-> ****Ignorar esta sección ocasionará que la IA genere código que no respeta la arquitectura, estructura ni las convenciones del proyecto, produciendo código legacy, inconsistente, desordenado y con malas practicas****
-
-## Principales IA para Desarrollo de Software
-
-| Empresa ⬇️ / Plataforma ➡️ | Web                                                                                     | Desktop                                                               | Terminal / Bash / CLI                                              |
-| --------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| Anthropic                   | [Claude Web](https://claude.ai/)                                                        | [Claude Desktop](https://youtu.be/DYwZy7VNKws?si=cXTPumpZ3Jr9rNn9)    | [Claude Code](https://youtu.be/Bf7hfpItrDk?si=wjUIcIgtDX_Loyey)    |
-| Open AI                     | [Chat GPT](https://chatgpt.com/)                                                        | [GPT Codex Desktop](https://youtu.be/bgx8ownl3O4?si=TzbOntfYIBVN1PGU) | [Codex](https://youtu.be/Ub-K1n4YYsg?si=EoIXGCzEa4ZxyRqA)          |
-| Google                      | [Google AI Studio](https://aistudio.google.com/) / [Gemini](https://gemini.google.com/) | [Antigravity 2.0](https://antigravity.google/product/antigravity-2)   | [Antigravity CLI](https://youtu.be/bdEqIchP4x4?si=gRf6iLggXuzy_cq) |
-| Anomaly Innovations         | [`opencode web`](https://opencode.ai/docs/web/)                                         | [Open Code Desktop](https://youtu.be/_SVSv2Y59P0?si=LT2S0z10t1FBxlB6) | [Open Code CLI](https://youtu.be/2gO8WyctqMk?si=aNvHlf23tKfrN-Z3)  |
-| Cursor                      | [Cursor Web](https://cursor.com/agents)                                                 | [Cursor Desktop](https://youtu.be/XWsOQTqVl0w?si=0OVGRnYSCH46v2zf)    | [Cursor CLI](https://cursor.com/es/cli)                            |
-
-
-> [!TIP]
-> # 🧠 Mira estos enlaces 🔗 para que aprendas de IA enfocada en desarrollo de Software:
+> Esto es una guia. Este proyecto ya tiene skills configuradas.
 >
-> ## 1. [Benchmark de IA](https://artificialanalysis.ai/)
-> ## 2. [Categorización de los tipos de IA: Modelos, Harnesses y Orquestadores](https://youtu.be/_HxDbdItVcs?si=VB6SHcZB1enB2Qvl)
-> ## 3. [Mejores Modelos de IA](https://youtu.be/EPz00z1ACPc?si=Dkw3zECIk1d84YxX)
-> ## 4. [Mejores Harnesses de IA](https://youtu.be/Fzn9uWRRDXM?si=NJJmsOYuzTXl_aad)
-> ## 5. [Mejores Orquestadores de IA](https://youtu.be/rANNn5fIVmg?si=RxFAUjPUEYzXJpbq)
-> ## 6. [Desarrollo de software con IA: MCP, CLI, RAG](https://youtu.be/sn1o1Hr1pJs)
+> Para explicar como configurar skills, se usa como ejemplo [`angular-developer`](https://github.com/angular/skills). No debes configurar otra vez la misma skill
 
-## ✏️ Edición de Código
-Este proyecto esta configurado para usar _IAs de pago y desde la terminal_. **NO** sirve si usas IAs gratis o desde una pagina web, porque estan limitadas.
+#### Forma 1 - Usando Comando de [www.skills.sh](https://www.skills.sh/):
 
-**Razones:**
-* Si copias y pegas codigo desde plataforma web al proyecto, es probable que cometas errores
+1. Buscar una skill en [www.skills.sh](https://www.skills.sh/)
 
-Las IAs de pago y desde la terminal tienen mejoras respecto a otras plataformas:
+2. Ejecutar el comando de la skill a descargar:
 
-* Mayor comprensión del proyecto y de la estructura completa del código (_contexto_ y _tokens_).
+```bash
+pn dlx skills add https://github.com/angular/angular --skill angular-developer
+```
 
-* Acceso al sistema operativo (archivos y carpetas) y capacidad para ejecutar comandos.
+3. La terminal hace las siguientes preguntas:
 
-* Capacidad para realizar cambios respetando la arquitectura del proyecto.
+* ¿Para que IA instalar la skill?
+Seleccionar Claude Code
 
-* Uso de Skills y MCP para reducir las _alucinaciones_ de la IA, permitiéndole a la IA consultar documentación oficial actualizada y seguir buenas prácticas.
+* ¿Cual es el alcance de la skill? (Install scope)
+Seleccionar Project
+
+Hay dos alcances:
+
+| Alcance | Disponibilidad                                                       | ¿Se puede compartir con el equipo mediante Git? |
+| ------- | -------------------------------------------------------------------- | ----------------------------------------------- |
+| Global  | Disponible para la persona que la instala en **todos sus proyectos** | ❌ **No**                                      |
+| Project | Disponible **solo en el proyecto actual** donde se instala           | ✅ **Sí**                                      |
+
+4. Verificar que la skill se guarde en `.agents\skills\angular-developer`
+
+5. Eliminar `skills-lock.json`
+
+#### Forma 2 - Descargar Skill sin Comando
+1. Buscar un repositorio con una skill
+
+2. Descargar el repositorio
+
+3. Mover la skill a `.agents\skills\NOMBRE-DE-LA-SKILL\SKILL.md`
+
+#### Forma 3 - Crear tu Propia Skill
+Para crear una nueva skill, hay que llamar la skill `skill-creator`. Ejemplo
+
+```bash
+/skill-creator en la carpeta .agents\skills\ crear una skill sobre <<aqui describes sobre que trata la skill>>
+```
+
+#### Ver Skills Instaladas
+Ejecutar el comando:
+
+```bash
+/skills
+```
+
+## Model Context Protocol (MCP)
+Es un protocolo (no es exactamente una API REST, aunque es similar) que permite que una IA se comunique con sistemas externos —herramientas, servicios o fuentes de datos— de forma estandarizada. Un servidor MCP puede exponer *tools* (funciones que la IA puede invocar), *resources* (datos) y *prompts* (plantillas)
+
+### Diferencia entre MCP `angular-cli` y Skill `angular-developer`
+Ambos son mantenidos por el equipo oficial de Angular (Google), y tambien le enseñan a la IA como hacer codigo con Angular. La diferencia es:
+
+**MCP `angular-cli`** expone *tools* que la IA invoca en tiempo real, como `search_documentation` (busca en la documentación oficial de angular.dev) y `get_best_practices` (obtiene la guía oficial de buenas prácticas). El MCP no almacena esa teoría: la consulta dinámicamente cada vez que se necesita. Su contenido es la teoria de Angular
+
+**skill `angular-developer`** Su contenido siempre es el mismo, a diferencia de MCP `angular-cli`, contiene mas ejemplos de la teoiria de Angular
+
+### ¿Cuando Usar un CLI y no un MCP?
+
+**Respuesta resumida:**
+Cuando el MCP y el CLI sirven para lo mismo, es mejor usar el CLI porque consume menos contexto que el MCP.
+
+**Ejemplos:**
+
+| MCP                                                                                         | CLI                                                                                                    |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [Playwright MCP](https://github.com/microsoft/playwright-mcp)                               | [Playwright CLI](https://github.com/microsoft/playwright-cli/blob/main/skills/playwright-cli/SKILL.md) |
+| [Atlassian / Jira MCP](https://www.atlassian.com/platform/rovo-mcp)                         | [Atlassian / Jira CLI](https://developer.atlassian.com/cloud/acli/guides/introduction/)                |
+| [GitHub MCP](https://github.com/github/github-mcp-server)                                   | [GitHub CLI](https://youtu.be/oZRFOkLUZdk)                                                             |
+| [Azure MCP](https://learn.microsoft.com/es-es/azure/developer/azure-mcp-server/)            | [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/)                                              |
+| [AWS MCP](https://docs.aws.amazon.com/es_es/agent-toolkit/latest/userguide/mcp-server.html) | [AWS CLI](https://aws.amazon.com/es/cli/)                                                              |
+
+**Explicación:**
+Por defecto, Claude Code difiere las definiciones de las tools de un MCP usando ([MCP tool search](https://code.claude.com/docs/en/mcp#scale-with-mcp-tool-search)): al iniciar la sesión solo carga en el contexto los nombres de las tools y las instrucciones del servidor, y la descripcion de lo que hace cada tool se carga cuando el modelo la necesita.
+
+Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: el modelo ejecuta los comandos directamente en la terminal ([documentación oficial](https://code.claude.com/docs/en/costs#reduce-mcp-server-overhead)).
+
+### ¿Como Configurar MCP?
+
+> [!NOTE]
+>
+> Esto es una guia. **NO** debes hacer lo siguiente porque el MCP ya esta configurado
+>
+> Para explicar como configurar MCP, se usa como ejemplo `angular-cli MCP`
+
+1. Este comando instala el MCP de `angular-cli` con el `--scope project`. Es decir, configura el MCP para que se ejecute únicamente en este proyecto y pueda compartirse con el resto del equipo mediante Git:
+
+```bash
+!claude mcp add angular-cli --scope project -- pnpm dlx @angular/cli mcp
+```
+
+2. Verificar de que el comando automaticamente haya creado archivo `.mcp.json` en la ruta raiz del proyecto que contenga:
+
+```json
+{
+  "mcpServers": {
+    "angular-cli": {
+      "type": "stdio",
+      "command": "pnpm",
+      "args": [
+        "dlx",
+        "@angular/cli",
+        "mcp"
+      ],
+      "env": {}
+    }
+  }
+}
+```
+
+# Compatibilidad de este Proyecto con Multiples Harness y Modelos de IA
+A pesar de que en este readme.md se mencionan configuraciones de Claude, todo este proyecto es compatible con casi cualquier modelo/harness de IA
+
+[Mira este video](https://youtu.be/S4mBEeNBwuQ) para aprender que es y como crear un enlace simbolico
+
+## Carpeta `.agents`
+Enlace simbolico
+
+Esto sucede porque agents md y las carpetas agents skills son estándar en la IA 
+
+| Modelo / harness de IA | Carpeta donde lee las skills |
+| --- | --- |
+| GitHub Copilot CLI | `/.github/skills/` |
+| Claude Code | `/.claude/skills/` |
+| Cursor | `/.cursor/skills/` |
+| DeepSeek | `/.deepcode/skills/` |
+| Grok | `/.grok/skills/` |
+| Gemini (Google) | `/.gemini/skills/` |
+| Open Code | `/.opencode/skills/` |
+| pi agent |          `/.pi/skills/` |
+| Codex |             `/.codex/skills/` |
+| open claw |       `/.openclaw/skills` |
+
+## [📜 `AGENTS.md`](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks)
+Es un prompt que siempre se envia a la IA. Sirve para que la IA:
+* Respete la arquitectura del proyecto.
+
+* Consulte la [documentacion oficial de Angular](https://angular.dev/llms.txt).
+
+* Use Angular moderno y no legacy.
+
+`AGENTS.md` esta basado en [este link de la documentacion oficial de Angular](https://angular.dev/ai/develop-with-ai)
+
+Para probar que funcione envia este prompt a Claude:
+
+```txt
+citarme textualmente de `angular-cli` MCP ¿que es Signal? y ejemplo
+```
+
+La salida debe contener algo similar a esto:
+
+```txt
+Angular Signals is a system that granularly tracks
+how and where your state is used throughout an application,
+allowing the framework to optimize rendering updates.
+```
+
+
+
 
 # Configurar Claude Code
 
@@ -519,105 +769,7 @@ cd /ruta/a/carpeta/raiz/del/proyecto
 claude --dangerously-skip-permissions
 ```
 
-# [📜 `AGENTS.md`](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks)
-Es un prompt que siempre se envia a Claude. Sirve para que Claude:
-* Respete la arquitectura de software del proyecto.
-
-* Consulte la [documentacion oficial de Angular](https://angular.dev/llms.txt).
-
-* Use Angular moderno y no legacy.
-
-`AGENTS.md` esta basado en [este link de la documentacion oficial de Angular](https://angular.dev/ai/develop-with-ai)
-
-Para probar que funcione envia este prompt a Claude:
-
-```txt
-citarme textualmente de `angular-cli` MCP ¿que es Signal? y ejemplo
-```
-
-La salida debe contener algo similar a esto:
-
-```txt
-Angular Signals is a system that granularly tracks
-how and where your state is used throughout an application,
-allowing the framework to optimize rendering updates.
-```
-
-# Diferencia entre Skills y MCP
-
-**Skill:** Es un archivo Markdown llamado `SKILL.md` que contiene instrucciones para enseñarle a la IA cómo ejecutar un proceso, o para darle conocimiento sobre un tema. La IA carga ese contenido directamente en su contexto antes de responder.
-
-**Model Context Protocol (MCP):** Es un protocolo (no es exactamente una API REST, aunque es similar) que permite que una IA se comunique con sistemas externos —herramientas, servicios o fuentes de datos— de forma estandarizada. Un servidor MCP puede exponer *tools* (funciones que la IA puede invocar), *resources* (datos) y *prompts* (plantillas)
-
-## Diferencia entre MCP `angular-cli` y Skill `angular-developer`
-Ambos son mantenidos por el equipo oficial de Angular (Google), y tambien le enseñan a la IA como hacer codigo con Angular. La diferencia es:
-
-**MCP `angular-cli`** expone *tools* que la IA invoca en tiempo real, como `search_documentation` (busca en la documentación oficial de angular.dev) y `get_best_practices` (obtiene la guía oficial de buenas prácticas). El MCP no almacena esa teoría: la consulta dinámicamente cada vez que se necesita. Su contenido es la teoria de Angular
-
-**skill `angular-developer`** Su contenido siempre es el mismo, a diferencia de MCP `angular-cli`, contiene mas ejemplos de la teoiria de Angular
-
-# Skills
-
-## 🔗 Enlaces con Respositorios de Skills
-
-* ## [Skills escritas por el equipo oficial de Angular (Google)](https://github.com/angular/skills)
-
-* ## [Web de Vercel con múltiples repositorios de Skills sobre distintos temas](https://www.skills.sh/)
-
-* ## [Skills para UI / Maquetación](https://www.ui-skills.com/)
-
-* ## [Skills de Anthropic AI](https://github.com/anthropics/skills/tree/main/skills)
-
-* ## [Skills de Open AI](https://github.com/openai/plugins)
-
-## ¿Como Configurar Skills?
-
-> [!NOTE]
->
-> Esto es una guia. **NO** debes hacer lo siguiente porque las skills ya estan configuradas
->
-> Para explicar como configurar skills, se usa como ejemplo [`angular-developer`](https://github.com/angular/skills)
-
-Hay dos formas:
-
-### Forma 1 - Usando Comando de [www.skills.sh](https://www.skills.sh/):
-
-1. Buscar una skill en [www.skills.sh](https://www.skills.sh/)
-
-2. Ejecutar el comando de la skill a descargar:
-
-```bash
-pn dlx skills add https://github.com/angular/angular --skill angular-developer
-```
-
-3. La terminal hace las siguientes preguntas:
-
-* ¿Para que IA instalar la skill?
-Seleccionar Claude Code
-
-* ¿Cual es el alcance de la skill? (Install scope)
-Seleccionar Project
-
-Hay dos alcances:
-
-| Alcance | Disponibilidad                                                       | ¿Se puede compartir con el equipo mediante Git? |
-| ------- | -------------------------------------------------------------------- | ----------------------------------------------- |
-| Global  | Disponible para la persona que la instala en **todos sus proyectos** | ❌ **No**                                      |
-| Project | Disponible **solo en el proyecto actual** donde se instala           | ✅ **Sí**                                      |
-
-4. Verificar que la skill se guarde en `.agents\skills\angular-developer`
-
-5. Eliminar `skills-lock.json`
-
-### Forma 2 - Descargar Skill sin Comando
-1. Buscar un repositorio con una skill
-
-2. Descargar el repositorio
-
-3. Mover la skill a `.agents\skills\NOMBRE-DE-LA-SKILL\SKILL.md`
-
-### Ver Skills Instaladas
-Para ver la lista de skills ejecutar el comando `/skills` dentro de Claude Code
+# Skills Configuradas en este Proyecto
 
 ## 🌿 `git-commit`
 Por cada feature terminada hacer un commit antes de solicitar nuevas modificaciones a la IA. Evita acumular demasiados cambios, ya que puedes perder el contexto de lo que la IA está realizando y cometer errores.
@@ -665,7 +817,7 @@ Solo funciona en Claude. Crea un mockup (similar a Figma) que puedes editar con 
 /design cambia el color del titulo del texto X por rojo
 ```
 
-# MCP
+# MCP Configurados en este Proyecto
 
 ## 🔗 Enlaces - Mas Ejemplos de MCP
 Estos MCP no estan configurados en este proyecto:
@@ -678,40 +830,7 @@ Estos MCP no estan configurados en este proyecto:
 
 * [Figma MCP:](https://youtu.be/uZ6Nbwp8GtU?si=cf4h9SxQdnXbc3KI) Sirve para convertir un mockup de Figma a codigo de CSS/Sass/Tailwind/Bootstrap
 
-## ¿Como Configurar MCP?
-
-> [!NOTE]
->
-> Esto es una guia. **NO** debes hacer lo siguiente porque el MCP ya esta configurado
->
-> Para explicar como configurar MCP, se usa como ejemplo `angular-cli MCP`
-
-1. Este comando instala el MCP de `angular-cli` con el `--scope project`. Es decir, configura el MCP para que se ejecute únicamente en este proyecto y pueda compartirse con el resto del equipo mediante Git:
-
-```bash
-!claude mcp add angular-cli --scope project -- pnpm dlx @angular/cli mcp
-```
-
-2. Verificar de que el comando automaticamente haya creado archivo `.mcp.json` en la ruta raiz del proyecto que contenga:
-
-```json
-{
-  "mcpServers": {
-    "angular-cli": {
-      "type": "stdio",
-      "command": "pnpm",
-      "args": [
-        "dlx",
-        "@angular/cli",
-        "mcp"
-      ],
-      "env": {}
-    }
-  }
-}
-```
-
-## `angular-cli MCP`
+## `angular-cli` MCP
 
 Sirve para que la IA acceda a la documentación oficial de angular. Esto permite que la IA tenga datos actualizados de como escribir codigo de Angular.
 
@@ -781,30 +900,10 @@ usar get_best_practices de angular-cli MCP para refactorizar el componente que e
 usar search_documentation de angular-cli MCP para migrar a signals el componente que esta en la ruta src/***
 ```
 
-# CLI
+# CLI Configurados en Este Proyecto
 Puedes instalar CLIs para que la IA ejecute comandos y automatice procesos.
 
 También puedes crear skills que le expliquen a la IA cómo ejecutar los comandos del CLI.
-
-## ¿Por qué Usar un CLI y no un MCP?
-
-**Respuesta resumida:**
-Cuando el MCP y el CLI sirven para lo mismo, es mejor usar el CLI porque consume menos contexto que el MCP.
-
-**Ejemplos:**
-
-| MCP                                                                                         | CLI                                                                                                    |
-| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| [Playwright MCP](https://github.com/microsoft/playwright-mcp)                               | [Playwright CLI](https://github.com/microsoft/playwright-cli/blob/main/skills/playwright-cli/SKILL.md) |
-| [Atlassian / Jira MCP](https://www.atlassian.com/platform/rovo-mcp)                         | [Atlassian / Jira CLI](https://developer.atlassian.com/cloud/acli/guides/introduction/)                |
-| [GitHub MCP](https://github.com/github/github-mcp-server)                                   | [GitHub CLI](https://youtu.be/oZRFOkLUZdk)                                                             |
-| [Azure MCP](https://learn.microsoft.com/es-es/azure/developer/azure-mcp-server/)            | [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/)                                              |
-| [AWS MCP](https://docs.aws.amazon.com/es_es/agent-toolkit/latest/userguide/mcp-server.html) | [AWS CLI](https://aws.amazon.com/es/cli/)                                                              |
-
-**Explicación:**
-Por defecto, Claude Code difiere las definiciones de las tools de un MCP usando ([MCP tool search](https://code.claude.com/docs/en/mcp#scale-with-mcp-tool-search)): al iniciar la sesión solo carga en el contexto los nombres de las tools y las instrucciones del servidor, y la descripcion de lo que hace cada tool se carga cuando el modelo la necesita.
-
-Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: el modelo ejecuta los comandos directamente en la terminal ([documentación oficial](https://code.claude.com/docs/en/costs#reduce-mcp-server-overhead)).
 
 ## 🌐 `playwright-cli`
 

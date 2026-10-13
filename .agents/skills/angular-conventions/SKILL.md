@@ -1,4 +1,3 @@
-
 # Reglas Obligatorias para Skill
 Aplican a toda respuesta o modificación de código de este proyecto.
 
