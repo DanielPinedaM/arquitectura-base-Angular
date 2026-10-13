@@ -181,7 +181,11 @@ git config user name
 
 git config user email
 
-### [Node.js 24.21.0](https://nodejs.org/es/download)
+### ⚙️ Entorno de Ejecución
+Instalar [Node.js 24.21.0](https://nodejs.org/es/download), prohibido usar alternativas como:
+
+* [Bun](https://youtu.be/9gM7HQ7SafE)
+* [Deno](https://youtu.be/tOoEGrqL9_s)
 
 ### [Instalar `pnpm`](https://pnpm.io/installation)
 1. Abrir Git Bash
@@ -348,11 +352,7 @@ fnm use 24.21.0
 
 
 
-# ⚙️ Entorno de Ejecución
-Usar Node.js, prohibido usar alternativas como:
 
-* [Bun](https://bun.com/)
-* [Deno](https://deno.com/)
 
 # 📦 Manejador de Paquetes
 Usar `pnpm`, `pnpm-lock.yaml` y `pnpm dlx <paquete>` version `>=11.0.0 <12.0.0`. Esta 🚫 **BLOQUEADO** el uso de otras alternativas como:
