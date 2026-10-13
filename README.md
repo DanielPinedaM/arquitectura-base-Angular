@@ -236,7 +236,7 @@ La configuración de autocompletado, formateo de código y linter ya está inclu
 * `eslint.config.js`
 
 ### Harness de IA desde la Terminal
-[Claude Code](https://youtu.be/Bf7hfpItrDk?si=5pW919OUbtSqJlyP) 
+Puedes instalar cualquier IA pero debes usarla desde la terminal, por ejemplo, puedes usar cualquier harness que este en la columna "[Terminal / Bash / CLI](#principales-ia-para-desarrollo-de-software)"
 
 > [!CAUTION]
 > # ⚠️ **IMPORTANTE** 🚨
