@@ -173,6 +173,79 @@ Explica cada uno de los siguientes puntos con teoría y ejemplos, basándote en 
 ## Instalaciones Necesarias
 Esto es obligatorio, sin esto no puedes ejecutar el proyecto
 
+> # ⚠️ Advertencia
+> La forma correcta de instalar es:
+> 1. Ejecutar Power Shell como administrador
+> 2. El orden de instalacion es: pnpm, despues Node.js y de ultimo npm
+> 3. Instalar Node.js y npm desde pnpm. **NO** uses el [instalador de Node.js](https://nodejs.org/es/download)
+> 4. [**NO** instales un administrador de versiones para Node.js (fnm, nvm, volta, etc)](#instalar-fnm-opcional)
+> Sino haces esto asi entonces el proyecto queda mal configurado, todo esto se explica a continuacion y en orden
+
+### Instalar `pnpm`
+1. Ejecutar Power Shell como administrador
+
+2. Instalar la ultima version estable de `pnpm` y agregar `pnpm` a la variable de entorno PATH
+
+```console
+Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
+```
+
+3. Cerrar y volver abrir Power Shell como administrador
+
+4. Si la instalacion de pnpm es correcta, al ejecutar
+
+```console
+pnpm -v
+```
+
+Debe mostrar un numero con la version de `pnpm` instalada
+
+5. Hacer que Windows Defender no bloquee el acceso de `pnpm`
+
+```console
+$pnpmExe = Get-ChildItem "$env:LOCALAPPDATA\pnpm" -Recurse -Filter pnpm.exe -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName; if ($pnpmExe) { Add-MpPreference -ControlledFolderAccessAllowedApplications $pnpmExe; $pnpmExe } else { "No se encontro pnpm.exe en $env:LOCALAPPDATA\pnpm" }
+```
+
+### ⚙️ Entorno de Ejecución
+Usar Node.js, prohibido usar alternativas como:
+
+* [Bun](https://youtu.be/9gM7HQ7SafE)
+* [Deno](https://youtu.be/tOoEGrqL9_s)
+
+1. Instalar Node.js de forma global con `pnpm`, sin depender de fnm, nvm, etc
+
+```console
+pnpm runtime set node 24.21.0 -g
+```
+
+2. Cerrar y volver abrir Power Shell como administrador
+
+3. Si la instalacion de Node.js es correcta, al ejecutar
+
+```console
+node -v
+```
+
+Debe mostrar un numero con la version de Node.js instalada
+
+### Instalar npm
+1. Instalar `npm` a traves de `pnpm`
+
+
+```console
+pnpm add -g npm
+```
+
+2. Cerrar y volver abrir Power Shell como administrador
+
+3. Si la instalacion de `npm` es correcta, al ejecutar
+
+```console
+npm -v
+```
+
+Debe mostrar un numero con la version de `npm` instalada
+
 ### Git Bash
 
 > [!CAUTION]
@@ -251,31 +324,6 @@ ls -la .claude
 ```
 
 Debe mostrar `.claude -> .agents/`. Si en cambio muestra un archivo normal, o si clonaste el repositorio sin seguir estos pasos, elimina la carpeta del proyecto y repite todos los pasos 2, 3 y [8 hasta 12](#configurar-enlaces-simbolicos-de-git)
-
-### ⚙️ Entorno de Ejecución
-[Clic aqui para instalar Node.js 24.21.0](https://nodejs.org/es/download), prohibido usar alternativas como:
-
-* [Bun](https://youtu.be/9gM7HQ7SafE)
-* [Deno](https://youtu.be/tOoEGrqL9_s)
-
-### [Instalar `pnpm`](https://pnpm.io/installation)
-1. Abrir Git Bash
-
-2. Instalar de forma global la ultima version estable de `pnpm`:
-
-```console
-npm i -g pnpm@latest
-```
-
-3. Cerrar y volver abrir Git Bash
-
-4. Si la instalacion es correcta, al ejecutar
-
-```console
-pnpm -v
-```
-
-Debe mostrar un numero con la version de `pnpm` instalada
 
 ### Editor de Codigo (IDE)
 Instalar [VS Code](https://code.visualstudio.com/download) o cualquier editor basado en VS Code ([Antigravity IDE](https://antigravity.google/product/antigravity-ide), [Cursor](https://cursor.com/download), etc.)
