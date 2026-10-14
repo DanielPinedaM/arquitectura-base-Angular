@@ -258,10 +258,10 @@ Instalar [Node.js 24.21.0](https://nodejs.org/es/download), prohibido usar alter
 ### [Instalar `pnpm`](https://pnpm.io/installation)
 1. Abrir Git Bash
 
-2. Instalar:
+2. Instalar de forma global la ultima version estable de `pnpm`:
 
 ```console
-npm i -g pnpm@latest-11
+npm i -g pnpm@latest
 ```
 
 3. Cerrar y volver abrir Git Bash
@@ -422,7 +422,7 @@ fnm use 24.21.0
 
 
 # 📦 Manejador de Paquetes
-Usar `pnpm`, `pnpm-lock.yaml` y `pnpm dlx <paquete>` version `>=11.0.0 <12.0.0`. Esta 🚫 **BLOQUEADO** el uso de otras alternativas como:
+Usar `pnpm`, `pnpm-lock.yaml` y `pnpm dlx <paquete>` version `>=12.0.0 <13.0.0`. Esta 🚫 **BLOQUEADO** el uso de otras alternativas como:
 
 | Concepto ⬇️ / Nombre manejador de paquetes ➡️            | `npm`                                   | `yarn`                              |
 | --------------------------------------------------------- | --------------------------------------- | ----------------------------------- |
