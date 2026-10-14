@@ -370,28 +370,34 @@ No hagas este paso, la razon de porque existe:
 
 - El archivo `.nvmrc` en este proyecto
 
-es por compatibilidad, [segun la documentacion oficial de pnpm](https://pnpm.io/blog/whats-different-in-pnpm-12) a partir de pnpm 12, no es necesario instalar un Administrador de Versiones para Node.js (fnm, nvm, volta, etc) porque pnpm permite cambiar de version de Node.js
+es por compatibilidad, [segun la documentacion oficial de pnpm](https://pnpm.io/blog/whats-different-in-pnpm-12) a partir de pnpm 12, no es necesario instalar un administrador de versiones para Node.js (fnm, nvm, volta, etc) porque pnpm permite cambiar de version de Node.js
 
 Para que `fnm` automáticamente al entrar a la carpeta del proyecto seleccione la versión correcta de Node.js que se especifica en el archivo `.nvmrc` que esta en la raiz del proyecto. Hacer esto:
 
 1. Abrir Git Bash.
 
-2. Instalar Node.js 24.21.0:
+2. Instalar `fnm`:
+
+```console
+winget install Schniz.fnm
+```
+
+3. Instalar Node.js 24.21.0:
 
 ```console
 fnm install 24.21.0
 ```
 
-3. Copiar completo el siguiente comando y ejecutarlo:
+4. Copiar completo el siguiente comando y ejecutarlo:
 
 ```console
 echo 'eval "$(fnm env --use-on-cd)"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-4. Cerrar y volver abrir Git Bash
+5. Cerrar y volver abrir Git Bash
 
-5. Para verificar que funcione ejecutar los siguientes comandos en el siguiente orden:
+6. Para verificar que funcione ejecutar los siguientes comandos en el siguiente orden:
 
 ```console
 cd /ruta/a/carpeta/raiz/del/proyecto
@@ -405,28 +411,11 @@ fnm current
 node -v
 ```
 
-6. Debería mostrarte `v24.21.0` automáticamente, sin que hayas escrito manualmente
+7. Debería mostrarte `v24.21.0` automáticamente, sin que hayas escrito manualmente
 
 ```console
 fnm use 24.21.0
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # 📦 Manejador de Paquetes
 Usar `pnpm`, `pnpm-lock.yaml` y `pnpm dlx <paquete>` version `>=12.0.0 <13.0.0`. Esta 🚫 **BLOQUEADO** el uso de otras alternativas como:
