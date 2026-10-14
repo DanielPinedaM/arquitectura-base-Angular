@@ -480,7 +480,9 @@ Angular CLI no tiene un comando para servir la carpeta `dist`; `ng serve` compil
 # 🪲 Scripts para Hacer Debugging
 
 > [!TIP]
-> # Deja de escribir `console.log()` para ver valores de variables y estados, mejor usa el debugging
+> Deja de escribir `console.log()` para ver valores de variables y estados, mejor usa el debugging
+
+Aqui se explica como hacer debugging manual, pero la skill [`playwright-cli`](#-playwright-cli) permite que la IA haga debugging automaticamente
 
 | Comando          | Ambiente      | Variable de Entorno                         | Configuración de `.vscode/launch.json` |
 | ---------------- | ------------- | ------------------------------------------- | -------------------------------------- |
