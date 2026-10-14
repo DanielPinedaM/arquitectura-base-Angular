@@ -135,7 +135,9 @@ Explica cada uno de los siguientes puntos con teoría y ejemplos, basándote en 
 
 - Standalone components
 
-- ¿Como definir y validar formularios con Signal Forms y Zod?
+- Formularios:
+  - ¿Es correcto usar input nativo de HTML para formularios?
+  - ¿Como definir y validar formularios con Signal Forms y Zod?
 
 - Servicio singleton con `@Service()` y no @Injectable({providedIn: 'root'})
 
