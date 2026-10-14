@@ -195,7 +195,7 @@ Instalar [Node.js 24.21.0](https://nodejs.org/es/download), prohibido usar alter
 2. Instalar:
 
 ```console
-npm install -g pnpm@latest-11
+npm i -g pnpm@latest-11
 ```
 
 3. Cerrar y volver abrir Git Bash
