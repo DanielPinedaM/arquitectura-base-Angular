@@ -235,7 +235,7 @@ git config --global core.symlinks true
 10. Clonar (descargar) el repositorio. Reemplazar la URL del repositorio
 
 ```console
-git clone -c core.symlinks=true https://github.com/NOMBRE_DE_USUARIO/NOMBRE_REPOSITORIO.git
+git clone -c core.symlinks=true https://github.com/NOMBRE_USUARIO/NOMBRE_REPOSITORIO.git
 ```
 
 11. Entrar a la carpeta raiz del proyecto
