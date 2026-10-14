@@ -182,7 +182,37 @@ Esto es obligatorio, sin esto no puedes ejecutar el proyecto
 
 1. [Clic aqui para **instalar** Git Bash](https://git-scm.com/install/windows)
 
-2. En Windows activar el modo desarrollador:
+2. Abrir Git Bash
+
+3. Abrir la carpeta donde se quiere descargar el proyecto
+
+#### Configurar Usuario y Correo de Git
+4. Configurar usuario de Git
+
+```console
+git config --global user.name "nombre_de_usuario"
+```
+
+5. Verificar que se configuro usuario de Git
+
+```console
+git config user.name
+```
+
+6. Configurar correo de Git
+
+```console
+git config --global user.email correo@gmail.com
+```
+
+7. Verificar que se configuro correo de Git
+
+```console
+git config user.email
+```
+
+#### Configurar Enlaces Simbolicos de Git
+8. En Windows activar el modo desarrollador:
    * Abrir inicio
    * Buscar **Configuración**
    * Clic en **Sistema**
@@ -195,38 +225,10 @@ Esto es obligatorio, sin esto no puedes ejecutar el proyecto
    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v AllowDevelopmentWithoutDevLicense /d 1
    ```
 
-3. Abrir Git Bash
-
-4. Abrir la carpeta donde se quiere descargar el proyecto
-
-5. Activar enlaces simbolicos de Git
+9. Activar enlaces simbolicos de Git
 
 ```console
 git config --global core.symlinks true
-```
-
-6. Configurar usuario de Git
-
-```console
-git config --global user.name "nombre_de_usuario"
-```
-
-7. Verificar que se configuro usuario de Git
-
-```console
-git config user.name
-```
-
-8. Configurar correo de Git
-
-```console
-git config --global user.email correo@gmail.com
-```
-
-9. Verificar que se configuro correo de Git
-
-```console
-git config user.email
 ```
 
 10. Clonar (descargar) el repositorio. Reemplazar la URL del repositorio
@@ -247,7 +249,7 @@ cd /ruta/a/carpeta/raiz/del/proyecto
 ls -la .claude
 ```
 
-Debe mostrar `.claude -> .agents/`. Si en cambio muestra un archivo normal, o si clonaste el repositorio sin seguir estos pasos, elimina la carpeta del proyecto y repite todos los pasos desde el 1.
+Debe mostrar `.claude -> .agents/`. Si en cambio muestra un archivo normal, o si clonaste el repositorio sin seguir estos pasos, elimina la carpeta del proyecto y repite todos los pasos 2, 3 y [8 hasta 12](#configurar-enlaces-simbolicos-de-git)
 
 ### ⚙️ Entorno de Ejecución
 [Clic aqui para instalar Node.js 24.21.0](https://nodejs.org/es/download), prohibido usar alternativas como:
