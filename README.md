@@ -173,15 +173,69 @@ Explica cada uno de los siguientes puntos con teoría y ejemplos, basándote en 
 Esto es obligatorio, sin esto no puedes ejecutar el proyecto
 
 ### [Git Bash](https://youtu.be/niPExbK8lSw?si=tHx4IYZBdrUmW6ey)
-Despues de instalar Git Bash ejecutar lo siguiente:
 
-Descargar repositorio
+> [!CAUTION]
+> # ⚠️ Advertencia
+> Es importante hacer esto, porque saltarse estos pasos:
+>
+> * Elimina las [configuraciones de IA de este proyecto](#compatibilidad-de-este-proyecto-con-multiples-harness-y-modelos-de-ia)
 
-git clone
+1. [Instalar Git Bash](https://git-scm.com/install/windows)
 
-git config user name
+2. Activar el modo desarrollador, en Windows:
+   * Abrir inicio
+   * Buscar **Configuración**
+   * Clic en **Sistema**
+   * Clic en **Avanzado**
+   * Activar la opcion que dice **Modo para desarrolladores**
 
-git config user email
+Tambien sirve si ejecutas en PowerShell como administrador
+
+```console
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v AllowDevelopmentWithoutDevLicense /d 1
+```
+
+3. Abrir Git Bash
+
+4. Abrir la carpeta donde se quiere descargar el proyecto
+
+```console
+cd /ruta/a/carpeta/raiz/del/proyecto
+```
+
+5. Activar enlaces simbolicos de Git
+
+```console
+git config --global core.symlinks true
+```
+
+6. Configurar usuario de Git
+
+```console
+git config --global user.name "nombre_de_usuario"
+```
+
+```console
+git config user.name
+```
+
+7. Configurar correo de Git
+
+```console
+git config --global user.email correo@gmail.com
+```
+
+```console
+git config user.email
+```
+
+8. Clonar (descargar) el repositorio
+
+```console
+git clone -c core.symlinks=true https://github.com/NOMBRE_DE_USUARIO/NOMBRE_REPOSITORIO.git
+```
+
+Si hiciste `git clone` sin estos pasos, entonces elimina el repositorio y sigue los pasos
 
 ### ⚙️ Entorno de Ejecución
 Instalar [Node.js 24.21.0](https://nodejs.org/es/download), prohibido usar alternativas como:
