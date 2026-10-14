@@ -353,9 +353,14 @@ Este proyecto esta configurado para usar IA de pago y desde la terminal. **NO** 
 ## Instalaciones Recomendadas
 Son opcionales. Puedes ejecutar el proyecto sin ellas, pero te ayudarán a programar mejor.
 
-## Herdr
+### Herdr
+* [Click aqui para **instalar** Herdr](https://herdr.dev/docs/install/)
 
-# **[Instalar `fnm` (Opcional)](https://github.com/Schniz/fnm)**
+* [Click aqui para **aprender** Herdr](https://youtu.be/Hr693AAnCV0)
+
+Tambien sirve alternativas como [Orca](https://youtu.be/ze7AgvWfRwM?si=MnVb42vL8hfvD1KO)
+
+### [Instalar `fnm` (Opcional)](https://github.com/Schniz/fnm)
 
 > [!NOTE]
 > Este paso **NO** es necesario
