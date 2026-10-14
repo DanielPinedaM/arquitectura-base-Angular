@@ -176,7 +176,7 @@ Esto es obligatorio, sin esto no puedes ejecutar el proyecto
 > # ⚠️ Advertencia
 > La forma correcta de instalar es:
 > 1. Ejecutar Power Shell como administrador
-> 2. El orden de instalacion es: pnpm, despues Node.js y de ultimo npm
+> 2. El orden de instalacion es: `pnpm`, despues Node.js y de ultimo `npm`
 > 3. Instalar Node.js y npm desde pnpm. **NO** uses el [instalador de Node.js](https://nodejs.org/es/download)
 > 4. [**NO** instales un administrador de versiones para Node.js (fnm, nvm, volta, etc)](#instalar-fnm-opcional)
 > Sino haces esto asi entonces el proyecto queda mal configurado, todo esto se explica a continuacion y en orden
@@ -230,7 +230,6 @@ Debe mostrar un numero con la version de Node.js instalada
 
 ### Instalar npm
 1. Instalar `npm` a traves de `pnpm`
-
 
 ```console
 pnpm add -g npm
