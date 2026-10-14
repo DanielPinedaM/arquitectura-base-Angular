@@ -5,3 +5,6 @@ allowBuilds:
   lmdb: true
   msgpackr-extract: true
   nx: true
+
+skills:
+  dirs: []
