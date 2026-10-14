@@ -529,7 +529,7 @@ Es un archivo Markdown llamado `SKILL.md` que contiene instrucciones para enseñ
 * [Skills de Open AI](https://github.com/openai/plugins)
 
 ### ¿Como Configurar Skills?
-Para aprender como crear una nueva skill [mira este video](https://youtu.be/oZTXrgHRi-k ), **SIEMPRE** agregar las skills en la carpeta `.agents\skills\NOMBRE-DE-LA-SKILL\SKILL.md`, **NUNCA** en otra carpeta (`.claude`, `.codex`, etc), esto sin importar que harness y modelo de IA uses (Claude Code, Codex, etc)
+
 
 > [!NOTE]
 >
@@ -574,11 +574,7 @@ Hay dos alcances:
 3. Mover la skill a `.agents\skills\NOMBRE-DE-LA-SKILL\SKILL.md`
 
 #### Forma 3 - Crear tu Propia Skill
-Para crear una nueva skill, hay que llamar la skill `skill-creator`. Ejemplo
-
-```bash
-/skill-creator en la carpeta .agents\skills\ crear una skill sobre <<aqui describes sobre que trata la skill>>
-```
+[Ver skill-creator](#skill-creator)
 
 #### Ver Skills Instaladas
 Ejecutar el comando:
@@ -820,6 +816,15 @@ Solo funciona en Claude. Crea un mockup (similar a Figma) que puedes editar con 
 
 ```txt
 /design cambia el color del titulo del texto X por rojo
+```
+
+## `skill-creator`
+Para aprender como crear una nueva skill [mira este video](https://youtu.be/oZTXrgHRi-k ), **SIEMPRE** agregar las skills en la carpeta `.agents\skills\NOMBRE-DE-LA-SKILL\SKILL.md`, **NUNCA** en otra carpeta (`.claude`, `.codex`, etc), esto sin importar que harness y modelo de IA uses (Claude Code, Codex, etc)
+
+Para crear una nueva skill, hay que llamar la skill `skill-creator`. Ejemplo:
+
+```bash
+/skill-creator en la carpeta .agents\skills\ crear una skill sobre <<aqui describes sobre que trata la skill>>
 ```
 
 # MCP Configurados en este Proyecto
