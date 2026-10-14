@@ -323,7 +323,7 @@ Puedes instalar cualquier IA pero debes usarla desde la terminal, por ejemplo, p
 > [!CAUTION]
 > # ⚠️ **IMPORTANTE** 🚨
 >
-> ****Ignorar esta sección ocasionará que la IA genere código que no respeta la arquitectura, estructura ni las convenciones del proyecto, produciendo código legacy, inconsistente, desordenado y con malas practicas****
+> Ignorar esta sección ocasionará que la IA genere código que no respeta la arquitectura, estructura ni las convenciones del proyecto, produciendo código legacy, inconsistente, desordenado y con malas practicas
 
 ### Principales IA para Desarrollo de Software
 
@@ -336,7 +336,7 @@ Puedes instalar cualquier IA pero debes usarla desde la terminal, por ejemplo, p
 | Cursor                      | [Cursor Web](https://cursor.com/agents)                                                 | [Cursor Desktop](https://youtu.be/XWsOQTqVl0w?si=0OVGRnYSCH46v2zf)    | [Cursor CLI](https://cursor.com/es/cli)                            |
 
 #### ✏️ Edición de Código
-Este proyecto esta configurado para usar _IAs de pago y desde la terminal_. **NO** sirve si usas IAs gratis o desde una pagina web, porque estan limitadas.
+Este proyecto esta configurado para usar IA de pago y desde la terminal. **NO** sirve si usas IA gratis o desde una pagina web, porque estan limitadas.
 
 **Razones:**
 * Si copias y pegas codigo desde plataforma web al proyecto, es probable que cometas errores
