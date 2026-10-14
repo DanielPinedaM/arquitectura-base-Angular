@@ -49,7 +49,8 @@ Estas son 2 de las principales razones por las que se decide usar Sass y no CSS,
 
 3. De forma oficial [Tailwind 4 no se puede configurar con Sass](https://tailwindcss.com/docs/compatibility), para hacerlo, hay que recurrir a hacks
 
-* [Tailwind CSS 4](https://youtu.be/R5EXap3vNDA?si=9TV4hucexfUBXgGk) Usa _clases utilitarias (utility classes)_, esto significa que si tienes conocimiento en CSS, cada clase de CSS tiene su equivalente en Tailwind. Ejemplo: En CSS se escribe
+## [Tailwind CSS 4](https://youtu.be/R5EXap3vNDA?si=9TV4hucexfUBXgGk) 
+Usa _clases utilitarias (utility classes)_, esto significa que si tienes conocimiento en CSS, cada clase de CSS tiene su equivalente en Tailwind. Ejemplo: En CSS se escribe
 
 ```CSS
 div {
