@@ -418,7 +418,11 @@ fnm use 24.21.0
 ```
 
 # 📦 Manejador de Paquetes
-Usar `pnpm`, `pnpm-lock.yaml` y `pnpm dlx <paquete>` version `>=12.0.0 <13.0.0`. Esta 🚫 **BLOQUEADO** el uso de otras alternativas como:
+Usar `pnpm` version `>=12.0.0 <13.0.0`, `pnpm-lock.yaml` y `pnpm dlx <paquete>`. Esta 🚫 **BLOQUEADO** el uso de:
+
+* Otras versiones de `pnpm` fuera de ese rango (por ejemplo pnpm 11 o pnpm 13).
+
+* Otros manejadores de paquetes como:
 
 | Concepto ⬇️ / Nombre manejador de paquetes ➡️            | `npm`                                   | `yarn`                              |
 | --------------------------------------------------------- | --------------------------------------- | ----------------------------------- |
