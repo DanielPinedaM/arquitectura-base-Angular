@@ -250,7 +250,7 @@ ls -la .claude
 Debe mostrar `.claude -> .agents/`. Si en cambio muestra un archivo normal, o si clonaste el repositorio sin seguir estos pasos, elimina la carpeta del proyecto y repite todos los pasos desde el 1.
 
 ### ⚙️ Entorno de Ejecución
-Instalar [Node.js 24.21.0](https://nodejs.org/es/download), prohibido usar alternativas como:
+[Clic aqui para instalar Node.js 24.21.0](https://nodejs.org/es/download), prohibido usar alternativas como:
 
 * [Bun](https://youtu.be/9gM7HQ7SafE)
 * [Deno](https://youtu.be/tOoEGrqL9_s)
@@ -272,10 +272,10 @@ npm i -g pnpm@latest
 pnpm -v
 ```
 
-Debe mostrar la version de `pnpm` instalada
+Debe mostrar un numero con la version de `pnpm` instalada
 
 ### Editor de Codigo (IDE)
-[VS Code](https://code.visualstudio.com/) o cualquier editor basado en VS Code ([Antigravity IDE](https://antigravity.google/product/antigravity-ide), [Cursor](https://cursor.com/get-started), etc.)
+Instalar [VS Code](https://code.visualstudio.com/download) o cualquier editor basado en VS Code ([Antigravity IDE](https://antigravity.google/product/antigravity-ide), [Cursor](https://cursor.com/download), etc.)
 
 #### ⌨️ Autocompletado, Formatear Código y Linter
 Usar VS Code o cualquier editor basado en VS Code para instalar las siguientes extensiones:
