@@ -4,7 +4,7 @@ Arquitectura base agnóstica a las features para iniciar un nuevo proyecto en An
 # Ejecución de Proyecto
 
 * Runtime: Node.js 24
-* Administrador de versiones: fnm
+* Administrador de versiones: pnpm
 * Manejador de paquetes: pnpm
 * Archivo de bloqueo: pnpm-lock.yaml
 
@@ -20,6 +20,11 @@ Esta PROHIBIDO:
 
 # Reglas **OBLIGATORIAS** de Angular
 
+## Preguntar
+Las modificaciones triviales se implementan directamente; las de complejidad media o alta, solo después de utilizar la [skill `question-me`](.agents/skills/question-me/SKILL.md)
+
+**Razón:** preguntar cuesta menos que revisar y deshacer código basado en una suposición incorrecta.
+
 ## Fuentes de consulta
 Antes de editar código y responder, consulta solo las fuentes cuya columna **¿Cuándo leerlo?** coincida con la tarea, y aplica a la vez las reglas y la documentación consultadas.
 
@@ -32,11 +37,6 @@ Cuando las fuentes se contradicen, prevalece la que tenga el número menor en la
 | 3 | tool `search_documentation` del MCP server `angular-cli` | [Documentación oficial completa de Angular](https://angular.dev/llms.txt) | Solo si en la skill `angular-developer` el tema no existe o le falta información. |
 | 4 | [Skill `angular-developer`](.agents/skills/angular-developer/SKILL.md) | Resumen de la [documentación oficial de Angular](https://angular.dev/llms.txt) | Al responder y usar APIs de Angular (aunque creas conocerla) y ante errores. Consúltala antes que `search_documentation`: al ser un resumen, se lee más rápido. |
 | 5 | Datos de entrenamiento | Tu conocimiento previo | Puedes usarlo, pero las fuentes anteriores tienen prioridad: este proyecto usa Angular 22, cuyos breaking changes pueden haberlo dejado desactualizado. Que esté desactualizado no significa que esté mal; solo que puede no aplicar a esta versión. |
-
-## Preguntar
-Si detectas un error, una inconsistencia o una ambigüedad, o tienes alguna duda, detente y pregúntame antes de escribir o modificar código. No supongas cómo debe implementarse algo.
-
-**Razón:** preguntar cuesta menos que revisar y deshacer código basado en una suposición incorrecta.
 
 ## Buenas Practicas de Angular
 * Usar lazy loading para todas las rutas de `src\app\app.routes.ts`
