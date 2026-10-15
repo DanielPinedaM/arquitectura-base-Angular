@@ -97,6 +97,8 @@ Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
 
 * 🎥 Puedes hacer clic en el nombre de cada tecnología para ver cursos y aprenderlas
 
+* [🔗 Enlace - HTTP Cats - Explicación de los Status HTTP](https://http.cat/)
+
 * Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
 
 1. [🔗 Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
@@ -120,7 +122,10 @@ Explica cada uno de los siguientes puntos con teoría y ejemplos, basándote en 
 
 - Manejo de fechas: En este proyecto se usa Luxon y no `new Date` nativo de JavaScript
 
-- ¿Como maquetar componentes de UI?, ¿Como usar CSS global y Tailwind para componentes?
+- Maquetacion:
+  - ¿Como maquetar componentes de UI?
+  - ¿Como usar Tailwind para tema oscuro y claro en los componentes?
+  - ¿Como usar CSS global y Tailwind para componentes?
 
 - Botones:
   - ¿Como escribir un boton?
@@ -228,7 +233,7 @@ node -v
 
 Debe mostrar un numero con la version de Node.js instalada
 
-### Instalar npm
+### Instalar `npm`
 1. Instalar `npm` a traves de `pnpm`
 
 ```console
@@ -245,7 +250,7 @@ npm -v
 
 Debe mostrar un numero con la version de `npm` instalada
 
-### Git Bash
+### Instalar Git Bash
 
 > [!CAUTION]
 > # ⚠️ Advertencia
@@ -365,13 +370,20 @@ La configuración de autocompletado, formateo de código y linter ya está inclu
 * `.prettierrc`
 * `eslint.config.js`
 
-### Harness de IA Desde la Terminal
-Puedes instalar cualquier IA pero debes usarla desde la terminal, por ejemplo, puedes usar cualquier harness que este en la columna "[Terminal / Bash / CLI](#principales-ia-para-desarrollo-de-software)" de la tabla (Claude Code, Codex CLI, Antigravity CLI, Open Code CLI, Cursor CLI, etc)
+### Harness de IA desde la Terminal
 
 > [!CAUTION]
 > # ⚠️ **IMPORTANTE** 🚨
 >
 > Ignorar esta sección ocasionará que la IA genere código que no respeta la arquitectura, estructura ni las convenciones del proyecto, produciendo código legacy, inconsistente, desordenado y con malas practicas
+
+**¿Qué es el Harness Engineering y por qué mejora los resultados de la IA?**
+
+[Mira este video](https://youtu.be/DOgIFhpndW0?si=k5ulr68LgZt4MumG) que responde la pregunta.
+
+*Harness Engineering* consiste en diseñar el entorno que rodea al modelo: instrucciones, contexto, herramientas y ciclos de ejecución y verificación. Un buen *harness* permite obtener resultados más fiables incluso con el mismo modelo.
+
+Por eso, se recomienda usar herramientas de IA desde la terminal, como las de la columna [Terminal / Bash / CLI](#principales-ia-para-desarrollo-de-software): Claude Code, Codex CLI, Antigravity CLI, OpenCode CLI, Cursor CLI, etc.
 
 ### Principales IA para Desarrollo de Software
 
@@ -411,9 +423,9 @@ Tambien sirve alternativas como [Orca](https://youtu.be/ze7AgvWfRwM?si=MnVb42vL8
 ### [Instalar `fnm` (Opcional)](https://github.com/Schniz/fnm)
 
 > [!NOTE]
-> Este paso **NO** es necesario
+> **NO** es necesario realizar este paso.
 
-No hagas este paso, la razon de porque existe:
+La razon de porque existe:
 - Este paso de instalar fnm
 
 - El archivo `.nvmrc` en este proyecto
@@ -510,14 +522,17 @@ Para esto en `package.json` se agrego:
 Para todos los comandos de `pnpm` usar el alias `pn`
 
 # 📦 Instalar Paquetes
-
 Este comando instala los paquetes que estan en `package.json` que son Angular, TypeScript, Tailwind, etc:
+
+```console
+cd /ruta/a/carpeta/raiz/del/proyecto
+```
 
 ```console
 pn i
 ```
 
-# ▶️ Scripts de Desarrollo
+# ▶️ Comandos para Ejecutar Proyecto
 
 | Comando          | Ambiente     | Variable de Entorno                         |
 | ---------------- | ------------ | ------------------------------------------- |
@@ -525,7 +540,7 @@ pn i
 | `pn start:test`  | Pruebas      | `src/environments/environment.test.ts`      |
 | `pn start:prod`  | Producción   | `src/environments/environment.prod.ts`      |
 
-# 🚀 Generar Carpeta `dist` (Build) para Desplegar
+# 🚀 Comandos para Generar Carpeta `dist` (Build) para Desplegar
 
 | Comando         | Ambiente     | Variable de Entorno                   |
 | --------------- | ------------ | -------------------------------------- |
@@ -535,13 +550,12 @@ pn i
 # Ejecutar Carpeta `dist` con Archivos de Compilación
 `pn serve:dist` ejecuta en `http://localhost:2000` los archivos ya compilados dentro de la carpeta `dist`. NO recibe ni lee variables de entorno.
 
-## Regla
 El ambiente queda **hardcodeado dentro de la carpeta `dist`** durante el build. NO se define al ejecutar `pn serve:dist`.
 
 ***Motivo:*** Los comandos `build:*` usan `fileReplacements` de `angular.json`, que reemplaza `src/environments/environment.ts` por el archivo del ambiente **antes** de compilar. Es decir, **las variables de entorno quedan hardcodeadas dentro de los archivos `.js` generados**, no se leen en tiempo de ejecución.
 
 ## Pasos
-1. Generar la carpeta `dist` con el ambiente deseado, usando uno de los comandos de la sección "[Generar Carpeta `dist` (Build) para Desplegar](#-generar-carpeta-dist-build-para-desplegar)"
+1. Generar la carpeta `dist` con el ambiente deseado, usando uno de los comandos de la sección [Generar Carpeta `dist` (Build) para Desplegar](#-generar-carpeta-dist-build-para-desplegar)
 
 2. Ejecutar la carpeta `dist`
 
@@ -649,20 +663,38 @@ debugger;
 
 5. Automaticamente el navegador abre la pestaña "Fuentes" ("Sources") de las devtools donde puede ver el código a depurar que contiene `debugger;`
 
-# [🔗 Enlace - HTTP Cats - Explicación de los Status HTTP](https://http.cat/)
-
-# 🤖 Uso de IA
-
-# Definiciones
+# 🤖 Definiciones de IA
 
 ## Modelo de IA
+Sistema entrenado con datos que, dada una entrada (texto, imagen, audio), produce una salida (texto, predicción, imagen). Es el "cerebro": contiene lo aprendido en sus pesos, pero por sí solo no tiene memoria entre llamadas, no ejecuta acciones ni accede a archivos o internet. Solo recibe una entrada y devuelve una salida.
+
+**Ejemplos:**
+- Claude Opus 5, Claude Sonnet 5, Claude Fable 5 (Anthropic)
+- GPT-6 Astra, GPT-6 Sol (OpenAI)
+- Gemini 4 Argon (Google)
+- DeepSeek 4
 
 ## Harness de IA
+Software que envuelve al modelo y lo convierte en un sistema útil. Gestiona el bucle de ejecución: construye el prompt (instrucciones de sistema, contexto, historial), le da herramientas (leer o escribir archivos, ejecutar comandos, buscar en la web), ejecuta las acciones que el modelo pide, le devuelve los resultados y repite hasta terminar la tarea. El mismo modelo rinde muy distinto según el harness que lo envuelva.
+
+**Ejemplos:**
+- Claude Code (Antropic) y Codex CLI (Open AI): harness de programación en terminal
+- Cursor, GitHub Copilot: harness de programación dentro del editor de codigo
+- Las aplicaciones moviles y web de [ChatGPT](https://chatgpt.com/) y [claude.ai](https://claude.ai/): harness con UI de chat
 
 ## Skill
-Es un archivo Markdown llamado `SKILL.md` que contiene instrucciones para enseñarle a la IA cómo ejecutar un proceso, o para darle conocimiento sobre un tema. La IA carga ese contenido directamente en su contexto antes de responder.
+Es una carpeta cuyo archivo principal es `SKILL.md`, con instrucciones para enseñarle a la IA cómo ejecutar un proceso o darle conocimiento sobre un tema. Puede incluir archivos adicionales (scripts, plantillas, documentos de referencia).
+
+La carga es progresiva:
+1. Al inicio, solo el `name` y la `description` del frontmatter de `SKILL.md` entran al contexto de la IA.
+2. Si la IA decide que la skill es relevante para la tarea, lee el `SKILL.md` completo.
+3. Los archivos adicionales los lee o ejecuta solo cuando las instrucciones de `SKILL.md` los necesitan.
+
+Por eso la `description` es crítica: si es vaga, la IA no sabrá cuándo usar la skill.
 
 ### 🔗 Enlaces con Respositorios de Skills
+Estos skills no estan configurados en este proyecto:
+
 * [Skills escritas por el equipo oficial de Angular (Google)](https://github.com/angular/skills)
 
 * [Web de Vercel con múltiples repositorios de Skills sobre distintos temas](https://www.skills.sh/)
@@ -675,15 +707,13 @@ Es un archivo Markdown llamado `SKILL.md` que contiene instrucciones para enseñ
 
 ### ¿Como Configurar Skills?
 
-
 > [!NOTE]
 >
 > Esto es una guia. Este proyecto ya tiene skills configuradas.
 >
-> Para explicar como configurar skills, se usa como ejemplo [`angular-developer`](https://github.com/angular/skills). No debes configurar otra vez la misma skill
+> Para explicar como configurar skills, se usa como ejemplo [`angular-developer`](https://github.com/angular/skills). No debes configurar otra vez esta misma skill
 
 #### Forma 1 - Usando Comando de [www.skills.sh](https://www.skills.sh/):
-
 1. Buscar una skill en [www.skills.sh](https://www.skills.sh/)
 
 2. Ejecutar el comando de la skill a descargar:
@@ -707,7 +737,7 @@ Hay dos alcances:
 | Global  | Disponible para la persona que la instala en **todos sus proyectos** | ❌ **No**                                      |
 | Project | Disponible **solo en el proyecto actual** donde se instala           | ✅ **Sí**                                      |
 
-4. Verificar que la skill se guarde en `.agents\skills\angular-developer`
+4. Verificar que la skill se guarde en `.agents\skills\angular-developer\`
 
 5. Eliminar `skills-lock.json`
 
@@ -722,23 +752,52 @@ Hay dos alcances:
 [Ver skill-creator](#skill-creator)
 
 #### Ver Skills Instaladas
-Ejecutar el comando:
+Ejecutar comandos:
+
+```console
+cd /ruta/a/carpeta/raiz/del/proyecto
+```
 
 ```bash
 /skills
 ```
 
+## CLI (Command Line Interface - Interfaz de Línea de Comandos)
+Es un programa que se usa escribiendo comandos de texto en una terminal, en lugar de hacer clic en una interfaz gráfica (GUI). Recibe un comando con sus argumentos, lo ejecuta y muestra el resultado como texto.
+
+Puedes instalar CLIs para que la IA ejecute comandos y automatice procesos.
+
+También puedes crear skills que le expliquen a la IA cómo ejecutar los comandos del CLI.
+
 ## Model Context Protocol (MCP)
-Es un protocolo (no es exactamente una API REST, aunque es similar) que permite que una IA se comunique con sistemas externos —herramientas, servicios o fuentes de datos— de forma estandarizada. Un servidor MCP puede exponer *tools* (funciones que la IA puede invocar), *resources* (datos) y *prompts* (plantillas)
+Es un protocolo (no es exactamente una API REST, aunque es similar) que permite que una IA se comunique con sistemas externos herramientas, servicios o fuentes de datos de forma estandarizada. Un servidor MCP puede exponer *tools* (funciones que la IA puede invocar), *resources* (datos) y *prompts* (plantillas)
+
+### 🔗 Enlaces - Mas Ejemplos de MCP
+Estos MCP no estan configurados en este proyecto:
+
+* [Repositorios con MCP](https://mcpservers.org/es/)
+
+* [Repositorios con MCP de Claude](https://claude.ai/directory)
+
+* [Repositorios con MCP de Chat GPT](http://chatgpt.com/plugins)
+
+* [Figma MCP:](https://youtu.be/uZ6Nbwp8GtU?si=cf4h9SxQdnXbc3KI) Sirve para convertir un mockup de Figma a codigo de CSS/Sass/Tailwind/Bootstrap
 
 ### Diferencia entre MCP `angular-cli` y Skill `angular-developer`
-Ambos son mantenidos por el equipo oficial de Angular (Google), y tambien le enseñan a la IA como hacer codigo con Angular. La diferencia es:
+Ambos son mantenidos por el equipo oficial de Angular (Google) y ayudan a la IA a escribir código Angular
 
-**MCP `angular-cli`** expone *tools* que la IA invoca en tiempo real, como `search_documentation` (busca en la documentación oficial de angular.dev) y `get_best_practices` (obtiene la guía oficial de buenas prácticas). El MCP no almacena esa teoría: la consulta dinámicamente cada vez que se necesita. Su contenido es la teoria de Angular
+**Skill `angular-developer`**: instrucciones y guías de referencia (signals, formularios, inyección de dependencias, routing, SSR, testing, etc.) que la IA carga en su contexto cuando la tarea lo requiere. Su contenido es fijo y se puede modificar en `\.agents\skills\angular-developer`
 
-**skill `angular-developer`** Su contenido siempre es el mismo, a diferencia de MCP `angular-cli`, contiene mas ejemplos de la teoiria de Angular
+**MCP `angular-cli`**: expone *tools* que la IA invoca en tiempo real. Algunas consultan información, como `search_documentation` (busca en `angular.dev`) y `get_best_practices` (obtiene la guía de buenas prácticas). La mayoría ejecutan acciones sobre el proyecto: `run_target` (build, test, lint), `devserver_start`, `list_projects` y `onpush_zoneless_migration`.
+
+Se complementan:
+- La skill  `angular-developer` es un resumen de la  tool `search_documentation` de MCP `angular-cli` que contiene la documentacion oficial completa
+
+- La skill le dice a la IA *cómo* escribir el código, y el MCP le permite *consultar* la documentación y *verificar* el resultado.
 
 ### ¿Cuando Usar un CLI y no un MCP?
+
+[Mira este video](https://youtu.be/YEPJNXmmkw0?si=7cLlZ5WeDBWRRXxL) que responde la pregunta
 
 **Respuesta resumida:**
 Cuando el MCP y el CLI sirven para lo mismo, es mejor usar el CLI porque consume menos contexto que el MCP.
@@ -791,58 +850,6 @@ Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: 
 }
 ```
 
-# Compatibilidad de este Proyecto con Multiples Harness y Modelos de IA
-A pesar de que en este readme.md se mencionan configuraciones de Claude, todo este proyecto es compatible con casi cualquier modelo/harness de IA
-
-[Mira este video](https://youtu.be/S4mBEeNBwuQ) para aprender que es y como crear un enlace simbolico
-
-## Carpeta `.agents`
-Enlace simbolico
-
-Esto sucede porque agents md y las carpetas agents skills son estándar en la IA 
-
-**NO** modifiques ni elimines las siguientes carpetas porque dañas la compatibilidad
-
-| Modelo / harness de IA | Carpeta donde lee las skills |
-| --- | --- |
-| GitHub Copilot CLI | `/.github/skills/` |
-| Claude Code | `/.claude/skills/` |
-| Cursor | `/.cursor/skills/` |
-| DeepSeek | `/.deepcode/skills/` |
-| Grok | `/.grok/skills/` |
-| Gemini (Google) | `/.gemini/skills/` |
-| Open Code | `/.opencode/skills/` |
-| pi agent |          `/.pi/skills/` |
-| Codex |             `/.codex/skills/` |
-| open claw |       `/.openclaw/skills` |
-
-## [📜 `AGENTS.md`](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks)
-Es un prompt que siempre se envia a la IA. Sirve para que la IA:
-* Respete la arquitectura del proyecto.
-
-* Consulte la [documentacion oficial de Angular](https://angular.dev/llms.txt).
-
-* Use Angular moderno y no legacy.
-
-`AGENTS.md` esta basado en [este link de la documentacion oficial de Angular](https://angular.dev/ai/develop-with-ai)
-
-Para probar que funcione envia este prompt a Claude:
-
-```txt
-citarme textualmente de `angular-cli` MCP ¿que es Signal? y ejemplo
-```
-
-La salida debe contener algo similar a esto:
-
-```txt
-Angular Signals is a system that granularly tracks
-how and where your state is used throughout an application,
-allowing the framework to optimize rendering updates.
-```
-
-
-
-
 # Configurar Claude Code
 
 ## Cambiar Idioma de Claude Code a Español
@@ -861,7 +868,7 @@ C:\Users\NOMBRE_USUARIO\.claude\settings.json
 }
 ```
 
-## Eliminar Skills Innecesarias (Bloatware) que Estan Preinstaladas en Claude Code
+## Eliminar Skills Innecesarias (Bloatware) que estan Preinstaladas en Claude Code
 Esto ayuda a mejorar el consumo de tokens y contexto de Claude
 
 1. En el explorador de archivos abrir la siguiente ruta:
@@ -896,6 +903,64 @@ C:\Users\NOMBRE_USUARIO\.claude\settings.json
 }
 ```
 
+# Compatibilidad de este Proyecto con Múltiples Harness y Modelos de IA
+Aunque este `README.md` menciona configuraciones de Claude, las skills y las instrucciones de este proyecto funcionan en casi cualquier harness de IA y, por lo tanto, con cualquier modelo que se ejecute dentro de ellos. Esto se logra con dos mecanismos:
+
+1. **Enlaces simbólicos** hacia la carpeta `.agents/skills/`.
+
+2. **`AGENTS.md`**, el archivo de instrucciones que la mayoría de harness leen.
+
+## Enlace Simbólico de la Carpeta `.agents`
+Un enlace simbólico es un acceso directo a otra carpeta ([ver video explicativo](https://youtu.be/S4mBEeNBwuQ)). Cada harness busca su configuración en una carpeta distinta, así que las carpetas de la tabla son enlaces simbolicos a `.agents`: una sola copia, leída por todos.
+
+**NO** modifiques ni elimines las carpetas de la tabla. Crea, edita o borra skills, rules y configuraciones de IA solo en la carpeta `.agents`.
+
+Que todos los harness vean un archivo no significa que todos lo entiendan. Las skills (`SKILL.md`) son estándar; las rules y configuraciones son propias de cada harness.
+
+| Harness de IA                                                                                       | Carpeta donde lee las skills |
+| --------------------------------------------------------------------------------------------------- | ---------------------------- |
+| [Claude Code](https://code.claude.com/docs/en/skills#where-skills-live)                             | `/.claude/skills/`           |
+| [Codex](https://developers.openai.com/codex/skills)                                                 | `/.codex/skills/`            |
+| [GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)         | `/.github/skills/`           |
+| [Cursor](https://cursor.com/docs/skills)                                                            | `/.cursor/skills/`           |
+| [Deep Code CLI (DeepSeek)](https://api-docs.deepseek.com/quick_start/agent_integrations/deepcode/)  | `/.deepcode/skills/`         |
+| [Grok Build (xAI)](https://docs.x.ai/build/features/skills-plugins-marketplaces)                    | `/.grok/skills/`             |
+| [Gemini CLI (Google)](https://geminicli.com/docs/cli/skills/)                                       | `/.gemini/skills/`           |
+| [OpenCode](https://opencode.ai/docs/skills)                                                         | `/.opencode/skills/`         |
+| [Pi](https://pi.dev/docs/latest/skills)                                                             | `/.pi/skills/`               |
+| [OpenClaw](https://docs.openclaw.ai/tools/creating-skills)                                          | `/.openclaw/skills/`         |
+
+## 📜 `AGENTS.md`
+[Mira este video](https://youtu.be/eS5HmdpcqnM?si=D7X-HFPQAfCkZ4Ks) para aprender qué es y como escribir un `AGENTS.md`. En [el titulo **Descripción del proyecto** del `AGENTS.md`](AGENTS.md#descripción-del-proyecto) solo necesitas agregar una descripción del proyecto **MUY** consisa de maximo 4 renglones, por ejemplo: *plataforma bancaria de usuarios X* o *sistema de ventas para la empresa Y*. El resto del `AGENTS.md` está escrito correctamente y no requiere cambios.
+
+Es un archivo de instrucciones que el harness carga automáticamente en el contexto de la IA al iniciar cada sesión. Es un estándar abierto, por lo que la mayoría de harness lo leen sin configuración adicional. En este proyecto sirve para que la IA:
+
+* Respete la arquitectura del proyecto.
+
+* Consulte la [documentación oficial de Angular](https://angular.dev/llms.txt).
+
+* Use Angular moderno y no legacy.
+
+`AGENTS.md` está basado en [esta guía de la documentación oficial de Angular](https://angular.dev/ai/develop-with-ai).
+
+Si usas Claude Code, [Claude también lee `AGENTS.md`](https://code.claude.com/docs/en/memory#agents-md), pero solo si el proyecto no tiene `CLAUDE.md`, `.claude/CLAUDE.md` ni `CLAUDE.local.md`. Si has agregado alguno de estos archivos, elimínalo para que Claude lea `AGENTS.md`.
+
+Para probar que funcione `AGENTS.md` envia este prompt:
+
+```txt
+citar textualmente ¿que es Signal? y ejemplo usando la tool `search_documentation` de `angular-cli` MCP
+```
+
+La salida debe contener algo similar a esto:
+
+```txt
+Angular Signals is a system that granularly tracks
+how and where your state is used throughout an application,
+allowing the framework to optimize rendering updates.
+```
+
+Esta definicion corresponde a la [documentacion oficial de Angular](https://angular.dev/guide/signals)
+
 # 🅰️ Configurar Angular para que Funcione con IA
 Estas configuraciones ya estan listas para funcionar. Solo debes seguir los pasos a continuación para verificar que funcionen correctamente.
 
@@ -905,17 +970,22 @@ Hacer esto:
 1. Abrir Git Bash
 
 2. Abrir la carpeta del proyecto
+
 ```console
 cd /ruta/a/carpeta/raiz/del/proyecto
 ```
 
-3. Ejecutar claude con todos los permisos:
+3. Ejecutar tu harness de IA con todos los permisos:
+
+```console
+codex --yolo
+```
 
 ```console
 claude --dangerously-skip-permissions
 ```
 
-# Skills Configuradas en este Proyecto
+# **Skills** Configuradas en este Proyecto
 
 ## 🌿 `git-commit`
 Por cada feature terminada hacer un commit antes de solicitar nuevas modificaciones a la IA. Evita acumular demasiados cambios, ya que puedes perder el contexto de lo que la IA está realizando y cometer errores.
@@ -925,8 +995,6 @@ Trabajar bajo el principio:
 > 1 commit = 1 feature
 
 El skill `.agents\skills\git-commit\SKILL.md` te permite realizar commits.
-
-***Ejemplos de prompt:***
 
 ```console
 git commit y git push
@@ -938,22 +1006,19 @@ Skill del equipo oficial de Angular (Google) que contiene un resumen de la docum
 Para probar que funcione envia este prompt a Claude:
 
 ```txt
-/angular-developer de la skill citarme textualmente Angular Aria, titulo Styling Headless Components
+/angular-developer de la skill citarme textualmente la definicion de Angular Aria
 ```
 
 La salida debe contener algo similar a esto:
 
 ```txt
-Because Angular Aria components are headless,
-they do not come with default styles (...)
+Angular Aria (`@angular/aria`) es una colección de directivas headless (...)
 ```
 
 ## `design`
 [Mira este video](https://youtu.be/Bb-hjNbvXmM?si=LGrcN90kD-J0IlFB) para aprender a usar la skill `design`.
 
 Solo funciona en Claude. Crea un mockup (similar a Figma) que puedes editar con IA, pidiéndole a Claude los cambios en lenguaje natural. Genera una URL que puedes compartir, y puedes convertirlo a código de CSS, Sass, Tailwind o Bootstrap.
-
-**Ejemplos**
 
 ```txt
 /design crea una landing page para un portafolio
@@ -964,7 +1029,9 @@ Solo funciona en Claude. Crea un mockup (similar a Figma) que puedes editar con 
 ```
 
 ## `skill-creator`
-Para aprender como crear una nueva skill [mira este video](https://youtu.be/oZTXrgHRi-k ), **SIEMPRE** agregar las skills en la carpeta `.agents\skills\NOMBRE-DE-LA-SKILL\SKILL.md`, **NUNCA** en otra carpeta (`.claude`, `.codex`, etc), esto sin importar que harness y modelo de IA uses (Claude Code, Codex, etc)
+Para aprender como crear una nueva skill [mira este video](https://youtu.be/oZTXrgHRi-k)
+
+**SIEMPRE** agregar las skills en la carpeta `.agents\skills\NOMBRE-DE-LA-SKILL\SKILL.md`, **NUNCA** en otra carpeta (`.claude`, `.codex`, etc), esto sin importar que harness y modelo de IA uses (Claude Code, Codex CLI, etc)
 
 Para crear una nueva skill, hay que llamar la skill `skill-creator`. Ejemplo:
 
@@ -972,18 +1039,22 @@ Para crear una nueva skill, hay que llamar la skill `skill-creator`. Ejemplo:
 /skill-creator en la carpeta .agents\skills\ crear una skill sobre <<aqui describes sobre que trata la skill>>
 ```
 
-# MCP Configurados en este Proyecto
+## `question-me`
+Esta skill esta basada en:
 
-## 🔗 Enlaces - Mas Ejemplos de MCP
-Estos MCP no estan configurados en este proyecto:
+| Autor       | Nombre de la skill | Enlace                                                                                                                                                                |
+| ----------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Matt Pocock | `grill-me`         | [https://www.skills.sh/mattpocock/skills/grill-me](https://www.skills.sh/mattpocock/skills/grill-me)                                                                  |
+| Matt Pocock | `grill-with-docs`  | [https://www.skills.sh/mattpocock/skills/grill-with-docs](https://www.skills.sh/mattpocock/skills/grill-with-docs)                                                    |
+| Fazt        | `fxquestionme`     | [https://github.com/fazt/dotfiles/blob/master/claude/skills/fxquestionme/SKILL.md](https://github.com/fazt/dotfiles/blob/master/claude/skills/fxquestionme/SKILL.md) |
 
-* [Repositorios con MCP](https://mcpservers.org/es/)
+Permite que la IA te haga preguntas para aclarar tus objetivos y eliminar ambigüedades, logrando modificaciones más precisas.
 
-* [Repositorios con MCP de Claude](https://claude.ai/directory)
+```bash
+/question-me << Aqui describir el bug a solucionar, el código a refactorizar o la nueva feature a implementar >>
+```
 
-* [Repositorios con MCP de Chat GPT](http://chatgpt.com/plugins)
-
-* [Figma MCP:](https://youtu.be/uZ6Nbwp8GtU?si=cf4h9SxQdnXbc3KI) Sirve para convertir un mockup de Figma a codigo de CSS/Sass/Tailwind/Bootstrap
+# **MCP** Configurados en este Proyecto
 
 ## `angular-cli` MCP
 
@@ -1042,7 +1113,7 @@ La cita corresponde a [este link de la documentación oficial de Angular](https:
 
 **Iniciar tutorial paso a paso:**
 ```txt
-usar la tool ai_tutor de angular-cli MCP para explicarme Forms with signals
+usar la tool ai_tutor de angular-cli MCP para enseñarme Forms with signals
 ```
 
 **Refactorizar:**
@@ -1055,10 +1126,7 @@ usar get_best_practices de angular-cli MCP para refactorizar el componente que e
 usar search_documentation de angular-cli MCP para migrar a signals el componente que esta en la ruta src/***
 ```
 
-# CLI Configurados en Este Proyecto
-Puedes instalar CLIs para que la IA ejecute comandos y automatice procesos.
-
-También puedes crear skills que le expliquen a la IA cómo ejecutar los comandos del CLI.
+# **CLI** Configurados en Este Proyecto
 
 ## 🌐 `playwright-cli`
 
@@ -1088,24 +1156,25 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 
 | Pregunta ⬇️ / Modo ➡️                                                                  | Modo AUTOMATIZAR                          | Modo DEPURAR                                 |
 |-----------------------------------------------------------------------------------------|-------------------------------------------|----------------------------------------------|
-| ¿Para qué sirve?                                                                        | Ejecutar o automatizar un flujo de la app | Encontrar la causa de un bug                 |
+| ¿Para qué sirve?                                                                        | Ejecutar o automatizar un flujo de la app | Encontrar la causa y corregir bugs           |
 | Ejemplo de uso                                                                          | Llenar un formulario muchas veces         | La pagina web no es responsive, corrigela    |
-| ¿Escribe codigo de testing en Jest, Vitest, etc?                                        | ❌ No                                     | ❌ No                                       |
 | Modifica código fuente                                                                  | ❌ No                                     | ✅ Sí                                       |
 | Cuando el frontend hace peticiones HTTP, determina si el bug está en frontend o backend | ❌ No                                     | ✅ Sí                                       |
+| ¿Escribe codigo de testing en Jest, Vitest, etc?                                        | ❌ No                                     | ❌ No                                       |
+| ¿Ejecuta tests?                                                                         | ❌ No                                     | ✅ Sí, pero solo si el proyecto tiene tests |
 | ¿Ejecuta ESLint?                                                                        | ❌ No                                     | ✅ sí, pero solo si ESLint está configurado |
 | ¿Genera el build de la aplicacion?                                                      | ❌ No                                     | ✅ Sí                                       |
 | ¿Abre el navegador y usa comandos de `playwright-cli`?                                  | ✅ Sí                                     | ✅ Sí                                       |
-| ¿Pide usuario y contraseña y hace login?                                                | ✅ Sí                                     | ✅ Sí                                       |
+| ¿Pide usuario y contraseña y hace login?                                                | ✅ Sí, pero solo si el flujo exige sesión | ✅ Sí, pero solo si el flujo exige sesión   |
+| ¿Crea un sub agente para verificar la solución del bug?                                  | ❌ No                                     | ✅ Sí                                       |
 
-**SIEMPRE** que necesites controlar el navegador con la IA:
+**SIEMPRE** antes de llamar la skill `playwright-cli` para controlar el navegador con la IA:
 1. Detener la ejecucion del proyecto
 
 2. Llamar [la skill `playwright-cli`](.agents/skills/playwright-cli/SKILL.md) y **NO** [playwright MCP](https://github.com/microsoft/playwright-mcp)
 
 3. Usar este prompt:
 
-***Ejemplo de Prompt:***
 ```txt
 /playwright-cli <<< Aqui describir de forma MUY DETALLADA
 la funcionalidad a testear, bug a solucionar o el proceso a automatizar,
