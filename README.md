@@ -570,7 +570,7 @@ Volver a ejecutar `pn serve:dist` NO cambia el ambiente. Para cambiarlo, generar
 
 Angular CLI no tiene un comando para servir la carpeta `dist`; `ng serve` compila en memoria y no usa los archivos compilados. Por eso este script usa el paquete `serve`, y la bandera `-s` (`--single`) hace el fallback a `index.html` que necesita el Angular Router para que funcionen los deep links (por ejemplo, recargar el navegador en `http://localhost:2000/iniciar-sesion`).
 
-# 🪲 Scripts para Hacer Debugging
+# 🪲 Comandos para Hacer Debugging
 
 > [!TIP]
 > Deja de escribir `console.log()` para ver valores de variables y estados, mejor usa el debugging
