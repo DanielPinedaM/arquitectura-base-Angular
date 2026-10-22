@@ -1168,7 +1168,7 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 | ¿Genera el build de la aplicacion?                                                      | ❌ No                                     | ✅ Sí                                                                        |
 | ¿Abre el navegador y usa comandos de `playwright-cli`?                                  | ✅ Sí                                     | ✅ Sí                                                                        |
 | ¿Pide usuario y contraseña y hace login?                                                | ✅ Sí, pero solo si el flujo exige sesión | ✅ Sí, pero solo si el flujo exige sesión                                    |
-| ¿Crea un sub agente para verificar la solución del bug?                                  | ❌ No                                     | ✅ Sí                                                                       |
+| ¿Crea un sub agente para verificar la solución del bug?                                 | ❌ No                                     | ✅ Sí                                                                        |
 
 **SIEMPRE** antes de llamar la skill `playwright-cli` para controlar el navegador con la IA:
 1. Detener la ejecucion del proyecto
