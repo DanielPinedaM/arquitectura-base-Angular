@@ -5,7 +5,7 @@
 # 🅰️ Stack Frontend del Proyecto
 A continuación se resumen las principales tecnologías del proyecto y el motivo por el que se utilizan. No se incluyen todas las dependencias.
 
-## Node.js 24.21.0
+## Node.js 24.22.1
 
 ## [Angular 22](https://cursos.devtalles.com/courses/angular-moderno)
 _Framework opinionado_, excelente para proyectos grandes, aplicaciones complejas y formularios complejos. Desde la versión 17 hasta la 22 ha incorporado cambios importantes, como los _Signals_ (_reactividad_) y las nuevas _directivas de control_ de flujo _`@for`_, _`@if`_, _`@switch`_, _`@case`_.
@@ -220,7 +220,7 @@ Usar Node.js, prohibido usar alternativas como:
 1. Instalar Node.js de forma global con `pnpm`, sin depender de fnm, nvm, etc
 
 ```console
-pnpm runtime set node 24.21.0 -g
+pnpm runtime set node 24.22.1 -g
 ```
 
 2. Cerrar y volver abrir Power Shell como administrador
@@ -433,14 +433,14 @@ La razon de porque existe:
 
 es por compatibilidad, [segun la documentacion oficial de pnpm](https://pnpm.io/blog/whats-different-in-pnpm-12) a partir de pnpm 12, no es necesario instalar un administrador de versiones para Node.js (fnm, nvm, volta, etc) porque pnpm permite cambiar de version de Node.js
 
-Este proyecto usa Node.js 24.21.0. Para esto en `package.json` se agrego:
+Este proyecto usa Node.js 24.22.1. Para esto en `package.json` se agrego:
 
 ```JSON
 {
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": "24.21.0",
+      "version": "24.22.1",
       "onFail": "download"
     }
   }
@@ -457,10 +457,10 @@ Para que `fnm` automáticamente al entrar a la carpeta del proyecto seleccione l
 winget install Schniz.fnm
 ```
 
-3. Instalar Node.js 24.21.0:
+3. Instalar Node.js 24.22.1:
 
 ```console
-fnm install 24.21.0
+fnm install 24.22.1
 ```
 
 4. Copiar completo el siguiente comando y ejecutarlo:
@@ -486,10 +486,10 @@ fnm current
 node -v
 ```
 
-7. Debería mostrarte `v24.21.0` automáticamente, sin que hayas escrito manualmente
+7. Debería mostrarte `v24.22.1` automáticamente, sin que hayas escrito manualmente
 
 ```console
-fnm use 24.21.0
+fnm use 24.22.1
 ```
 
 # 📦 Manejador de Paquetes
