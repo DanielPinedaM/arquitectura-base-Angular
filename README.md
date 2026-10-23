@@ -928,6 +928,7 @@ Que todos los harness vean un archivo no significa que todos lo entiendan. Las s
 | [Deep Code CLI (DeepSeek)](https://api-docs.deepseek.com/quick_start/agent_integrations/deepcode/)  | `/.deepcode/skills/`         |
 | [Grok Build (xAI)](https://docs.x.ai/build/features/skills-plugins-marketplaces)                    | `/.grok/skills/`             |
 | [Gemini CLI (Google)](https://geminicli.com/docs/cli/skills/)                                       | `/.gemini/skills/`           |
+| [Antigravity CLI (Google)](https://antigravity.google/docs/skills/)                                 | `/.agents/skills/`           |
 | [OpenCode](https://opencode.ai/docs/skills)                                                         | `/.opencode/skills/`         |
 | [Pi](https://pi.dev/docs/latest/skills)                                                             | `/.pi/skills/`               |
 | [OpenClaw](https://docs.openclaw.ai/tools/creating-skills)                                          | `/.openclaw/skills/`         |
