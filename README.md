@@ -211,7 +211,7 @@ Debe mostrar un numero con la version de `pnpm` instalada
 $pnpmExe = Get-ChildItem "$env:LOCALAPPDATA\pnpm" -Recurse -Filter pnpm.exe -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName; if ($pnpmExe) { Add-MpPreference -ControlledFolderAccessAllowedApplications $pnpmExe; $pnpmExe } else { "No se encontro pnpm.exe en $env:LOCALAPPDATA\pnpm" }
 ```
 
-### ⚙️ Entorno de Ejecución
+### ⚙️ Instalar Node.js (Entorno de Ejecución)
 Usar Node.js, prohibido usar alternativas como:
 
 * [Bun](https://youtu.be/9gM7HQ7SafE)
