@@ -98,11 +98,11 @@ Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
 * [🔗 Enlace - HTTP Cats - Explicación de los Status HTTP](https://http.cat/)
 
 * Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
-  1. [🔗 Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
-  2. [🔗 Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
-  3. [🔗 Rxjs VS Signals](https://youtu.be/lSzO2D3OCjY?si=Yr4nlZ2AanGWW0WN)
-  4. [🔗 Forms with Signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
-  5. [🔗 input y output con Signals `import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
+1. [🔗 Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
+2. [🔗 Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
+3. [🔗 Rxjs VS Signals](https://youtu.be/lSzO2D3OCjY?si=Yr4nlZ2AanGWW0WN)
+4. [🔗 Forms with Signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
+5. [🔗 input y output con Signals `import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
 
 * Para entender la arquitectura del proyecto:
   * Lee la [skill angular-conventions](.agents/skills/angular-conventions/SKILL.md)
@@ -111,10 +111,10 @@ Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
 
 ```console
 Leer estas skills. Cuando las skills se contradicen, prevalece la que tenga el número menor en la columna **Prioridad**
-| Prioridad | Skill |
-| --- | --- |
-| 1 | `.agents/skills/angular-conventions/SKILL.md` |
-| 2 | `.agents/skills/angular-developer/SKILL.md` |
+| Prioridad | Skill                                         |
+| --------- | --------------------------------------------- |
+| 1         | `.agents/skills/angular-conventions/SKILL.md` |
+| 2         | `.agents/skills/angular-developer/SKILL.md`   |
 
 Explica cada uno de los siguientes puntos con teoría y ejemplos, sin saltarte ninguno, basándote en ambas skills. Cuando sea posible, muestra un ejemplo correcto y uno incorrecto:
 - Estructura de archivos y carpetas (feature arquitecture)
@@ -165,12 +165,12 @@ Explica cada uno de los siguientes puntos con teoría y ejemplos, sin saltarte n
 ```
 
 * Mira estos enlaces para que aprendas de IA enfocada en desarrollo de software:
-  1. [🔗 Benchmark de IA](https://artificialanalysis.ai/)
-  2. [🔗 Categorización de los tipos de IA: Modelos, Harnesses y Orquestadores](https://youtu.be/_HxDbdItVcs?si=VB6SHcZB1enB2Qvl)
-  3. [🔗 Mejores Modelos de IA](https://youtu.be/EPz00z1ACPc?si=Dkw3zECIk1d84YxX)
-  4. [🔗 Mejores Harnesses de IA](https://youtu.be/Fzn9uWRRDXM?si=NJJmsOYuzTXl_aad)
-  5. [🔗 Mejores Orquestadores de IA](https://youtu.be/rANNn5fIVmg?si=RxFAUjPUEYzXJpbq)
-  6. [🔗 Desarrollo de software con IA: MCP, CLI, RAG](https://youtu.be/sn1o1Hr1pJs)
+1. [🔗 Benchmark de IA](https://artificialanalysis.ai/)
+2. [🔗 Categorización de los tipos de IA: Modelos, Harnesses y Orquestadores](https://youtu.be/_HxDbdItVcs?si=VB6SHcZB1enB2Qvl)
+3. [🔗 Mejores Modelos de IA](https://youtu.be/EPz00z1ACPc?si=Dkw3zECIk1d84YxX)
+4. [🔗 Mejores Harnesses de IA](https://youtu.be/Fzn9uWRRDXM?si=NJJmsOYuzTXl_aad)
+5. [🔗 Mejores Orquestadores de IA](https://youtu.be/rANNn5fIVmg?si=RxFAUjPUEYzXJpbq)
+6. [🔗 Desarrollo de software con IA: MCP, CLI, RAG](https://youtu.be/sn1o1Hr1pJs)
 
 # ⬇️ Instalaciones
 
