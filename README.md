@@ -963,7 +963,7 @@ allowing the framework to optimize rendering updates.
 Esta definicion corresponde a la [documentacion oficial de Angular](https://angular.dev/guide/signals)
 
 # 🅰️ Configurar Angular para que Funcione con IA
-Estas configuraciones ya estan listas para funcionar. Solo debes seguir los pasos a continuación para verificar que funcionen correctamente.
+Para que las configuraciones con IA funcionen hacer los siguientes pasos y verificar su funcionamiento:
 
 # Antes de Probar que Funcione Angular con IA
 Hacer esto:
