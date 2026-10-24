@@ -110,19 +110,24 @@ Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
   * Si no entiendes algo de la skill, pregúntale a la IA en lugar de pedirle solo *"hazme X"*. Aunque la skill es larga, aprenderás la arquitectura del proyecto y buenas prácticas, y podrás detectar cuándo la IA alucina al revisar el código. Por ejemplo, este prompt resume la arquitectura de este proyecto:
 
 ```console
-Leer estas skills:
-- `.agents/skills/angular-conventions/SKILL.md`
-- `.agents/skills/angular-developer/SKILL.md`
+Leer estas skills. Cuando las skills se contradicen, prevalece la que tenga el número menor en la columna **Prioridad**
+| Prioridad | Skill |
+| --- | --- |
+| 1 | `.agents/skills/angular-conventions/SKILL.md` |
+| 2 | `.agents/skills/angular-developer/SKILL.md` |
 
-Explica cada uno de los siguientes puntos con teoría y ejemplos, basándote en ambas skills. Si se contradicen, prevalece `angular-conventions` sobre `angular-developer`:
+Explica cada uno de los siguientes puntos con teoría y ejemplos, sin saltarte ninguno, basándote en ambas skills. Cuando sea posible, muestra un ejemplo correcto y uno incorrecto:
 - Estructura de archivos y carpetas (feature arquitecture)
 
 - Manejo de fechas: En este proyecto se usa Luxon y no `new Date` nativo de JavaScript
 
 - Maquetacion:
   - ¿Como maquetar componentes de UI?
-  - ¿Como usar Tailwind para tema oscuro y claro en los componentes?
+  - ¿Como usar el prefijo dark: de Tailwind para tema oscuro y claro en los componentes?
   - ¿Como usar CSS global y Tailwind para componentes?
+  - CSS nesting
+  - Mobile First en Tailwind y CSS
+  - En este proyecto se usa sintaxis de rango de CSS Media Queries Level 4 y esta prohibido `min-width` y `max-width`
 
 - Botones:
   - ¿Como escribir un boton?
@@ -141,14 +146,16 @@ Explica cada uno de los siguientes puntos con teoría y ejemplos, basándote en 
 - Formularios:
   - ¿Es correcto usar input nativo de HTML para formularios?
   - ¿Como definir y validar formularios con Signal Forms y Zod?
+  - ¿Porque no debo de escribir logica de negocio/dominio dentro de los componentes de Spartan ng ni en la carpeta shared del proyecto?, explicarme alto acoplamiento y composicion de componentes
 
 - Servicio singleton con `@Service()` y no @Injectable({providedIn: 'root'})
 
 - Explicar estados en Angular:
   - Como definir y actualizar estados con signals
+  - ¿Que significa mantener las transformaciones de estado puras y predecibles?, explicar concepto de inmutabilidad y spread operator de JavaScript aplicado a los signals de Angular
   - Signal que depende de otro Signal
   - ¿Cuando usar `computed()`, `linkedSignal` y `effect()`?
-  - Estado global
+  - Estado global definido con signal y servicio singlenton
 
 - `input()` y `output()` con signals, importados desde `import { input, output } from '@angular/core'`
 
