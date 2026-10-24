@@ -1153,6 +1153,19 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 
 * [Click aquí para ver más ejemplos](/.agents/skills/playwright-cli/automatizacion-del-navegador.md#tareas-específicas)
 
+Puedes pedir a la IA que te explique la skill con este prompt:
+
+```bash
+/design crear un diagrama de flujo para la skill .agents\skills\playwright-cli\SKILL.md
+
+explicar:
+- Símbolos de diagrama de flujo
+
+- ¿Cuantos bucles hay?
+
+- ¿Cual es la condicion de inicio y de salida de cada bucle?
+```
+
 [Esta skill](.agents/skills/playwright-cli/SKILL.md) esta basada en [la skill oficial de Microsoft](https://github.com/microsoft/playwright-cli/blob/main/skills/playwright-cli/SKILL.md). La diferencia es que esta skill tiene dos modos diferentes:
 
 | Pregunta ⬇️ / Modo ➡️                                                                                                    | Modo AUTOMATIZAR                          | Modo DEPURAR                                                                                                                                                          |
