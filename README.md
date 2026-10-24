@@ -5,7 +5,7 @@
 # 🅰️ Stack Frontend del Proyecto
 A continuación se resumen las principales tecnologías del proyecto y el motivo por el que se utilizan. No se incluyen todas las dependencias.
 
-## Node.js 24.22.1
+## 🟢 Node.js 24.22.1
 
 ## [Angular 22](https://cursos.devtalles.com/courses/angular-moderno)
 _Framework opinionado_, excelente para proyectos grandes, aplicaciones complejas y formularios complejos. Desde la versión 17 hasta la 22 ha incorporado cambios importantes, como los _Signals_ (_reactividad_) y las nuevas _directivas de control_ de flujo _`@for`_, _`@if`_, _`@switch`_, _`@case`_.
@@ -17,7 +17,6 @@ Agrega _tipado estático_ al lenguaje, permitiendo detectar errores durante el d
 Corrige los errores de _`new Date()`_ de JavaScript y y tiene una API muy completa para manejo de fechas.
 
 ## [CSS](https://youtu.be/K3xmRF8ab1o?si=w1Ox_P5e2R934Xby)
-
 1. No es necesario usar Sass, porque CSS ya tiene de forma nativa:
   * [CSS anidado (CSS nesting)](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Nesting). Ejemplo:
 
@@ -49,7 +48,7 @@ Estas son 2 de las principales razones por las que se decide usar Sass y no CSS,
 
 3. De forma oficial [Tailwind 4 no se puede configurar con Sass](https://tailwindcss.com/docs/compatibility), para hacerlo, hay que recurrir a hacks
 
-## [Tailwind CSS 4](https://youtu.be/R5EXap3vNDA?si=9TV4hucexfUBXgGk) 
+## [Tailwind CSS 4](https://youtu.be/R5EXap3vNDA?si=9TV4hucexfUBXgGk)
 Usa _clases utilitarias (utility classes)_, esto significa que si tienes conocimiento en CSS, cada clase de CSS tiene su equivalente en Tailwind. Ejemplo: En CSS se escribe
 
 ```CSS
@@ -80,7 +79,6 @@ En este proyecto se usa CSS para estilos globales y Tailwind para los estilos de
 5. Para modificar los estilos de Spartan ng no se requiere usar hacks de CSS como `::ng-deep` o `!important`
 
 ## [Zod 4](https://youtu.be/bUzGfrjg66M?si=PqQtfsXKDVA0HnuP)
-
 1. Permite utilizar la _misma sintaxis de código_ y reutilizar los mismos _esquemas de validación_ en frontend y backend de Node.js.
 
 En frontend valida _formularios_ y _datos de entrada_, con integración con _React Hook Form_ (React) y [_Forms with Signals_ (Angular)](https://angular.dev/guide/forms/signals/validation). En backend valida _`body`_, _`query`_ y _`params`_ de las _solicitudes http_, garantizando la integridad de los datos antes de procesarlos.
@@ -100,12 +98,11 @@ Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
 * [🔗 Enlace - HTTP Cats - Explicación de los Status HTTP](https://http.cat/)
 
 * Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
-
-1. [🔗 Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
-2. [🔗 Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
-3. [🔗 Rxjs VS Signals](https://youtu.be/lSzO2D3OCjY?si=Yr4nlZ2AanGWW0WN)
-4. [🔗 Forms with Signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
-5. [🔗 input y output con Signals `import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
+  1. [🔗 Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
+  2. [🔗 Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
+  3. [🔗 Rxjs VS Signals](https://youtu.be/lSzO2D3OCjY?si=Yr4nlZ2AanGWW0WN)
+  4. [🔗 Forms with Signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
+  5. [🔗 input y output con Signals `import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
 
 * Para entender la arquitectura del proyecto:
   * Lee la [skill angular-conventions](.agents/skills/angular-conventions/SKILL.md)
@@ -161,17 +158,12 @@ Explica cada uno de los siguientes puntos con teoría y ejemplos, basándote en 
 ```
 
 * Mira estos enlaces para que aprendas de IA enfocada en desarrollo de software:
-1. [🔗 Benchmark de IA](https://artificialanalysis.ai/)
-
-2. [🔗 Categorización de los tipos de IA: Modelos, Harnesses y Orquestadores](https://youtu.be/_HxDbdItVcs?si=VB6SHcZB1enB2Qvl)
-
-3. [🔗 Mejores Modelos de IA](https://youtu.be/EPz00z1ACPc?si=Dkw3zECIk1d84YxX)
-
-4. [🔗 Mejores Harnesses de IA](https://youtu.be/Fzn9uWRRDXM?si=NJJmsOYuzTXl_aad)
-
-5. [🔗 Mejores Orquestadores de IA](https://youtu.be/rANNn5fIVmg?si=RxFAUjPUEYzXJpbq)
-
-6. [🔗 Desarrollo de software con IA: MCP, CLI, RAG](https://youtu.be/sn1o1Hr1pJs)
+  1. [🔗 Benchmark de IA](https://artificialanalysis.ai/)
+  2. [🔗 Categorización de los tipos de IA: Modelos, Harnesses y Orquestadores](https://youtu.be/_HxDbdItVcs?si=VB6SHcZB1enB2Qvl)
+  3. [🔗 Mejores Modelos de IA](https://youtu.be/EPz00z1ACPc?si=Dkw3zECIk1d84YxX)
+  4. [🔗 Mejores Harnesses de IA](https://youtu.be/Fzn9uWRRDXM?si=NJJmsOYuzTXl_aad)
+  5. [🔗 Mejores Orquestadores de IA](https://youtu.be/rANNn5fIVmg?si=RxFAUjPUEYzXJpbq)
+  6. [🔗 Desarrollo de software con IA: MCP, CLI, RAG](https://youtu.be/sn1o1Hr1pJs)
 
 # ⬇️ Instalaciones
 
@@ -211,7 +203,7 @@ Debe mostrar un numero con la version de `pnpm` instalada
 $pnpmExe = Get-ChildItem "$env:LOCALAPPDATA\pnpm" -Recurse -Filter pnpm.exe -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName; if ($pnpmExe) { Add-MpPreference -ControlledFolderAccessAllowedApplications $pnpmExe; $pnpmExe } else { "No se encontro pnpm.exe en $env:LOCALAPPDATA\pnpm" }
 ```
 
-### ⚙️ Instalar Node.js (Entorno de Ejecución)
+### 🟢 Instalar Node.js (Entorno de Ejecución)
 Usar Node.js, prohibido usar alternativas como:
 
 * [Bun](https://youtu.be/9gM7HQ7SafE)
@@ -798,7 +790,6 @@ Se complementan:
 - La skill le dice a la IA *cómo* escribir el código, y el MCP le permite *consultar* la documentación y *verificar* el resultado.
 
 ### ¿Cuando Usar un CLI y no un MCP?
-
 [Mira este video](https://youtu.be/YEPJNXmmkw0?si=7cLlZ5WeDBWRRXxL) que responde la pregunta
 
 **Respuesta resumida:**
@@ -1188,7 +1179,7 @@ Debe mostrar un numero con la version de `playwright-cli` instalada
 **SIEMPRE** antes de llamar la skill `playwright-cli` para controlar el navegador con la IA:
 1. Detener la ejecucion del proyecto
 
-2. Si es posible. Si tienes cambios en el git working directory o staging area, entonces hacer git commit y git push, esto se hace para que la IA pueda diferenciar que cambios hizo
+2. Si es posible. Si tienes cambios en el git working directory o staging area, entonces hacer `git commit` y `git push`, esto se hace para que la IA pueda diferenciar que cambios hizo
 
 3. Llamar [la skill `playwright-cli`](.agents/skills/playwright-cli/SKILL.md) y **NO** [playwright MCP](https://github.com/microsoft/playwright-mcp)
 
