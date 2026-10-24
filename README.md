@@ -996,7 +996,7 @@ Trabajar bajo el principio:
 
 > 1 commit = 1 feature
 
-El skill `.agents\skills\git-commit\SKILL.md` te permite realizar commits.
+El skill [`.agents\skills\git-commit\SKILL.md`](.agents/skills/git-commit/SKILL.md) te permite realizar commits.
 
 ```console
 git commit y git push
