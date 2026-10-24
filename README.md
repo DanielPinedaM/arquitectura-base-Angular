@@ -939,7 +939,7 @@ Es un archivo de instrucciones que el harness carga automáticamente en el conte
 
 * Respete la arquitectura del proyecto.
 
-* Consulte la [documentación oficial de Angular](https://angular.dev/llms.txt).
+* Consulte la [documentación oficial de Angular](https://angular.dev/llms.txt) usando la [tool search_documentation de angular-cli MCP](#angular-cli-mcp)
 
 * Use Angular moderno y no legacy.
 
