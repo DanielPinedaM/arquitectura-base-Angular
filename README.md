@@ -97,72 +97,14 @@ Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
 
 * [🔗 Enlace - HTTP Cats - Explicación de los Status HTTP](https://http.cat/)
 
+* [Leer esto](#angular-conventions) para entender la arquitectura del proyecto.
+
 * Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
 1. [🔗 Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
 2. [🔗 Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
 3. [🔗 Rxjs VS Signals](https://youtu.be/lSzO2D3OCjY?si=Yr4nlZ2AanGWW0WN)
 4. [🔗 Forms with Signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
 5. [🔗 input y output con Signals `import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
-
-* Para entender la arquitectura del proyecto:
-  * Lee la [skill angular-conventions](.agents/skills/angular-conventions/SKILL.md)
-
-  * Si no entiendes algo de la skill, pregúntale a la IA en lugar de pedirle solo *"hazme X"*. Aunque la skill es larga, aprenderás la arquitectura del proyecto y buenas prácticas, y podrás detectar cuándo la IA alucina al revisar el código. Por ejemplo, este prompt resume la arquitectura de este proyecto:
-
-```console
-Leer estas skills. Cuando las skills se contradicen, prevalece la que tenga el número menor en la columna **Prioridad**
-| Prioridad | Skill                                         |
-| --------- | --------------------------------------------- |
-| 1         | `.agents/skills/angular-conventions/SKILL.md` |
-| 2         | `.agents/skills/angular-developer/SKILL.md`   |
-
-Explica cada uno de los siguientes puntos con teoría y ejemplos, sin saltarte ninguno, basándote en ambas skills. Cuando sea posible, muestra un ejemplo correcto y uno incorrecto:
-- Estructura de archivos y carpetas (feature arquitecture)
-
-- Manejo de fechas: En este proyecto se usa Luxon y no `new Date` nativo de JavaScript
-
-- Maquetacion:
-  - ¿Como maquetar componentes de UI?
-  - ¿Como usar el prefijo dark: de Tailwind para tema oscuro y claro en los componentes?
-  - ¿Como usar CSS global y Tailwind para componentes?
-  - CSS nesting
-  - Mobile First en Tailwind y CSS
-  - En este proyecto se usa sintaxis de rango de CSS Media Queries Level 4 y esta prohibido `min-width` y `max-width`
-
-- Botones:
-  - ¿Como escribir un boton?
-  - ¿Es correcto usar <button> de HTML nativo en los componentes?
-  - Tipos de botones: Boton con solo texto, solo icono, icono y texto
-
-- Consumo de API
-  - ¿Como consumir una API?
-  - ¿Es correcto escribir try catch al llamar a una API?
-  - ¿Como validar cuando peticion HTTP es exitosa y erronea?
-
-- ¿Como crear una nueva ruta?
-
-- Standalone components
-
-- Formularios:
-  - ¿Es correcto usar input nativo de HTML para formularios?
-  - ¿Como definir y validar formularios con Signal Forms y Zod?
-  - ¿Porque no debo de escribir logica de negocio/dominio dentro de los componentes de Spartan ng ni en la carpeta shared del proyecto?, explicarme alto acoplamiento y composicion de componentes
-
-- Servicio singleton con `@Service()` y no @Injectable({providedIn: 'root'})
-
-- Explicar estados en Angular:
-  - Como definir y actualizar estados con signals
-  - ¿Que significa mantener las transformaciones de estado puras y predecibles?, explicar concepto de inmutabilidad y spread operator de JavaScript aplicado a los signals de Angular
-  - Signal que depende de otro Signal
-  - ¿Cuando usar `computed()`, `linkedSignal` y `effect()`?
-  - Estado global definido con signal y servicio singlenton
-
-- `input()` y `output()` con signals, importados desde `import { input, output } from '@angular/core'`
-
-- Control Flow Directives: `@for`, `@if`, `@switch`, `@case`, `@default`
-
-- Inyección de dependencias con `inject()`
-```
 
 * 🔗 Mira estos enlaces para que aprendas de IA enfocada en desarrollo de software:
 1. [Ollama: IA local gratis](https://youtu.be/p2zZ6zuaCDM)
@@ -992,6 +934,69 @@ El skill [`.agents\skills\git-commit\SKILL.md`](.agents/skills/git-commit/SKILL.
 
 ```console
 git commit y git push
+```
+
+## `angular-conventions`
+Contiene reglas que explican la arquitectura del proyecto.
+
+Para entender la arquitectura del proyecto:
+* Lee la [skill angular-conventions](.agents/skills/angular-conventions/SKILL.md)
+
+* Si no entiendes algo de la skill, pregúntale a la IA en lugar de pedirle solo *"hazme X"*. Aunque la skill es larga, aprenderás la arquitectura del proyecto y buenas prácticas, y podrás detectar cuándo la IA alucina al revisar el código. Por ejemplo, este prompt resume la arquitectura de este proyecto:
+
+```console
+Leer estas skills. Cuando las skills se contradicen, prevalece la que tenga el número menor en la columna **Prioridad**
+| Prioridad | Skill                                         |
+| --------- | --------------------------------------------- |
+| 1         | `.agents/skills/angular-conventions/SKILL.md` |
+| 2         | `.agents/skills/angular-developer/SKILL.md`   |
+
+Explica cada uno de los siguientes puntos con teoría y ejemplos, sin saltarte ninguno, basándote en ambas skills. Cuando sea posible, muestra un ejemplo correcto y uno incorrecto:
+- Estructura de archivos y carpetas (feature arquitecture)
+
+- Manejo de fechas: En este proyecto se usa Luxon y no `new Date` nativo de JavaScript
+
+- Maquetacion:
+  - ¿Como maquetar componentes de UI?
+  - ¿Como usar el prefijo dark: de Tailwind para tema oscuro y claro en los componentes?
+  - ¿Como usar CSS global y Tailwind para componentes?
+  - CSS nesting
+  - Mobile First en Tailwind y CSS
+  - En este proyecto se usa sintaxis de rango de CSS Media Queries Level 4 y esta prohibido `min-width` y `max-width`
+
+- Botones:
+  - ¿Como escribir un boton?
+  - ¿Es correcto usar <button> de HTML nativo en los componentes?
+  - Tipos de botones: Boton con solo texto, solo icono, icono y texto
+
+- Consumo de API
+  - ¿Como consumir una API?
+  - ¿Es correcto escribir try catch al llamar a una API?
+  - ¿Como validar cuando peticion HTTP es exitosa y erronea?
+
+- ¿Como crear una nueva ruta?
+
+- Standalone components
+
+- Formularios:
+  - ¿Es correcto usar input nativo de HTML para formularios?
+  - ¿Como definir y validar formularios con Signal Forms y Zod?
+  - ¿Porque no debo de escribir logica de negocio/dominio dentro de los componentes de Spartan ng ni en la carpeta shared del proyecto?, explicarme alto acoplamiento y composicion de componentes
+
+- Servicio singleton con `@Service()` y no @Injectable({providedIn: 'root'})
+
+- Explicar estados en Angular:
+  - Como definir y actualizar estados con signals
+  - ¿Que significa mantener las transformaciones de estado puras y predecibles?, explicar concepto de inmutabilidad y spread operator de JavaScript aplicado a los signals de Angular
+  - Signal que depende de otro Signal
+  - ¿Cuando usar `computed()`, `linkedSignal` y `effect()`?
+  - Estado global definido con signal y servicio singlenton
+
+- `input()` y `output()` con signals, importados desde `import { input, output } from '@angular/core'`
+
+- Control Flow Directives: `@for`, `@if`, `@switch`, `@case`, `@default`
+
+- Inyección de dependencias con `inject()`
 ```
 
 ## 💻 [`angular-developer`](https://github.com/angular/skills)
