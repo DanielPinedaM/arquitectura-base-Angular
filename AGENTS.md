@@ -34,9 +34,10 @@ Cuando las fuentes se contradicen, prevalece la que tenga el número menor en la
 | --- | --- | --- | --- |
 | 1 | [Skill `angular-conventions`](.agents/skills/angular-conventions/SKILL.md) | Reglas propias del proyecto. | Al decidir dónde va un archivo o carpeta, cómo se nombra, qué librería o componente del proyecto usar y cómo se estiliza, y al responder cómo se hace algo en este proyecto. |
 | 2 | tool `get_best_practices` del MCP server `angular-cli` | Reglas de terceros de Google sobre buenas prácticas de Angular. | Al escribir o revisar el código TypeScript y las plantillas de componentes, servicios y directivas: tipado, signals, plantillas, inyección de dependencias y accesibilidad. |
-| 3 | tool `search_documentation` del MCP server `angular-cli` | [Documentación oficial completa de Angular](https://angular.dev/llms.txt) | Solo si en la skill `angular-developer` el tema no existe o le falta información. |
-| 4 | [Skill `angular-developer`](.agents/skills/angular-developer/SKILL.md) | Resumen de la [documentación oficial de Angular](https://angular.dev/llms.txt) | Al responder y usar APIs de Angular (aunque creas conocerla) y ante errores. Consúltala antes que `search_documentation`: al ser un resumen, se lee más rápido. |
-| 5 | Datos de entrenamiento | Tu conocimiento previo | Puedes usarlo, pero las fuentes anteriores tienen prioridad: este proyecto usa Angular 22, cuyos breaking changes pueden haberlo dejado desactualizado. Que esté desactualizado no significa que esté mal; solo que puede no aplicar a esta versión. |
+| 3 | tool `search_documentation` del MCP server `angular-cli` | [Documentación oficial de Angular](https://angular.dev/llms.txt) | Solo si en la skill `angular-developer` el tema no existe o le falta información. |
+| 4 | [Skill `angular-developer`](.agents/skills/angular-developer/SKILL.md) | Resumen de la [documentación oficial de Angular](https://angular.dev/llms.txt) | Al responder y usar APIs de Angular (aunque creas conocerla). Consúltala antes que `search_documentation`: al ser un resumen, se lee más rápido. |
+| 5 | [Skill `zod-4`](.agents/skills/zod-4/SKILL.md) | Breaking changes de Zod 4 | Al responder preguntas y editar codigo de Zod |
+| 6 | Datos de entrenamiento | Tu conocimiento previo | Puedes usarlo, pero las fuentes anteriores tienen prioridad: este proyecto usa Angular 22 y Zod 4, cuyos breaking changes pueden dejar tus datos de entrenamiento desactualizados. Que esté desactualizado no significa que esté mal; solo que puede no aplicar a esta versión. |
 
 ## Buenas Practicas de Angular
 * Usar lazy loading para todas las rutas de `src\app\app.routes.ts`
