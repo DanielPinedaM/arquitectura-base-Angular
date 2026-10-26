@@ -887,7 +887,7 @@ Para probar que funcione `AGENTS.md` envia este prompt:
 citar textualmente ¿que es Signal? y ejemplo usando la tool `search_documentation` de `angular-cli` MCP
 ```
 
-La salida debe contener algo similar a esto:
+La respuesta debe contener algo similar a esto:
 
 ```txt
 Angular Signals is a system that granularly tracks
@@ -1008,7 +1008,7 @@ Para probar que funcione envia este prompt a Claude:
 /angular-developer de la skill citarme textualmente la definicion de Angular Aria
 ```
 
-La salida debe contener algo similar a esto:
+La respuesta debe contener algo similar a esto:
 
 ```txt
 Angular Aria (`@angular/aria`) es una colección de directivas headless (...)
