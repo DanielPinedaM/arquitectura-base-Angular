@@ -1,7 +1,7 @@
-﻿import { IEnvironment } from '@/environments/data-types/interfaces/environment.interface';
+﻿import { Environment } from '@/environments/data-types/interfaces/environment.interface';
 
 /** variables de entorno de PRUEBAS */
-export const environment: IEnvironment = {
+export const environment: Environment = {
   NODE_ENV: 'test',
   api: 'https://aqui escribir dominio de PRUEBAS/api/v1/',
 

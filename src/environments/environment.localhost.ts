@@ -1,7 +1,7 @@
-﻿import { IEnvironment } from '@/environments/data-types/interfaces/environment.interface';
+﻿import { Environment } from '@/environments/data-types/interfaces/environment.interface';
 
 /** variables de entorno de DESARROLLO (LOCAL HOST) */
-export const environment: IEnvironment = {
+export const environment: Environment = {
   NODE_ENV: 'localhost',
   api: 'http://localhost:3000/api/v1/',
 

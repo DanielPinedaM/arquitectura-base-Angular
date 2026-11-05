@@ -1,4 +1,4 @@
-export interface IEnvironment {
+export interface Environment {
   NODE_ENV: 'localhost' | 'production' | 'test';
   api: string;
 

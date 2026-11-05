@@ -1,7 +1,7 @@
-﻿import { IEnvironment } from '@/environments/data-types/interfaces/environment.interface';
+﻿import { Environment } from '@/environments/data-types/interfaces/environment.interface';
 
 /** variables de entorno de PRODUCCIÓN */
-export const environment: IEnvironment = {
+export const environment: Environment = {
   NODE_ENV: 'production',
   api: 'https://aqui escribir dominio de PRODUCCION/api/v1/',
 
