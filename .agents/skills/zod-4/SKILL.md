@@ -164,7 +164,3 @@ Cada archivo de reglas contiene:
 | 13 | `referencias/testing.md` | Testing de schemas: safeParse en los tests, valores límite, aserciones de errores, datos mock, property-based testing |
 | 14 | `referencias/api-de-testing.md` | Referencia de la API de Jest y Vitest para tests de schemas |
 | 15 | `referencias/anti-patterns-de-testing.md` | Errores de testing con ejemplos MAL/BIEN |
-
-## Documento compilado completo
-
-Para la guía completa con todas las reglas expandidas: `AGENTS.md`
