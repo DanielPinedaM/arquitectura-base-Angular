@@ -401,6 +401,17 @@ powershell -c "irm https://releases.herdr.dev/core/install.ps1 | iex"
 
 Tambien sirve alternativas como [Orca](https://youtu.be/ze7AgvWfRwM?si=MnVb42vL8hfvD1KO)
 
+### Python 3
+[Clic aqui para instalar Python 3](https://www.python.org/downloads/)
+
+Aunque el backend del proyecto no use Python y los agentes de IA de terminal funcionen sin Python, es recomendable instalarlo, porque a menudo los agentes de IA usan Python de forma automatica para ejecutar scripts que analizan y editan código.
+
+**Ejemplo:** En un proyecto de TypeScript, el agente de IA puede ejecutar esto para leer las dependencias de `package.json`:
+
+```bash
+python3 -c "import json; print(json.load(open('package.json'))['dependencies'])"
+```
+
 ### [Instalar `fnm` (Opcional)](https://github.com/Schniz/fnm)
 
 > [!NOTE]
@@ -1061,6 +1072,18 @@ Permite que la IA te haga preguntas para aclarar tus objetivos y eliminar ambig�
 
 ```bash
 /question-me << Aqui describir el bug a solucionar, el código a refactorizar o la nueva feature a implementar >>
+```
+
+## `zod-4`
+Esta skill esta basada en [este repositorio de GitHub](https://github.com/anivar/zod-skill). Le explica a la IA:
+- ¿Donde usar Zod? por ejemplo en los formularios
+
+- Buenas practicas de Zod
+
+- Breaking changes de Zod 4 para escribir codigo de Zod actualizado
+
+```bash
+/zod-4 Explicame con teoria y ejemplo: esquema de Zod 4 en Angular Signal Form
 ```
 
 # **MCP** Configurados en este Proyecto
