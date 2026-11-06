@@ -408,7 +408,7 @@ Aunque el backend del proyecto no use Python y los agentes de IA de terminal fun
 
 **Ejemplo:** En un proyecto de TypeScript, el agente de IA puede ejecutar esto para leer las dependencias de `package.json`:
 
-```bash
+```console
 python3 -c "import json; print(json.load(open('package.json'))['dependencies'])"
 ```
 
@@ -524,7 +524,7 @@ El ambiente queda **hardcodeado dentro de la carpeta `dist`** durante el build. 
 
 2. Ejecutar la carpeta `dist`
 
-```bash
+```console
 pn serve:dist
 ```
 
@@ -675,7 +675,7 @@ Estos skills no estan configurados en este proyecto:
 
 2. Ejecutar el comando de la skill a descargar:
 
-```bash
+```console
 pn dlx skills add https://github.com/angular/angular --skill angular-developer
 ```
 
@@ -715,7 +715,7 @@ Ejecutar comandos:
 cd /ruta/a/carpeta/raiz/del/proyecto
 ```
 
-```bash
+```console
 /skills
 ```
 
@@ -783,7 +783,7 @@ Un CLI es más eficiente en contexto porque no agrega ningún listado de tools: 
 
 1. Este comando instala el MCP de `angular-cli` con el `--scope project`. Es decir, configura el MCP para que se ejecute únicamente en este proyecto y pueda compartirse con el resto del equipo mediante Git:
 
-```bash
+```console
 !claude mcp add angular-cli --scope project -- pnpm dlx @angular/cli mcp
 ```
 
@@ -904,13 +904,13 @@ Si usas Claude Code, [Claude también lee `AGENTS.md`](https://code.claude.com/d
 
 Para probar que funcione `AGENTS.md` envia este prompt:
 
-```txt
+```console
 citar textualmente ¿que es Signal? y ejemplo usando la tool `search_documentation` de `angular-cli` MCP
 ```
 
 La respuesta debe contener algo similar a esto:
 
-```txt
+```console
 Angular Signals is a system that granularly tracks
 how and where your state is used throughout an application,
 allowing the framework to optimize rendering updates.
@@ -1055,7 +1055,7 @@ Para aprender como crear una nueva skill [mira este video](https://youtu.be/oZTX
 
 Para crear una nueva skill, hay que llamar la skill `skill-creator`. Ejemplo:
 
-```bash
+```console
 /skill-creator en la carpeta .agents\skills\ crear una skill sobre <<aqui describes sobre que trata la skill>>
 ```
 
@@ -1070,7 +1070,7 @@ Esta skill esta basada en:
 
 Permite que la IA te haga preguntas para aclarar tus objetivos y eliminar ambigüedades, logrando modificaciones más precisas.
 
-```bash
+```console
 /question-me << Aqui describir el bug a solucionar, el código a refactorizar o la nueva feature a implementar >>
 ```
 
@@ -1082,7 +1082,7 @@ Esta skill esta basada en [este repositorio de GitHub](https://github.com/anivar
 
 - Breaking changes de Zod 4 para escribir codigo de Zod actualizado
 
-```bash
+```console
 /zod-4 Explicame con teoria y ejemplo: esquema de Zod 4 en Angular Signal Form
 ```
 
@@ -1186,7 +1186,7 @@ Sirve para que la IA desde la terminal pueda controlar el navegador. Ejemplos de
 
 Puedes pedir a la IA que te explique la skill con este prompt:
 
-```bash
+```console
 /design crear un diagrama de flujo para la skill .agents\skills\playwright-cli\SKILL.md
 
 explicar:
@@ -1215,13 +1215,13 @@ explicar:
 
 Instalar:
 
-```bash
+```console
 pnpm add -g @playwright/cli@latest
 ```
 
 Si la instalacion de `playwright-cli` es correcta, al ejecutar
 
-```bash
+```console
 playwright-cli --version
 ```
 
