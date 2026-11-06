@@ -1,23 +1,6 @@
 ---
 name: zod-4
-description: >
-  Zod v4 best practices, patterns, and API guidance for schema validation,
-  parsing, error handling, and type inference in TypeScript applications.
-  Covers safeParse, object composition, refinements, transforms, codecs,
-  branded types, v3→v4 migration, and testing schemas with Jest or Vitest.
-  Baseline: zod ^4.6.0.
-  Triggers on: zod imports, z.object, z.string, z.infer, safeParse,
-  mentions of "zod", "schema validation", "zod v4", "z.enum", or testing a
-  schema — "schema test", "zod mock", zod-schema-faker.
-license: MIT
-user-invocable: false
-agentic: false
-compatibility: "TypeScript ^5.5 projects using zod ^4.6.0 or later (checked against zod 4.6.7)"
-metadata:
-  author: Anivar Aravind
-  author_url: https://anivar.net
-  version: 2.0.0
-  tags: zod, validation, schema, typescript, parsing, type-inference, forms, api, testing, jest, vitest
+description: Zod v4 best practices, patterns, and API guidance for schema validation, parsing, error handling, and type inference in TypeScript applications. Covers safeParse, object composition, refinements, transforms, codecs, branded types, v3→v4 migration, and testing schemas with Jest or Vitest. Baseline: zod ^4.6.0. Triggers on: zod imports, z.object, z.string, z.infer, safeParse, mentions of "zod", "schema validation", "zod v4", "z enum", or testing a schema — "schema test", "zod mock", zod-schema-faker.
 ---
 
 # Zod
