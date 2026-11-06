@@ -1,42 +1,42 @@
 ---
-title: Log Structured Errors, Not Raw ZodError
-impact: HIGH
-description: Use z.flattenError() for compact, structured logs with request correlation IDs. Never console.log a raw ZodError — it's noisy, unstructured, and impossible to query.
-tags: observability, logging, errors, flattenError, structured-logging
+title: Registrar errores estructurados, no el ZodError crudo
+impact: ALTO
+description: Usa z.flattenError() para logs compactos y estructurados con IDs de correlación de la petición. Nunca hagas console.log de un ZodError crudo — es ruidoso, no está estructurado y es imposible de consultar.
+tags: observabilidad, logging, errores, flattenError, logging-estructurado
 ---
 
-# Log Structured Errors, Not Raw ZodError
+# Registrar errores estructurados, no el ZodError crudo
 
-## Problem
+## Problema
 
-Raw `ZodError` objects contain deeply nested issue arrays with internal metadata. Logging them directly produces noisy, unstructured output that's impossible to filter, alert on, or query in log aggregation tools (Datadog, Grafana, ELK).
+Los objetos `ZodError` crudos contienen arrays de issues profundamente anidados con metadata interna. Registrarlos directamente en los logs produce una salida ruidosa y sin estructura que es imposible de filtrar, de usar para alertas o de consultar en las herramientas de agregación de logs (Datadog, Grafana, ELK).
 
-## Incorrect
+## Incorrecto
 
 ```typescript
 const UserSchema = z.object({ name: z.string(), email: z.email() })
 
-// BUG: raw ZodError is noisy and unqueryable
+// BUG: el ZodError crudo es ruidoso y no se puede consultar
 app.post("/api/users", (req, res) => {
   const result = UserSchema.safeParse(req.body)
   if (!result.success) {
     logger.error("Validation failed", { error: result.error })
-    // Logs a massive nested object with internal Zod metadata
-    // Cannot search by field name, schema, or request
+    // Registra en el log un objeto anidado enorme con metadata interna de Zod
+    // No se puede buscar por nombre de campo, schema o petición
     return res.status(400).json({ error: "Invalid input" })
   }
 })
 ```
 
 ```typescript
-// BUG: console.log — no structure, no correlation
+// BUG: console.log — sin estructura, sin correlación
 const result = UserSchema.safeParse(data)
 if (!result.success) {
   console.log("Validation failed:", result.error)
 }
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 app.post("/api/users", (req, res) => {
@@ -56,7 +56,7 @@ app.post("/api/users", (req, res) => {
 ```
 
 ```typescript
-// Reusable helper for consistent structured logging
+// Helper reutilizable para un logging estructurado consistente
 type Logger = { warn(event: string, fields: Record<string, unknown>): void }
 
 function logValidationError(
@@ -80,6 +80,6 @@ function logValidationError(
 }
 ```
 
-## Why
+## Por qué
 
-Structured logs with `z.flattenError()` are compact (field name → error messages), queryable (search by schema name or failing field), and correlatable (request ID ties the error to a specific request). This enables dashboards that show which schemas and fields fail most often, alerting on validation spike rates, and debugging specific user requests.
+Los logs estructurados con `z.flattenError()` son compactos (nombre del campo → mensajes de error), consultables (búsqueda por nombre de schema o por campo que falla) y correlacionables (el ID de la petición vincula el error con una petición específica). Esto permite dashboards que muestran qué schemas y campos fallan con más frecuencia, alertas sobre picos en las tasas de validación y la depuración de peticiones específicas de los usuarios.

@@ -1,12 +1,12 @@
-# Zod Testing API Reference
+# Referencia de la API de testing de Zod
 
-Checked against Zod 4.6.7, Vitest 5.1, fast-check 4 and zod-schema-faker 3.
+Verificado con Zod 4.6.7, Vitest 5.1, fast-check 4 y zod-schema-faker 3.
 
-## Schema Correctness Testing
+## Testing de la corrección del schema
 
-### safeParse() for Tests
+### safeParse() para los tests
 
-Assert on `safeParse()` results. `expect(() => schema.parse(data)).toThrow()` passes on any thrown error, such as a `TypeError` from a bug in a transform, so it does not prove that validation rejected the input.
+Haz aserciones sobre los resultados de `safeParse()`. `expect(() => schema.parse(data)).toThrow()` pasa con cualquier error lanzado, como un `TypeError` de un bug en una transformación, así que no demuestra que la validación rechazó la entrada.
 
 ```typescript
 const UserSchema = z.object({
@@ -15,19 +15,19 @@ const UserSchema = z.object({
   age: z.int().min(0).max(150),
 })
 
-// GOOD: assertion-based
+// BIEN: basado en aserciones
 const result = UserSchema.safeParse(data)
 expect(result.success).toBe(false)
 expect(result.error?.issues.map((i) => i.code)).toContain("invalid_type")
 
-// GOOD: a yes or no only
+// BIEN: solo un sí o un no
 expect(UserSchema.validate(data)).toBe(false)
 
-// BAD: passes on any error
+// MAL: pasa con cualquier error
 expect(() => UserSchema.parse(data)).toThrow()
 ```
 
-### Testing Valid Data
+### Testing de datos válidos
 
 ```typescript
 describe("UserSchema", () => {
@@ -47,7 +47,7 @@ describe("UserSchema", () => {
 })
 ```
 
-### Testing Invalid Data
+### Testing de datos inválidos
 
 ```typescript
 const invalidInputs = [
@@ -63,7 +63,7 @@ it.each(invalidInputs)("rejects $desc", ({ input }) => {
 })
 ```
 
-### Boundary Value Testing
+### Testing de valores límite
 
 ```typescript
 const NumberSchema = z.number().min(0).max(100)
@@ -82,7 +82,7 @@ it.each(boundaries)("$desc ($value) → $expected", ({ value, expected }) => {
 })
 ```
 
-### Optional and Nullable Testing
+### Testing de optional y nullable
 
 ```typescript
 const Schema = z.object({
@@ -109,9 +109,9 @@ it("rejects undefined for non-optional", () => {
 })
 ```
 
-## Error Assertion Patterns
+## Patrones de aserción de errores
 
-### Using z.flattenError()
+### Usar z.flattenError()
 
 ```typescript
 it("reports field-level errors", () => {
@@ -125,7 +125,7 @@ it("reports field-level errors", () => {
 })
 ```
 
-### Asserting Error Messages
+### Hacer aserciones sobre los mensajes de error
 
 ```typescript
 it("shows custom error message", () => {
@@ -138,7 +138,7 @@ it("shows custom error message", () => {
 })
 ```
 
-### Asserting Error Codes
+### Hacer aserciones sobre los códigos de error
 
 ```typescript
 it("produces invalid_type for wrong type", () => {
@@ -158,7 +158,7 @@ it("produces too_small for under minimum", () => {
 })
 ```
 
-### Asserting Error Paths
+### Hacer aserciones sobre los paths de error
 
 ```typescript
 const FormSchema = z
@@ -181,24 +181,24 @@ it("targets the correct field", () => {
 })
 ```
 
-### Counting Errors
+### Contar los errores
 
 ```typescript
 it("reports all validation errors at once", () => {
   const result = UserSchema.safeParse({})
   expect(result.success).toBe(false)
   if (!result.success) {
-    // Zod reports all issues, not just the first
+    // Zod reporta todos los issues, no solo el primero
     expect(result.error.issues.length).toBeGreaterThanOrEqual(3)
   }
 })
 ```
 
-## Mock Data Generation
+## Generación de datos mock
 
-### Using zod-schema-faker
+### Usar zod-schema-faker
 
-Import from `zod-schema-faker/v4`. The package root is the library's Zod 3 entry and throws `Unsupported schema type` on a Zod 4 schema. `fake()` returns the schema's input type; parse the value to get the output of a schema with a transform.
+Importa desde `zod-schema-faker/v4`. La raíz del paquete es el punto de entrada de Zod 3 de la librería y lanza `Unsupported schema type` con un schema de Zod 4. `fake()` devuelve el tipo de entrada del schema; parsea el valor para obtener la salida de un schema con una transformación.
 
 ```bash
 npm install -D zod-schema-faker @faker-js/faker randexp
@@ -209,7 +209,7 @@ import { faker } from "@faker-js/faker"
 import { fake, seed, setFaker } from "zod-schema-faker/v4"
 import * as z from "zod"
 
-// Call once in test setup (beforeAll or setupFiles)
+// Llamarlo una vez en el setup de los tests (beforeAll o setupFiles)
 setFaker(faker)
 
 const UserSchema = z.object({
@@ -220,7 +220,7 @@ const UserSchema = z.object({
 })
 
 describe("with generated data", () => {
-  beforeEach(() => seed(42)) // deterministic
+  beforeEach(() => seed(42)) // determinista
 
   it("schema accepts its own generated data", () => {
     const user = fake(UserSchema)
@@ -236,14 +236,14 @@ describe("with generated data", () => {
 })
 ```
 
-### Not @anatine/zod-mock
+### No @anatine/zod-mock
 
-`@anatine/zod-mock` supports Zod 3 only: its latest release (3.14.0) declares `zod ^3.21.4`, and on a Zod 4
-schema `generateMock()` returns `undefined`. Use `zod-schema-faker/v4`.
+`@anatine/zod-mock` solo soporta Zod 3: su última versión (3.14.0) declara `zod ^3.21.4`, y con un schema de Zod 4
+`generateMock()` devuelve `undefined`. Usa `zod-schema-faker/v4`.
 
-## Snapshot Testing
+## Snapshot testing
 
-### JSON Schema Snapshots
+### Snapshots de JSON Schema
 
 ```typescript
 it("schema shape matches snapshot", () => {
@@ -252,12 +252,12 @@ it("schema shape matches snapshot", () => {
 })
 ```
 
-Update snapshots when schema changes are intentional:
+Actualiza los snapshots cuando los cambios en el schema sean intencionados:
 ```bash
-vitest --update  # or jest --updateSnapshot
+vitest --update  # o jest --updateSnapshot
 ```
 
-### Formatted Error Snapshots
+### Snapshots de errores formateados
 
 ```typescript
 it("error output matches snapshot", () => {
@@ -270,9 +270,9 @@ it("error output matches snapshot", () => {
 })
 ```
 
-## Integration Testing
+## Testing de integración
 
-### Express/Fastify API Handler
+### Handler de API de Express/Fastify
 
 ```typescript
 import request from "supertest"
@@ -296,7 +296,7 @@ it("accepts valid request", async () => {
 })
 ```
 
-### Form Validation
+### Validación de formularios
 
 ```typescript
 const formData = { password: "12345678", confirm: "different" }
@@ -306,7 +306,7 @@ it("produces form-compatible errors", () => {
   expect(result.success).toBe(false)
   if (!result.success) {
     const errors = z.flattenError(result.error)
-    // Structure matches what form libraries expect
+    // La estructura coincide con lo que esperan las librerías de formularios
     expect(errors).toEqual({
       formErrors: expect.any(Array),
       fieldErrors: expect.objectContaining({
@@ -317,9 +317,9 @@ it("produces form-compatible errors", () => {
 })
 ```
 
-### Database Layer
+### Capa de base de datos
 
-Call the code under test with a mock store, then assert on the mock. A test that only parses and then checks a mock it never passed anywhere proves nothing.
+Llama al código bajo test con un store mock y luego haz aserciones sobre el mock. Un test que solo parsea y luego revisa un mock que nunca pasó a ninguna parte no demuestra nada.
 
 ```typescript
 type User = z.infer<typeof UserSchema>
@@ -339,15 +339,15 @@ it("does not insert invalid data", async () => {
 })
 ```
 
-## Property-Based Testing
+## Property-based testing
 
-### With fast-check
+### Con fast-check
 
 ```bash
 npm install -D fast-check
 ```
 
-A property states a rule that holds for every input. fast-check generates the inputs, reports the seed of a failure, and shrinks a failing input to the smallest case. Build the inputs with fast-check arbitraries so a failure shrinks, and state the rule as a relation between results, not by repeating the schema's logic (rule 10).
+Una propiedad enuncia una regla que se cumple para toda entrada. fast-check genera las entradas, reporta el seed de un fallo y reduce una entrada que falla al caso más pequeño. Construye las entradas con arbitraries de fast-check para que un fallo se reduzca, y enuncia la regla como una relación entre resultados, no repitiendo la lógica del schema (regla 10).
 
 ```typescript
 import fc from "fast-check"
@@ -410,8 +410,8 @@ it("any integer age outside 0..150 is rejected", () => {
 })
 ```
 
-To check that a schema accepts its own generated data, let fast-check choose the faker's seed. A failure then
-reports a seed that reproduces the data; it does not shrink.
+Para verificar que un schema acepta sus propios datos generados, deja que fast-check elija el seed del faker. Así, un fallo
+reporta un seed que reproduce los datos; no se reduce.
 
 ```typescript
 import { fake, seed } from "zod-schema-faker/v4"
@@ -427,10 +427,10 @@ it("schema accepts its own generated data", () => {
 })
 ```
 
-Never write `fc.property(fc.constant(null), ...)`: it generates nothing, its counterexample is `[null]`, and the
-data that failed is lost.
+Nunca escribas `fc.property(fc.constant(null), ...)`: no genera nada, su contraejemplo es `[null]` y los
+datos que fallaron se pierden.
 
-### Transform Output Testing
+### Testing de la salida de una transformación
 
 ```typescript
 const InputSchema = z.object({ cents: z.string().regex(z.regexes.integer) })
@@ -442,14 +442,14 @@ it("transform output satisfies the output schema", () => {
     fc.property(fc.integer({ min: 0, max: 2 ** 31 - 1 }), (s) => {
       seed(s)
       const result = Transformed.safeParse(fake(InputSchema))
-      expect(result.success).toBe(true) // a generated input that does not parse fails the test
+      expect(result.success).toBe(true) // una entrada generada que no se parsea hace fallar el test
       expect(OutputSchema.safeParse(result.data).success).toBe(true)
     }),
   )
 })
 ```
 
-## Async Schema Testing
+## Testing de schemas asíncronos
 
 ```typescript
 it("validates async refinements", async () => {
@@ -458,15 +458,15 @@ it("validates async refinements", async () => {
     { error: "Already registered" }
   )
 
-  // Must use safeParseAsync
+  // Hay que usar safeParseAsync
   const result = await UniqueEmail.safeParseAsync("taken@example.com")
   expect(result.success).toBe(false)
 })
 ```
 
-## Test Helpers
+## Helpers de test
 
-### reusable assertion helper
+### helper de aserción reutilizable
 
 ```typescript
 function expectValid<T>(schema: z.ZodType<T>, data: unknown) {
@@ -486,7 +486,7 @@ function expectInvalid(schema: z.ZodType, data: unknown) {
   throw new Error("Expected invalid but data was accepted")
 }
 
-// Usage
+// Uso
 const validData = { name: "Alice", email: "alice@example.com", age: 30 }
 
 it("accepts valid user", () => {
@@ -500,23 +500,23 @@ it("rejects invalid email", () => {
 })
 ```
 
-## Structural Testing
+## Testing estructural
 
-### Schema Dependency Direction
+### Dirección de las dependencias de los schemas
 
-Assert that schemas are imported from boundary layers, not from domain code. This enforces the architectural rule that parsing happens at boundaries.
+Verifica con aserciones que los schemas se importan desde las capas de límite, no desde el código de dominio. Esto hace cumplir la regla arquitectónica de que el parseo ocurre en los límites.
 
 ```typescript
 import { execSync } from "node:child_process"
 
 describe("schema architecture", () => {
   it("domain layer does not import raw schemas", () => {
-    // grep for Zod schema imports in domain code
+    // grep de los imports de schemas de Zod en el código de dominio
     const result = execSync(
       'grep -r "from.*schemas" src/domain/ || true',
       { encoding: "utf-8" }
     )
-    // Domain should only import types (z.infer), not raw schemas
+    // El dominio solo debería importar tipos (z.infer), no schemas crudos
     const rawImports = result
       .split("\n")
       .filter((line) => line && !line.includes("type {") && !line.includes("type{"))
@@ -525,9 +525,9 @@ describe("schema architecture", () => {
 })
 ```
 
-### Circular Import Detection
+### Detección de imports circulares
 
-Use madge to detect circular dependencies between schema files:
+Usa madge para detectar dependencias circulares entre los archivos de schemas:
 
 ```typescript
 import madge from "madge"
@@ -544,11 +544,11 @@ describe("schema dependencies", () => {
 })
 ```
 
-## Drift Detection
+## Detección de deriva
 
-### JSON Schema Snapshot Workflow
+### Flujo de trabajo con snapshots de JSON Schema
 
-Export schemas as JSON Schema and commit snapshots. CI fails when schemas change without updating snapshots.
+Exporta los schemas como JSON Schema y haz commit de los snapshots. El CI falla cuando los schemas cambian sin actualizar los snapshots.
 
 ```typescript
 // scripts/export-schemas.ts
@@ -567,7 +567,7 @@ for (const [name, schema] of Object.entries(schemas)) {
 }
 ```
 
-### Snapshot Test
+### Test de snapshot
 
 ```typescript
 import { readFileSync } from "node:fs"
@@ -583,7 +583,7 @@ describe("schema drift detection", () => {
 })
 ```
 
-### CI Integration
+### Integración con CI
 
 ```yaml
 # .github/workflows/schema-check.yml
@@ -599,11 +599,11 @@ describe("schema drift detection", () => {
     fi
 ```
 
-## Observable Error Testing
+## Testing de errores observables
 
-### Assert flattenError Structure
+### Hacer aserciones sobre la estructura de flattenError
 
-Test that validation errors produce the expected structured output for logging and monitoring.
+Prueba que los errores de validación producen la salida estructurada esperada para el logging y el monitoreo.
 
 ```typescript
 describe("error observability", () => {
@@ -612,7 +612,7 @@ describe("error observability", () => {
     expect(result.success).toBe(false)
     if (!result.success) {
       const flat = z.flattenError(result.error)
-      // Verify structure matches what logging expects
+      // Verificar que la estructura coincide con lo que espera el logging
       expect(flat).toHaveProperty("formErrors")
       expect(flat).toHaveProperty("fieldErrors")
       expect(flat.fieldErrors).toHaveProperty("email")
@@ -636,13 +636,13 @@ describe("error observability", () => {
 })
 ```
 
-## Performance Testing
+## Testing de rendimiento
 
-Do not assert a wall-clock threshold in a unit test: the time moves between identical runs on shared CI machines, so the test fails at random. Use a benchmark and read the comparison.
+No hagas aserciones sobre un umbral de tiempo real en un unit test: el tiempo varía entre ejecuciones idénticas en las máquinas compartidas de CI, así que el test falla al azar. Usa un benchmark y lee la comparación.
 
-### With Vitest Bench
+### Con Vitest Bench
 
-Vitest 5 runs benchmarks inside tests: the test context carries `bench`, and `bench.compare()` runs the registrations and reports them. The `bench` fixture works only in files that match `benchmark.include` (by default `*.bench.ts`); in a `*.test.ts` file it throws. Vitest marks the API experimental (vitest.dev/guide/benchmarking). Checked with Vitest 5.1.
+Vitest 5 ejecuta benchmarks dentro de los tests: el contexto del test lleva `bench`, y `bench.compare()` ejecuta los registros y los reporta. El fixture `bench` solo funciona en los archivos que coinciden con `benchmark.include` (por defecto `*.bench.ts`); en un archivo `*.test.ts` lanza una excepción. Vitest marca la API como experimental (vitest.dev/guide/benchmarking). Verificado con Vitest 5.1.
 
 ```typescript
 // schema.bench.ts
@@ -660,9 +660,9 @@ test("compares validate() with safeParse() on invalid input", async ({ bench }) 
 })
 ```
 
-Run with:
+Ejecútalo con:
 ```bash
 vitest bench --run
 ```
 
-With Vitest 4 and earlier, import `bench` from `"vitest"` as a top-level function instead.
+Con Vitest 4 y versiones anteriores, importa en su lugar `bench` desde `"vitest"` como una función de nivel superior.

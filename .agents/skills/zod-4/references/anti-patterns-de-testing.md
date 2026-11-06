@@ -1,26 +1,26 @@
-# Zod Testing Anti-Patterns
+# Anti-patterns de testing de Zod
 
-Checked against Zod 4.6.7, Vitest 5, fast-check 4 and zod-schema-faker 3.
+Verificado con Zod 4.6.7, Vitest 5, fast-check 4 y zod-schema-faker 3.
 
-## Table of Contents
+## Tabla de contenido
 
-- Testing schema internals instead of behavior
-- Not testing error paths
-- Using parse() with toThrow() in tests
-- Not testing boundary values
-- Hardcoding mock data instead of generating
-- Duplicating schema logic in assertions
-- Testing transform output without testing input validation
-- Not testing optional/nullable combinations
-- Snapshot testing raw ZodError
-- Not seeding random data generators
-- A property over a constant
-- Not testing at boundaries
-- No snapshot regression testing
-- Testing schema shape but not error observability
-- No drift detection workflow
+- Probar los detalles internos del schema en lugar del comportamiento
+- No probar los caminos de error
+- Usar parse() con toThrow() en los tests
+- No probar los valores límite
+- Escribir a mano los datos mock en lugar de generarlos
+- Duplicar la lógica del schema en las aserciones
+- Probar la salida de una transformación sin probar la validación de la entrada
+- No probar las combinaciones de optional/nullable
+- Hacer snapshot testing del ZodError crudo
+- No usar un seed en los generadores de datos aleatorios
+- Una propiedad sobre una constante
+- No probar en los límites
+- Sin testing de regresión con snapshots
+- Probar la forma del schema pero no la observabilidad de los errores
+- Sin un flujo de detección de deriva
 
-## Testing schema internals instead of behavior
+## Probar los detalles internos del schema en lugar del comportamiento
 
 ```typescript
 const UserSchema = z.object({
@@ -29,14 +29,14 @@ const UserSchema = z.object({
   age: z.int().min(0).max(150).optional(),
 })
 
-// BAD: testing internal structure — breaks on refactors and upgrades
+// MAL: probar la estructura interna — se rompe con los refactors y las actualizaciones
 it("has correct shape", () => {
   expect(UserSchema.shape.name).toBeDefined()
   expect(UserSchema._zod.def.type).toBe("object")
-  // Zod 3 tests read _def.typeName, which is undefined in Zod 4
+  // Los tests de Zod 3 leen _def.typeName, que es undefined en Zod 4
 })
 
-// GOOD: test parse behavior — stable across refactors
+// BIEN: probar el comportamiento del parseo — estable entre refactors
 it("accepts valid user", () => {
   const result = UserSchema.safeParse({
     name: "Alice",
@@ -51,20 +51,20 @@ it("rejects missing name", () => {
 })
 ```
 
-## Not testing error paths
+## No probar los caminos de error
 
 ```typescript
 const validUser = { name: "Alice", email: "alice@example.com", age: 30 }
 
-// BAD: only testing valid inputs
+// MAL: solo se prueban entradas válidas
 describe("UserSchema", () => {
   it("accepts valid user", () => {
     expect(UserSchema.safeParse(validUser).success).toBe(true)
   })
-  // No tests for invalid data — regressions go unnoticed
+  // No hay tests para datos inválidos — las regresiones pasan desapercibidas
 })
 
-// GOOD: test both valid and invalid
+// BIEN: probar tanto lo válido como lo inválido
 describe("UserSchema", () => {
   it("accepts valid user", () => {
     expect(UserSchema.safeParse(validUser).success).toBe(true)
@@ -90,18 +90,18 @@ describe("UserSchema", () => {
 })
 ```
 
-## Using parse() with toThrow() in tests
+## Usar parse() con toThrow() en los tests
 
 ```typescript
 const invalidData = { name: "", email: "bad" }
 
-// BAD: passes on any thrown error, not only a validation failure;
-// a TypeError from a bug in a transform also passes
+// MAL: pasa con cualquier error lanzado, no solo con un fallo de validación;
+// un TypeError de un bug en una transformación también pasa
 it("rejects invalid data", () => {
   expect(() => UserSchema.parse(invalidData)).toThrow()
 })
 
-// BAD: try/catch obscures the test intent
+// MAL: el try/catch oculta la intención del test
 it("rejects invalid data", () => {
   try {
     UserSchema.parse(invalidData)
@@ -111,7 +111,7 @@ it("rejects invalid data", () => {
   }
 })
 
-// GOOD: assert on the result and the issues
+// BIEN: hacer aserciones sobre el resultado y los issues
 it("rejects invalid data", () => {
   const result = UserSchema.safeParse(invalidData)
   expect(result.success).toBe(false)
@@ -121,40 +121,40 @@ it("rejects invalid data", () => {
 })
 ```
 
-## Not testing boundary values
+## No probar los valores límite
 
 ```typescript
 const AgeSchema = z.number().min(0).max(150)
 
-// BAD: only testing middle values
+// MAL: solo se prueban valores intermedios
 it("validates age", () => {
   expect(AgeSchema.safeParse(25).success).toBe(true)
   expect(AgeSchema.safeParse(-5).success).toBe(false)
 })
 
-// GOOD: testing boundaries
+// BIEN: probar los límites
 it.each([
-  [0, true],    // minimum boundary
-  [150, true],  // maximum boundary
-  [-1, false],  // one below minimum
-  [151, false], // one above maximum
-  [75, true],   // middle value
+  [0, true],    // límite mínimo
+  [150, true],  // límite máximo
+  [-1, false],  // uno por debajo del mínimo
+  [151, false], // uno por encima del máximo
+  [75, true],   // valor intermedio
 ])("age %i → %s", (age, expected) => {
   expect(AgeSchema.safeParse(age).success).toBe(expected)
 })
 ```
 
-## Hardcoding mock data instead of generating
+## Escribir a mano los datos mock en lugar de generarlos
 
 ```typescript
 const MemberSchema = UserSchema.extend({ role: z.enum(["admin", "member"]) })
 
-// BAD: a hand-written fixture; every schema change needs a hand edit
+// MAL: un fixture escrito a mano; cada cambio en el schema requiere editarlo a mano
 const mockMember = {
   name: "Test User",
   email: "test@test.com",
   age: 25,
-  // 'role' was added to the schema and not here, so this test now fails
+  // 'role' se agregó al schema y no aquí, así que este test ahora falla
 }
 
 it("accepts mock member", () => {
@@ -163,7 +163,7 @@ it("accepts mock member", () => {
 ```
 
 ```typescript
-// GOOD: generate from schema — always in sync
+// BIEN: generar a partir del schema — siempre sincronizado
 import { faker } from "@faker-js/faker"
 import { fake, seed, setFaker } from "zod-schema-faker/v4"
 
@@ -176,39 +176,39 @@ it("accepts generated member", () => {
 })
 ```
 
-## Duplicating schema logic in assertions
+## Duplicar la lógica del schema en las aserciones
 
 ```typescript
 const EmailSchema = z.email()
 
-// BAD: re-implementing validation in the test
+// MAL: reimplementar la validación en el test
 it("validates email format", () => {
   const email = "test@example.com"
   const result = EmailSchema.safeParse(email)
   expect(result.success).toBe(true)
-  // Duplicating the schema's own regex check in the test
+  // Se duplica en el test el propio check con regex del schema
   expect(email).toMatch(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
 })
 
-// GOOD: trust the schema — test behavior, not implementation
+// BIEN: confiar en el schema — probar el comportamiento, no la implementación
 it("validates email format", () => {
   expect(EmailSchema.safeParse("test@example.com").success).toBe(true)
   expect(EmailSchema.safeParse("not-an-email").success).toBe(false)
 })
 ```
 
-## Testing transform output without testing input validation
+## Probar la salida de una transformación sin probar la validación de la entrada
 
 ```typescript
 const DateString = z.iso.date().transform((s) => new Date(s))
 
-// BAD: only testing the transform output
+// MAL: solo se prueba la salida de la transformación
 it("transforms to Date", () => {
   const result = DateString.parse("2024-01-01")
   expect(result).toBeInstanceOf(Date)
 })
 
-// GOOD: test both validation and transform
+// BIEN: probar tanto la validación como la transformación
 it("transforms valid date string", () => {
   const result = DateString.safeParse("2024-01-01")
   expect(result.success).toBe(true)
@@ -224,7 +224,7 @@ it("rejects invalid date string", () => {
 })
 ```
 
-## Not testing optional/nullable combinations
+## No probar las combinaciones de optional/nullable
 
 ```typescript
 const ProfileSchema = z.object({
@@ -233,7 +233,7 @@ const ProfileSchema = z.object({
   avatar: z.string().nullable(),
 })
 
-// BAD: only testing with all fields present
+// MAL: solo se prueba con todos los campos presentes
 it("accepts profile", () => {
   expect(ProfileSchema.safeParse({
     name: "Alice",
@@ -242,7 +242,7 @@ it("accepts profile", () => {
   }).success).toBe(true)
 })
 
-// GOOD: test all optional/nullable variants
+// BIEN: probar todas las variantes de optional/nullable
 it("accepts without optional field", () => {
   expect(ProfileSchema.safeParse({ name: "Alice", avatar: "https://example.com/img.png" }).success).toBe(true)
 })
@@ -257,17 +257,17 @@ it("rejects null for non-nullable optional", () => {
 
 it("rejects undefined for non-optional nullable", () => {
   expect(ProfileSchema.safeParse({ name: "Alice" }).success).toBe(false)
-  // avatar is nullable but not optional — must be explicitly provided
+  // avatar es nullable pero no optional — debe proporcionarse explícitamente
 })
 ```
 
-## Snapshot testing raw ZodError
+## Hacer snapshot testing del ZodError crudo
 
 ```typescript
 const invalid = { name: "Alice", email: "bad" }
 
-// BAD: the snapshot holds Zod's default message text and issue fields,
-// which change between Zod versions
+// MAL: el snapshot contiene el texto de los mensajes por defecto de Zod y los campos de los issues,
+// que cambian entre versiones de Zod
 it("error matches snapshot", () => {
   const result = UserSchema.safeParse(invalid)
   if (!result.success) {
@@ -275,7 +275,7 @@ it("error matches snapshot", () => {
   }
 })
 
-// GOOD: snapshot formatted output
+// BIEN: hacer snapshot de la salida formateada
 it("error matches snapshot", () => {
   const result = UserSchema.safeParse(invalid)
   if (!result.success) {
@@ -284,40 +284,40 @@ it("error matches snapshot", () => {
   }
 })
 
-// GOOD: snapshot JSON Schema for schema shape
+// BIEN: hacer snapshot del JSON Schema para la forma del schema
 it("schema shape matches snapshot", () => {
   expect(z.toJSONSchema(UserSchema)).toMatchSnapshot()
 })
 ```
 
-Default messages are still Zod's text. For assertions that must survive upgrades, assert on issue `code` and `path`, or set your own messages.
+Los mensajes por defecto siguen siendo el texto de Zod. Para las aserciones que deben sobrevivir a las actualizaciones, haz aserciones sobre el `code` y el `path` de los issues, o establece tus propios mensajes.
 
-## Not seeding random data generators
+## No usar un seed en los generadores de datos aleatorios
 
 ```typescript
-// BAD: non-deterministic — test passes sometimes, fails others
+// MAL: no determinista — el test pasa a veces y otras veces falla
 it("accepts generated data", () => {
-  const user = fake(UserSchema) // different every run
+  const user = fake(UserSchema) // distinto en cada ejecución
   expect(UserSchema.safeParse(user).success).toBe(true)
-  // If this fails, you can't reproduce it
+  // Si esto falla, no puedes reproducirlo
 })
 
-// GOOD: seeded — deterministic and reproducible
+// BIEN: con seed — determinista y reproducible
 beforeEach(() => seed(42))
 
 it("accepts generated data", () => {
-  const user = fake(UserSchema) // same every run
+  const user = fake(UserSchema) // igual en cada ejecución
   expect(UserSchema.safeParse(user).success).toBe(true)
 })
 ```
 
-## A property over a constant
+## Una propiedad sobre una constante
 
 ```typescript
 import fc from "fast-check"
 
-// BAD: fc.constant(null) generates nothing. The counterexample is [null], and
-// fast-check's seed does not reach the faker, so the data that failed is lost
+// MAL: fc.constant(null) no genera nada. El contraejemplo es [null], y
+// el seed de fast-check no llega al faker, así que los datos que fallaron se pierden
 it("schema accepts generated data", () => {
   fc.assert(
     fc.property(fc.constant(null), () => {
@@ -326,7 +326,7 @@ it("schema accepts generated data", () => {
   )
 })
 
-// GOOD: fast-check chooses the faker's seed, so the counterexample reproduces the data
+// BIEN: fast-check elige el seed del faker, así que el contraejemplo reproduce los datos
 it("schema accepts generated data", () => {
   fc.assert(
     fc.property(fc.integer({ min: 0, max: 2 ** 31 - 1 }), (s) => {
@@ -337,24 +337,24 @@ it("schema accepts generated data", () => {
 })
 ```
 
-## Not testing at boundaries
+## No probar en los límites
 
 ```typescript
-// BAD: schema unit tests pass but handler never calls safeParse
+// MAL: los unit tests del schema pasan, pero el handler nunca llama a safeParse
 // tests/user-schema.test.ts
 it("rejects invalid email", () => {
   expect(UserSchema.safeParse({ name: "Alice", email: "bad" }).success).toBe(false)
 })
 
-// But the actual handler does:
+// Pero el handler real hace:
 app.post("/users", async (req, res) => {
-  // No validation! req.body goes straight to the database
+  // ¡Sin validación! req.body va directo a la base de datos
   res.status(201).json(await db.users.create(req.body))
 })
 ```
 
 ```typescript
-// GOOD: integration test verifies the boundary actually validates
+// BIEN: un test de integración verifica que el límite realmente valida
 import request from "supertest"
 
 it("API rejects invalid input with field errors", async () => {
@@ -374,36 +374,36 @@ it("API accepts valid input", async () => {
 })
 ```
 
-## No snapshot regression testing
+## Sin testing de regresión con snapshots
 
 ```typescript
-// BAD: field removal goes unnoticed
-// Someone removes `role` from UserSchema — no test catches it
+// MAL: la eliminación de un campo pasa desapercibida
+// Alguien elimina `role` de UserSchema — ningún test lo detecta
 const UserSchema = z.object({
   name: z.string(),
   email: z.email(),
-  // role was here — removed without anyone noticing
+  // role estaba aquí — se eliminó sin que nadie lo notara
 })
 
-// GOOD: JSON Schema snapshot catches schema changes
+// BIEN: el snapshot de JSON Schema detecta los cambios en el schema
 it("schema shape has not changed", () => {
   const jsonSchema = z.toJSONSchema(UserSchema)
   expect(jsonSchema).toMatchSnapshot()
-  // If `role` is removed, snapshot diff shows it clearly in code review
+  // Si se elimina `role`, el diff del snapshot lo muestra claramente en la revisión de código
 })
 ```
 
-## Testing schema shape but not error observability
+## Probar la forma del schema pero no la observabilidad de los errores
 
 ```typescript
-// BAD: tests verify schema accepts/rejects but never check error structure
+// MAL: los tests verifican que el schema acepta/rechaza, pero nunca revisan la estructura del error
 it("rejects invalid input", () => {
   const result = UserSchema.safeParse({ email: "bad" })
   expect(result.success).toBe(false)
-  // Never checks what the error looks like — logging could be broken
+  // Nunca revisa cómo se ve el error — el logging podría estar roto
 })
 
-// GOOD: verify flattenError produces queryable structure
+// BIEN: verificar que flattenError produce una estructura consultable
 it("produces structured errors for logging", () => {
   const result = UserSchema.safeParse({ email: "bad" })
   expect(result.success).toBe(false)
@@ -411,21 +411,21 @@ it("produces structured errors for logging", () => {
     const flat = z.flattenError(result.error)
     expect(flat.fieldErrors).toHaveProperty("email")
     expect(flat.fieldErrors.email![0]).toBeTruthy()
-    // Verifies that your logging pipeline will receive useful data
+    // Verifica que tu pipeline de logging recibirá datos útiles
   }
 })
 ```
 
-## No drift detection workflow
+## Sin un flujo de detección de deriva
 
 ```typescript
-// BAD: schema changes land without mechanical review
-// Developer changes OrderSchema, no CI check, no snapshot diff
-// Consumers break silently because the field they depend on is gone
+// MAL: los cambios en el schema llegan sin revisión mecánica
+// El desarrollador cambia OrderSchema, no hay check de CI ni diff de snapshots
+// Los consumidores se rompen silenciosamente porque el campo del que dependen ya no está
 ```
 
 ```typescript
-// GOOD: export and diff JSON Schema snapshots in CI
+// BIEN: exportar los snapshots de JSON Schema y compararlos con diff en el CI
 // scripts/export-schemas.ts
 import * as z from "zod"
 import { writeFileSync } from "node:fs"
@@ -437,9 +437,9 @@ writeFileSync(
   JSON.stringify(jsonSchema, null, 2) + "\n"
 )
 
-// CI workflow:
-// 1. Run export-schemas.ts
-// 2. git diff snapshots/ — if changed, CI fails
-// 3. Developer reviews diff, updates snapshots intentionally
-// 4. Schema changes are always visible in code review
+// Flujo de trabajo de CI:
+// 1. Ejecutar export-schemas.ts
+// 2. git diff snapshots/ — si cambió, el CI falla
+// 3. El desarrollador revisa el diff y actualiza los snapshots intencionalmente
+// 4. Los cambios en el schema siempre son visibles en la revisión de código
 ```

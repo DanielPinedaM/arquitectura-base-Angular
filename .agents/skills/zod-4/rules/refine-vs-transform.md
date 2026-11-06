@@ -1,45 +1,45 @@
 ---
-title: Refine for Validation, Transform for Conversion
-impact: HIGH
-description: Use .refine() to validate, .transform() to convert, and .pipe() to validate the converted value.
-tags: refine, transform, pipe, validation, codec
+title: Refine para la validación, transform para la conversión
+impact: ALTO
+description: Usa .refine() para validar, .transform() para convertir y .pipe() para validar el valor convertido.
+tags: refine, transform, pipe, validación, codec
 ---
 
-# Refine for Validation, Transform for Conversion
+# Refine para la validación, transform para la conversión
 
-## Problem
+## Problema
 
-Validating inside `.transform()` by throwing bypasses Zod's errors: the exception escapes `safeParse()`. Checking a numeric string with `parseInt` accepts strings that only start with digits, because `parseInt("12abc")` returns `12`.
+Validar dentro de `.transform()` lanzando una excepción se salta los errores de Zod: la excepción escapa de `safeParse()`. Verificar un string numérico con `parseInt` acepta strings que solo empiezan con dígitos, porque `parseInt("12abc")` devuelve `12`.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BUG: the throw escapes safeParse() as a plain Error
+// BUG: el throw escapa de safeParse() como un Error plano
 const ThrowingInt = z.string().transform((val) => {
   const n = Number.parseInt(val, 10)
   if (Number.isNaN(n)) throw new Error("Not a number")
   return n
 })
 
-// BUG: parseInt("12abc") is 12, so "12abc" passes
+// BUG: parseInt("12abc") es 12, así que "12abc" pasa
 const LooseInt = z
   .string()
   .refine((val) => !Number.isNaN(Number.parseInt(val, 10)), { error: "Must be a numeric string" })
   .transform((val) => Number.parseInt(val, 10))
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// GOOD: check the string, convert it, then check the number
+// BIEN: verificar el string, convertirlo y luego verificar el número
 const StringToInt = z.string().regex(z.regexes.integer).transform(Number).pipe(z.int().min(0))
 
 StringToInt.parse("42") // 42
 StringToInt.safeParse("12abc").success // false
 ```
 
-When the value must also go back to a string, use a codec instead (see `pattern-codecs`).
+Cuando el valor también debe volver a ser un string, usa un codec en su lugar (consulta `pattern-codecs`).
 
-## Why
+## Por qué
 
-`.refine()` answers "is this valid?" and adds an issue when it is not. `.transform()` returns a new value and must not throw (zod.dev/api, "Transforms"). `.pipe()` feeds the output of one schema into the next, so the converted value is validated with its own checks. To report an issue from inside a transform, push it onto `ctx.issues` and return `z.NEVER`.
+`.refine()` responde "¿es esto válido?" y agrega un issue cuando no lo es. `.transform()` devuelve un valor nuevo y no debe lanzar excepciones (zod.dev/api, "Transforms"). `.pipe()` pasa la salida de un schema al siguiente, así que el valor convertido se valida con sus propios checks. Para reportar un issue desde dentro de una transformación, haz push de él en `ctx.issues` y devuelve `z.NEVER`.

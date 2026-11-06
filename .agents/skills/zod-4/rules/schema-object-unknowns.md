@@ -1,17 +1,17 @@
 ---
-title: Handle Unknown Keys Explicitly
-impact: CRITICAL
-description: Default z.object() strips unknown keys. Use strictObject or looseObject for explicit behavior.
-tags: object, unknown-keys, strict, passthrough
+title: Manejar las claves desconocidas de forma explícita
+impact: CRÍTICO
+description: Por defecto, z.object() elimina las claves desconocidas. Usa strictObject o looseObject para un comportamiento explícito.
+tags: object, claves-desconocidas, strict, passthrough
 ---
 
-# Handle Unknown Keys Explicitly
+# Manejar las claves desconocidas de forma explícita
 
-## Problem
+## Problema
 
-`z.object()` silently strips any keys not defined in the schema. This can cause data loss when forwarding payloads, storing extra metadata, or proxying API responses.
+`z.object()` elimina silenciosamente cualquier clave que no esté definida en el schema. Esto puede causar pérdida de datos al reenviar payloads, al almacenar metadata extra o al hacer proxy de las respuestas de una API.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
 const Config = z.object({
@@ -19,40 +19,40 @@ const Config = z.object({
   port: z.number(),
 })
 
-// BUG: unknown keys are silently dropped
+// BUG: las claves desconocidas se descartan silenciosamente
 const input = { host: "localhost", port: 3000, debug: true, logLevel: "verbose" }
 const result = Config.parse(input)
-// result = { host: "localhost", port: 3000 } — debug and logLevel are gone
+// result = { host: "localhost", port: 3000 } — debug y logLevel desaparecieron
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// REJECT unknown keys (API input validation)
+// RECHAZAR las claves desconocidas (validación de la entrada de la API)
 const StrictConfig = z.strictObject({
   host: z.string(),
   port: z.number(),
 })
-// Throws on { host: "localhost", port: 3000, debug: true }
+// Lanza una excepción con { host: "localhost", port: 3000, debug: true }
 
-// PRESERVE unknown keys (proxy, forwarding)
+// CONSERVAR las claves desconocidas (proxy, reenvío)
 const LooseConfig = z.looseObject({
   host: z.string(),
   port: z.number(),
 })
-// Passes through { host: "localhost", port: 3000, debug: true, logLevel: "verbose" }
+// Deja pasar { host: "localhost", port: 3000, debug: true, logLevel: "verbose" }
 
-// STRIP unknown keys (default — when you explicitly want stripping)
+// ELIMINAR las claves desconocidas (por defecto — cuando quieres eliminarlas explícitamente)
 const SafeConfig = z.object({
   host: z.string(),
   port: z.number(),
 })
 ```
 
-## Why
+## Por qué
 
-| Variant | Unknown keys | Use when |
+| Variante | Claves desconocidas | Úsalo cuando |
 |---------|-------------|----------|
-| `z.object()` | Strips | Sanitizing user input, you want only known fields |
-| `z.strictObject()` | Rejects (error) | API contracts, config validation — no surprises |
-| `z.looseObject()` | Preserves | Proxying data, forwarding payloads, middleware |
+| `z.object()` | Las elimina | Sanitizas la entrada del usuario, solo quieres los campos conocidos |
+| `z.strictObject()` | Las rechaza (error) | Contratos de API, validación de configuración — sin sorpresas |
+| `z.looseObject()` | Las conserva | Hacer proxy de datos, reenviar payloads, middleware |

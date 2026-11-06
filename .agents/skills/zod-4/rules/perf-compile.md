@@ -1,44 +1,44 @@
 ---
-title: Compile the Final Schema, and Prove It Compiled
-impact: MEDIUM
-description: Pass the final schema to z.compile(); a derived schema is not compiled, and an unsupported schema falls back without an error.
-tags: performance, compile, hot-path, csp, bundle-size
+title: Compilar el schema final y demostrar que se compiló
+impact: MEDIO
+description: Pasa el schema final a z.compile(); un schema derivado no está compilado, y un schema no soportado hace fallback sin ningún error.
+tags: rendimiento, compile, hot-path, csp, tamaño-del-bundle
 ---
 
-# Compile the Final Schema, and Prove It Compiled
+# Compilar el schema final y demostrar que se compiló
 
-## Problem
+## Problema
 
-`z.compile()` (Zod 4.5) makes valid input parse faster on a hot path. It can fail without a sign. A method called on a compiled schema, such as `.refine()` or `.optional()`, returns a new schema that is not compiled. An async check or a `.catch()` function anywhere in the schema makes `z.compile()` return the original schema, uncompiled. No error tells you.
+`z.compile()` (Zod 4.5) hace que la entrada válida se parsee más rápido en un hot path. Puede fallar sin dar ninguna señal. Un método llamado sobre un schema compilado, como `.refine()` u `.optional()`, devuelve un schema nuevo que no está compilado. Un check asíncrono o una función de `.catch()` en cualquier parte del schema hace que `z.compile()` devuelva el schema original, sin compilar. Ningún error te lo indica.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BUG: .refine() returns a new schema, and the new schema is not compiled
+// BUG: .refine() devuelve un schema nuevo, y el schema nuevo no está compilado
 const Order = z.compile(z.object({ id: z.string(), qty: z.int() })).refine((o) => o.qty > 0)
 
-// BUG: a .catch() function anywhere makes z.compile() return the original schema
+// BUG: una función de .catch() en cualquier parte hace que z.compile() devuelva el schema original
 const Query = z.compile(z.object({ page: z.int().catch(() => 1) }))
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 const OrderShape = z.object({ id: z.string(), qty: z.int() }).refine((o) => o.qty > 0)
 export const Order = z.compile(OrderShape)
 
-const QueryShape = z.object({ page: z.int().catch(1) }) // a constant .catch() compiles
+const QueryShape = z.object({ page: z.int().catch(1) }) // un .catch() constante se compila
 export const Query = z.compile(QueryShape)
 
-// A test fails when a schema stops compiling
+// Un test falla cuando un schema deja de compilarse
 test("hot-path schemas compile", () => {
   expect(() => z.compile(OrderShape, { strict: true })).not.toThrow()
   expect(() => z.compile(QueryShape, { strict: true })).not.toThrow()
 })
 ```
 
-## Why
+## Por qué
 
-A compiled schema returns the same data and the same issues as the original, so compiling is safe where it applies. `strict: true` throws `z.ZodCompileUnsupportedError` or `z.ZodCompileAsyncError` instead of falling back, which makes the fall-back visible in a test.
+Un schema compilado devuelve los mismos datos y los mismos issues que el original, así que compilar es seguro donde aplica. `strict: true` lanza `z.ZodCompileUnsupportedError` o `z.ZodCompileAsyncError` en lugar de hacer fallback, lo que hace visible el fallback en un test.
 
-On invalid input Zod runs the standard parser again to build the issues: failures do not get faster, and a refinement can run twice, so keep refinements free of side effects. Use `.validate()` when you need only a boolean. The compiler adds about 7 KB gzipped to a bundle that uses it. Under a strict Content Security Policy, `new Function` is blocked; install a parser generated at build time with `z.withParser()`. See `references/compile.md`.
+Con una entrada inválida, Zod vuelve a ejecutar el parser estándar para construir los issues: los fallos no se vuelven más rápidos, y un refinamiento puede ejecutarse dos veces, así que mantén los refinamientos libres de efectos secundarios. Usa `.validate()` cuando solo necesites un booleano. El compilador agrega unos 7 KB en gzip a un bundle que lo usa. Con una Content Security Policy estricta, `new Function` está bloqueado; instala un parser generado en tiempo de build con `z.withParser()`. Consulta `references/compilacion.md`.

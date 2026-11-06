@@ -1,45 +1,45 @@
 ---
-title: Spread Over Extend for Large Schemas
-impact: MEDIUM
-description: Use spread syntax with .shape over .extend() for large schemas to reduce compile-time cost.
-tags: performance, extend, spread, typescript
+title: Spread en lugar de extend para schemas grandes
+impact: MEDIO
+description: Usa la sintaxis spread con .shape en lugar de .extend() en schemas grandes para reducir el costo en tiempo de compilación.
+tags: rendimiento, extend, spread, typescript
 ---
 
-# Spread Over Extend for Large Schemas
+# Spread en lugar de extend para schemas grandes
 
-## Problem
+## Problema
 
-`.extend()` is expensive for the TypeScript compiler on large schemas, and a TypeScript limitation makes chained calls quadratically more expensive (zod.dev/api, "`.extend()`").
+`.extend()` es costoso para el compilador de TypeScript en schemas grandes, y una limitación de TypeScript hace que las llamadas encadenadas sean cuadráticamente más costosas (zod.dev/api, "`.extend()`").
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BAD: each .extend() creates a new TS type — slow compile
+// MAL: cada .extend() crea un tipo de TS nuevo — compilación lenta
 const Base = z.object({ id: z.string(), created: z.date() })
 const WithName = Base.extend({ name: z.string() })
 const WithEmail = WithName.extend({ email: z.email() })
 const WithRole = WithEmail.extend({ role: z.enum(["admin", "user"]) })
-// 4 intermediate types for TypeScript to resolve
+// 4 tipos intermedios que TypeScript debe resolver
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 const Base = z.object({ id: z.string(), created: z.date() })
 const Extra = { name: z.string(), email: z.email(), role: z.enum(["admin", "user"]) }
 
-// GOOD: single z.object with spread — one type instantiation
+// BIEN: un solo z.object con spread — una sola instanciación de tipo
 const Full = z.object({ ...Base.shape, ...Extra })
 ```
 
-## Why
+## Por qué
 
-`.extend()` is fine for one-off extensions. For large hierarchies, spreading `.shape` into one `z.object()` keeps compile times down, and the same syntax works in Zod Mini. The two forms differ at runtime:
+`.extend()` está bien para extensiones puntuales. Para jerarquías grandes, hacer spread de `.shape` en un solo `z.object()` mantiene bajos los tiempos de compilación, y la misma sintaxis funciona en Zod Mini. Las dos formas difieren en runtime:
 
 | | `Base.extend({...})` | `z.object({ ...Base.shape, ... })` |
 |---|---|---|
-| Strictness of `Base` | Kept | Lost: you choose `z.object`, `z.strictObject` or `z.looseObject` |
-| Refinements on `Base` | Kept; throws if a new key overwrites an existing one | Lost: `.shape` holds only the fields |
-| Overwrite a key on a refined `Base` | Use `.safeExtend()`, which also checks the new schema is assignable | Allowed |
+| Rigurosidad de `Base` | Se conserva | Se pierde: tú eliges `z.object`, `z.strictObject` o `z.looseObject` |
+| Refinamientos de `Base` | Se conservan; lanza una excepción si una clave nueva sobrescribe una existente | Se pierden: `.shape` solo contiene los campos |
+| Sobrescribir una clave en un `Base` con refinamientos | Usa `.safeExtend()`, que además verifica que el schema nuevo sea asignable | Permitido |
 
-Measured on zod 4.6.7. The zod.dev API page says `.extend()` throws on any schema with refinements; 4.6.7 throws only when a key is overwritten.
+Medido en zod 4.6.7. La página de la API de zod.dev dice que `.extend()` lanza una excepción en cualquier schema con refinamientos; 4.6.7 solo la lanza cuando se sobrescribe una clave.

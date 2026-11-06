@@ -1,33 +1,33 @@
 ---
-title: Never Throw in Refinements
-impact: HIGH
-description: Refinement and transform functions must never throw. Return false from .refine(), add issues in .superRefine(), push onto ctx.issues in .transform().
+title: Nunca lanzar excepciones en los refinamientos
+impact: ALTO
+description: Las funciones de refinamiento y de transformación nunca deben lanzar excepciones. Devuelve false desde .refine(), agrega issues en .superRefine(), haz push en ctx.issues en .transform().
 tags: refine, superRefine, transform, throw, error
 ---
 
-# Never Throw in Refinements
+# Nunca lanzar excepciones en los refinamientos
 
-## Problem
+## Problema
 
-An exception thrown inside a `.refine()` or `.transform()` function is not turned into a Zod issue. It escapes `.parse()` and `.safeParse()` as a plain `Error`, so a caller that relies on `safeParse()` never throwing gets an unhandled exception.
+Una excepción lanzada dentro de una función de `.refine()` o de `.transform()` no se convierte en un issue de Zod. Escapa de `.parse()` y de `.safeParse()` como un `Error` plano, así que quien llama y confía en que `safeParse()` nunca lanza excepciones recibe una excepción no manejada.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BUG: the throw escapes safeParse()
+// BUG: el throw escapa de safeParse()
 const PositiveNumber = z.number().refine((n) => {
   if (n <= 0) throw new Error("Must be positive")
   return true
 })
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// GOOD: .refine() returns a boolean; its function receives only the value
+// BIEN: .refine() devuelve un booleano; su función solo recibe el valor
 const PositiveNumber = z.number().refine((n) => n > 0, { error: "Must be positive" })
 
-// GOOD: .superRefine() receives ctx and can add several issues
+// BIEN: .superRefine() recibe ctx y puede agregar varios issues
 const Password = z.string().superRefine((val, ctx) => {
   if (val.length < 8) {
     ctx.addIssue({ code: "custom", message: "Password must be at least 8 characters", input: val })
@@ -37,7 +37,7 @@ const Password = z.string().superRefine((val, ctx) => {
   }
 })
 
-// GOOD: a transform reports a failure by pushing onto ctx.issues and returning z.NEVER
+// BIEN: una transformación reporta un fallo haciendo push en ctx.issues y devolviendo z.NEVER
 const NumericString = z.string().transform((val, ctx) => {
   const n = Number(val)
   if (Number.isNaN(n)) {
@@ -48,6 +48,6 @@ const NumericString = z.string().transform((val, ctx) => {
 })
 ```
 
-## Why
+## Por qué
 
-`.refine()` expects a boolean, or a `Promise<boolean>` for an async check. Its function gets the value only, with no `ctx`. `.superRefine()` gets `(value, ctx)` and reports with `ctx.addIssue()`. A `.transform()` gets `(value, ctx)` and reports with `ctx.issues.push()` (zod.dev/api, "Refinements" and "Transforms"). Each of these becomes a Zod issue in the result; a throw does not.
+`.refine()` espera un booleano, o una `Promise<boolean>` para un check asíncrono. Su función solo recibe el valor, sin `ctx`. `.superRefine()` recibe `(value, ctx)` y reporta con `ctx.addIssue()`. Un `.transform()` recibe `(value, ctx)` y reporta con `ctx.issues.push()` (zod.dev/api, "Refinements" y "Transforms"). Cada uno de estos se convierte en un issue de Zod en el resultado; un throw no.

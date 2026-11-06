@@ -1,29 +1,29 @@
 ---
-title: Parse a JSON String with a Codec, Not z.json()
-impact: HIGH
-description: z.json() checks a value that is already parsed and does not parse a string; decode JSON text with a codec that reports bad JSON as an issue.
-tags: json, codec, parsing, request-body
+title: Parsear un string JSON con un codec, no con z.json()
+impact: ALTO
+description: z.json() verifica un valor que ya está parseado y no parsea un string; decodifica el texto JSON con un codec que reporte el JSON inválido como un issue.
+tags: json, codec, parseo, body-de-la-petición
 ---
 
-# Parse a JSON String with a Codec, Not z.json()
+# Parsear un string JSON con un codec, no con z.json()
 
-## Problem
+## Problema
 
-`z.json()` checks that a value can be encoded as JSON. A string can be, so `z.json().parse('{"name":"Ada"}')` returns the same string. Code that gives JSON text to `z.json()` gets a string where it expects an object. `JSON.parse()` inside `.transform()` is no better: on bad text it throws a `SyntaxError`, and the error escapes `safeParse()`.
+`z.json()` verifica que un valor se pueda codificar como JSON. Un string se puede, así que `z.json().parse('{"name":"Ada"}')` devuelve el mismo string. El código que le pasa texto JSON a `z.json()` obtiene un string donde espera un objeto. `JSON.parse()` dentro de `.transform()` no es mejor: con un texto inválido lanza un `SyntaxError`, y el error escapa de `safeParse()`.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
 const Body = z.object({ name: z.string() })
 
-// BUG: the result is the string '{"name":"Ada"}', not an object
+// BUG: el resultado es el string '{"name":"Ada"}', no un objeto
 const notParsed = z.json().parse('{"name":"Ada"}')
 
-// BUG: on "{bad", JSON.parse throws out of safeParse() instead of returning success: false
+// BUG: con "{bad", JSON.parse lanza una excepción fuera de safeParse() en lugar de devolver success: false
 const FromText = z.string().transform((s) => JSON.parse(s)).pipe(Body)
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 const jsonCodec = <T extends z.core.$ZodType>(schema: T) =>
@@ -46,10 +46,10 @@ const jsonCodec = <T extends z.core.$ZodType>(schema: T) =>
 
 const BodyFromText = jsonCodec(Body)
 BodyFromText.decode('{"name":"Ada"}')     // { name: "Ada" }
-BodyFromText.safeDecode("{bad").success  // false: an invalid_format issue with format "json"
+BodyFromText.safeDecode("{bad").success  // false: un issue invalid_format con format "json"
 BodyFromText.encode({ name: "Ada" })      // '{"name":"Ada"}'
 ```
 
-## Why
+## Por qué
 
-Use `z.json()` for a value that is already parsed, such as a JSON column or a field typed as arbitrary JSON. For JSON text, the codec turns bad text into an issue, validates the result with your schema, and encodes the value back. Zod does not export the codec; it is a recipe from zod.dev/codecs. See `references/codecs.md` for the other recipes.
+Usa `z.json()` para un valor que ya está parseado, como una columna JSON o un campo tipado como JSON arbitrario. Para texto JSON, el codec convierte el texto inválido en un issue, valida el resultado con tu schema y vuelve a codificar el valor. Zod no exporta el codec; es una receta de zod.dev/codecs. Consulta `references/codecs.md` para ver las otras recetas.

@@ -1,101 +1,101 @@
 ---
 name: zod-4
-description: Zod v4 best practices, patterns, and API guidance for schema validation, parsing, error handling, and type inference in TypeScript applications. Covers safeParse, object composition, refinements, transforms, codecs, branded types, v3→v4 migration, and testing schemas with Jest or Vitest. Baseline: zod ^4.6.0. Triggers on: zod imports, z.object, z.string, z.infer, safeParse, mentions of "zod", "schema validation", "zod v4", "z enum", or testing a schema — "schema test", "zod mock", zod-schema-faker.
+description: Buenas prácticas, patrones y guía de la API de Zod v4 para la validación de schemas, el parseo, el manejo de errores y la inferencia de tipos en aplicaciones TypeScript. Cubre safeParse, composición de objetos, refinamientos, transformaciones, codecs, branded types, migración v3→v4 y testing de schemas con Jest o Vitest. Versión base: zod ^4.6.0. Se activa con: imports de zod, z.object, z.string, z.infer, safeParse, menciones de "zod", "validación de schemas", "zod v4", "z enum", o el testing de un schema — "test de schema", "mock de zod", zod-schema-faker.
 ---
 
 # Zod
 
-**IMPORTANT:** Your training data about `zod` may be outdated or incorrect — Zod 4 changes string formats, enums, error customization, issue codes, defaults, and functions. Always rely on this skill's rule files and the project's actual source code as the source of truth. Do not fall back on memorized v3 patterns when they conflict with the retrieved reference.
+**IMPORTANTE:** Tus datos de entrenamiento sobre `zod` pueden estar desactualizados o ser incorrectos — Zod 4 cambia los formatos de string, los enums, la personalización de errores, los códigos de issue, los valores por defecto y las funciones. Apóyate siempre en los archivos de reglas de esta skill y en el código fuente real del proyecto como fuente de verdad. No recurras a patrones memorizados de v3 cuando entren en conflicto con la referencia consultada.
 
-## When to Use Zod
+## Cuándo usar Zod
 
-Zod is for **runtime type validation** — parsing untrusted data at system boundaries (API input, form data, env vars, external services). For compile-time-only types, plain TypeScript is sufficient.
+Zod sirve para la **validación de tipos en runtime** — parsear datos no confiables en los límites del sistema (entrada de APIs, datos de formularios, variables de entorno, servicios externos). Para tipos solo en tiempo de compilación, TypeScript puro es suficiente.
 
-| Need | Recommended Tool |
+| Necesidad | Herramienta recomendada |
 |------|-----------------|
-| API input/output validation | **Zod** |
-| Form validation (React, Vue) | **Zod** (with react-hook-form, formik, etc.) |
-| Env var parsing | **Zod** (with t3-env or manual) |
-| Compile-time types only | Plain TypeScript |
-| Strict client bundle budget | Zod Mini (`zod/mini`), or Valibot |
-| Maximum type inference | ArkType |
+| Validación de entrada/salida de APIs | **Zod** |
+| Validación de formularios (React, Vue) | **Zod** (con react-hook-form, formik, etc.) |
+| Parseo de variables de entorno | **Zod** (con t3-env o manual) |
+| Solo tipos en tiempo de compilación | TypeScript puro |
+| Presupuesto estricto del bundle del cliente | Zod Mini (`zod/mini`), o Valibot |
+| Máxima inferencia de tipos | ArkType |
 
-## Rule Categories by Priority
+## Categorías de reglas por prioridad
 
-| Priority | Category | Impact | Prefix |
+| Prioridad | Categoría | Impacto | Prefijo |
 |----------|----------|--------|--------|
-| 1 | Parsing & Type Safety | CRITICAL | `parse-` |
-| 2 | Schema Design | CRITICAL | `schema-` |
-| 3 | Refinements & Transforms | HIGH | `refine-` |
-| 4 | Error Handling | HIGH | `error-` |
-| 5 | Performance & Composition | MEDIUM | `perf-` |
-| 6 | v4 Migration | MEDIUM | `migrate-` |
-| 7 | Advanced Patterns | MEDIUM | `pattern-` |
-| 8 | Architecture & Boundaries | CRITICAL/HIGH | `arch-` |
-| 9 | Observability | HIGH/MEDIUM | `observe-` |
+| 1 | Parseo y seguridad de tipos | CRÍTICO | `parse-` |
+| 2 | Diseño de schemas | CRÍTICO | `schema-` |
+| 3 | Refinamientos y transformaciones | ALTO | `refine-` |
+| 4 | Manejo de errores | ALTO | `error-` |
+| 5 | Rendimiento y composición | MEDIO | `perf-` |
+| 6 | Migración a v4 | MEDIO | `migrate-` |
+| 7 | Patrones avanzados | MEDIO | `pattern-` |
+| 8 | Arquitectura y límites | CRÍTICO/ALTO | `arch-` |
+| 9 | Observabilidad | ALTO/MEDIO | `observe-` |
 
-## Quick Reference
+## Referencia rápida
 
-### 1. Parsing & Type Safety (CRITICAL)
+### 1. Parseo y seguridad de tipos (CRÍTICO)
 
-- `parse-use-safeParse` — Use `safeParse()` for user input instead of `parse()` which throws
-- `parse-async-required` — Must use `parseAsync()`/`safeParseAsync()` when schema has async refinements
-- `parse-infer-types` — Use `z.infer<typeof Schema>` for output types; never manually duplicate types
-- `parse-validate-boolean` — Use `.validate()` for a yes or no; it narrows to the input type, so use `safeParse()` for the output
+- `parse-use-safeParse` — Usa `safeParse()` para la entrada del usuario en lugar de `parse()`, que lanza excepciones
+- `parse-async-required` — Debes usar `parseAsync()`/`safeParseAsync()` cuando el schema tiene refinamientos asíncronos
+- `parse-infer-types` — Usa `z.infer<typeof Schema>` para los tipos de salida; nunca dupliques tipos manualmente
+- `parse-validate-boolean` — Usa `.validate()` para un sí o un no; estrecha al tipo de entrada, así que usa `safeParse()` para la salida
 
-### 2. Schema Design (CRITICAL)
+### 2. Diseño de schemas (CRÍTICO)
 
-- `schema-object-unknowns` — `z.object()` strips unknown keys; use `strictObject` or `looseObject`
-- `schema-union-discriminated` — Use `z.discriminatedUnion()` for tagged unions, not `z.union()`
-- `schema-coercion-pitfalls` — `z.coerce.boolean()` makes `"false"` → `true`; use `z.stringbool()`
-- `schema-recursive-types` — Use a getter for recursive schemas; cyclic input parses since 4.5
-- `schema-json-string` — `z.json()` does not parse a string; decode JSON text with a codec
+- `schema-object-unknowns` — `z.object()` elimina las claves desconocidas; usa `strictObject` o `looseObject`
+- `schema-union-discriminated` — Usa `z.discriminatedUnion()` para las uniones etiquetadas, no `z.union()`
+- `schema-coercion-pitfalls` — `z.coerce.boolean()` convierte `"false"` → `true`; usa `z.stringbool()`
+- `schema-recursive-types` — Usa un getter para los schemas recursivos; la entrada cíclica se parsea desde 4.5
+- `schema-json-string` — `z.json()` no parsea un string; decodifica el texto JSON con un codec
 
-### 3. Refinements & Transforms (HIGH)
+### 3. Refinamientos y transformaciones (ALTO)
 
-- `refine-never-throw` — Never throw inside `.refine()` or `.transform()`; return false, or add issues through `ctx`
-- `refine-vs-transform` — `.refine()` for validation, `.transform()` for conversion, `.pipe()` for staging
-- `refine-cross-field` — Refine the parent object and set `path`; `.superRefine()` for several issues
+- `refine-never-throw` — Nunca lances excepciones dentro de `.refine()` o `.transform()`; devuelve false, o agrega issues mediante `ctx`
+- `refine-vs-transform` — `.refine()` para la validación, `.transform()` para la conversión, `.pipe()` para las etapas
+- `refine-cross-field` — Refina el objeto padre y establece `path`; `.superRefine()` para varios issues
 
-### 4. Error Handling (HIGH)
+### 4. Manejo de errores (ALTO)
 
-- `error-custom-messages` — Use the `error` parameter; `required_error`/`invalid_type_error` are gone, `message` is deprecated
-- `error-formatting` — `z.flattenError()` for forms, `z.treeifyError()` for nested; `formatError` deprecated
-- `error-input-security` — Never use `reportInput: true` in production; leaks sensitive data
+- `error-custom-messages` — Usa el parámetro `error`; `required_error`/`invalid_type_error` ya no existen, `message` está deprecado
+- `error-formatting` — `z.flattenError()` para formularios, `z.treeifyError()` para datos anidados; `formatError` deprecado
+- `error-input-security` — Nunca uses `reportInput: true` en producción; filtra datos sensibles
 
-### 5. Performance & Composition (MEDIUM)
+### 5. Rendimiento y composición (MEDIO)
 
-- `perf-extend-spread` — Use `{ ...Schema.shape }` spread over chained `.extend()` for large schemas
-- `perf-reuse-schemas` — Define once, derive with `.pick()`, `.omit()`, `.partial()`
-- `perf-zod-mini` — Use Zod Mini (`zod/mini`) only under a strict client bundle budget; load a locale
-- `perf-compile` — Compile the final schema with `z.compile()`; prove it compiled with `strict: true` in a test
+- `perf-extend-spread` — Usa el spread `{ ...Schema.shape }` en lugar de `.extend()` encadenados para schemas grandes
+- `perf-reuse-schemas` — Define una vez, deriva con `.pick()`, `.omit()`, `.partial()`
+- `perf-zod-mini` — Usa Zod Mini (`zod/mini`) solo con un presupuesto estricto del bundle del cliente; carga un locale
+- `perf-compile` — Compila el schema final con `z.compile()`; demuestra que se compiló con `strict: true` en un test
 
-### 6. v4 Migration (MEDIUM)
+### 6. Migración a v4 (MEDIO)
 
-- `migrate-string-formats` — Use `z.email()`, `z.uuid()`, `z.url()` not `z.string().email()`
-- `migrate-native-enum` — Use unified `z.enum()` for TS enums; `z.nativeEnum()` is deprecated
-- `migrate-error-api` — Use the `error` parameter; `errorMap` is gone and `message` is deprecated
+- `migrate-string-formats` — Usa `z.email()`, `z.uuid()`, `z.url()`, no `z.string().email()`
+- `migrate-native-enum` — Usa el `z.enum()` unificado para los enums de TS; `z.nativeEnum()` está deprecado
+- `migrate-error-api` — Usa el parámetro `error`; `errorMap` ya no existe y `message` está deprecado
 
-### 7. Advanced Patterns (MEDIUM)
+### 7. Patrones avanzados (MEDIO)
 
-- `pattern-branded-types` — `.brand<"Name">()` for nominal typing (USD vs EUR)
-- `pattern-codecs` — `z.codec()` for bidirectional transforms (parse + serialize)
-- `pattern-pipe` — `.pipe()` for staged parsing (string → number → validate range)
+- `pattern-branded-types` — `.brand<"Name">()` para el tipado nominal (USD vs EUR)
+- `pattern-codecs` — `z.codec()` para transformaciones bidireccionales (parsear + serializar)
+- `pattern-pipe` — `.pipe()` para el parseo por etapas (string → number → validar el rango)
 
-### 8. Architecture & Boundaries (CRITICAL/HIGH)
+### 8. Arquitectura y límites (CRÍTICO/ALTO)
 
-- `arch-boundary-parsing` — Parse at system boundaries (API handler, env, form, fetch); pass typed data to domain logic
-- `arch-schema-organization` — Co-locate schemas with their boundary layer; domain types use `z.infer`
-- `arch-schema-versioning` — Additive changes only for non-breaking evolution; new fields use `.optional()`
+- `arch-boundary-parsing` — Parsea en los límites del sistema (handler de API, env, formulario, fetch); pasa datos tipados a la lógica de dominio
+- `arch-schema-organization` — Ubica los schemas junto a su capa de límite; los tipos de dominio usan `z.infer`
+- `arch-schema-versioning` — Solo cambios aditivos para una evolución sin breaking changes; los campos nuevos usan `.optional()`
 
-### 9. Observability (HIGH/MEDIUM)
+### 9. Observabilidad (ALTO/MEDIO)
 
-- `observe-structured-errors` — Use `z.flattenError()` for compact structured logs with request correlation IDs
-- `observe-error-metrics` — `trackedSafeParse()` wrapper to increment counters per schema and field on failure
+- `observe-structured-errors` — Usa `z.flattenError()` para logs estructurados compactos con IDs de correlación de la petición
+- `observe-error-metrics` — Wrapper `trackedSafeParse()` para incrementar contadores por schema y por campo cuando falla
 
-## Schema Types Quick Reference
+## Referencia rápida de tipos de schema
 
-| Type | Syntax |
+| Tipo | Sintaxis |
 |------|--------|
 | String | `z.string()` |
 | Number | `z.number()`, `z.int()`, `z.float32()`, `z.float64()` |
@@ -114,57 +114,57 @@ Zod is for **runtime type validation** — parsing untrusted data at system boun
 | URL | `z.url()` |
 | UUID | `z.uuid()` |
 | String→Bool | `z.stringbool()` |
-| ISO DateTime | `z.iso.datetime()` |
+| DateTime ISO | `z.iso.datetime()` |
 | File | `z.file()` |
-| JSON value | `z.json()` (validates a value; does not parse a string) |
+| Valor JSON | `z.json()` (valida un valor; no parsea un string) |
 | Array | `z.array(schema)` |
-| Tuple | `z.tuple([a, b])` |
-| Object | `z.object({})` |
-| Strict Object | `z.strictObject({})` |
-| Loose Object | `z.looseObject({})` |
+| Tupla | `z.tuple([a, b])` |
+| Objeto | `z.object({})` |
+| Objeto estricto | `z.strictObject({})` |
+| Objeto laxo | `z.looseObject({})` |
 | Record | `z.record(keySchema, valueSchema)` |
 | Map | `z.map(keySchema, valueSchema)` |
 | Set | `z.set(schema)` |
-| Union | `z.union([a, b])` |
-| Disc. Union | `z.discriminatedUnion("key", [...])` |
-| Intersection | `z.intersection(a, b)` |
+| Unión | `z.union([a, b])` |
+| Unión disc. | `z.discriminatedUnion("key", [...])` |
+| Intersección | `z.intersection(a, b)` |
 
-## How to Use
+## Cómo usar
 
-Read individual rule files for detailed explanations and code examples:
+Lee los archivos de reglas individuales para ver explicaciones detalladas y ejemplos de código:
 
 ```text
 rules/parse-use-safeParse.md
 rules/schema-object-unknowns.md
 ```
 
-Each rule file contains:
+Cada archivo de reglas contiene:
 
-- Brief explanation of why it matters
-- Incorrect code example with explanation
-- Correct code example with explanation
-- Additional context and decision tables
+- Breve explicación de por qué importa
+- Ejemplo de código incorrecto con su explicación
+- Ejemplo de código correcto con su explicación
+- Contexto adicional y tablas de decisión
 
-## References
+## Referencias
 
-| Priority | Reference | When to read |
+| Prioridad | Referencia | Cuándo leerla |
 |----------|-----------|-------------|
-| 1 | `references/schema-types.md` | Primitives, string formats, numbers, enums, dates, functions, branded types |
-| 2 | `references/parsing-and-inference.md` | parse, safeParse, validate, z.infer, coercion, Standard Schema |
-| 3 | `references/objects-and-composition.md` | Objects, optional keys, arrays, unions, pick/omit/partial, recursive, properties |
-| 4 | `references/refinements-and-transforms.md` | refine, superRefine, transform, pipe, defaults |
-| 5 | `references/error-handling.md` | ZodError, flattenError, treeifyError, error customization |
-| 6 | `references/behaviour-changes.md` | What parses differently in 4.0, 4.4, 4.5 and 4.6; read before an upgrade |
-| 7 | `references/codecs.md` | z.codec, decode and encode, what runs in each direction, copy-in recipes |
-| 8 | `references/metadata-and-json-schema.md` | Registries, .meta(), z.toJSONSchema options, z.fromJSONSchema |
-| 9 | `references/compile.md` | z.compile, zod/compile, what does not compile, z.withParser, bundle cost |
-| 10 | `references/anti-patterns.md` | Common mistakes with BAD/GOOD examples |
-| 11 | `references/boundary-architecture.md` | Where Zod fits: Express, tRPC, Next.js, React Hook Form, env, external APIs |
-| 12 | `references/linter-and-ci.md` | ESLint rules, CI schema snapshots, unused schema detection, circular deps |
-| 13 | `references/testing.md` | Testing schemas: safeParse in tests, boundary values, error assertions, mock data, property-based testing |
-| 14 | `references/testing-api.md` | Jest and Vitest API reference for schema tests |
-| 15 | `references/testing-anti-patterns.md` | Testing mistakes with BAD/GOOD examples |
+| 1 | `references/tipos-de-schema.md` | Primitivos, formatos de string, números, enums, fechas, funciones, branded types |
+| 2 | `references/parseo-e-inferencia.md` | parse, safeParse, validate, z.infer, coerción, Standard Schema |
+| 3 | `references/objetos-y-composicion.md` | Objetos, claves opcionales, arrays, uniones, pick/omit/partial, recursivos, propiedades |
+| 4 | `references/refinamientos-y-transformaciones.md` | refine, superRefine, transform, pipe, valores por defecto |
+| 5 | `references/manejo-de-errores.md` | ZodError, flattenError, treeifyError, personalización de errores |
+| 6 | `references/cambios-de-comportamiento.md` | Lo que se parsea de forma distinta en 4.0, 4.4, 4.5 y 4.6; léelo antes de una actualización |
+| 7 | `references/codecs.md` | z.codec, decode y encode, qué se ejecuta en cada dirección, recetas para copiar |
+| 8 | `references/metadata-y-json-schema.md` | Registries, .meta(), opciones de z.toJSONSchema, z.fromJSONSchema |
+| 9 | `references/compilacion.md` | z.compile, zod/compile, lo que no se compila, z.withParser, costo en el bundle |
+| 10 | `references/anti-patterns.md` | Errores comunes con ejemplos MAL/BIEN |
+| 11 | `references/arquitectura-de-limites.md` | Dónde encaja Zod: Express, tRPC, Next.js, React Hook Form, env, APIs externas |
+| 12 | `references/linter-y-ci.md` | Reglas de ESLint, snapshots de schemas en CI, detección de schemas sin usar, deps circulares |
+| 13 | `references/testing.md` | Testing de schemas: safeParse en los tests, valores límite, aserciones de errores, datos mock, property-based testing |
+| 14 | `references/api-de-testing.md` | Referencia de la API de Jest y Vitest para tests de schemas |
+| 15 | `references/anti-patterns-de-testing.md` | Errores de testing con ejemplos MAL/BIEN |
 
-## Full Compiled Document
+## Documento compilado completo
 
-For the complete guide with all rules expanded: `AGENTS.md`
+Para la guía completa con todas las reglas expandidas: `AGENTS.md`

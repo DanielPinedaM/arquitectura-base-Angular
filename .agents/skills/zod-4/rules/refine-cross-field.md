@@ -1,20 +1,20 @@
 ---
-title: Cross-Field Validation
-impact: HIGH
-description: Refine the parent object and set path to the field that shows the error.
-tags: refine, superRefine, cross-field, password, confirm, path, when
+title: Validación entre campos
+impact: ALTO
+description: Refina el objeto padre y establece path en el campo que muestra el error.
+tags: refine, superRefine, entre-campos, password, confirm, path, when
 ---
 
-# Cross-Field Validation
+# Validación entre campos
 
-## Problem
+## Problema
 
-A refinement on one field sees only that field's value. A rule that compares two fields, such as a password and its confirmation, belongs on the parent object, with `path` set so that the error shows on the right field.
+Un refinamiento sobre un campo solo ve el valor de ese campo. Una regla que compara dos campos, como una contraseña y su confirmación, pertenece al objeto padre, con `path` establecido para que el error se muestre en el campo correcto.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BUG: the refinement on confirm cannot see password, so it cannot compare them
+// BUG: el refinamiento sobre confirm no puede ver password, así que no puede compararlos
 const Form = z.object({
   password: z.string().min(8),
   confirm: z.string().refine((val) => val.length > 0, {
@@ -23,10 +23,10 @@ const Form = z.object({
 })
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// GOOD: refine the object, and put the issue on confirm
+// BIEN: refinar el objeto y poner el issue en confirm
 const Form = z
   .object({
     password: z.string().min(8),
@@ -38,7 +38,7 @@ const Form = z
   })
 ```
 
-An object refinement does not run when any field has a type error, even a field it does not read. A failed check such as `.min()` does not stop it. Use `when` to run it as soon as the fields it reads are valid:
+Un refinamiento de objeto no se ejecuta cuando algún campo tiene un error de tipo, incluso un campo que no lee. Un check fallido como `.min()` no lo detiene. Usa `when` para ejecutarlo en cuanto los campos que lee sean válidos:
 
 ```typescript
 const Base = z.object({
@@ -56,7 +56,7 @@ const Signup = Base.refine((data) => data.password === data.confirm, {
 })
 ```
 
-To report more than one issue, use `.superRefine()` and add each issue with its own `path`:
+Para reportar más de un issue, usa `.superRefine()` y agrega cada issue con su propio `path`:
 
 ```typescript
 const DateRange = z
@@ -71,6 +71,6 @@ const DateRange = z
   })
 ```
 
-## Why
+## Por qué
 
-`path` puts the issue under the field, so `z.flattenError()` reports it in `fieldErrors.confirm` and a form library shows it next to that input. `.refine()` covers a single condition (zod.dev/api, "Refinements"). The zod.dev page for the `zod` package lists `.superRefine()` as deprecated in favour of `.check()`, but the API page documents it and the 4.6.7 type definitions do not mark it deprecated.
+`path` coloca el issue bajo el campo, así que `z.flattenError()` lo reporta en `fieldErrors.confirm` y una librería de formularios lo muestra junto a ese input. `.refine()` cubre una sola condición (zod.dev/api, "Refinements"). La página de zod.dev del paquete `zod` lista `.superRefine()` como deprecado en favor de `.check()`, pero la página de la API lo documenta y las definiciones de tipos de 4.6.7 no lo marcan como deprecado.

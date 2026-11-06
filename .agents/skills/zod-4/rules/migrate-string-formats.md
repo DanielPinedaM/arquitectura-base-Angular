@@ -1,43 +1,43 @@
 ---
-title: "v4: Top-Level String Formats"
-impact: MEDIUM
-description: Use top-level z.email(), z.uuid(), z.url() instead of the deprecated z.string().email() methods.
-tags: migration, v4, string, email, uuid, url, formats
+title: "v4: formatos de string de nivel superior"
+impact: MEDIO
+description: Usa z.email(), z.uuid(), z.url() de nivel superior en lugar de los métodos deprecados z.string().email().
+tags: migración, v4, string, email, uuid, url, formatos
 ---
 
-# v4: Top-Level String Formats
+# v4: formatos de string de nivel superior
 
-## Problem
+## Problema
 
-Zod 4 moved the string formats to top-level functions. The method forms such as `z.string().email()` still work, and their type definitions mark them deprecated (zod.dev/v4/changelog).
+Zod 4 movió los formatos de string a funciones de nivel superior. Las formas de método, como `z.string().email()`, todavía funcionan, y sus definiciones de tipos las marcan como deprecadas (zod.dev/v4/changelog).
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BAD: method forms from Zod 3
-const Email = z.string().email() // deprecated: use z.email()
-const Url = z.string().url() // deprecated: use z.url()
-const Uuid = z.string().uuid() // deprecated: use z.uuid()
-const Cuid = z.cuid() // deprecated: CUID v1 leaks information; use z.cuid2()
+// MAL: formas de método de Zod 3
+const Email = z.string().email() // deprecado: usar z.email()
+const Url = z.string().url() // deprecado: usar z.url()
+const Uuid = z.string().uuid() // deprecado: usar z.uuid()
+const Cuid = z.cuid() // deprecado: CUID v1 filtra información; usar z.cuid2()
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 const Email = z.email()
 const Url = z.url()
-const HttpUrl = z.httpUrl() // http or https, with a valid domain
-const Uuid = z.uuid() // RFC 9562 variant bits; z.guid() for any 8-4-4-4-12 hex string
+const HttpUrl = z.httpUrl() // http o https, con un dominio válido
+const Uuid = z.uuid() // bits de variante de RFC 9562; z.guid() para cualquier string hex 8-4-4-4-12
 const Cuid2 = z.cuid2()
 const Ulid = z.ulid()
 const Ipv4 = z.ipv4()
 const Cidrv6 = z.cidrv6()
 const Jwt = z.jwt()
-const Base64url = z.base64url() // no padding
+const Base64url = z.base64url() // sin padding
 const IsoDate = z.iso.date()
-const IsoDateTime = z.iso.datetime() // seconds required since Zod 4.5
+const IsoDateTime = z.iso.datetime() // segundos obligatorios desde Zod 4.5
 ```
 
-## Why
+## Por qué
 
-Each format is its own schema type, and the top-level form is shorter and tree-shakes better. `z.uuid()` checks the RFC 9562 variant bits; it accepts every version unless you pass `{ version }` or use `z.uuidv4()`, `z.uuidv7()`. `z.string().ip()` and `z.string().cidr()` are removed; use `z.ipv4()`/`z.ipv6()` and `z.cidrv4()`/`z.cidrv6()`, or a union. The full list is in `references/schema-types.md`.
+Cada formato es su propio tipo de schema, y la forma de nivel superior es más corta y funciona mejor con el tree-shaking. `z.uuid()` verifica los bits de variante de RFC 9562; acepta todas las versiones a menos que pases `{ version }` o uses `z.uuidv4()`, `z.uuidv7()`. `z.string().ip()` y `z.string().cidr()` se eliminaron; usa `z.ipv4()`/`z.ipv6()` y `z.cidrv4()`/`z.cidrv6()`, o una unión. La lista completa está en `references/tipos-de-schema.md`.

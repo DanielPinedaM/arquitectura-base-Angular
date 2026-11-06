@@ -1,10 +1,10 @@
-# Codecs Reference
+# Referencia de codecs
 
-Docs: zod.dev/codecs, zod.dev/blog/zod-4-5 · Zod 4.6.7
+Documentación: zod.dev/codecs, zod.dev/blog/zod-4-5 · Zod 4.6.7
 
-A codec is a schema with a transform in each direction. Decoding converts the input type to the output type: `.decode()` does at runtime what `.parse()` does. Encoding converts the output type back to the input type. Use a codec where a value crosses a boundary in both directions: an API request and response, a database row, a form value, a query string.
+Un codec es un schema con una transformación en cada dirección. Decodificar convierte el tipo de entrada en el tipo de salida: `.decode()` hace en runtime lo que hace `.parse()`. Codificar convierte el tipo de salida de vuelta en el tipo de entrada. Usa un codec donde un valor cruce un límite en ambas direcciones: una petición y una respuesta de API, una fila de base de datos, un valor de formulario, un query string.
 
-## Define a Codec
+## Definir un codec
 
 ```typescript
 const isoDatetimeToDate = z.codec(z.iso.datetime(), z.date(), {
@@ -16,7 +16,7 @@ const parsed = isoDatetimeToDate.decode("2024-01-15T10:30:00.000Z") // Date
 const serialized = isoDatetimeToDate.encode(parsed)                 // "2024-01-15T10:30:00.000Z"
 ```
 
-A codec is a schema like any other. Nest it in objects, arrays and pipes.
+Un codec es un schema como cualquier otro. Anídalo en objetos, arrays y pipes.
 
 ```typescript
 const Payload = z.object({ startDate: isoDatetimeToDate })
@@ -25,58 +25,58 @@ Payload.decode({ startDate: "2024-01-15T10:30:00.000Z" }) // { startDate: Date }
 Payload.encode({ startDate: new Date() })                  // { startDate: string }
 ```
 
-## Typed Input
+## Entrada tipada
 
-`.parse()` takes `unknown`. `.decode()` takes the input type and `.encode()` takes the output type, so TypeScript finds a wrong argument.
+`.parse()` acepta `unknown`. `.decode()` acepta el tipo de entrada y `.encode()` acepta el tipo de salida, así que TypeScript encuentra un argumento incorrecto.
 
 ```typescript
-isoDatetimeToDate.parse(12345) // compiles; fails at runtime
+isoDatetimeToDate.parse(12345) // compila; falla en runtime
 
-// @ts-expect-error a number is not a string
+// @ts-expect-error un number no es un string
 isoDatetimeToDate.decode(12345)
 
-// @ts-expect-error a number is not a Date
+// @ts-expect-error un number no es un Date
 isoDatetimeToDate.encode(12345)
 ```
 
-## Methods and Functions
+## Métodos y funciones
 
-| Method | Top-level function | Returns |
+| Método | Función de nivel superior | Devuelve |
 |---|---|---|
-| `.decode(input)` | `z.decode(schema, input)` | the output, or throws `ZodError` |
-| `.encode(output)` | `z.encode(schema, output)` | the input, or throws `ZodError` |
-| `.safeDecode()`, `.safeEncode()` | `z.safeDecode()`, `z.safeEncode()` | `{ success, data }` or `{ success, error }` |
-| `.decodeAsync()`, `.encodeAsync()` | `z.decodeAsync()`, `z.encodeAsync()` | a `Promise` |
-| `.safeDecodeAsync()`, `.safeEncodeAsync()` | `z.safeDecodeAsync()`, `z.safeEncodeAsync()` | a `Promise` of the safe result |
+| `.decode(input)` | `z.decode(schema, input)` | la salida, o lanza `ZodError` |
+| `.encode(output)` | `z.encode(schema, output)` | la entrada, o lanza `ZodError` |
+| `.safeDecode()`, `.safeEncode()` | `z.safeDecode()`, `z.safeEncode()` | `{ success, data }` o `{ success, error }` |
+| `.decodeAsync()`, `.encodeAsync()` | `z.decodeAsync()`, `z.encodeAsync()` | una `Promise` |
+| `.safeDecodeAsync()`, `.safeEncodeAsync()` | `z.safeDecodeAsync()`, `z.safeEncodeAsync()` | una `Promise` del resultado seguro |
 
-`z.decode()` and `z.encode()` work with any schema, not only with a codec. A codec can have async `decode` and `encode` functions; use the async methods with it.
+`z.decode()` y `z.encode()` funcionan con cualquier schema, no solo con un codec. Un codec puede tener funciones `decode` y `encode` asíncronas; usa los métodos asíncronos con él.
 
-## What Runs in Each Direction
+## Qué se ejecuta en cada dirección
 
-| Part of the schema | Decode | Encode |
+| Parte del schema | Decodificar | Codificar |
 |---|---|---|
-| `z.codec(A, B, ...)` | parse with `A`, run `decode`, parse with `B` | encode with `B`, run `encode`, encode with `A` |
-| `.pipe()` from `A` to `B` | `A`, then `B` | `B`, then `A` |
-| Checks and `.refine()` | run | run, after a first pass that checks only the types |
-| Overwrites such as `.trim()` | run | run |
-| `.default()` and `.prefault()` | apply to `undefined` | do not apply: `undefined` fails |
-| `.catch()` | applies | does not apply |
-| `z.stringbool()` | string to boolean | `true` to the first truthy value, `false` to the first falsy value (`"true"` and `"false"` by default) |
-| `.transform()` | runs | throws `$ZodEncodeError`, a plain error, not a `ZodError` |
+| `z.codec(A, B, ...)` | parsea con `A`, ejecuta `decode`, parsea con `B` | codifica con `B`, ejecuta `encode`, codifica con `A` |
+| `.pipe()` de `A` a `B` | `A`, luego `B` | `B`, luego `A` |
+| Checks y `.refine()` | se ejecutan | se ejecutan, después de una primera pasada que solo verifica los tipos |
+| Sobrescrituras como `.trim()` | se ejecutan | se ejecutan |
+| `.default()` y `.prefault()` | se aplican a `undefined` | no se aplican: `undefined` falla |
+| `.catch()` | se aplica | no se aplica |
+| `z.stringbool()` | de string a booleano | `true` al primer valor truthy, `false` al primer valor falsy (`"true"` y `"false"` por defecto) |
+| `.transform()` | se ejecuta | lanza `$ZodEncodeError`, un error plano, no un `ZodError` |
 
 ```typescript
 const WithDefault = z.string().default("hello")
 WithDefault.decode(undefined)                        // "hello"
-WithDefault.safeEncode(undefined as never).success   // false: defaults are decode-only
+WithDefault.safeEncode(undefined as never).success   // false: los valores por defecto son solo para decodificar
 
 z.stringbool({ truthy: ["yes", "y"], falsy: ["no", "n"] }).encode(false) // "no"
 ```
 
-A schema that contains a `.transform()` cannot encode. Replace the transform with a codec when the value must go back out.
+Un schema que contiene un `.transform()` no puede codificar. Reemplaza la transformación por un codec cuando el valor deba volver a salir.
 
-## Invert a Codec
+## Invertir un codec
 
-`z.invertCodec()` swaps the input and output schemas and the two functions. It inverts only the codec you pass; codecs nested inside another schema keep their direction.
+`z.invertCodec()` intercambia los schemas de entrada y de salida y las dos funciones. Solo invierte el codec que le pasas; los codecs anidados dentro de otro schema mantienen su dirección.
 
 ```typescript
 const dateToIsoDatetime = z.invertCodec(isoDatetimeToDate)
@@ -85,9 +85,9 @@ dateToIsoDatetime.decode(new Date("2024-01-15T10:30:00.000Z")) // "2024-01-15T10
 dateToIsoDatetime.encode("2024-01-15T10:30:00.000Z")           // Date
 ```
 
-## Validate One Side: `z.input()` and `z.output()`
+## Validar un lado: `z.input()` y `z.output()`
 
-`z.input(schema)` and `z.output(schema)` give a schema for one side of the codecs and pipes inside `schema`. Use them to check the wire form and the rich form separately. On a schema without codecs or pipes they change nothing.
+`z.input(schema)` y `z.output(schema)` dan un schema para un lado de los codecs y los pipes que hay dentro de `schema`. Úsalos para verificar por separado la forma de transmisión y la forma enriquecida. En un schema sin codecs ni pipes, no cambian nada.
 
 ```typescript
 const Event = z.object({ name: z.string(), at: isoDatetimeToDate })
@@ -97,17 +97,17 @@ z.output(Event).safeParse({ name: "launch", at: new Date() }).success           
 z.input(Event).safeParse({ name: "launch", at: new Date() }).success            // false
 ```
 
-## Codecs vs Transforms
+## Codecs vs transformaciones
 
 | | `.transform()` | `z.codec()` |
 |---|---|---|
-| Direction | One way: input to output | Both ways |
-| Use when | You only parse | You parse and serialize |
-| `.encode()` | Throws `$ZodEncodeError` | Runs the `encode` function |
+| Dirección | En un solo sentido: de la entrada a la salida | En ambos sentidos |
+| Úsalo cuando | Solo parseas | Parseas y serializas |
+| `.encode()` | Lanza `$ZodEncodeError` | Ejecuta la función `encode` |
 
-## Recipes
+## Recetas
 
-Zod does not export these codecs. The docs call them recipes to copy into your code and change as needed. The check runs every recipe in this block against the examples below it.
+Zod no exporta estos codecs. La documentación los llama recetas para copiar en tu código y cambiar según sea necesario. La verificación ejecuta cada receta de este bloque contra los ejemplos que hay debajo de él.
 
 ```typescript
 const stringToNumber = z.codec(z.string().regex(z.regexes.number), z.number(), {
@@ -199,12 +199,12 @@ const uriComponent = z.codec(z.string(), z.string(), {
 })
 ```
 
-`isoDatetimeToDate` is the first example on this page. The docs' `jsonCodec` catches `err: any`; this copy narrows the error instead, so it compiles under `strict` with `useUnknownInCatchVariables`.
+`isoDatetimeToDate` es el primer ejemplo de esta página. El `jsonCodec` de la documentación captura `err: any`; esta copia, en cambio, estrecha el error, así que compila bajo `strict` con `useUnknownInCatchVariables`.
 
 ```typescript
 stringToNumber.decode("42.5")                    // 42.5
 stringToInt.decode("42")                         // 42
-stringToInt.safeDecode("12abc").success          // false: the regex rejects it
+stringToInt.safeDecode("12abc").success          // false: el regex lo rechaza
 stringToBigInt.decode("12345")                   // 12345n
 numberToBigInt.encode(42n)                       // 42
 epochSecondsToDate.decode(1705314600)            // 2024-01-15T10:30:00.000Z
@@ -216,6 +216,6 @@ base64urlToBytes.decode("SGVsbG8")               // Uint8Array [72, 101, 108, 10
 hexToBytes.decode("48656c6c6f")                  // Uint8Array [72, 101, 108, 108, 111]
 bytesToUtf8.decode(utf8ToBytes.decode("Hello, 世界!")) // "Hello, 世界!"
 stringToURL.encode(new URL("https://example.com")) // "https://example.com/"
-stringToHttpURL.safeDecode("mailto:a@b.co").success // false: http or https only
+stringToHttpURL.safeDecode("mailto:a@b.co").success // false: solo http o https
 uriComponent.decode("Hello%20World%21")          // "Hello World!"
 ```

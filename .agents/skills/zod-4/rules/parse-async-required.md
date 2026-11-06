@@ -1,17 +1,17 @@
 ---
-title: Use parseAsync for Async Refinements
-impact: CRITICAL
-description: Must use parseAsync()/safeParseAsync() when schema has async refinements or transforms.
-tags: parsing, async, refinement, transform
+title: Usar parseAsync para refinamientos asíncronos
+impact: CRÍTICO
+description: Debes usar parseAsync()/safeParseAsync() cuando el schema tiene refinamientos o transformaciones asíncronos.
+tags: parseo, async, refinamiento, transformación
 ---
 
-# Use parseAsync for Async Refinements
+# Usar parseAsync para refinamientos asíncronos
 
-## Problem
+## Problema
 
-When a schema contains async refinements (`.refine(async ...)`) or async transforms (`.transform(async ...)`), calling synchronous `.parse()` or `.safeParse()` will throw an error. The async refinement will not execute.
+Cuando un schema contiene refinamientos asíncronos (`.refine(async ...)`) o transformaciones asíncronas (`.transform(async ...)`), llamar a `.parse()` o a `.safeParse()` síncronos lanzará un error. El refinamiento asíncrono no se ejecutará.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
 const UniqueEmail = z.email().refine(
@@ -19,11 +19,11 @@ const UniqueEmail = z.email().refine(
   { error: "Email already registered" }
 )
 
-// BUG: sync parse with an async refinement throws $ZodAsyncError
+// BUG: un parseo síncrono con un refinamiento asíncrono lanza $ZodAsyncError
 const result = UniqueEmail.safeParse(input)
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 const UniqueEmail = z.email().refine(
@@ -31,13 +31,13 @@ const UniqueEmail = z.email().refine(
   { error: "Email already registered" }
 )
 
-// CORRECT: use safeParseAsync for schemas with async refinements
+// CORRECTO: usar safeParseAsync para schemas con refinamientos asíncronos
 const result = await UniqueEmail.safeParseAsync(input)
 if (!result.success) {
   console.log(result.error.issues)
 }
 ```
 
-## Why
+## Por qué
 
-Zod separates sync and async parsing. If any refinement or transform in the schema chain is async, you must use `parseAsync()` or `safeParseAsync()`. The sync version throws `$ZodAsyncError` ("Encountered Promise during synchronous parse"); it does not skip the refinement. The same holds for `.validate()`, whose async form is `.validateAsync()`. Test the async path, because a happy-path test of another schema does not reach it.
+Zod separa el parseo síncrono del asíncrono. Si algún refinamiento o transformación de la cadena del schema es asíncrono, debes usar `parseAsync()` o `safeParseAsync()`. La versión síncrona lanza `$ZodAsyncError` ("Encountered Promise during synchronous parse"); no omite el refinamiento. Lo mismo aplica a `.validate()`, cuya forma asíncrona es `.validateAsync()`. Prueba el camino asíncrono, porque un test del happy path de otro schema no llega a él.

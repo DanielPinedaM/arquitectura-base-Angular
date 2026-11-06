@@ -1,22 +1,22 @@
 ---
-title: Use safeParse() for User Input
-impact: CRITICAL
-description: Use safeParse() instead of parse() to avoid throwing on invalid input.
-tags: parsing, safeParse, error-handling, validation
+title: Usar safeParse() para la entrada del usuario
+impact: CRÍTICO
+description: Usa safeParse() en lugar de parse() para evitar lanzar excepciones con una entrada inválida.
+tags: parseo, safeParse, manejo-de-errores, validación
 ---
 
-# Use safeParse() for User Input
+# Usar safeParse() para la entrada del usuario
 
-## Problem
+## Problema
 
-`parse()` throws a `ZodError` on invalid input. Wrapping it in try/catch is verbose and error-prone — you lose the discriminated success/error result and risk catching unrelated errors.
+`parse()` lanza un `ZodError` con una entrada inválida. Envolverlo en un try/catch es verboso y propenso a errores — pierdes el resultado discriminado de éxito/error y te arriesgas a capturar errores no relacionados.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
 const UserSchema = z.object({ name: z.string(), email: z.email() })
 
-// BUG: try/catch is verbose and catches unrelated errors
+// BUG: try/catch es verboso y captura errores no relacionados
 function validateInput(data: unknown) {
   try {
     const result = UserSchema.parse(data)
@@ -25,12 +25,12 @@ function validateInput(data: unknown) {
     if (e instanceof z.ZodError) {
       return { success: false, errors: e.issues }
     }
-    throw e // rethrow non-Zod errors
+    throw e // relanzar los errores que no son de Zod
   }
 }
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 function validateInput(data: unknown) {
@@ -42,6 +42,6 @@ function validateInput(data: unknown) {
 }
 ```
 
-## Why
+## Por qué
 
-`safeParse()` returns a discriminated union `{ success: true, data } | { success: false, error }`. No exceptions, no try/catch, no risk of catching unrelated errors. Use `parse()` only when invalid data is truly exceptional (e.g., internal config that should never be wrong). When you need only a yes or no, `.validate()` returns a boolean without building an error (zod.dev/basics). `ZodError.errors` from Zod 3 is removed; read `.issues`.
+`safeParse()` devuelve una unión discriminada `{ success: true, data } | { success: false, error }`. Sin excepciones, sin try/catch, sin riesgo de capturar errores no relacionados. Usa `parse()` solo cuando los datos inválidos sean verdaderamente excepcionales (p. ej., una configuración interna que nunca debería estar mal). Cuando solo necesitas un sí o un no, `.validate()` devuelve un booleano sin construir un error (zod.dev/basics). `ZodError.errors` de Zod 3 se eliminó; lee `.issues`.

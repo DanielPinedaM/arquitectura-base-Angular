@@ -1,36 +1,36 @@
 ---
-title: reportInput Leaks Sensitive Data
-impact: HIGH
-description: Never enable reportInput in production. It embeds raw input values in error messages.
-tags: security, reportInput, logging, production
+title: reportInput filtra datos sensibles
+impact: ALTO
+description: Nunca habilites reportInput en producción. Incrusta los valores de entrada crudos en los mensajes de error.
+tags: seguridad, reportInput, logging, producción
 ---
 
-# reportInput Leaks Sensitive Data
+# reportInput filtra datos sensibles
 
-## Problem
+## Problema
 
-The `reportInput` parse option includes the raw input value in each issue. Zod leaves it out by default for this reason (zod.dev/error-customization). If enabled in production, sensitive data (passwords, tokens, PII) ends up in error logs, monitoring systems, and API responses.
+La opción de parseo `reportInput` incluye el valor de entrada crudo en cada issue. Zod lo omite por defecto por esta razón (zod.dev/error-customization). Si se habilita en producción, los datos sensibles (contraseñas, tokens, PII) terminan en los logs de errores, en los sistemas de monitoreo y en las respuestas de la API.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
 const UserSchema = z.object({ email: z.email(), password: z.string().min(12) })
 
-// BUG: leaks passwords, tokens, PII into error messages
+// BUG: filtra contraseñas, tokens, PII en los mensajes de error
 app.post("/register", (req, res) => {
   const result = UserSchema.safeParse(req.body, { reportInput: true })
   if (!result.success) {
-    // error.issues[0].input could contain: "myP@ssw0rd123"
+    // error.issues[0].input podría contener: "myP@ssw0rd123"
     logger.error(result.error.issues)
     res.status(400).json({ errors: result.error.issues })
   }
 })
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// GOOD: only use reportInput in development/debugging
+// BIEN: usar reportInput solo en desarrollo/depuración
 const parseOptions = {
   reportInput: process.env.NODE_ENV === "development",
 }
@@ -38,13 +38,13 @@ const parseOptions = {
 app.post("/register", (req, res) => {
   const result = UserSchema.safeParse(req.body, parseOptions)
   if (!result.success) {
-    // In production, issues won't contain raw input values
+    // En producción, los issues no contendrán los valores de entrada crudos
     const flat = z.flattenError(result.error)
     res.status(400).json({ errors: flat.fieldErrors })
   }
 })
 ```
 
-## Why
+## Por qué
 
-Error issues are routinely logged, sent to error monitoring (Sentry, Datadog), and sometimes returned in API responses. Including raw input values in these flows violates data privacy principles and can expose sensitive user data.
+Los issues de error se registran habitualmente en logs, se envían a herramientas de monitoreo de errores (Sentry, Datadog) y a veces se devuelven en las respuestas de la API. Incluir los valores de entrada crudos en estos flujos viola los principios de privacidad de datos y puede exponer datos sensibles de los usuarios.

@@ -1,20 +1,20 @@
 ---
-title: Recursive Schema Design
-impact: CRITICAL
-description: Define recursive schemas with a getter. Cyclic input parses since Zod 4.5.
-tags: recursive, getter, lazy, tree, cyclic
+title: Diseño de schemas recursivos
+impact: CRÍTICO
+description: Define los schemas recursivos con un getter. La entrada cíclica se parsea desde Zod 4.5.
+tags: recursivo, getter, lazy, árbol, cíclico
 ---
 
-# Recursive Schema Design
+# Diseño de schemas recursivos
 
-## Problem
+## Problema
 
-A schema for a tree (categories, comments, an org chart) refers to itself. A direct self-reference fails, because the variable is not yet defined when the object literal runs. The Zod 3 pattern, `z.lazy()` with a hand-written interface, still works in Zod 4, but the interface duplicates the schema and drifts from it.
+Un schema para un árbol (categorías, comentarios, un organigrama) se refiere a sí mismo. Una autorreferencia directa falla, porque la variable todavía no está definida cuando se ejecuta el literal de objeto. El patrón de Zod 3, `z.lazy()` con una interfaz escrita a mano, todavía funciona en Zod 4, pero la interfaz duplica el schema y se desvía de él.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BUG: the hand-written interface and the schema can drift apart
+// BUG: la interfaz escrita a mano y el schema pueden desincronizarse
 interface CategoryShape {
   name: string
   children: CategoryShape[]
@@ -26,10 +26,10 @@ const Category: z.ZodType<CategoryShape> = z.object({
 })
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// GOOD: a getter defers the reference until parse time, and z.infer resolves the type
+// BIEN: un getter difiere la referencia hasta el momento del parseo, y z.infer resuelve el tipo
 const Category = z.object({
   name: z.string(),
   get children() {
@@ -41,7 +41,7 @@ type Category = z.infer<typeof Category>
 // { name: string; children: Category[] }
 ```
 
-When TypeScript reports TS7023 ("implicitly has return type 'any'") on a getter, annotate the getter's return type:
+Cuando TypeScript reporta TS7023 ("implicitly has return type 'any'") en un getter, anota el tipo de retorno del getter:
 
 ```typescript
 const Activity = z.object({
@@ -52,8 +52,8 @@ const Activity = z.object({
 })
 ```
 
-## Why
+## Por qué
 
-The getter is the documented way to define recursive objects in Zod 4 (zod.dev/api, "Recursive objects"). The result is a plain `ZodObject`, so `.pick()`, `.omit()`, `.partial()` and `.extend()` keep working. Mutually recursive schemas (a `User` with `posts`, a `Post` with an `author`) use the same pattern.
+El getter es la forma documentada de definir objetos recursivos en Zod 4 (zod.dev/api, "Recursive objects"). El resultado es un `ZodObject` normal, así que `.pick()`, `.omit()`, `.partial()` y `.extend()` siguen funcionando. Los schemas mutuamente recursivos (un `User` con `posts`, un `Post` con un `author`) usan el mismo patrón.
 
-Since Zod 4.5, cyclic input parses: an object that contains itself comes back as an output graph with the same cycles. Zod Mini needs a memoizer registered for this (zod.dev/api). `z.lazy()` is not removed and not deprecated; `z.json()` is built on it.
+Desde Zod 4.5, la entrada cíclica se parsea: un objeto que se contiene a sí mismo vuelve como un grafo de salida con los mismos ciclos. Zod Mini necesita un memoizer registrado para esto (zod.dev/api). `z.lazy()` no se eliminó ni está deprecado; `z.json()` está construido sobre él.

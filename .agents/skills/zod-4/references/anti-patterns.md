@@ -1,31 +1,31 @@
-# Zod Anti-Patterns
+# Anti-patterns de Zod
 
-Docs: zod.dev/api, zod.dev/v4/changelog · Zod 4.6.7
+Documentación: zod.dev/api, zod.dev/v4/changelog · Zod 4.6.7
 
-## Table of Contents
+## Tabla de contenido
 
-- Using parse() with try/catch instead of safeParse()
-- Sync parse with async refinements
-- Manual type definitions alongside schemas
-- Deprecated string format methods
-- Using z.nativeEnum()
-- Using required_error, invalid_type_error and message
-- Using z.formatError()
-- Throwing inside refinements or transforms
-- z.coerce.boolean() for string booleans
-- Assuming z.object() preserves unknown keys
-- z.union() for tagged objects
-- reportInput in production
-- z.lazy() with a hand-written type for recursive schemas
-- Duplicating field definitions
-- Hand-rolling what Zod 4 does natively
+- Usar parse() con try/catch en lugar de safeParse()
+- Parseo síncrono con refinamientos asíncronos
+- Definiciones de tipos manuales junto a los schemas
+- Métodos de formato de string deprecados
+- Usar z.nativeEnum()
+- Usar required_error, invalid_type_error y message
+- Usar z.formatError()
+- Lanzar excepciones dentro de refinamientos o transformaciones
+- z.coerce.boolean() para strings booleanos
+- Asumir que z.object() conserva las claves desconocidas
+- z.union() para objetos etiquetados
+- reportInput en producción
+- z.lazy() con un tipo escrito a mano para schemas recursivos
+- Duplicar definiciones de campos
+- Reimplementar a mano lo que Zod 4 hace de forma nativa
 
-## Using parse() with try/catch instead of safeParse()
+## Usar parse() con try/catch en lugar de safeParse()
 
 ```typescript
 const UserSchema = z.object({ name: z.string(), email: z.email() })
 
-// BAD: verbose, catches unrelated errors
+// MAL: verboso, captura errores no relacionados
 function readUserThrowing(data: unknown) {
   try {
     const user = UserSchema.parse(data)
@@ -38,7 +38,7 @@ function readUserThrowing(data: unknown) {
   }
 }
 
-// GOOD: discriminated result
+// BIEN: resultado discriminado
 function readUser(data: unknown) {
   const result = UserSchema.safeParse(data)
   if (result.success) {
@@ -48,21 +48,21 @@ function readUser(data: unknown) {
 }
 ```
 
-## Sync parse with async refinements
+## Parseo síncrono con refinamientos asíncronos
 
 ```typescript
-// BAD: throws $ZodAsyncError because the refinement is async
+// MAL: lanza $ZodAsyncError porque el refinamiento es asíncrono
 const Schema = z.email().refine(async (e) => !(await db.exists(e)))
-Schema.safeParse(data) // throws
+Schema.safeParse(data) // lanza una excepción
 
-// GOOD: use safeParseAsync
+// BIEN: usar safeParseAsync
 await Schema.safeParseAsync(data)
 ```
 
-## Manual type definitions alongside schemas
+## Definiciones de tipos manuales junto a los schemas
 
 ```typescript
-// BAD: types drift from schema
+// MAL: los tipos se desvían del schema
 interface UserShape {
   name: string
   email: string
@@ -71,12 +71,12 @@ interface UserShape {
 const UserSchema = z.object({
   name: z.string(),
   email: z.email(),
-  age: z.number(), // added to schema, forgot interface
+  age: z.number(), // se agregó al schema, se olvidó en la interfaz
 })
 ```
 
 ```typescript
-// GOOD: infer from schema
+// BIEN: inferir a partir del schema
 const UserSchema = z.object({
   name: z.string(),
   email: z.email(),
@@ -86,67 +86,67 @@ const UserSchema = z.object({
 type User = z.infer<typeof UserSchema>
 ```
 
-## Deprecated string format methods
+## Métodos de formato de string deprecados
 
 ```typescript
-// BAD: the method forms still run, and their types mark them deprecated
-z.string().email() // deprecated: use z.email()
-z.string().url() // deprecated: use z.url()
-z.string().uuid() // deprecated: use z.uuid()
+// MAL: las formas de método todavía se ejecutan, y sus tipos las marcan como deprecadas
+z.string().email() // deprecado: usar z.email()
+z.string().url() // deprecado: usar z.url()
+z.string().uuid() // deprecado: usar z.uuid()
 
-// GOOD: top-level format functions
+// BIEN: funciones de formato de nivel superior
 z.email()
 z.url()
 z.uuid()
 ```
 
-## Using z.nativeEnum()
+## Usar z.nativeEnum()
 
 ```typescript
 enum Status { Active = "active", Inactive = "inactive" }
 
-// BAD: still runs, but deprecated
-z.nativeEnum(Status) // deprecated: use z.enum()
+// MAL: todavía se ejecuta, pero está deprecado
+z.nativeEnum(Status) // deprecado: usar z.enum()
 
-// GOOD: unified z.enum()
+// BIEN: z.enum() unificado
 z.enum(Status)
 ```
 
-## Using required_error, invalid_type_error and message
+## Usar required_error, invalid_type_error y message
 
 ```typescript
-// BAD: Zod 4 dropped required_error and invalid_type_error; plain JavaScript ignores them
-// @ts-expect-error not Zod 4 parameters
+// MAL: Zod 4 eliminó required_error e invalid_type_error; JavaScript puro los ignora
+// @ts-expect-error no son parámetros de Zod 4
 z.string({ required_error: "Required", invalid_type_error: "Not a string" })
-// still works, but `message` is deprecated
+// todavía funciona, pero `message` está deprecado
 z.number().min(5, { message: "Too small" })
 
-// GOOD: unified error parameter
+// BIEN: parámetro error unificado
 z.string({ error: (issue) => (issue.input === undefined ? "Required" : "Not a string") })
 z.number().min(5, { error: "Too small" })
-z.number().min(5, "Too small") // shorthand
+z.number().min(5, "Too small") // forma abreviada
 ```
 
-## Using z.formatError()
+## Usar z.formatError()
 
 ```typescript
 const result = z.object({ email: z.email() }).safeParse(data)
 
 if (!result.success) {
-  // BAD: the docs mark z.formatError() deprecated
+  // MAL: la documentación marca z.formatError() como deprecado
   z.formatError(result.error)
 
-  // GOOD: use the right formatter
-  z.flattenError(result.error)   // for flat forms
-  z.treeifyError(result.error)   // for nested structures
-  z.prettifyError(result.error)  // for logging
+  // BIEN: usar el formateador adecuado
+  z.flattenError(result.error)   // para formularios planos
+  z.treeifyError(result.error)   // para estructuras anidadas
+  z.prettifyError(result.error)  // para logging
 }
 ```
 
-## Throwing inside refinements or transforms
+## Lanzar excepciones dentro de refinamientos o transformaciones
 
 ```typescript
-// BAD: the throw escapes safeParse() as a plain Error
+// MAL: el throw escapa de safeParse() como un Error plano
 z.number().refine((n) => {
   if (n <= 0) throw new Error("Must be positive")
   return true
@@ -158,70 +158,70 @@ z.string().transform((val) => {
   return n
 })
 
-// GOOD: return boolean from refine
+// BIEN: devolver un booleano desde refine
 z.number().refine((n) => n > 0, { error: "Must be positive" })
 
-// GOOD: check the string, convert it, then check the number
+// BIEN: verificar el string, convertirlo y luego verificar el número
 z.string().regex(z.regexes.integer).transform(Number).pipe(z.int().positive())
 ```
 
-`Number.parseInt("12abc", 10)` is `12`, so a `parseInt` check accepts strings that only start with digits.
+`Number.parseInt("12abc", 10)` es `12`, así que un check con `parseInt` acepta strings que solo empiezan con dígitos.
 
-## z.coerce.boolean() for string booleans
+## z.coerce.boolean() para strings booleanos
 
 ```typescript
-// BAD: Boolean("false") === true
+// MAL: Boolean("false") === true
 z.coerce.boolean().parse("false") // true
 z.coerce.boolean().parse("0")     // true
 
-// GOOD: z.stringbool() handles string booleans correctly
+// BIEN: z.stringbool() maneja correctamente los strings booleanos
 z.stringbool().parse("false") // false
 z.stringbool().parse("0")     // false
 ```
 
-## Assuming z.object() preserves unknown keys
+## Asumir que z.object() conserva las claves desconocidas
 
 ```typescript
-// BAD: unknown keys are silently stripped
+// MAL: las claves desconocidas se eliminan silenciosamente
 const payload = { name: "Alice", role: "admin", debug: true }
 z.object({ name: z.string() }).parse(payload)
-// { name: "Alice" } — role and debug are gone
+// { name: "Alice" } — role y debug desaparecieron
 
-// GOOD: choose explicitly
-z.strictObject({ name: z.string() }) // rejects unknown
-z.looseObject({ name: z.string() })  // preserves unknown
+// BIEN: elegir explícitamente
+z.strictObject({ name: z.string() }) // rechaza las desconocidas
+z.looseObject({ name: z.string() })  // conserva las desconocidas
 ```
 
-## z.union() for tagged objects
+## z.union() para objetos etiquetados
 
 ```typescript
-// BAD: tries every branch; a bad tag gives one "Invalid input" issue at the root
+// MAL: prueba todas las ramas; una etiqueta incorrecta da un único issue "Invalid input" en la raíz
 z.union([
   z.object({ type: z.literal("a"), value: z.string() }),
   z.object({ type: z.literal("b"), count: z.number() }),
 ])
 
-// GOOD: picks the branch by the discriminator; issues name the failing field
+// BIEN: elige la rama según el discriminador; los issues nombran el campo que falla
 z.discriminatedUnion("type", [
   z.object({ type: z.literal("a"), value: z.string() }),
   z.object({ type: z.literal("b"), count: z.number() }),
 ])
 ```
 
-## reportInput in production
+## reportInput en producción
 
 ```typescript
 const LoginSchema = z.object({ email: z.email(), password: z.string() })
 
-// BAD: leaks sensitive data into error logs
+// MAL: filtra datos sensibles en los logs de errores
 app.post("/login", (req, res) => {
   const result = LoginSchema.safeParse(req.body, { reportInput: true })
   if (!result.success) {
-    logger.error(result.error.issues) // may contain passwords
+    logger.error(result.error.issues) // puede contener contraseñas
   }
 })
 
-// GOOD: development only
+// BIEN: solo en desarrollo
 app.post("/session", (req, res) => {
   const result = LoginSchema.safeParse(req.body, {
     reportInput: process.env.NODE_ENV === "development",
@@ -229,12 +229,12 @@ app.post("/session", (req, res) => {
 })
 ```
 
-## z.lazy() with a hand-written type for recursive schemas
+## z.lazy() con un tipo escrito a mano para schemas recursivos
 
-`z.lazy()` is not removed or deprecated. The getter is the documented form for recursive objects: it needs no hand-written type and keeps object methods.
+`z.lazy()` no se eliminó ni está deprecado. El getter es la forma documentada para los objetos recursivos: no necesita un tipo escrito a mano y conserva los métodos de objeto.
 
 ```typescript
-// BAD: the interface duplicates the schema
+// MAL: la interfaz duplica el schema
 interface TreeShape {
   value: string
   children?: TreeShape[]
@@ -247,7 +247,7 @@ const Tree: z.ZodType<TreeShape> = z.object({
 ```
 
 ```typescript
-// GOOD: getter pattern
+// BIEN: patrón getter
 const Tree = z.object({
   value: z.string(),
   get children() {
@@ -256,96 +256,96 @@ const Tree = z.object({
 })
 ```
 
-## Duplicating field definitions
+## Duplicar definiciones de campos
 
 ```typescript
-// BAD: fields duplicated — will drift
+// MAL: campos duplicados — se desincronizarán
 const CreateUser = z.object({ name: z.string(), email: z.email() })
 const UpdateUser = z.object({ name: z.string().optional(), email: z.email().optional() })
 ```
 
 ```typescript
-// GOOD: derive from base
+// BIEN: derivar a partir de una base
 const User = z.object({ name: z.string(), email: z.email() })
 const CreateUser = User
 const UpdateUser = User.partial()
 ```
 
-## Hand-rolling what Zod 4 does natively
+## Reimplementar a mano lo que Zod 4 hace de forma nativa
 
-Working code that a Zod 4 API does better. You maintain the hand-rolled version; Zod maintains the API.
+Código que funciona y que una API de Zod 4 hace mejor. Tú mantienes la versión hecha a mano; Zod mantiene la API.
 
-### One-way transforms where the value has to make a round trip
+### Transformaciones unidireccionales donde el valor tiene que hacer ida y vuelta
 
 ```typescript
-// WORKS, but you own the inverse
+// FUNCIONA, pero la inversa es tuya
 const DateIn = z.iso.datetime().transform((s) => new Date(s))
-const toWire = (d: Date) => d.toISOString()   // and this drifts from the above
+const toWire = (d: Date) => d.toISOString()   // y esto se desvía de lo anterior
 ```
 
 ```typescript
-// BETTER: one definition, both directions
+// MEJOR: una sola definición, ambas direcciones
 const DateField = z.codec(z.iso.datetime(), z.date(), {
   decode: (s) => new Date(s),
   encode: (d) => d.toISOString(),
 })
 z.decode(DateField, "2024-01-01T00:00:00Z") // Date
 z.encode(DateField, new Date())             // string
-z.invertCodec(DateField)                    // when the boundary runs the other way
+z.invertCodec(DateField)                    // cuando el límite va en la otra dirección
 ```
 
-The transform pair is where serialisation bugs live: someone changes the parse
-side and the write side keeps the old shape. A codec makes that impossible to
-express.
+El par de transformaciones es donde viven los bugs de serialización: alguien cambia el lado del parseo
+y el lado de escritura mantiene la forma antigua. Un codec hace que eso sea imposible de
+expresar.
 
-### Optional keys that must not be present-and-undefined
+### Claves opcionales que no deben estar presentes con valor undefined
 
 ```typescript
-// WORKS, but accepts { nickname: undefined }
+// FUNCIONA, pero acepta { nickname: undefined }
 z.object({ nickname: z.string().optional() })
 
-// BETTER when the key must be absent
+// MEJOR cuando la clave debe estar ausente
 z.object({ nickname: z.string().exactOptional() })
 ```
 
-Matters against JSON, which cannot express an explicit `undefined`, and against
-TypeScript's `exactOptionalPropertyTypes`.
+Importa frente a JSON, que no puede expresar un `undefined` explícito, y frente al
+`exactOptionalPropertyTypes` de TypeScript.
 
-### Mutually exclusive unions checked by hand
+### Uniones mutuamente excluyentes verificadas a mano
 
 ```typescript
 const EmailLogin = z.object({ email: z.email() })
 const PhoneLogin = z.object({ phone: z.e164() })
 
-// WORKS, but you maintain the exclusivity check
+// FUNCIONA, pero tú mantienes el check de exclusividad
 z.union([EmailLogin, PhoneLogin]).refine((v) => !("email" in v && "phone" in v))
 
-// BETTER: fails when more than one branch matches
+// MEJOR: falla cuando coincide más de una rama
 z.xor([EmailLogin, PhoneLogin])
 ```
 
-`z.xor()` takes an array, like `z.union()`.
+`z.xor()` acepta un array, como `z.union()`.
 
-### JSON Schema written or parsed by hand
+### JSON Schema escrito o parseado a mano
 
 ```typescript
 const User = z.object({ name: z.string() })
 
-// BETTER, both directions
-z.toJSONSchema(User)      // publish a contract
+// MEJOR, en ambas direcciones
+z.toJSONSchema(User)      // publicar un contrato
 z.fromJSONSchema({ type: "object", properties: { name: { type: "string" } } }) // experimental
 ```
 
-Hand-written JSON Schema alongside a Zod schema is two sources of truth that
-agree only until someone edits one of them.
+Un JSON Schema escrito a mano junto a un schema de Zod son dos fuentes de verdad que
+coinciden solo hasta que alguien edita una de ellas.
 
-### Format checks written as regex
+### Checks de formato escritos como regex
 
 ```typescript
-// WORKS
+// FUNCIONA
 z.string().regex(/^[0-9a-f]{64}$/i)
 
-// BETTER — named, and correct per algorithm
+// MEJOR — con nombre, y correcto según el algoritmo
 z.hash("sha256")
 z.guid()
 ```

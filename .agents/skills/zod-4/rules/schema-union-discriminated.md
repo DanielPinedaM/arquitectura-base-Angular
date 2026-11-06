@@ -1,43 +1,43 @@
 ---
-title: Use Discriminated Unions
-impact: CRITICAL
-description: Use z.discriminatedUnion() for tagged object unions instead of z.union().
-tags: union, discriminated, tagged, performance
+title: Usar uniones discriminadas
+impact: CRÍTICO
+description: Usa z.discriminatedUnion() para uniones de objetos etiquetadas en lugar de z.union().
+tags: unión, discriminada, etiquetada, rendimiento
 ---
 
-# Use Discriminated Unions
+# Usar uniones discriminadas
 
-## Problem
+## Problema
 
-`z.union()` tries each branch sequentially until one matches. For object unions with a shared discriminator field (like `type` or `kind`), this is slow and produces confusing error messages that show issues from every branch.
+`z.union()` prueba cada rama secuencialmente hasta que una coincide. Para uniones de objetos con un campo discriminador compartido (como `type` o `kind`), esto es lento y produce mensajes de error confusos que muestran los issues de todas las ramas.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BAD: tries each branch sequentially, error shows issues from all branches
+// MAL: prueba cada rama secuencialmente, el error muestra los issues de todas las ramas
 const Shape = z.union([
   z.object({ type: z.literal("circle"), radius: z.number() }),
   z.object({ type: z.literal("square"), side: z.number() }),
   z.object({ type: z.literal("rect"), width: z.number(), height: z.number() }),
 ])
-// { type: "triangle" } fails with one invalid_union issue at path [], message "Invalid input",
-// and an `errors` array holding every branch's issues
+// { type: "triangle" } falla con un único issue invalid_union en el path [], con el mensaje "Invalid input",
+// y un array `errors` que contiene los issues de cada rama
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// GOOD: picks the branch by the discriminator; issues name the failing field
+// BIEN: elige la rama según el discriminador; los issues nombran el campo que falla
 const Shape = z.discriminatedUnion("type", [
   z.object({ type: z.literal("circle"), radius: z.number() }),
   z.object({ type: z.literal("square"), side: z.number() }),
   z.object({ type: z.literal("rect"), width: z.number(), height: z.number() }),
 ])
-// { type: "triangle" } fails at path ["type"]:
+// { type: "triangle" } falla en el path ["type"]:
 //   "Invalid discriminator value. Expected 'circle' | 'square' | 'rect'"
-// { type: "circle", radius: "x" } reports only the circle branch: invalid_type at ["radius"]
+// { type: "circle", radius: "x" } reporta solo la rama circle: invalid_type en ["radius"]
 ```
 
-## Why
+## Por qué
 
-`discriminatedUnion` checks the discriminator field first, then only validates the matching branch. It does not try the other branches, so the issues name the field that is wrong. In Zod 4 a discriminator can be a literal, an enum, a union of literals, `null` or `undefined`, and a discriminated union can be an option of another one (zod.dev/v4). `z.getDiscriminatedOption(Shape, "circle")` (Zod 4.5) returns one branch as a `ZodObject`. To require that exactly one branch matches, use `z.xor([a, b])`.
+`discriminatedUnion` verifica primero el campo discriminador y luego valida solo la rama que coincide. No prueba las otras ramas, así que los issues nombran el campo que está mal. En Zod 4, un discriminador puede ser un literal, un enum, una unión de literales, `null` o `undefined`, y una unión discriminada puede ser una opción de otra (zod.dev/v4). `z.getDiscriminatedOption(Shape, "circle")` (Zod 4.5) devuelve una rama como un `ZodObject`. Para exigir que coincida exactamente una rama, usa `z.xor([a, b])`.

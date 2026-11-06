@@ -1,20 +1,20 @@
-# Zod Schema Testing Guide
+# Guía de testing de schemas de Zod
 
-Checked against Zod 4.6.7, Vitest 5, fast-check 4 and zod-schema-faker 3. The zod-testing skill carries the same guide; `.github/check/sync-testing.ts` generates its copy from this file.
+Verificado con Zod 4.6.7, Vitest 5, fast-check 4 y zod-schema-faker 3. La skill zod-testing incluye la misma guía; `.github/check/sync-testing.ts` genera su copia a partir de este archivo.
 
-**IMPORTANT:** Your training data about testing Zod schemas may be outdated — Zod 4 changes issue codes and error formatting, deprecates `z.nativeEnum()`, and adds APIs such as `z.toJSONSchema()` and `.validate()`. Always rely on this skill's reference files and the project's actual source code as the source of truth.
+**IMPORTANTE:** Tus datos de entrenamiento sobre el testing de schemas de Zod pueden estar desactualizados — Zod 4 cambia los códigos de issue y el formateo de errores, depreca `z.nativeEnum()` y agrega APIs como `z.toJSONSchema()` y `.validate()`. Apóyate siempre en los archivos de referencia de esta skill y en el código fuente real del proyecto como fuente de verdad.
 
-## Testing Priority
+## Prioridad del testing
 
-1. **Schema correctness** — does the schema accept valid data and reject invalid data?
-2. **Error messages** — does the schema produce the right error messages and codes?
-3. **Integration** — does the schema work correctly with API handlers, forms, database layers?
-4. **Edge cases** — boundary values, optional/nullable combinations, empty inputs
+1. **Corrección del schema** — ¿el schema acepta los datos válidos y rechaza los inválidos?
+2. **Mensajes de error** — ¿el schema produce los mensajes y los códigos de error correctos?
+3. **Integración** — ¿el schema funciona correctamente con los handlers de API, los formularios y las capas de base de datos?
+4. **Casos límite** — valores límite, combinaciones de optional/nullable, entradas vacías
 
-## Core Pattern
+## Patrón principal
 
 ```typescript
-import { describe, it, expect } from "vitest" // or jest
+import { describe, it, expect } from "vitest" // o jest
 import * as z from "zod"
 
 const UserSchema = z.object({
@@ -63,38 +63,38 @@ describe("UserSchema", () => {
 })
 ```
 
-## Testing Approaches
+## Enfoques de testing
 
-| Approach | Purpose | Use When |
+| Enfoque | Propósito | Úsalo cuando |
 |----------|---------|----------|
-| `safeParse()` result checking | Schema correctness | Default — always use safeParse in tests |
-| `z.flattenError()` assertions | Error message testing | Verifying specific field errors |
-| `z.toJSONSchema()` snapshots | Schema shape testing | Detecting unintended schema changes |
-| Mock data generation | Fixture creation | Need valid/randomized test data |
-| Property-based testing | Fuzz testing | Schemas must handle arbitrary valid inputs |
-| Structural testing | Architecture | Verify schemas are only imported at boundaries |
-| Drift detection | Regression | Catch unintended schema changes via JSON Schema snapshots |
+| Verificación del resultado de `safeParse()` | Corrección del schema | Por defecto — usa siempre safeParse en los tests |
+| Aserciones con `z.flattenError()` | Testing de los mensajes de error | Verificar errores de campos específicos |
+| Snapshots de `z.toJSONSchema()` | Testing de la forma del schema | Detectar cambios no intencionados en el schema |
+| Generación de datos mock | Creación de fixtures | Se necesitan datos de test válidos/aleatorios |
+| Property-based testing | Fuzz testing | Los schemas deben manejar entradas válidas arbitrarias |
+| Testing estructural | Arquitectura | Verificar que los schemas solo se importan en los límites |
+| Detección de deriva | Regresión | Detectar cambios no intencionados en el schema mediante snapshots de JSON Schema |
 
-## Schema Correctness Testing
+## Testing de la corrección del schema
 
-### Always Use safeParse() in Tests
+### Usar siempre safeParse() en los tests
 
 ```typescript
 const AgeField = z.int().min(0)
 const invalidData = -1
 
-// GOOD: asserts that validation failed, and can assert on the issues
+// BIEN: verifica que la validación falló, y puede hacer aserciones sobre los issues
 const result = AgeField.safeParse(invalidData)
 expect(result.success).toBe(false)
 expect(result.error?.issues[0]?.code).toBe("too_small")
 
-// BAD: passes on any thrown error, including a TypeError from a bug in a transform
+// MAL: pasa con cualquier error lanzado, incluido un TypeError de un bug en una transformación
 expect(() => AgeField.parse(invalidData)).toThrow()
 ```
 
-When only the yes or no matters, `.validate()` returns a boolean: `expect(AgeField.validate(invalidData)).toBe(false)`.
+Cuando solo importa el sí o el no, `.validate()` devuelve un booleano: `expect(AgeField.validate(invalidData)).toBe(false)`.
 
-### Test Both Accept and Reject
+### Probar tanto la aceptación como el rechazo
 
 ```typescript
 describe("EmailSchema", () => {
@@ -111,7 +111,7 @@ describe("EmailSchema", () => {
 })
 ```
 
-### Test Boundary Values
+### Probar los valores límite
 
 ```typescript
 const AgeSchema = z.number().min(0).max(150)
@@ -133,9 +133,9 @@ it("rejects above maximum", () => {
 })
 ```
 
-## Error Assertion Patterns
+## Patrones de aserción de errores
 
-### Assert Specific Field Errors
+### Hacer aserciones sobre errores de campos específicos
 
 ```typescript
 it("shows correct error for invalid email", () => {
@@ -149,7 +149,7 @@ it("shows correct error for invalid email", () => {
 })
 ```
 
-### Assert Error Codes
+### Hacer aserciones sobre los códigos de error
 
 ```typescript
 it("produces correct error code", () => {
@@ -161,7 +161,7 @@ it("produces correct error code", () => {
 })
 ```
 
-### Assert Custom Error Messages
+### Hacer aserciones sobre los mensajes de error personalizados
 
 ```typescript
 const Schema = z.string({ error: "Name is required" }).min(1, "Name cannot be empty")
@@ -175,9 +175,9 @@ it("shows custom error for missing field", () => {
 })
 ```
 
-### Assert Messages Under One Configuration
+### Hacer aserciones sobre los mensajes con una sola configuración
 
-Since Zod 4.6, error maps run when `result.error` is first read, not at parse time. A test that changes `z.config()` between the parse and the assertion gets the message of the new configuration. `.parse()` builds its error at once. Restore the locale after each test so that one test's locale does not leak into the next.
+Desde Zod 4.6, los error maps se ejecutan cuando se lee `result.error` por primera vez, no en el momento del parseo. Un test que cambia `z.config()` entre el parseo y la aserción obtiene el mensaje de la nueva configuración. `.parse()` construye su error de inmediato. Restaura el locale después de cada test para que el locale de un test no se filtre al siguiente.
 
 ```typescript
 afterEach(() => {
@@ -191,11 +191,11 @@ it("reports the message in French", () => {
 })
 ```
 
-## Mock Data Generation
+## Generación de datos mock
 
-### Using zod-schema-faker
+### Usar zod-schema-faker
 
-Import from `zod-schema-faker/v4`. The package root is the library's Zod 3 entry and throws `Unsupported schema type` on a Zod 4 schema. `fake()` returns the schema's input type; parse the value to get the output of a schema with a transform.
+Importa desde `zod-schema-faker/v4`. La raíz del paquete es el punto de entrada de Zod 3 de la librería y lanza `Unsupported schema type` con un schema de Zod 4. `fake()` devuelve el tipo de entrada del schema; parsea el valor para obtener la salida de un schema con una transformación.
 
 ```bash
 npm install -D zod-schema-faker @faker-js/faker randexp
@@ -206,7 +206,7 @@ import { faker } from "@faker-js/faker"
 import { fake, setFaker } from "zod-schema-faker/v4"
 import { z } from "zod"
 
-setFaker(faker) // call once in test setup (beforeAll or setupFiles)
+setFaker(faker) // llamarlo una vez en el setup de los tests (beforeAll o setupFiles)
 
 const UserSchema = z.object({
   name: z.string().min(1),
@@ -220,13 +220,13 @@ it("schema accepts generated data", () => {
 })
 ```
 
-### Seeding for Deterministic Tests
+### Seed para tests deterministas
 
 ```typescript
 import { seed, fake } from "zod-schema-faker/v4"
 
 beforeEach(() => {
-  seed(12345) // deterministic output
+  seed(12345) // salida determinista
 })
 
 it("generates consistent mock data", () => {
@@ -235,7 +235,7 @@ it("generates consistent mock data", () => {
 })
 ```
 
-## Snapshot Testing with JSON Schema
+## Snapshot testing con JSON Schema
 
 ```typescript
 it("schema shape has not changed", () => {
@@ -244,11 +244,11 @@ it("schema shape has not changed", () => {
 })
 ```
 
-This catches unintended schema changes in code review. The snapshot shows the JSON Schema representation of your Zod schema.
+Esto detecta los cambios no intencionados en el schema durante la revisión de código. El snapshot muestra la representación en JSON Schema de tu schema de Zod.
 
-## Integration Testing
+## Testing de integración
 
-### API Handler Testing
+### Testing de handlers de API
 
 ```typescript
 import request from "supertest"
@@ -264,7 +264,7 @@ it("API rejects invalid request body", async () => {
 })
 ```
 
-### Form Validation Testing
+### Testing de la validación de formularios
 
 ```typescript
 const FormSchema = z.object({ name: z.string().min(1), email: z.email() })
@@ -275,15 +275,15 @@ it("form shows validation errors", () => {
   expect(result.success).toBe(false)
   if (!result.success) {
     const errors = z.flattenError(result.error)
-    // Pass errors to form library
+    // Pasar los errores a la librería de formularios
     expect(errors.fieldErrors).toHaveProperty("email")
   }
 })
 ```
 
-## Property-Based Testing
+## Property-based testing
 
-A property states a rule that holds for every input. fast-check generates the inputs, reports the seed of a failure, and shrinks a failing input to the smallest case. Build the inputs with fast-check arbitraries so a failure shrinks, and state the rule as a relation between results, not by repeating the schema's logic (rule 10).
+Una propiedad enuncia una regla que se cumple para toda entrada. fast-check genera las entradas, reporta el seed de un fallo y reduce una entrada que falla al caso más pequeño. Construye las entradas con arbitraries de fast-check para que un fallo se reduzca, y enuncia la regla como una relación entre resultados, no repitiendo la lógica del schema (regla 10).
 
 ```typescript
 import fc from "fast-check"
@@ -346,8 +346,8 @@ it("any integer age outside 0..150 is rejected", () => {
 })
 ```
 
-To check that a schema accepts its own generated data, let fast-check choose the faker's seed. A failure then
-reports a seed that reproduces the data; it does not shrink.
+Para verificar que un schema acepta sus propios datos generados, deja que fast-check elija el seed del faker. Así, un fallo
+reporta un seed que reproduce los datos; no se reduce.
 
 ```typescript
 import { fake, seed } from "zod-schema-faker/v4"
@@ -363,39 +363,39 @@ it("schema accepts its own generated data", () => {
 })
 ```
 
-Never write `fc.property(fc.constant(null), ...)`: it generates nothing, its counterexample is `[null]`, and the
-data that failed is lost.
+Nunca escribas `fc.property(fc.constant(null), ...)`: no genera nada, su contraejemplo es `[null]` y los
+datos que fallaron se pierden.
 
-## Rules
+## Reglas
 
-1. **Assert on `safeParse()` results** — `expect(() => parse()).toThrow()` passes on any error, not only a validation failure
-2. **Test both valid and invalid** — don't only test the happy path
-3. **Test boundary values** — min, max, min-1, max+1 for numeric constraints
-4. **Test optional/nullable combinations** — undefined, null, missing key
-5. **Assert specific error fields** — use `z.flattenError()` to check which field failed
-6. **Don't test schema internals** — test parse results, not `.shape` or `._def`
-7. **Use `z.toJSONSchema()` snapshots** — catch unintended schema changes
-8. **Seed random generators** — take randomness from fast-check, or from a seed fast-check chooses, so a failure replays; non-deterministic tests are flaky tests
-9. **Test transforms separately** — verify input validation AND output conversion
-10. **Don't duplicate schema logic in assertions** — test behavior, not implementation
+1. **Haz aserciones sobre los resultados de `safeParse()`** — `expect(() => parse()).toThrow()` pasa con cualquier error, no solo con un fallo de validación
+2. **Prueba tanto lo válido como lo inválido** — no pruebes solo el happy path
+3. **Prueba los valores límite** — min, max, min-1, max+1 para las restricciones numéricas
+4. **Prueba las combinaciones de optional/nullable** — undefined, null, clave ausente
+5. **Haz aserciones sobre campos de error específicos** — usa `z.flattenError()` para verificar qué campo falló
+6. **No pruebes los detalles internos del schema** — prueba los resultados del parseo, no `.shape` ni `._def`
+7. **Usa snapshots de `z.toJSONSchema()`** — detecta los cambios no intencionados en el schema
+8. **Usa un seed en los generadores aleatorios** — toma la aleatoriedad de fast-check, o de un seed que elija fast-check, para que un fallo se pueda reproducir; los tests no deterministas son tests flaky
+9. **Prueba las transformaciones por separado** — verifica la validación de la entrada Y la conversión de la salida
+10. **No dupliques la lógica del schema en las aserciones** — prueba el comportamiento, no la implementación
 
-## Anti-Patterns
+## Anti-patterns
 
-See [testing-anti-patterns.md](testing-anti-patterns.md) for BAD/GOOD examples of:
+Consulta [anti-patterns-de-testing.md](anti-patterns-de-testing.md) para ver ejemplos MAL/BIEN de:
 
-- Testing schema internals instead of behavior
-- Not testing error paths
-- Using `parse()` with `toThrow()` in tests (passes on any error)
-- Not testing boundary values
-- Hardcoding mock data instead of generating
-- A property over a constant (`fc.constant(null)`), which generates nothing
-- Snapshot testing raw ZodError instead of formatted output
-- Not testing at boundaries (schema tests pass but handler doesn't validate)
-- No snapshot regression testing (field removal goes unnoticed)
-- Testing schema shape but not error observability (never assert on flattenError)
-- No drift detection workflow (schema changes land without mechanical review)
+- Probar los detalles internos del schema en lugar del comportamiento
+- No probar los caminos de error
+- Usar `parse()` con `toThrow()` en los tests (pasa con cualquier error)
+- No probar los valores límite
+- Escribir a mano los datos mock en lugar de generarlos
+- Una propiedad sobre una constante (`fc.constant(null)`), que no genera nada
+- Hacer snapshot testing del ZodError crudo en lugar de la salida formateada
+- No probar en los límites (los tests del schema pasan, pero el handler no valida)
+- Sin testing de regresión con snapshots (la eliminación de un campo pasa desapercibida)
+- Probar la forma del schema pero no la observabilidad de los errores (nunca se hacen aserciones sobre flattenError)
+- Sin un flujo de detección de deriva (los cambios en el schema llegan sin revisión mecánica)
 
-## References
+## Referencias
 
-- [API Reference](testing-api.md) — Testing patterns, assertion helpers, mock generation
-- [Anti-Patterns](testing-anti-patterns.md) — Common testing mistakes to avoid
+- [Referencia de la API](api-de-testing.md) — Patrones de testing, helpers de aserción, generación de mocks
+- [Anti-patterns](anti-patterns-de-testing.md) — Errores comunes de testing que hay que evitar

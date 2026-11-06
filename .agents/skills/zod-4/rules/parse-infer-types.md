@@ -1,20 +1,20 @@
 ---
-title: Infer Types from Schemas
-impact: CRITICAL
-description: Use z.infer<typeof Schema> for output types. Never manually duplicate types.
-tags: inference, types, typescript, DRY
+title: Inferir los tipos a partir de los schemas
+impact: CRÍTICO
+description: Usa z.infer<typeof Schema> para los tipos de salida. Nunca dupliques tipos manualmente.
+tags: inferencia, tipos, typescript, DRY
 ---
 
-# Infer Types from Schemas
+# Inferir los tipos a partir de los schemas
 
-## Problem
+## Problema
 
-Manually defining TypeScript interfaces alongside Zod schemas creates duplicate type definitions that drift apart. When the schema changes, the manual type is forgotten.
+Definir manualmente interfaces de TypeScript junto a los schemas de Zod crea definiciones de tipos duplicadas que se desincronizan. Cuando el schema cambia, el tipo manual se olvida.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BUG: manual type will drift from schema
+// BUG: el tipo manual se desviará del schema
 interface User {
   name: string
   email: string
@@ -27,10 +27,10 @@ const UserSchema = z.object({
   age: z.number().min(0),
 })
 
-// These can silently diverge when schema is updated
+// Estos pueden divergir silenciosamente cuando se actualiza el schema
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 const UserSchema = z.object({
@@ -39,18 +39,18 @@ const UserSchema = z.object({
   age: z.number().min(0),
 })
 
-// Output type (after parsing/transforms)
+// Tipo de salida (después del parseo/las transformaciones)
 type User = z.infer<typeof UserSchema>
 
-// Input type (before transforms — useful for forms)
+// Tipo de entrada (antes de las transformaciones — útil para formularios)
 type UserInput = z.input<typeof UserSchema>
 ```
 
-## Why
+## Por qué
 
-`z.infer` extracts the output type (after transforms). `z.input` extracts the input type (before transforms). These always stay in sync with the schema. Use `z.infer` for most cases; use `z.input` when you need the pre-transform shape (e.g., form state where a date field is a string before being transformed to Date).
+`z.infer` extrae el tipo de salida (después de las transformaciones). `z.input` extrae el tipo de entrada (antes de las transformaciones). Estos siempre se mantienen sincronizados con el schema. Usa `z.infer` en la mayoría de los casos; usa `z.input` cuando necesites la forma previa a la transformación (p. ej., el estado de un formulario donde un campo de fecha es un string antes de transformarse en Date).
 
-When the type comes first, from a generated client or a type you do not own, check the schema against it with `z.toZod<T>()` (Zod 4.5). It fails to compile on any difference, where `satisfies z.ZodType<T>` lets extra keys and `z.any()` through:
+Cuando el tipo viene primero, de un cliente generado o de un tipo que no te pertenece, verifica el schema contra él con `z.toZod<T>()` (Zod 4.5). Falla al compilar ante cualquier diferencia, mientras que `satisfies z.ZodType<T>` deja pasar claves extra y `z.any()`:
 
 ```typescript
 type Player = { username: string; xp: number }

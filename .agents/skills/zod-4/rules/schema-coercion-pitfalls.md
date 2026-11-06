@@ -1,17 +1,17 @@
 ---
-title: Coercion Pitfalls — Boolean Strings
-impact: CRITICAL
-description: z.coerce.boolean() uses JavaScript Boolean() which makes "false" → true. Use z.stringbool().
-tags: coercion, boolean, forms, env-vars
+title: Trampas de la coerción — strings booleanos
+impact: CRÍTICO
+description: z.coerce.boolean() usa el Boolean() de JavaScript, que convierte "false" → true. Usa z.stringbool().
+tags: coerción, boolean, formularios, variables-de-entorno
 ---
 
-# Coercion Pitfalls — Boolean Strings
+# Trampas de la coerción — strings booleanos
 
-## Problem
+## Problema
 
-`z.coerce.boolean()` wraps the input in JavaScript's `Boolean()` constructor. `Boolean("false")` is `true` because any non-empty string is truthy. This silently corrupts form data and environment variables.
+`z.coerce.boolean()` envuelve la entrada en el constructor `Boolean()` de JavaScript. `Boolean("false")` es `true` porque cualquier string no vacío es truthy. Esto corrompe silenciosamente los datos de los formularios y las variables de entorno.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
 // BUG: Boolean("false") === true, Boolean("0") === true
@@ -21,13 +21,13 @@ const Settings = z.object({
 })
 
 Settings.parse({ debug: "false", verbose: "0" })
-// { debug: true, verbose: true } — both are wrong!
+// { debug: true, verbose: true } — ¡ambos están mal!
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// GOOD: z.stringbool() handles string boolean representations correctly
+// BIEN: z.stringbool() maneja correctamente las representaciones booleanas en string
 const Settings = z.object({
   debug: z.stringbool(),
   verbose: z.stringbool(),
@@ -36,11 +36,11 @@ const Settings = z.object({
 Settings.parse({ debug: "false", verbose: "0" })
 // { debug: false, verbose: false }
 
-// z.stringbool() accepts, case-insensitively: "true"/"false", "1"/"0", "yes"/"no",
-// "on"/"off", "y"/"n", "enabled"/"disabled". Anything else is an invalid_value issue.
-// Change the sets with z.stringbool({ truthy: [...], falsy: [...] }) or { case: "sensitive" }.
+// z.stringbool() acepta, sin distinguir mayúsculas de minúsculas: "true"/"false", "1"/"0", "yes"/"no",
+// "on"/"off", "y"/"n", "enabled"/"disabled". Cualquier otra cosa es un issue invalid_value.
+// Cambiar los conjuntos con z.stringbool({ truthy: [...], falsy: [...] }) o { case: "sensitive" }.
 ```
 
-## Why
+## Por qué
 
-`z.stringbool()` is purpose-built for string-to-boolean conversion from forms, env vars, and query parameters. It understands common string representations of boolean values. `z.coerce.boolean()` should only be used when you actually want JavaScript truthiness semantics.
+`z.stringbool()` está hecho específicamente para la conversión de string a booleano desde formularios, variables de entorno y parámetros de query. Entiende las representaciones comunes en string de los valores booleanos. `z.coerce.boolean()` solo debería usarse cuando realmente quieres la semántica de truthiness de JavaScript.

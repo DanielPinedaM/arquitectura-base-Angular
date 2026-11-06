@@ -1,39 +1,39 @@
 ---
-title: Track Validation Error Rates per Schema and Field
-impact: MEDIUM
-description: Wrap safeParse in a tracked helper that increments counters per schema and per field on failure. Identify too-strict schemas (high failure rate) and too-loose schemas (never fail).
-tags: observability, metrics, monitoring, validation, production
+title: Hacer seguimiento de las tasas de error de validación por schema y campo
+impact: MEDIO
+description: Envuelve safeParse en un helper con seguimiento que incrementa contadores por schema y por campo cuando falla. Identifica los schemas demasiado estrictos (alta tasa de fallos) y los demasiado laxos (nunca fallan).
+tags: observabilidad, métricas, monitoreo, validación, producción
 ---
 
-# Track Validation Error Rates per Schema and Field
+# Hacer seguimiento de las tasas de error de validación por schema y campo
 
-## Problem
+## Problema
 
-Without metrics on validation failures, you have no visibility into schema behavior in production. Too-strict schemas silently reject valid user input (causing UX frustration), while too-loose schemas that never fail may not be providing any real protection.
+Sin métricas sobre los fallos de validación, no tienes visibilidad del comportamiento de los schemas en producción. Los schemas demasiado estrictos rechazan silenciosamente entradas válidas de los usuarios (lo que causa frustración en la UX), mientras que los schemas demasiado laxos que nunca fallan pueden no estar dando ninguna protección real.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
 const OrderSchema = z.object({ sku: z.string(), quantity: z.int().positive() })
 
-// No monitoring — validation is a black box
+// Sin monitoreo — la validación es una caja negra
 app.post("/api/orders", (req, res) => {
   const result = OrderSchema.safeParse(req.body)
   if (!result.success) {
     return res.status(400).json({ error: "Invalid" })
   }
-  // How often does this fail? Which fields? No one knows.
+  // ¿Con qué frecuencia falla esto? ¿Qué campos? Nadie lo sabe.
 })
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 import * as z from "zod"
 
 const OrderSchema = z.object({ sku: z.string(), quantity: z.int().positive() })
 
-// Tracked safeParse wrapper
+// Wrapper de safeParse con seguimiento
 function trackedSafeParse<T extends z.ZodType>(
   schema: T,
   data: unknown,
@@ -46,7 +46,7 @@ function trackedSafeParse<T extends z.ZodType>(
   if (!result.success) {
     metrics.increment("zod.validation.failure", { schema: schemaName })
 
-    // Track which fields fail
+    // Hacer seguimiento de qué campos fallan
     const flat = z.flattenError(result.error)
     for (const field of Object.keys(flat.fieldErrors)) {
       metrics.increment("zod.validation.field_error", {
@@ -63,7 +63,7 @@ function processOrder(order: z.infer<typeof OrderSchema>) {
   return { accepted: order.quantity }
 }
 
-// Usage
+// Uso
 app.post("/api/orders", (req, res) => {
   const result = trackedSafeParse(OrderSchema, req.body, "OrderSchema")
   if (!result.success) {
@@ -75,15 +75,15 @@ app.post("/api/orders", (req, res) => {
 })
 ```
 
-## What the Metrics Tell You
+## Lo que te dicen las métricas
 
-| Signal | Meaning | Action |
+| Señal | Significado | Acción |
 |--------|---------|--------|
-| High failure rate on a schema | Schema may be too strict | Review constraints, check if users send valid data that gets rejected |
-| One field dominates failures | Confusing input format | Improve form UX, add coercion, clarify docs |
-| Schema never fails | Schema may be too loose | Review if it's actually validating anything meaningful |
-| Failure spike after deploy | Schema change broke clients | Roll back or make the change additive |
+| Alta tasa de fallos en un schema | El schema puede ser demasiado estricto | Revisar las restricciones, comprobar si los usuarios envían datos válidos que se rechazan |
+| Un campo domina los fallos | Formato de entrada confuso | Mejorar la UX del formulario, agregar coerción, aclarar la documentación |
+| El schema nunca falla | El schema puede ser demasiado laxo | Revisar si realmente está validando algo significativo |
+| Pico de fallos tras un deploy | Un cambio en el schema rompió a los clientes | Revertir o hacer que el cambio sea aditivo |
 
-## Why
+## Por qué
 
-Validation metrics close the feedback loop between schema design and real-world usage. Without them, you're guessing whether schemas are helping or hurting. Tracking per-schema and per-field failure rates turns Zod from a silent gatekeeper into an observable system component.
+Las métricas de validación cierran el ciclo de retroalimentación entre el diseño de los schemas y el uso en el mundo real. Sin ellas, estás adivinando si los schemas ayudan o perjudican. Hacer seguimiento de las tasas de fallo por schema y por campo convierte a Zod de un guardián silencioso en un componente observable del sistema.

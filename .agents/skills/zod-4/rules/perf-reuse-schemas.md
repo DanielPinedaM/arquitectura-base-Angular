@@ -1,20 +1,20 @@
 ---
-title: Reuse Schemas with Composition
-impact: MEDIUM
-description: Define schemas once. Use .pick(), .omit(), .partial() to derive variants.
-tags: composition, pick, omit, partial, DRY
+title: Reutilizar schemas con composición
+impact: MEDIO
+description: Define los schemas una sola vez. Usa .pick(), .omit(), .partial() para derivar variantes.
+tags: composición, pick, omit, partial, DRY
 ---
 
-# Reuse Schemas with Composition
+# Reutilizar schemas con composición
 
-## Problem
+## Problema
 
-Duplicating field definitions across related schemas (Create, Update, Response) leads to drift. When a field changes, only some schemas get updated.
+Duplicar definiciones de campos entre schemas relacionados (Create, Update, Response) provoca deriva. Cuando un campo cambia, solo algunos schemas se actualizan.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BAD: fields duplicated across schemas
+// MAL: campos duplicados entre schemas
 const UserCreate = z.object({
   name: z.string(),
   email: z.email(),
@@ -24,7 +24,7 @@ const UserCreate = z.object({
 const UserUpdate = z.object({
   name: z.string().optional(),
   email: z.email().optional(),
-  // forgot password field — drift
+  // se olvidó el campo password — deriva
 })
 
 const UserResponse = z.object({
@@ -35,10 +35,10 @@ const UserResponse = z.object({
 })
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// GOOD: single source, derive variants
+// BIEN: una sola fuente, derivar variantes
 const User = z.object({
   id: z.string(),
   name: z.string(),
@@ -52,6 +52,6 @@ const UserUpdate = User.pick({ name: true, email: true }).partial()
 const UserResponse = User.omit({ password: true })
 ```
 
-## Why
+## Por qué
 
-`pick()`, `omit()`, `partial()`, and `required()` derive new schemas from a base. Changes to the base propagate automatically to all derived schemas. The inferred types also stay in sync. `.exactPartial()` (Zod 4.5) makes keys omittable without accepting an explicit `undefined`, and `z.deepPartial()` makes nested objects partial too. `.partial()` and `z.deepPartial()` throw on an object that carries its own refinement.
+`pick()`, `omit()`, `partial()` y `required()` derivan schemas nuevos a partir de una base. Los cambios en la base se propagan automáticamente a todos los schemas derivados. Los tipos inferidos también se mantienen sincronizados. `.exactPartial()` (Zod 4.5) hace que las claves se puedan omitir sin aceptar un `undefined` explícito, y `z.deepPartial()` también hace parciales los objetos anidados. `.partial()` y `z.deepPartial()` lanzan una excepción en un objeto que tiene su propio refinamiento.

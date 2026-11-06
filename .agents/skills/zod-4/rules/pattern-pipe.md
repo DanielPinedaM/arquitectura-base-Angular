@@ -1,42 +1,42 @@
 ---
-title: Pipe for Staged Parsing
-impact: MEDIUM
-description: Use .pipe() to chain validation stages. Parse string → coerce number → validate range.
-tags: pipe, staged, coerce, chain
+title: Pipe para parseo por etapas
+impact: MEDIO
+description: Usa .pipe() para encadenar etapas de validación. Parsear string → aplicar coerción a number → validar el rango.
+tags: pipe, por-etapas, coerce, encadenamiento
 ---
 
-# Pipe for Staged Parsing
+# Pipe para parseo por etapas
 
-## Problem
+## Problema
 
-Complex validation chains that coerce and validate in multiple stages become messy when done in a single transform. Each stage should parse the output of the previous stage.
+Las cadenas de validación complejas que aplican coerción y validan en varias etapas se vuelven desordenadas cuando se hacen en una sola transformación. Cada etapa debería parsear la salida de la etapa anterior.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BAD: everything in one transform — no intermediate validation
+// MAL: todo en una transformación — sin validación intermedia
 const PortNumber = z.string().transform((val) => {
   const n = parseInt(val, 10)
-  if (isNaN(n)) throw new Error("Not a number") // wrong: shouldn't throw
-  if (n < 1 || n > 65535) throw new Error("Invalid port") // wrong: shouldn't throw
+  if (isNaN(n)) throw new Error("Not a number") // incorrecto: no debería lanzar excepciones
+  if (n < 1 || n > 65535) throw new Error("Invalid port") // incorrecto: no debería lanzar excepciones
   return n
 })
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// GOOD: staged parsing with pipe
+// BIEN: parseo por etapas con pipe
 const PortNumber = z
   .string()
-  .pipe(z.coerce.number()) // stage 1: string → number
-  .pipe(z.int().min(1).max(65535)) // stage 2: validate range
+  .pipe(z.coerce.number()) // etapa 1: string → number
+  .pipe(z.int().min(1).max(65535)) // etapa 2: validar el rango
 
 PortNumber.parse("8080") // 8080
-PortNumber.safeParse("abc").success // false: stage 1 fails
-PortNumber.safeParse("99999").success // false: stage 2 fails
+PortNumber.safeParse("abc").success // false: falla la etapa 1
+PortNumber.safeParse("99999").success // false: falla la etapa 2
 ```
 
-## Why
+## Por qué
 
-`.pipe()` feeds the output of one schema into another. Each stage produces Zod issues on failure, and each stage's type is inferred. `z.coerce.number()` accepts whatever `Number()` accepts, so `"0x50"` becomes 80, `"1e3"` becomes 1000 and `" 80 "` becomes 80. When only decimal digits are valid, check the string first: `z.string().regex(z.regexes.integer).transform(Number).pipe(z.int().min(1).max(65535))`.
+`.pipe()` pasa la salida de un schema a otro. Cada etapa produce issues de Zod cuando falla, y el tipo de cada etapa se infiere. `z.coerce.number()` acepta todo lo que acepta `Number()`, así que `"0x50"` se convierte en 80, `"1e3"` en 1000 y `" 80 "` en 80. Cuando solo los dígitos decimales son válidos, verifica primero el string: `z.string().regex(z.regexes.integer).transform(Number).pipe(z.int().min(1).max(65535))`.

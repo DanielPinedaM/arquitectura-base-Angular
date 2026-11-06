@@ -1,14 +1,14 @@
-# Linting and CI Rules for Zod
+# Reglas de linting y CI para Zod
 
-Checked against Zod 4.6.7, ESLint 10.14.0 with typescript-eslint 8.72.1, and madge 8.0.0. The knip and ts-prune commands were not run.
+Verificado con Zod 4.6.7, ESLint 10.14.0 con typescript-eslint 8.72.1 y madge 8.0.0. Los comandos de knip y ts-prune no se ejecutaron.
 
-## Overview
+## Visión general
 
-Mechanical enforcement catches mistakes before code review. Use ESLint rules, CI checks, and static analysis tools to enforce Zod best practices automatically.
+La aplicación mecánica de las reglas detecta errores antes de la revisión de código. Usa reglas de ESLint, checks de CI y herramientas de análisis estático para aplicar automáticamente las buenas prácticas de Zod.
 
-## ESLint: `no-restricted-syntax` Rules
+## ESLint: reglas `no-restricted-syntax`
 
-ESLint 10 reads only the flat config format, `eslint.config.js`; it no longer supports `.eslintrc`. The config below was run with ESLint 10.14 and typescript-eslint 8.72: it flagged each banned call, skipped `JSON.parse()` and `Date.parse()`, and skipped `config/env.ts`.
+ESLint 10 solo lee el formato flat config, `eslint.config.js`; ya no soporta `.eslintrc`. La siguiente config se ejecutó con ESLint 10.14 y typescript-eslint 8.72: marcó cada llamada prohibida, omitió `JSON.parse()` y `Date.parse()`, y omitió `config/env.ts`.
 
 ```js
 // eslint.config.js
@@ -17,7 +17,7 @@ import tseslint from "typescript-eslint"
 
 const zodRules = [
   {
-    // parse() throws; JSON.parse, Date.parse and URL.parse are not Zod
+    // parse() lanza excepciones; JSON.parse, Date.parse y URL.parse no son de Zod
     selector: "CallExpression[callee.property.name='parse']:not([callee.object.name=/^(JSON|Date|URL)$/])",
     message: "Use safeParse() instead of parse(). parse() throws on invalid input. See: rules/parse-use-safeParse.md",
   },
@@ -42,17 +42,17 @@ export default defineConfig([
     rules: { "no-restricted-syntax": ["error", ...zodRules] },
   },
   {
-    // crashing on an invalid environment at startup is intended
+    // fallar al arrancar con un entorno inválido es intencional
     files: ["**/config/env.ts", "**/env.ts"],
     rules: { "no-restricted-syntax": "off" },
   },
 ])
 ```
 
-The selectors match syntax, not types. The `parse` rule also flags `.parse()` on other libraries, such as `path.parse()`; extend the exclusion list for the ones your code uses. For type-aware checks, deprecated Zod APIs carry `@deprecated` tags, which `@typescript-eslint/no-deprecated` reports. In the same run, it reported `z.nativeEnum()` and `z.string().email()` with Zod's own replacement text:
+Los selectores coinciden con la sintaxis, no con los tipos. La regla de `parse` también marca `.parse()` de otras librerías, como `path.parse()`; amplía la lista de exclusiones con las que use tu código. Para checks con información de tipos, las APIs deprecadas de Zod llevan tags `@deprecated`, que `@typescript-eslint/no-deprecated` reporta. En la misma ejecución, reportó `z.nativeEnum()` y `z.string().email()` con el propio texto de reemplazo de Zod:
 
 ```js
-// eslint.config.js: type-aware rule; needs a tsconfig.json
+// eslint.config.js: regla con información de tipos; necesita un tsconfig.json
 {
   files: ["src/**/*.ts"],
   languageOptions: {
@@ -64,11 +64,11 @@ The selectors match syntax, not types. The `parse` rule also flags `.parse()` on
 }
 ```
 
-## CI: Schema Snapshot Regression
+## CI: regresión de snapshots de schemas
 
-Detect unintended schema changes by committing JSON Schema snapshots and failing CI when they drift.
+Detecta cambios no intencionados en los schemas haciendo commit de snapshots de JSON Schema y haciendo fallar el CI cuando se desvían.
 
-### Setup
+### Configuración
 
 ```typescript
 // scripts/export-schemas.ts
@@ -92,7 +92,7 @@ for (const [name, schema] of Object.entries(schemas)) {
 }
 ```
 
-### CI Check
+### Check de CI
 
 ```yaml
 # .github/workflows/schema-check.yml
@@ -118,24 +118,24 @@ jobs:
           fi
 ```
 
-### Workflow
+### Flujo de trabajo
 
-1. Developer changes a schema
-2. CI runs `export-schemas.ts` and diffs against committed snapshots
-3. If diff exists, CI fails with the exact changes shown
-4. Developer reviews the diff, runs `npx tsx scripts/export-schemas.ts` locally, commits updated snapshots
+1. El desarrollador cambia un schema
+2. El CI ejecuta `export-schemas.ts` y hace diff contra los snapshots versionados
+3. Si hay diff, el CI falla y muestra los cambios exactos
+4. El desarrollador revisa el diff, ejecuta `npx tsx scripts/export-schemas.ts` en local y hace commit de los snapshots actualizados
 
-## Unused Schema Detection
+## Detección de schemas sin usar
 
-Find schemas that are defined but never imported.
+Encuentra los schemas que están definidos pero que nunca se importan.
 
-### With knip
+### Con knip
 
 ```bash
 npx knip --include exports
 ```
 
-knip detects unused exports including schemas. Configure in `knip.json`:
+knip detecta los exports sin usar, incluidos los schemas. Configúralo en `knip.json`:
 
 ```jsonc
 {
@@ -145,39 +145,39 @@ knip detects unused exports including schemas. Configure in `knip.json`:
 }
 ```
 
-### With ts-prune
+### Con ts-prune
 
 ```bash
 npx ts-prune | grep -i schema
 ```
 
-Shows exported symbols with no imports. Review and remove dead schemas.
+Muestra los símbolos exportados que no tienen imports. Revisa y elimina los schemas muertos.
 
-## Circular Dependency Detection
+## Detección de dependencias circulares
 
-Schema modules that import each other can fail at import time: a schema that reads another module's export before that module has run throws a `ReferenceError`. Inside one module, use a getter (see `schema-recursive-types`).
+Los módulos de schemas que se importan entre sí pueden fallar en el momento del import: un schema que lee el export de otro módulo antes de que ese módulo se haya ejecutado lanza un `ReferenceError`. Dentro de un mismo módulo, usa un getter (consulta `schema-recursive-types`).
 
-### With madge
+### Con madge
 
 ```bash
-# Find circular dependencies
+# Encontrar dependencias circulares
 npx madge --circular --extensions ts src/
 
-# Generate dependency graph
+# Generar el grafo de dependencias
 npx madge --image graph.svg --extensions ts src/
 ```
 
-### CI Integration
+### Integración con CI
 
 ```yaml
-# madge exits 1 when it finds a cycle, which fails the step
+# madge termina con el código 1 cuando encuentra un ciclo, lo que hace fallar el paso
 - name: Check circular dependencies
   run: npx madge --circular --extensions ts src/
 ```
 
-## Custom ESLint Rule Messages
+## Mensajes personalizados para las reglas de ESLint
 
-Include remediation instructions in ESLint messages so developers know exactly what to do. Add the entry to `zodRules` above:
+Incluye instrucciones de corrección en los mensajes de ESLint para que los desarrolladores sepan exactamente qué hacer. Agrega la entrada a `zodRules` de arriba:
 
 ```js
 {
@@ -186,11 +186,11 @@ Include remediation instructions in ESLint messages so developers know exactly w
 }
 ```
 
-## Summary
+## Resumen
 
-| Tool | What It Catches | When |
+| Herramienta | Qué detecta | Cuándo |
 |------|----------------|------|
-| ESLint `no-restricted-syntax` | Banned API usage (parse, reportInput, nativeEnum) | On save / pre-commit |
-| Schema snapshot CI | Unintended schema changes | On pull request |
-| knip / ts-prune | Unused schemas | On pull request / periodic |
-| madge | Circular schema dependencies | On pull request |
+| ESLint `no-restricted-syntax` | Uso de APIs prohibidas (parse, reportInput, nativeEnum) | Al guardar / en pre-commit |
+| CI de snapshots de schemas | Cambios no intencionados en los schemas | En el pull request |
+| knip / ts-prune | Schemas sin usar | En el pull request / periódicamente |
+| madge | Dependencias circulares entre schemas | En el pull request |

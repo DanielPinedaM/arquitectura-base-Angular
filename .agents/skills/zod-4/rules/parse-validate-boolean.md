@@ -1,22 +1,22 @@
 ---
-title: Use .validate() When You Need Only a Boolean
-impact: MEDIUM
-description: Use .validate() for a yes or no, because it builds no error; use safeParse() when you need the parsed value.
-tags: parsing, validate, performance, type-guard
+title: Usar .validate() cuando solo necesitas un booleano
+impact: MEDIO
+description: Usa .validate() para un sí o un no, porque no construye ningún error; usa safeParse() cuando necesites el valor parseado.
+tags: parseo, validate, rendimiento, type-guard
 ---
 
-# Use .validate() When You Need Only a Boolean
+# Usar .validate() cuando solo necesitas un booleano
 
-## Problem
+## Problema
 
-`.safeParse(x).success` builds a full `ZodError` for each failure and then discards it. `.validate()` (Zod 4.6) returns a boolean, stops at the first failure and builds no error. It has a trap: it narrows the value to the schema's input type and returns no output, so after a transform, a default or a codec the narrowed value is the raw input.
+`.safeParse(x).success` construye un `ZodError` completo por cada fallo y luego lo descarta. `.validate()` (Zod 4.6) devuelve un booleano, se detiene en el primer fallo y no construye ningún error. Tiene una trampa: estrecha el valor al tipo de entrada del schema y no devuelve ninguna salida, así que después de una transformación, un valor por defecto o un codec, el valor estrechado es la entrada cruda.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
 const Item = z.object({ id: z.string(), price: z.number().nonnegative() })
 
-// Builds and discards a ZodError for every invalid item
+// Construye y descarta un ZodError por cada elemento inválido
 function validItems(items: unknown[]) {
   return items.filter((item) => Item.safeParse(item).success)
 }
@@ -25,13 +25,13 @@ const Port = z.string().regex(z.regexes.integer).transform(Number)
 
 function nextPort(raw: unknown) {
   if (Port.validate(raw)) {
-    return raw + 1 // BUG: raw has the input type, string, so "8080" + 1 is "80801"
+    return raw + 1 // BUG: raw tiene el tipo de entrada, string, así que "8080" + 1 es "80801"
   }
   return undefined
 }
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 function validItems(items: unknown[]) {
@@ -44,8 +44,8 @@ function nextPort(raw: unknown) {
 }
 ```
 
-## Why
+## Por qué
 
-The zod.dev basics page measures `.validate()` as up to 16x faster than `.safeParse().success` on invalid input, and the 4.6 release post measures up to 35x on a schema compiled with `z.compile()`. Use it for filters, guards and routing decisions. Use `.safeParse()` when you need the transformed value or the issues.
+La página basics de zod.dev mide `.validate()` como hasta 16x más rápido que `.safeParse().success` con una entrada inválida, y el post del lanzamiento de la 4.6 mide hasta 35x en un schema compilado con `z.compile()`. Úsalo para filtros, guards y decisiones de enrutamiento. Usa `.safeParse()` cuando necesites el valor transformado o los issues.
 
-On a schema with an async refinement, `.validate()` throws, as `.safeParse()` does; use `.validateAsync()`.
+En un schema con un refinamiento asíncrono, `.validate()` lanza una excepción, como lo hace `.safeParse()`; usa `.validateAsync()`.

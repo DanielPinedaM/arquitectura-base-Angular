@@ -1,45 +1,45 @@
 ---
-title: Custom Error Messages (v4 API)
-impact: HIGH
-description: Customize messages with the error parameter. required_error and invalid_type_error are gone; message is deprecated.
-tags: errors, messages, v4, migration
+title: Mensajes de error personalizados (API de v4)
+impact: ALTO
+description: Personaliza los mensajes con el parámetro error. required_error e invalid_type_error ya no existen; message está deprecado.
+tags: errores, mensajes, v4, migración
 ---
 
-# Custom Error Messages (v4 API)
+# Mensajes de error personalizados (API de v4)
 
-## Problem
+## Problema
 
-Zod 4 dropped `required_error` and `invalid_type_error`. TypeScript rejects them; plain JavaScript passes them and Zod ignores them, so the default message appears instead of yours. The `message` parameter still works but is deprecated.
+Zod 4 eliminó `required_error` e `invalid_type_error`. TypeScript los rechaza; JavaScript puro los deja pasar y Zod los ignora, así que aparece el mensaje por defecto en lugar del tuyo. El parámetro `message` todavía funciona, pero está deprecado.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
-// BUG: Zod 4 dropped these parameters, so the custom messages never appear
+// BUG: Zod 4 eliminó estos parámetros, así que los mensajes personalizados nunca aparecen
 const Name = z.string({
-  // @ts-expect-error required_error and invalid_type_error are not Zod 4 parameters
+  // @ts-expect-error required_error e invalid_type_error no son parámetros de Zod 4
   required_error: "Name is required",
   invalid_type_error: "Name must be a string",
 })
 
-// `message` still works, but Zod 4 documents it as deprecated
+// `message` todavía funciona, pero Zod 4 lo documenta como deprecado
 const Age = z.number().min(18, { message: "Must be 18+" })
 ```
 
-## Correct
+## Correcto
 
 ```typescript
-// GOOD: the error parameter takes a string
+// BIEN: el parámetro error acepta un string
 const Age = z.number().min(18, { error: "Must be 18+" })
 
-// GOOD: or the string alone
+// BIEN: o solo el string
 const AgeShort = z.number().min(18, "Must be 18+")
 
-// GOOD: a function tells a missing value from a wrong type
+// BIEN: una función distingue un valor ausente de un tipo incorrecto
 const Name = z.string({
   error: (issue) => (issue.input === undefined ? "Name is required" : "Name must be a string"),
 })
 ```
 
-## Why
+## Por qué
 
-Zod 4 puts every error customization under one `error` parameter (zod.dev/error-customization). It takes a string, or a function that receives the issue (`code`, `input`, `path`, and fields such as `minimum`) and returns a string, or `undefined` to fall through to the next error map. A schema-level error covers the issues its own checks raise, so `z.string("Invalid name").min(5)` reports "Invalid name" for a short string.
+Zod 4 agrupa toda la personalización de errores bajo un único parámetro `error` (zod.dev/error-customization). Acepta un string, o una función que recibe el issue (`code`, `input`, `path` y campos como `minimum`) y devuelve un string, o `undefined` para pasar al siguiente error map. Un error a nivel de schema cubre los issues que generan sus propios checks, así que `z.string("Invalid name").min(5)` reporta "Invalid name" para un string corto.

@@ -1,29 +1,29 @@
 ---
-title: Error Formatting Functions
-impact: HIGH
-description: Use z.flattenError() for flat forms, z.treeifyError() for nested data, z.prettifyError() for logs. z.formatError() is deprecated.
-tags: errors, formatting, treeify, flatten, prettify
+title: Funciones de formateo de errores
+impact: ALTO
+description: Usa z.flattenError() para formularios planos, z.treeifyError() para datos anidados, z.prettifyError() para logs. z.formatError() está deprecado.
+tags: errores, formateo, treeify, flatten, prettify
 ---
 
-# Error Formatting Functions
+# Funciones de formateo de errores
 
-## Problem
+## Problema
 
-Zod 4 documents `z.formatError()` and the `.format()` and `.flatten()` methods on `ZodError` as deprecated. They still run. The top-level functions replace them.
+Zod 4 documenta `z.formatError()` y los métodos `.format()` y `.flatten()` de `ZodError` como deprecados. Todavía se ejecutan. Las funciones de nivel superior los reemplazan.
 
-## Incorrect
+## Incorrecto
 
 ```typescript
 const Signup = z.object({ email: z.email(), age: z.number().min(18) })
 
 const result = Signup.safeParse(data)
 if (!result.success) {
-  // the docs mark z.formatError() deprecated in favour of z.treeifyError()
+  // la documentación marca z.formatError() como deprecado en favor de z.treeifyError()
   const formatted = z.formatError(result.error)
 }
 ```
 
-## Correct
+## Correcto
 
 ```typescript
 const Signup = z.object({
@@ -33,25 +33,25 @@ const Signup = z.object({
 
 const result = Signup.safeParse(data)
 if (!result.success) {
-  // flat forms: { formErrors: string[], fieldErrors: { email?: string[], address?: string[] } }
+  // formularios planos: { formErrors: string[], fieldErrors: { email?: string[], address?: string[] } }
   const flat = z.flattenError(result.error)
-  flat.fieldErrors.email // e.g. ["Invalid email address"]
+  flat.fieldErrors.email // p. ej. ["Invalid email address"]
 
-  // nested data: a tree that mirrors the schema; use optional chaining
+  // datos anidados: un árbol que refleja el schema; usar optional chaining
   const tree = z.treeifyError(result.error)
   tree.properties?.address?.properties?.zip?.errors
 
-  // logs and CLIs: one line per issue, with "→ at <path>" under each
+  // logs y CLIs: una línea por issue, con "→ at <path>" debajo de cada uno
   const pretty = z.prettifyError(result.error)
 }
 ```
 
-## Why
+## Por qué
 
-| Function | Output | Use case |
+| Función | Salida | Caso de uso |
 |----------|--------|----------|
-| `z.flattenError()` | `{ formErrors, fieldErrors }` | One-level forms; nested issues land under the top-level key |
-| `z.treeifyError()` | `{ errors, properties?, items? }`, nested like the schema | Nested forms, arrays, recursive schemas |
-| `z.prettifyError()` | A multi-line string | Logs, debugging, CLI output |
+| `z.flattenError()` | `{ formErrors, fieldErrors }` | Formularios de un nivel; los issues anidados quedan bajo la clave de nivel superior |
+| `z.treeifyError()` | `{ errors, properties?, items? }`, anidado como el schema | Formularios anidados, arrays, schemas recursivos |
+| `z.prettifyError()` | Un string de varias líneas | Logs, depuración, salida de CLI |
 
-Source: zod.dev/error-formatting.
+Fuente: zod.dev/error-formatting.
