@@ -11,10 +11,10 @@ description: Buenas prácticas, patrones y guía de la API de Zod v4 para la val
 
 Zod sirve para la **validación de tipos en runtime** — parsear datos no confiables en los límites del sistema (entrada de APIs, datos de formularios, variables de entorno, servicios externos). Para tipos solo en tiempo de compilación, TypeScript puro es suficiente.
 
-| Necesidad | Herramienta recomendada |
+| Necesidad | Herramienta a usar |
 |------|-----------------|
-| Validación de entrada/salida de APIs | **Zod** |
-| Validación de formularios (React, Vue) | **Zod** (con react-hook-form, formik, etc.) |
+| Validación de entrada/salida de APIs | **Zod**|
+| Validación de formularios (Angular, React, Vue, etc) | **Zod** |
 | Parseo de variables de entorno | **Zod** (con t3-env o manual) |
 | Solo tipos en tiempo de compilación | TypeScript puro |
 | Presupuesto estricto del bundle del cliente | Zod Mini (`zod/mini`), o Valibot |
