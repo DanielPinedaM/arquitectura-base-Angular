@@ -904,6 +904,16 @@ Si usas Claude Code, [Claude también lee `AGENTS.md`](https://code.claude.com/d
 
 Para probar que funcione `AGENTS.md` envia este prompt:
 
+**1.** Al ejecutar
+
+```console
+/context all
+```
+
+en la sección **Memory files** debe aparecer `AGENTS.md`.
+
+**2.**
+
 ```console
 citar textualmente ¿que es Signal? y ejemplo usando la tool `search_documentation` de `angular-cli` MCP
 ```
