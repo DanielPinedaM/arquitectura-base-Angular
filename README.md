@@ -99,12 +99,12 @@ Contiene iconos para todo. Sus estilos se pueden personalizar con _Tailwind_.
 
 * [Leer esto](#angular-conventions) para entender la arquitectura del proyecto.
 
-* Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
-1. [🔗 Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
-2. [🔗 Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
-3. [🔗 Rxjs VS Signals](https://youtu.be/lSzO2D3OCjY?si=Yr4nlZ2AanGWW0WN)
-4. [🔗 Forms with Signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
-5. [🔗 input y output con Signals `import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
+* 🔗 Todo este proyecto usa Signals. Mira los siguientes videos para aprender:
+1. [Estados con Signals VS forma tradicional](https://youtu.be/jqGjE6iqkvg)
+2. [Resource y LinkedSignal](https://youtu.be/eEzLCLB5NUQ?si=DmCVg7jVBcHAZP1R)
+3. [Rxjs VS Signals](https://youtu.be/lSzO2D3OCjY?si=Yr4nlZ2AanGWW0WN)
+4. [Forms with Signals](https://youtu.be/7V9I9_qwx74?si=0aKj22-K5G2bLqT_)
+5. [input y output con Signals `import { input, output } from '@angular/core'`](https://youtu.be/_XnEoK47Il0?si=-FGhn2ho6J1Dmn8B)
 
 * 🔗 Mira estos enlaces para que aprendas de IA enfocada en desarrollo de software:
 1. [Ollama: IA local gratis](https://youtu.be/p2zZ6zuaCDM)
