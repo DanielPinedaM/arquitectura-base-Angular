@@ -40,4 +40,4 @@ const IsoDateTime = z.iso.datetime() // segundos obligatorios desde Zod 4.5
 
 ## Por qué
 
-Cada formato es su propio tipo de schema, y la forma de nivel superior es más corta y funciona mejor con el tree-shaking. `z.uuid()` verifica los bits de variante de RFC 9562; acepta todas las versiones a menos que pases `{ version }` o uses `z.uuidv4()`, `z.uuidv7()`. `z.string().ip()` y `z.string().cidr()` se eliminaron; usa `z.ipv4()`/`z.ipv6()` y `z.cidrv4()`/`z.cidrv6()`, o una unión. La lista completa está en `references/tipos-de-schema.md`.
+Cada formato es su propio tipo de schema, y la forma de nivel superior es más corta y funciona mejor con el tree-shaking. `z.uuid()` verifica los bits de variante de RFC 9562; acepta todas las versiones a menos que pases `{ version }` o uses `z.uuidv4()`, `z.uuidv7()`. `z.string().ip()` y `z.string().cidr()` se eliminaron; usa `z.ipv4()`/`z.ipv6()` y `z.cidrv4()`/`z.cidrv6()`, o una unión. La lista completa está en `referencias/tipos-de-schema.md`.

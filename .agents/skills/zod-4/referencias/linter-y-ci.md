@@ -19,19 +19,19 @@ const zodRules = [
   {
     // parse() lanza excepciones; JSON.parse, Date.parse y URL.parse no son de Zod
     selector: "CallExpression[callee.property.name='parse']:not([callee.object.name=/^(JSON|Date|URL)$/])",
-    message: "Use safeParse() instead of parse(). parse() throws on invalid input. See: rules/parse-use-safeParse.md",
+    message: "Use safeParse() instead of parse(). parse() throws on invalid input. See: reglas/parse-use-safeParse.md",
   },
   {
     selector: "Property[key.name='reportInput'][value.value=true]",
-    message: "reportInput: true leaks sensitive data. Use: reportInput: process.env.NODE_ENV === 'development'. See: rules/error-input-security.md",
+    message: "reportInput: true leaks sensitive data. Use: reportInput: process.env.NODE_ENV === 'development'. See: reglas/error-input-security.md",
   },
   {
     selector: "CallExpression[callee.property.name='nativeEnum']",
-    message: "z.nativeEnum() is deprecated. Use z.enum(YourTSEnum). See: rules/migrate-native-enum.md",
+    message: "z.nativeEnum() is deprecated. Use z.enum(YourTSEnum). See: reglas/migrate-native-enum.md",
   },
   {
     selector: "CallExpression[callee.property.name='email'][callee.object.callee.property.name='string']",
-    message: "Use z.email() instead of z.string().email(). See: rules/migrate-string-formats.md",
+    message: "Use z.email() instead of z.string().email(). See: reglas/migrate-string-formats.md",
   },
 ]
 
@@ -182,7 +182,7 @@ Incluye instrucciones de corrección en los mensajes de ESLint para que los desa
 ```js
 {
   selector: "CallExpression[callee.property.name='parse']:not([callee.object.name=/^(JSON|Date|URL)$/])",
-  message: "Use safeParse() instead of parse().\n\nparse() throws ZodError on invalid input.\nsafeParse() returns { success, data | error }.\n\nReplace:\n  schema.parse(data)\nWith:\n  const result = schema.safeParse(data)\n  if (!result.success) { /* handle error */ }\n\nSee: rules/parse-use-safeParse.md",
+  message: "Use safeParse() instead of parse().\n\nparse() throws ZodError on invalid input.\nsafeParse() returns { success, data | error }.\n\nReplace:\n  schema.parse(data)\nWith:\n  const result = schema.safeParse(data)\n  if (!result.success) { /* handle error */ }\n\nSee: reglas/parse-use-safeParse.md",
 }
 ```
 

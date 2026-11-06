@@ -52,4 +52,4 @@ BodyFromText.encode({ name: "Ada" })      // '{"name":"Ada"}'
 
 ## Por qué
 
-Usa `z.json()` para un valor que ya está parseado, como una columna JSON o un campo tipado como JSON arbitrario. Para texto JSON, el codec convierte el texto inválido en un issue, valida el resultado con tu schema y vuelve a codificar el valor. Zod no exporta el codec; es una receta de zod.dev/codecs. Consulta `references/codecs.md` para ver las otras recetas.
+Usa `z.json()` para un valor que ya está parseado, como una columna JSON o un campo tipado como JSON arbitrario. Para texto JSON, el codec convierte el texto inválido en un issue, valida el resultado con tu schema y vuelve a codificar el valor. Zod no exporta el codec; es una receta de zod.dev/codecs. Consulta `referencias/codecs.md` para ver las otras recetas.

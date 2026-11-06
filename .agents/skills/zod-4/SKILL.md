@@ -134,8 +134,8 @@ Zod sirve para la **validación de tipos en runtime** — parsear datos no confi
 Lee los archivos de reglas individuales para ver explicaciones detalladas y ejemplos de código:
 
 ```text
-rules/parse-use-safeParse.md
-rules/schema-object-unknowns.md
+reglas/parse-use-safeParse.md
+reglas/schema-object-unknowns.md
 ```
 
 Cada archivo de reglas contiene:
@@ -149,21 +149,21 @@ Cada archivo de reglas contiene:
 
 | Prioridad | Referencia | Cuándo leerla |
 |----------|-----------|-------------|
-| 1 | `references/tipos-de-schema.md` | Primitivos, formatos de string, números, enums, fechas, funciones, branded types |
-| 2 | `references/parseo-e-inferencia.md` | parse, safeParse, validate, z.infer, coerción, Standard Schema |
-| 3 | `references/objetos-y-composicion.md` | Objetos, claves opcionales, arrays, uniones, pick/omit/partial, recursivos, propiedades |
-| 4 | `references/refinamientos-y-transformaciones.md` | refine, superRefine, transform, pipe, valores por defecto |
-| 5 | `references/manejo-de-errores.md` | ZodError, flattenError, treeifyError, personalización de errores |
-| 6 | `references/breaking-changes-de-zod-4.md` | Lo que se parsea de forma distinta en 4.0, 4.4, 4.5 y 4.6; léelo antes de una actualización |
-| 7 | `references/codecs.md` | z.codec, decode y encode, qué se ejecuta en cada dirección, recetas para copiar |
-| 8 | `references/metadata-y-json-schema.md` | Registries, .meta(), opciones de z.toJSONSchema, z.fromJSONSchema |
-| 9 | `references/compilacion.md` | z.compile, zod/compile, lo que no se compila, z.withParser, costo en el bundle |
-| 10 | `references/anti-patterns.md` | Errores comunes con ejemplos MAL/BIEN |
-| 11 | `references/arquitectura-de-limites.md` | Dónde encaja Zod: Express, tRPC, Next.js, React Hook Form, env, APIs externas |
-| 12 | `references/linter-y-ci.md` | Reglas de ESLint, snapshots de schemas en CI, detección de schemas sin usar, deps circulares |
-| 13 | `references/testing.md` | Testing de schemas: safeParse en los tests, valores límite, aserciones de errores, datos mock, property-based testing |
-| 14 | `references/api-de-testing.md` | Referencia de la API de Jest y Vitest para tests de schemas |
-| 15 | `references/anti-patterns-de-testing.md` | Errores de testing con ejemplos MAL/BIEN |
+| 1 | `referencias/tipos-de-schema.md` | Primitivos, formatos de string, números, enums, fechas, funciones, branded types |
+| 2 | `referencias/parseo-e-inferencia.md` | parse, safeParse, validate, z.infer, coerción, Standard Schema |
+| 3 | `referencias/objetos-y-composicion.md` | Objetos, claves opcionales, arrays, uniones, pick/omit/partial, recursivos, propiedades |
+| 4 | `referencias/refinamientos-y-transformaciones.md` | refine, superRefine, transform, pipe, valores por defecto |
+| 5 | `referencias/manejo-de-errores.md` | ZodError, flattenError, treeifyError, personalización de errores |
+| 6 | `referencias/breaking-changes-de-zod-4.md` | Lo que se parsea de forma distinta en 4.0, 4.4, 4.5 y 4.6; léelo antes de una actualización |
+| 7 | `referencias/codecs.md` | z.codec, decode y encode, qué se ejecuta en cada dirección, recetas para copiar |
+| 8 | `referencias/metadata-y-json-schema.md` | Registries, .meta(), opciones de z.toJSONSchema, z.fromJSONSchema |
+| 9 | `referencias/compilacion.md` | z.compile, zod/compile, lo que no se compila, z.withParser, costo en el bundle |
+| 10 | `referencias/anti-patterns.md` | Errores comunes con ejemplos MAL/BIEN |
+| 11 | `referencias/arquitectura-de-limites.md` | Dónde encaja Zod: Express, tRPC, Next.js, React Hook Form, env, APIs externas |
+| 12 | `referencias/linter-y-ci.md` | Reglas de ESLint, snapshots de schemas en CI, detección de schemas sin usar, deps circulares |
+| 13 | `referencias/testing.md` | Testing de schemas: safeParse en los tests, valores límite, aserciones de errores, datos mock, property-based testing |
+| 14 | `referencias/api-de-testing.md` | Referencia de la API de Jest y Vitest para tests de schemas |
+| 15 | `referencias/anti-patterns-de-testing.md` | Errores de testing con ejemplos MAL/BIEN |
 
 ## Documento compilado completo
 
