@@ -146,7 +146,7 @@ z.toJSONSchema(Schemas)
 // { schemas: { Post: { $schema: "https://json-schema.org/draft/2020-12/schema", type: "object", ... } } }
 ```
 
-Desde 4.6, los checks encadenados se combinan: `z.number().min(0).max(23).int()` da `minimum: 0, maximum: 23` en cualquier orden (consulta `references/cambios-de-comportamiento.md`).
+Desde 4.6, los checks encadenados se combinan: `z.number().min(0).max(23).int()` da `minimum: 0, maximum: 23` en cualquier orden (consulta `references/breaking-changes-de-zod-4.md`).
 
 ## `z.fromJSONSchema()`
 

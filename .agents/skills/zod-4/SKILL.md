@@ -154,7 +154,7 @@ Cada archivo de reglas contiene:
 | 3 | `references/objetos-y-composicion.md` | Objetos, claves opcionales, arrays, uniones, pick/omit/partial, recursivos, propiedades |
 | 4 | `references/refinamientos-y-transformaciones.md` | refine, superRefine, transform, pipe, valores por defecto |
 | 5 | `references/manejo-de-errores.md` | ZodError, flattenError, treeifyError, personalización de errores |
-| 6 | `references/cambios-de-comportamiento.md` | Lo que se parsea de forma distinta en 4.0, 4.4, 4.5 y 4.6; léelo antes de una actualización |
+| 6 | `references/breaking-changes-de-zod-4.md` | Lo que se parsea de forma distinta en 4.0, 4.4, 4.5 y 4.6; léelo antes de una actualización |
 | 7 | `references/codecs.md` | z.codec, decode y encode, qué se ejecuta en cada dirección, recetas para copiar |
 | 8 | `references/metadata-y-json-schema.md` | Registries, .meta(), opciones de z.toJSONSchema, z.fromJSONSchema |
 | 9 | `references/compilacion.md` | z.compile, zod/compile, lo que no se compila, z.withParser, costo en el bundle |
